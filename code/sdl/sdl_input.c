@@ -93,7 +93,7 @@ static void IN_PrintKey( const SDL_Keysym *keysym, keyNum_t key, qboolean down )
 IN_IsConsoleKey
 
 TODO: If the SDL_Scancode situation improves, use it instead of
-      both of these methods
+	  both of these methods
 ===============
 */
 static qboolean IN_IsConsoleKey( keyNum_t key, int character )
@@ -790,8 +790,8 @@ static void IN_ProcessEvents( void )
 							else
 								Com_QueueEvent( 0, SE_CHAR, utf32, 0, 0, NULL );
 						}
-          }
-        }
+		  }
+		}
 				break;
 
 			case SDL_MOUSEMOTION:

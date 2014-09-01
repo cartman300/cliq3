@@ -27,14 +27,14 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // A user mod should never modify this file
 
 #ifdef STANDALONE
-  #define PRODUCT_NAME			"iofoo3"
-  #define BASEGAME			"foobar"
-  #define CLIENT_WINDOW_TITLE     	"changeme"
-  #define CLIENT_WINDOW_MIN_TITLE 	"changeme2"
-  #define HOMEPATH_NAME_UNIX		".foo"
-  #define HOMEPATH_NAME_WIN		"FooBar"
+  #define PRODUCT_NAME			"cliq3"
+  #define BASEGAME			"cliq3"
+  #define CLIENT_WINDOW_TITLE     	"cliquake3"
+  #define CLIENT_WINDOW_MIN_TITLE 	"cliq3"
+  #define HOMEPATH_NAME_UNIX		".cliq3"
+  #define HOMEPATH_NAME_WIN		"CLIq3"
   #define HOMEPATH_NAME_MACOSX		HOMEPATH_NAME_WIN
-  #define GAMENAME_FOR_MASTER		"foobar"	// must NOT contain whitespace
+  #define GAMENAME_FOR_MASTER		"CLIQuake3Arena"	// must NOT contain whitespace
 //  #define LEGACY_PROTOCOL	// You probably don't need this for your standalone game
 #else
   #define PRODUCT_NAME			"ioq3"
@@ -490,9 +490,9 @@ int Q_isnan(float x);
 
 static ID_INLINE float Q_rsqrt( float number ) {
 		float x = 0.5f * number;
-                float y;
+				float y;
 #ifdef __GNUC__            
-                asm("frsqrte %0,%1" : "=f" (y) : "f" (number));
+				asm("frsqrte %0,%1" : "=f" (y) : "f" (number));
 #else
 		y = __frsqrte( number );
 #endif
@@ -501,10 +501,10 @@ static ID_INLINE float Q_rsqrt( float number ) {
 
 #ifdef __GNUC__            
 static ID_INLINE float Q_fabs(float x) {
-    float abs_x;
-    
-    asm("fabs %0,%1" : "=f" (abs_x) : "f" (x));
-    return abs_x;
+	float abs_x;
+	
+	asm("fabs %0,%1" : "=f" (abs_x) : "f" (x));
+	return abs_x;
 }
 #else
 #define Q_fabs __fabsf
