@@ -24,6 +24,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // this file holds commands that can be executed by the server console, but not remote clients
 
 #include "g_local.h"
+#include "../CLI/header/sAPI.h"
 
 
 /*
@@ -495,6 +496,16 @@ qboolean	ConsoleCommand( void ) {
 
 	if (Q_stricmp (cmd, "listip") == 0) {
 		trap_SendConsoleCommand( EXEC_NOW, "g_banIPs\n" );
+		return qtrue;
+	}
+
+	if (Q_stricmp (cmd, "sv_loadplugins") == 0) {
+		CLIq3::sAPI::LoadPlugins();
+		return qtrue;
+	}
+	
+	if (Q_stricmp (cmd, "sv_unloadplugins") == 0) {
+		CLIq3::sAPI::UnloadPlugins();
 		return qtrue;
 	}
 

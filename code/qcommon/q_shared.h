@@ -124,10 +124,21 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 	#define Q_EXPORT
 #endif
 
+/*
+CLI stuf
+*/
+
 #if CLI
 	#using <mscorlib.dll>
 	#using <system.dll>
+
+	#define CreateNString(N, S) const char* N = (const char*)System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi( S ).ToPointer()
+	#define DestroyNString(N) System::Runtime::InteropServices::Marshal::FreeHGlobal(IntPtr((void*) N ))
+	#define Str(S) gcnew String(S)
+
 	using namespace System;
+	using namespace System::Reflection;
+	using namespace System::Collections::Generic;
 #endif
 
 /**********************************************************************

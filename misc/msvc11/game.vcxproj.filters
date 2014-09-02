@@ -12,6 +12,15 @@
     <Filter Include="Resource Files">
       <UniqueIdentifier>{d6f24f5e-77fd-43de-a82f-61e605b17b9e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\CLI">
+      <UniqueIdentifier>{568062f2-bd90-415b-bb8e-a5caf249f7fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\CLI\header">
+      <UniqueIdentifier>{1d369ea9-d629-49ff-94f5-26ed1a3abeee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\CLI\src">
+      <UniqueIdentifier>{b1c7beb3-7606-4992-adfc-912b97900ef7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\code\game\ai_chat.c">
@@ -116,6 +125,9 @@
     <ClCompile Include="..\..\code\qcommon\q_shared.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\code\CLI\src\sAPI.cpp">
+      <Filter>Source Files\CLI\src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\code\game\ai_chat.h">
@@ -198,6 +210,9 @@
     </ClInclude>
     <ClInclude Include="..\..\code\game\syn.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\CLI\header\sAPI.h">
+      <Filter>Source Files\CLI\header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
