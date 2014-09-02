@@ -186,14 +186,7 @@ typedef int intptr_t;
 
 typedef unsigned char 		byte;
 
-/*#ifdef __cplusplus
-	typedef bool qboolean;
-	#define qtrue true
-	#define qfalse false
-#else*/
-	typedef enum {qfalse, qtrue}	qboolean;
-//#endif
-
+typedef enum {qfalse, qtrue}	qboolean;
 #define toqbool(b) ((qboolean)(b))
 
 typedef union {
