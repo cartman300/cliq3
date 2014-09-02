@@ -23,6 +23,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "g_local.h"
 
+//#include <glib.h>
+#include <mono\jit\jit.h>
+#include <mono\metadata\assembly.h>
+
 level_locals_t	level;
 
 typedef struct {
@@ -405,10 +409,25 @@ G_InitGame
 */
 void G_InitGame( int levelTime, int randomSeed, int restart ) {
 	int					i;
+	MonoDomain* Domain;
+	MonoAssembly* Asm;
 
 	G_Printf ("------- Game Initialization -------\n");
 	G_Printf ("gamename: %s\n", GAMEVERSION);
 	G_Printf ("gamedate: %s\n", __DATE__);
+
+	G_Printf("-------- Testing Mono --------------\n");
+	Domain = mono_jit_init_version("cliq3", "v2.0");
+	if (Domain != NULL)
+		Asm = mono_domain_assembly_open(Domain, "test.exe");
+
+	if (Asm == NULL)
+		G_Printf("Mono assembly test.exe could not be found\n");
+	else {
+		mono_jit_exec(Domain, Asm, 0, NULL);
+	}
+
+	G_Printf("-------- Mono tests complete -------\n");
 
 	srand( randomSeed );
 
@@ -1324,7 +1343,7 @@ can see the last frag.
 =================
 */
 void CheckExitRules( void ) {
- 	int			i;
+	int			i;
 	gclient_t	*cl;
 	// if at the intermission, wait for all non-bots to
 	// signal ready, then go to next level

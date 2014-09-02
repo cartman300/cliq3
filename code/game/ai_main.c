@@ -529,11 +529,11 @@ void BotSetInfoConfigString(bot_state_t *bs) {
 			break;
 		}
 	}
-  	cs = va("l\\%s\\c\\%s\\a\\%s",
+	cs = va("l\\%s\\c\\%s\\a\\%s",
 				leader,
 				carrying,
 				action);
-  	trap_SetConfigstring (CS_BOTINFO + bs->client, cs);
+	trap_SetConfigstring (CS_BOTINFO + bs->client, cs);
 }
 
 /*
