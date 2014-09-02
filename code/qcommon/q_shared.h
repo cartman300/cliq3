@@ -131,6 +131,7 @@ CLI stuf
 #if CLI
 	#using <mscorlib.dll>
 	#using <system.dll>
+	#using <System.Windows.Forms.dll>
 
 	#define CreateNString(N, S) const char* N = (const char*)System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi( S ).ToPointer()
 	#define DestroyNString(N) System::Runtime::InteropServices::Marshal::FreeHGlobal(IntPtr((void*) N ))

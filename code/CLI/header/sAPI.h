@@ -12,6 +12,7 @@ namespace CLIq3 {
 
 	public:
 		static void Print(String^ S);
+		static void PrintError(String^ S);
 
 	internal:
 		static void LoadPlugins();

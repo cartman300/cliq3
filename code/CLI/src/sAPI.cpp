@@ -6,6 +6,9 @@
 using namespace CLIq3;
 using namespace System::IO;
 using namespace System::Runtime::InteropServices;
+using namespace System::Windows::Forms;
+
+#define Protected(body) try body catch(Exception^ E) { CLIq3::sAPI::PrintError(String::Format("{0}\n", E->ToString())); }
 
 void sAPI::Print(String^ S) {
 	CreateNString(NS, S);
@@ -13,19 +16,33 @@ void sAPI::Print(String^ S) {
 	DestroyNString(NS);
 }
 
-void sAPI::LoadPlugins() {
-	auto Files = Directory::GetFiles(Str(BASEGAME "/managed"), Str("*.cliq3.dll"),
-		System::IO::SearchOption::AllDirectories);
+void sAPI::PrintError(String^ S) {
+	CreateNString(NS, S);
+	Com_Printf(S_COLOR_RED "%s", NS);
+	DestroyNString(NS);
+}
 
-	for each (auto F in Files) 
-		LoadPlugin(Assembly::LoadFrom(F));
+void sAPI::LoadPlugins() {
+	Protected({
+		auto Files = Directory::GetFiles(Path::Combine(Application::StartupPath, BASEGAME), "*.cliq3.dll",
+			System::IO::SearchOption::AllDirectories);
+
+		for each (auto F in Files) {
+			Print(String::Format(S_COLOR_GREEN "Loading {0}\n", Path::GetFileName(F)));
+			LoadPlugin(Assembly::LoadFrom(F));
+		}
+	})
 }
 
 void sAPI::UnloadPlugins() {
-	for each (sAPIAddon^ Pl in Instances)
-		Pl->Unload();
+	Protected({
+		for each (sAPIAddon^ Pl in Instances) {
+			Print(String::Format(S_COLOR_GREEN "Unloading {0}\n", Pl->ToString()));
+			Pl->Unload();
+		}
 
-	Instances->Clear();
+		Instances->Clear();
+	})
 }
 
 void sAPI::LoadPlugin(Assembly^ Asm) {
