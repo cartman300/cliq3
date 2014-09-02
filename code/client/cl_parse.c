@@ -60,7 +60,7 @@ Parses deltas from the given base and adds the resulting entity
 to the current frame
 ==================
 */
-void CL_DeltaEntity (msg_t *msg, clSnapshot_t *frame, int Newnum, entityState_t *old, 
+void CL_DeltaEntity (msg_t *msg, clSnapshot_t *frame, int newnum, entityState_t *old, 
 					 qboolean unchanged) {
 	entityState_t	*state;
 
@@ -71,7 +71,7 @@ void CL_DeltaEntity (msg_t *msg, clSnapshot_t *frame, int Newnum, entityState_t 
 	if ( unchanged ) {
 		*state = *old;
 	} else {
-		MSG_ReadDeltaEntity( msg, old, state, Newnum );
+		MSG_ReadDeltaEntity( msg, old, state, newnum );
 	}
 
 	if ( state->number == (MAX_GENTITIES-1) ) {
@@ -87,13 +87,13 @@ CL_ParsePacketEntities
 
 ==================
 */
-void CL_ParsePacketEntities( msg_t *msg, clSnapshot_t *oldframe, clSnapshot_t *Newframe) {
-	int			Newnum;
+void CL_ParsePacketEntities( msg_t *msg, clSnapshot_t *oldframe, clSnapshot_t *newframe) {
+	int			newnum;
 	entityState_t	*oldstate;
 	int			oldindex, oldnum;
 
-	Newframe->parseEntitiesNum = cl.parseEntitiesNum;
-	Newframe->numEntities = 0;
+	newframe->parseEntitiesNum = cl.parseEntitiesNum;
+	newframe->numEntities = 0;
 
 	// delta from the entities present in oldframe
 	oldindex = 0;
@@ -112,9 +112,9 @@ void CL_ParsePacketEntities( msg_t *msg, clSnapshot_t *oldframe, clSnapshot_t *N
 
 	while ( 1 ) {
 		// read the entity index number
-		Newnum = MSG_ReadBits( msg, GENTITYNUM_BITS );
+		newnum = MSG_ReadBits( msg, GENTITYNUM_BITS );
 
-		if ( Newnum == (MAX_GENTITIES-1) ) {
+		if ( newnum == (MAX_GENTITIES-1) ) {
 			break;
 		}
 
@@ -122,12 +122,12 @@ void CL_ParsePacketEntities( msg_t *msg, clSnapshot_t *oldframe, clSnapshot_t *N
 			Com_Error (ERR_DROP,"CL_ParsePacketEntities: end of message");
 		}
 
-		while ( oldnum < Newnum ) {
+		while ( oldnum < newnum ) {
 			// one or more entities from the old packet are unchanged
 			if ( cl_shownet->integer == 3 ) {
 				Com_Printf ("%3i:  unchanged: %i\n", msg->readcount, oldnum);
 			}
-			CL_DeltaEntity( msg, Newframe, oldnum, oldstate, qtrue );
+			CL_DeltaEntity( msg, newframe, oldnum, oldstate, qtrue );
 			
 			oldindex++;
 
@@ -139,12 +139,12 @@ void CL_ParsePacketEntities( msg_t *msg, clSnapshot_t *oldframe, clSnapshot_t *N
 				oldnum = oldstate->number;
 			}
 		}
-		if (oldnum == Newnum) {
+		if (oldnum == newnum) {
 			// delta from previous state
 			if ( cl_shownet->integer == 3 ) {
-				Com_Printf ("%3i:  delta: %i\n", msg->readcount, Newnum);
+				Com_Printf ("%3i:  delta: %i\n", msg->readcount, newnum);
 			}
-			CL_DeltaEntity( msg, Newframe, Newnum, oldstate, qfalse );
+			CL_DeltaEntity( msg, newframe, newnum, oldstate, qfalse );
 
 			oldindex++;
 
@@ -158,12 +158,12 @@ void CL_ParsePacketEntities( msg_t *msg, clSnapshot_t *oldframe, clSnapshot_t *N
 			continue;
 		}
 
-		if ( oldnum > Newnum ) {
+		if ( oldnum > newnum ) {
 			// delta from baseline
 			if ( cl_shownet->integer == 3 ) {
-				Com_Printf ("%3i:  baseline: %i\n", msg->readcount, Newnum);
+				Com_Printf ("%3i:  baseline: %i\n", msg->readcount, newnum);
 			}
-			CL_DeltaEntity( msg, Newframe, Newnum, &cl.entityBaselines[Newnum], qfalse );
+			CL_DeltaEntity( msg, newframe, newnum, &cl.entityBaselines[newnum], qfalse );
 			continue;
 		}
 
@@ -175,7 +175,7 @@ void CL_ParsePacketEntities( msg_t *msg, clSnapshot_t *oldframe, clSnapshot_t *N
 		if ( cl_shownet->integer == 3 ) {
 			Com_Printf ("%3i:  unchanged: %i\n", msg->readcount, oldnum);
 		}
-		CL_DeltaEntity( msg, Newframe, oldnum, oldstate, qtrue );
+		CL_DeltaEntity( msg, newframe, oldnum, oldstate, qtrue );
 		
 		oldindex++;
 
@@ -202,7 +202,7 @@ for any reason, no changes to the state will be made at all.
 void CL_ParseSnapshot( msg_t *msg ) {
 	int			len;
 	clSnapshot_t	*old;
-	clSnapshot_t	NewSnap;
+	clSnapshot_t	newSnap;
 	int			deltaNum;
 	int			oldMessageNum;
 	int			i, packetNum;
@@ -211,98 +211,98 @@ void CL_ParseSnapshot( msg_t *msg ) {
 	// NOTE: now sent with all server to client messages
 	//clc.reliableAcknowledge = MSG_ReadLong( msg );
 
-	// read in the New snapshot to a temporary buffer
+	// read in the new snapshot to a temporary buffer
 	// we will only copy to cl.snap if it is valid
-	Com_Memset (&NewSnap, 0, sizeof(NewSnap));
+	Com_Memset (&newSnap, 0, sizeof(newSnap));
 
-	// we will have read any New server commands in This
+	// we will have read any new server commands in this
 	// message before we got to svc_snapshot
-	NewSnap.serverCommandNum = clc.serverCommandSequence;
+	newSnap.serverCommandNum = clc.serverCommandSequence;
 
-	NewSnap.serverTime = MSG_ReadLong( msg );
+	newSnap.serverTime = MSG_ReadLong( msg );
 
 	// if we were just unpaused, we can only *now* really let the
 	// change come into effect or the client hangs.
 	cl_paused->modified = 0;
 
-	NewSnap.messageNum = clc.serverMessageSequence;
+	newSnap.messageNum = clc.serverMessageSequence;
 
 	deltaNum = MSG_ReadByte( msg );
 	if ( !deltaNum ) {
-		NewSnap.deltaNum = -1;
+		newSnap.deltaNum = -1;
 	} else {
-		NewSnap.deltaNum = NewSnap.messageNum - deltaNum;
+		newSnap.deltaNum = newSnap.messageNum - deltaNum;
 	}
-	NewSnap.snapFlags = MSG_ReadByte( msg );
+	newSnap.snapFlags = MSG_ReadByte( msg );
 
 	// If the frame is delta compressed from data that we
 	// no longer have available, we must suck up the rest of
 	// the frame, but not use it, then ask for a non-compressed
 	// message 
-	if ( NewSnap.deltaNum <= 0 ) {
-		NewSnap.valid = qtrue;		// uncompressed frame
+	if ( newSnap.deltaNum <= 0 ) {
+		newSnap.valid = qtrue;		// uncompressed frame
 		old = NULL;
 		clc.demowaiting = qfalse;	// we can start recording now
 	} else {
-		old = &cl.snapshots[NewSnap.deltaNum & PACKET_MASK];
+		old = &cl.snapshots[newSnap.deltaNum & PACKET_MASK];
 		if ( !old->valid ) {
 			// should never happen
 			Com_Printf ("Delta from invalid frame (not supposed to happen!).\n");
-		} else if ( old->messageNum != NewSnap.deltaNum ) {
+		} else if ( old->messageNum != newSnap.deltaNum ) {
 			// The frame that the server did the delta from
 			// is too old, so we can't reconstruct it properly.
 			Com_Printf ("Delta frame too old.\n");
 		} else if ( cl.parseEntitiesNum - old->parseEntitiesNum > MAX_PARSE_ENTITIES - MAX_SNAPSHOT_ENTITIES ) {
 			Com_Printf ("Delta parseEntitiesNum too old.\n");
 		} else {
-			NewSnap.valid = qtrue;	// valid delta parse
+			newSnap.valid = qtrue;	// valid delta parse
 		}
 	}
 
 	// read areamask
 	len = MSG_ReadByte( msg );
 	
-	if(len > sizeof(NewSnap.areamask))
+	if(len > sizeof(newSnap.areamask))
 	{
 		Com_Error (ERR_DROP,"CL_ParseSnapshot: Invalid size %d for areamask", len);
 		return;
 	}
 	
-	MSG_ReadData( msg, &NewSnap.areamask, len);
+	MSG_ReadData( msg, &newSnap.areamask, len);
 
 	// read playerinfo
 	SHOWNET( msg, "playerstate" );
 	if ( old ) {
-		MSG_ReadDeltaPlayerstate( msg, &old->ps, &NewSnap.ps );
+		MSG_ReadDeltaPlayerstate( msg, &old->ps, &newSnap.ps );
 	} else {
-		MSG_ReadDeltaPlayerstate( msg, NULL, &NewSnap.ps );
+		MSG_ReadDeltaPlayerstate( msg, NULL, &newSnap.ps );
 	}
 
 	// read packet entities
 	SHOWNET( msg, "packet entities" );
-	CL_ParsePacketEntities( msg, old, &NewSnap );
+	CL_ParsePacketEntities( msg, old, &newSnap );
 
 	// if not valid, dump the entire thing now that it has
 	// been properly read
-	if ( !NewSnap.valid ) {
+	if ( !newSnap.valid ) {
 		return;
 	}
 
 	// clear the valid flags of any snapshots between the last
-	// received and This one, so if there was a dropped packet
+	// received and this one, so if there was a dropped packet
 	// it won't look like something valid to delta from next
 	// time we wrap around in the buffer
 	oldMessageNum = cl.snap.messageNum + 1;
 
-	if ( NewSnap.messageNum - oldMessageNum >= PACKET_BACKUP ) {
-		oldMessageNum = NewSnap.messageNum - ( PACKET_BACKUP - 1 );
+	if ( newSnap.messageNum - oldMessageNum >= PACKET_BACKUP ) {
+		oldMessageNum = newSnap.messageNum - ( PACKET_BACKUP - 1 );
 	}
-	for ( ; oldMessageNum < NewSnap.messageNum ; oldMessageNum++ ) {
+	for ( ; oldMessageNum < newSnap.messageNum ; oldMessageNum++ ) {
 		cl.snapshots[oldMessageNum & PACKET_MASK].valid = qfalse;
 	}
 
 	// copy to the current good spot
-	cl.snap = NewSnap;
+	cl.snap = newSnap;
 	cl.snap.ping = 999;
 	// calculate ping time
 	for ( i = 0 ; i < PACKET_BACKUP ; i++ ) {
@@ -320,7 +320,7 @@ void CL_ParseSnapshot( msg_t *msg ) {
 		cl.snap.deltaNum, cl.snap.ping );
 	}
 
-	cl.NewSnapshots = qtrue;
+	cl.newSnapshots = qtrue;
 }
 
 
@@ -334,7 +334,7 @@ int cl_connectedToCheatServer;
 CL_SystemInfoChanged
 
 The systeminfo configstring has been changed, so parse
-New information out of it.  This will happen at every
+new information out of it.  This will happen at every
 gamestate, and possibly during gameplay.
 ==================
 */
@@ -347,9 +347,9 @@ void CL_SystemInfoChanged( void ) {
 
 	systemInfo = cl.gameState.stringData + cl.gameState.stringOffsets[ CS_SYSTEMINFO ];
 	// NOTE TTimo:
-	// when the serverId changes, any further messages we send to the server will use This New serverId
+	// when the serverId changes, any further messages we send to the server will use this new serverId
 	// https://zerowing.idsoftware.com/bugzilla/show_bug.cgi?id=475
-	// in some cases, outdated cp commands might get sent with This News serverId
+	// in some cases, outdated cp commands might get sent with this news serverId
 	cl.serverId = atoi( Info_ValueForKey( systemInfo, "sv_serverid" ) );
 
 #ifdef USE_VOIP
@@ -411,7 +411,7 @@ void CL_SystemInfoChanged( void ) {
 			Cvar_Get(key, value, CVAR_SERVER_CREATED | CVAR_ROM);
 		else
 		{
-			// If This cvar may not be modified by a server discard the value.
+			// If this cvar may not be modified by a server discard the value.
 			if(!(cvar_flags & (CVAR_SYSTEMINFO | CVAR_SERVER_CREATED | CVAR_USER_CREATED)))
 			{
 #ifndef STANDALONE
@@ -461,7 +461,7 @@ CL_ParseGamestate
 void CL_ParseGamestate( msg_t *msg ) {
 	int				i;
 	entityState_t	*es;
-	int				Newnum;
+	int				newnum;
 	entityState_t	nullstate;
 	int				cmd;
 	char			*s;
@@ -505,13 +505,13 @@ void CL_ParseGamestate( msg_t *msg ) {
 			Com_Memcpy( cl.gameState.stringData + cl.gameState.dataCount, s, len + 1 );
 			cl.gameState.dataCount += len + 1;
 		} else if ( cmd == svc_baseline ) {
-			Newnum = MSG_ReadBits( msg, GENTITYNUM_BITS );
-			if ( Newnum < 0 || Newnum >= MAX_GENTITIES ) {
-				Com_Error( ERR_DROP, "Baseline number out of range: %i", Newnum );
+			newnum = MSG_ReadBits( msg, GENTITYNUM_BITS );
+			if ( newnum < 0 || newnum >= MAX_GENTITIES ) {
+				Com_Error( ERR_DROP, "Baseline number out of range: %i", newnum );
 			}
 			Com_Memset (&nullstate, 0, sizeof(nullstate));
-			es = &cl.entityBaselines[ Newnum ];
-			MSG_ReadDeltaEntity( msg, &nullstate, es, Newnum );
+			es = &cl.entityBaselines[ newnum ];
+			MSG_ReadDeltaEntity( msg, &nullstate, es, newnum );
 		} else {
 			Com_Error( ERR_DROP, "CL_ParseGamestate: bad command byte" );
 		}
@@ -638,7 +638,7 @@ void CL_ParseDownload ( msg_t *msg ) {
 		}
 
 		// send intentions now
-		// We need This because without it, we would hold the last nextdl and then start
+		// We need this because without it, we would hold the last nextdl and then start
 		// loading right away.  If we take a while to load, the server is happily trying
 		// to send us that last block over and over.
 		// Write it twice to help make sure we acknowledge the download
@@ -661,7 +661,7 @@ qboolean CL_ShouldIgnoreVoipSender(int sender)
 	else if (clc.voipMuteAll)
 		return qtrue;  // all channels are muted with extreme prejudice.
 	else if (clc.voipIgnore[sender])
-		return qtrue;  // just ignoring This guy.
+		return qtrue;  // just ignoring this guy.
 	else if (clc.voipGain[sender] == 0.0f)
 		return qtrue;  // too quiet to play.
 
@@ -749,15 +749,15 @@ void CL_ParseVoip ( msg_t *msg ) {
 		return;   // Channel is muted, bail.
 	}
 
-	// !!! FIXME: make sure data is narrowband? Does decoder handle This?
+	// !!! FIXME: make sure data is narrowband? Does decoder handle this?
 
 	Com_DPrintf("VoIP: packet accepted!\n");
 
 	seqdiff = sequence - clc.voipIncomingSequence[sender];
 
-	// This is a New "generation" ... a New recording started, reset the bits.
+	// This is a new "generation" ... a new recording started, reset the bits.
 	if (generation != clc.voipIncomingGeneration[sender]) {
-		Com_DPrintf("VoIP: New generation %d!\n", generation);
+		Com_DPrintf("VoIP: new generation %d!\n", generation);
 		speex_bits_reset(&clc.speexDecoderBits[sender]);
 		clc.voipIncomingGeneration[sender] = generation;
 		seqdiff = 0;

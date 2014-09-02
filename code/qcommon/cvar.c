@@ -201,7 +201,7 @@ Cvar_Validate
 ============
 */
 static const char *Cvar_Validate( cvar_t *var,
-	const char *value, qboolean warn )
+    const char *value, qboolean warn )
 {
 	static char s[ MAX_CVAR_VALUE_STRING ];
 	float valuef;
@@ -347,7 +347,7 @@ cvar_t *Cvar_Get( const char *var_name, const char *var_value, int flags ) {
 		}
 
 		// if the C code is now specifying a variable that the user already
-		// set a value for, take the New value as the reset value
+		// set a value for, take the new value as the reset value
 		if(var->flags & CVAR_USER_CREATED)
 		{
 			var->flags &= ~CVAR_USER_CREATED;
@@ -356,7 +356,7 @@ cvar_t *Cvar_Get( const char *var_name, const char *var_value, int flags ) {
 
 			if(flags & CVAR_ROM)
 			{
-				// This variable was set by the user,
+				// this variable was set by the user,
 				// so force it to value given by the engine.
 
 				if(var->latchedString)
@@ -407,7 +407,7 @@ cvar_t *Cvar_Get( const char *var_name, const char *var_value, int flags ) {
 	}
 
 	//
-	// allocate a New cvar
+	// allocate a new cvar
 	//
 
 	// find a free cvar
@@ -420,7 +420,7 @@ cvar_t *Cvar_Get( const char *var_name, const char *var_value, int flags ) {
 	if(index >= MAX_CVARS)
 	{
 		if(!com_errorEntered)
-			Com_Error(ERR_FATAL, "Error: Too many cvars, cannot create a New one!");
+			Com_Error(ERR_FATAL, "Error: Too many cvars, cannot create a new one!");
 
 		return NULL;
 	}
@@ -1263,8 +1263,8 @@ void	Cvar_Update( vmCvar_t *vmCvar ) {
 	vmCvar->modificationCount = cv->modificationCount;
 	if ( strlen(cv->string)+1 > MAX_CVAR_VALUE_STRING ) 
 	  Com_Error( ERR_DROP, "Cvar_Update: src %s length %u exceeds MAX_CVAR_VALUE_STRING",
-			 cv->string, 
-			 (unsigned int) strlen(cv->string));
+		     cv->string, 
+		     (unsigned int) strlen(cv->string));
 	Q_strncpyz( vmCvar->string, cv->string,  MAX_CVAR_VALUE_STRING ); 
 
 	vmCvar->value = cv->value;

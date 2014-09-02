@@ -504,7 +504,7 @@ SetTeam
 =================
 */
 void SetTeam( gentity_t *ent, char *s ) {
-	team_t					team, oldTeam;
+	int					team, oldTeam;
 	gclient_t			*client;
 	int					clientNum;
 	spectatorState_t	specState;

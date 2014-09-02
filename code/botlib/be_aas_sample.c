@@ -606,7 +606,7 @@ aas_trace_t AAS_TraceClientBBox(vec3_t start, vec3_t end, int presencetype,
 		plane = &aasworld.planes[aasnode->planenum];
 
 		switch(plane->type)
-		{/*FIXME: wtf doesn't This work? obviously the axial node planes aren't always facing positive!!!
+		{/*FIXME: wtf doesn't this work? obviously the axial node planes aren't always facing positive!!!
 			//check for axial planes
 			case PLANE_X:
 			{
@@ -634,7 +634,7 @@ aas_trace_t AAS_TraceClientBBox(vec3_t start, vec3_t end, int presencetype,
 			} //end default
 		} //end switch
 		// bk010221 - old location of FPE hack and divide by zero expression
-		//if the whole to be traced line is totally at the front of This node
+		//if the whole to be traced line is totally at the front of this node
 		//only go down the tree with the front child
 		if ((front >= -ON_EPSILON && back >= -ON_EPSILON))
 		{
@@ -648,7 +648,7 @@ aas_trace_t AAS_TraceClientBBox(vec3_t start, vec3_t end, int presencetype,
 				return trace;
 			} //end if
 		} //end if
-		//if the whole to be traced line is totally at the back of This node
+		//if the whole to be traced line is totally at the back of this node
 		//only go down the tree with the back child
 		else if ((front < ON_EPSILON && back < ON_EPSILON))
 		{
@@ -666,7 +666,7 @@ aas_trace_t AAS_TraceClientBBox(vec3_t start, vec3_t end, int presencetype,
 		else
 		{
 			tmpplanenum = tstack_p->planenum;
-			// bk010221 - New location of divide by zero (see above)
+			// bk010221 - new location of divide by zero (see above)
 			if ( front == back ) front -= 0.001f; // bk0101022 - hack/FPE 
                 	//calculate the hitpoint with the node (split point of the line)
 			//put the crosspoint TRACEPLANE_EPSILON pixels on the near side
@@ -797,7 +797,7 @@ int AAS_TraceAreas(vec3_t start, vec3_t end, int *areas, vec3_t *points, int max
 		plane = &aasworld.planes[aasnode->planenum];
 
 		switch(plane->type)
-		{/*FIXME: wtf doesn't This work? obviously the node planes aren't always facing positive!!!
+		{/*FIXME: wtf doesn't this work? obviously the node planes aren't always facing positive!!!
 			//check for axial planes
 			case PLANE_X:
 			{
@@ -825,7 +825,7 @@ int AAS_TraceAreas(vec3_t start, vec3_t end, int *areas, vec3_t *points, int max
 			} //end default
 		} //end switch
 
-		//if the whole to be traced line is totally at the front of This node
+		//if the whole to be traced line is totally at the front of this node
 		//only go down the tree with the front child
 		if (front > 0 && back > 0)
 		{
@@ -839,7 +839,7 @@ int AAS_TraceAreas(vec3_t start, vec3_t end, int *areas, vec3_t *points, int max
 				return numareas;
 			} //end if
 		} //end if
-		//if the whole to be traced line is totally at the back of This node
+		//if the whole to be traced line is totally at the back of this node
 		//only go down the tree with the back child
 		else if (front <= 0 && back <= 0)
 		{
@@ -955,12 +955,12 @@ qboolean AAS_InsideFace(aas_face_t *face, vec3_t pnormal, vec3_t point, float ep
 		VectorSubtract(point, v0, pointvec);
 		//get a vector pointing inside the face orthogonal to both the
 		//edge vector and the normal vector of the plane the face is in
-		//This vector defines a plane through the origin (first vertex of
+		//this vector defines a plane through the origin (first vertex of
 		//edge) and through both the edge vector and the normal vector
 		//of the plane
 		AAS_OrthogonalToVectors(edgevec, pnormal, sepnormal);
 		//check on wich side of the above plane the point is
-		//This is done by checking the sign of the dot product of the
+		//this is done by checking the sign of the dot product of the
 		//vector orthogonal vector from above and the vector from the
 		//origin (first vertex of edge) to the point 
 		//if the dotproduct is smaller than zero the point is outside the face
@@ -1029,7 +1029,7 @@ aas_face_t *AAS_AreaGroundFace(int areanum, vec3_t point)
 	{
 		facenum = aasworld.faceindex[area->firstface + i];
 		face = &aasworld.faces[abs(facenum)];
-		//if This is a ground face
+		//if this is a ground face
 		if (face->faceflags & FACE_GROUND)
 		{
 			//get the up or down normal
@@ -1182,7 +1182,7 @@ int AAS_BoxOnPlaneSide2(vec3_t absmins, vec3_t absmaxs, aas_plane_t *p)
 	)\
 ) //end of the function AAS_BoxOnPlaneSide
 //===========================================================================
-// remove the links to This entity from all areas
+// remove the links to this entity from all areas
 //
 // Parameter:				-
 // Returns:					-
@@ -1196,7 +1196,7 @@ void AAS_UnlinkFromAreas(aas_link_t *areas)
 	{
 		//next area the entity is linked in
 		nextlink = link->next_area;
-		//remove the entity from the linked list of This area
+		//remove the entity from the linked list of this area
 		if (link->prev_ent) link->prev_ent->next_ent = link->next_ent;
 		else aasworld.arealinkedentities[link->areanum] = link->next_ent;
 		if (link->next_ent) link->next_ent->prev_ent = link->prev_ent;
@@ -1254,7 +1254,7 @@ aas_link_t *AAS_AASLinkEntity(vec3_t absmins, vec3_t absmaxs, int entnum)
 		//if it is an area
 		if (nodenum < 0)
 		{
-			//NOTE: the entity might have already been linked into This area
+			//NOTE: the entity might have already been linked into this area
 			// because several node children can point to the same area
 			for (link = aasworld.arealinkedentities[-nodenum]; link; link = link->next_ent)
 			{
@@ -1322,13 +1322,13 @@ aas_link_t *AAS_AASLinkEntity(vec3_t absmins, vec3_t absmaxs, int entnum)
 aas_link_t *AAS_LinkEntityClientBBox(vec3_t absmins, vec3_t absmaxs, int entnum, int presencetype)
 {
 	vec3_t mins, maxs;
-	vec3_t Newabsmins, Newabsmaxs;
+	vec3_t newabsmins, newabsmaxs;
 
 	AAS_PresenceTypeBoundingBox(presencetype, mins, maxs);
-	VectorSubtract(absmins, maxs, Newabsmins);
-	VectorSubtract(absmaxs, mins, Newabsmaxs);
+	VectorSubtract(absmins, maxs, newabsmins);
+	VectorSubtract(absmaxs, mins, newabsmaxs);
 	//relink the entity
-	return AAS_AASLinkEntity(Newabsmins, Newabsmaxs, entnum);
+	return AAS_AASLinkEntity(newabsmins, newabsmaxs, entnum);
 } //end of the function AAS_LinkEntityClientBBox
 //===========================================================================
 //

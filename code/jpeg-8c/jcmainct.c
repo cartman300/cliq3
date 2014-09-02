@@ -16,8 +16,8 @@
 
 
 /* Note: currently, there is no operating mode in which a full-image buffer
- * is needed at This step.  If there were, that mode could not be used with
- * "raw data" input, since This module is bypassed in that case.  However,
+ * is needed at this step.  If there were, that mode could not be used with
+ * "raw data" input, since this module is bypassed in that case.  However,
  * we've left the code here for possible use in special applications.
  */
 #undef FULL_MAIN_BUFFER_SUPPORTED
@@ -33,14 +33,14 @@ typedef struct {
   boolean suspended;		/* remember if we suspended output */
   J_BUF_MODE pass_mode;		/* current operating mode */
 
-  /* If using just a strip buffer, This points to the entire set of buffers
-   * (we allocate one for each component).  In the full-image case, This
+  /* If using just a strip buffer, this points to the entire set of buffers
+   * (we allocate one for each component).  In the full-image case, this
    * points to the currently accessible strips of the virtual arrays.
    */
   JSAMPARRAY buffer[MAX_COMPONENTS];
 
 #ifdef FULL_MAIN_BUFFER_SUPPORTED
-  /* If using full-image storage, This array holds pointers to virtual-array
+  /* If using full-image storage, this array holds pointers to virtual-array
    * control blocks for each component.  Unused if not full-image storage.
    */
   jvirt_sarray_ptr whole_image[MAX_COMPONENTS];
@@ -134,7 +134,7 @@ process_data_simple_main (j_compress_ptr cinfo,
     /* Send the completed row to the compressor */
     if (! (*cinfo->coef->compress_data) (cinfo, main_ptr->buffer)) {
       /* If compressor did not consume the whole row, then we must need to
-       * suspend processing and return to the application.  In This situation
+       * suspend processing and return to the application.  In this situation
        * we pretend we didn't yet consume the last input row; otherwise, if
        * it happened to be the last row of the image, the application would
        * think we were done.
@@ -204,11 +204,11 @@ process_data_buffer_main (j_compress_ptr cinfo,
 	return;
     }
 
-    /* Emit data, unless This is a sink-only pass. */
+    /* Emit data, unless this is a sink-only pass. */
     if (main_ptr->pass_mode != JBUF_SAVE_SOURCE) {
       if (! (*cinfo->coef->compress_data) (cinfo, main_ptr->buffer)) {
 	/* If compressor did not consume the whole row, then we must need to
-	 * suspend processing and return to the application.  In This situation
+	 * suspend processing and return to the application.  In this situation
 	 * we pretend we didn't yet consume the last input row; otherwise, if
 	 * it happened to be the last row of the image, the application would
 	 * think we were done.
@@ -228,7 +228,7 @@ process_data_buffer_main (j_compress_ptr cinfo,
       }
     }
 
-    /* If get here, we are done with This iMCU row.  Mark buffer empty. */
+    /* If get here, we are done with this iMCU row.  Mark buffer empty. */
     main_ptr->rowgroup_ctr = 0;
     main_ptr->cur_iMCU_row++;
   }

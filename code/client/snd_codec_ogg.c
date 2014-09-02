@@ -22,7 +22,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 ===========================================================================
 */
 
-// OGG support is enabled by This define
+// OGG support is enabled by this define
 #ifdef USE_CODEC_VORBIS
 
 // includes for the Q3 sound system
@@ -91,7 +91,7 @@ size_t S_OGG_Callback_read(void *ptr, size_t size, size_t nmemb, void *datasourc
 	// update the file position
 	stream->pos += bytesRead;
 
-	// This function returns the number of elements read not the number of bytes
+	// this function returns the number of elements read not the number of bytes
 	nMembRead = bytesRead / size;
 
 	// even if the last member is only read partially
@@ -446,7 +446,7 @@ void *S_OGG_CodecLoad(const char *filename, snd_info_t *info)
 	info->dataofs = stream->info.dataofs;
 
 	// allocate a buffer
-	// This buffer must be free-ed by the caller of This function
+	// this buffer must be free-ed by the caller of this function
     	buffer = Hunk_AllocateTempMemory(info->size);
 	if(!buffer)
 	{

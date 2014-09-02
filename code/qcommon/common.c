@@ -151,7 +151,7 @@ void Com_EndRedirect (void)
 =============
 Com_Printf
 
-Both client and server can use This, and it will output
+Both client and server can use this, and it will output
 to the apropriate place.
 
 A raw string should NEVER be passed as fmt, because of "%f" type crashers.
@@ -173,7 +173,7 @@ void QDECL Com_Printf( const char *fmt, ... ) {
 			*rd_buffer = 0;
 		}
 		Q_strcat(rd_buffer, rd_buffersize, msg);
-	// TTimo nooo .. that would defeat the purpose
+    // TTimo nooo .. that would defeat the purpose
 		//rd_flush(rd_buffer);			
 		//*rd_buffer = 0;
 		return;
@@ -188,22 +188,22 @@ void QDECL Com_Printf( const char *fmt, ... ) {
 
 	// logfile
 	if ( com_logfile && com_logfile->integer ) {
-	// TTimo: only open the qconsole.log if the filesystem is in an initialized state
-	//   also, avoid recursing in the qconsole.log opening (i.e. if fs_debug is on)
+    // TTimo: only open the qconsole.log if the filesystem is in an initialized state
+    //   also, avoid recursing in the qconsole.log opening (i.e. if fs_debug is on)
 		if ( !logfile && FS_Initialized() && !opening_qconsole) {
-			struct tm *Newtime;
+			struct tm *newtime;
 			time_t aclock;
 
-	  opening_qconsole = qtrue;
+      opening_qconsole = qtrue;
 
 			time( &aclock );
-			Newtime = localtime( &aclock );
+			newtime = localtime( &aclock );
 
 			logfile = FS_FOpenFileWrite( "qconsole.log" );
 			
 			if(logfile)
 			{
-				Com_Printf( "logfile opened on %s\n", asctime( Newtime ) );
+				Com_Printf( "logfile opened on %s\n", asctime( newtime ) );
 			
 				if ( com_logfile->integer > 1 )
 				{
@@ -218,7 +218,7 @@ void QDECL Com_Printf( const char *fmt, ... ) {
 				Cvar_SetValue("logfile", 0);
 			}
 
-	  opening_qconsole = qfalse;
+      opening_qconsole = qfalse;
 		}
 		if ( logfile && FS_Initialized()) {
 			FS_Write(msg, strlen(msg), logfile);
@@ -253,7 +253,7 @@ void QDECL Com_DPrintf( const char *fmt, ...) {
 =============
 Com_Error
 
-Both client and server can use This, and it will
+Both client and server can use this, and it will
 do the appropriate thing.
 =============
 */
@@ -348,7 +348,7 @@ void QDECL Com_Error( int code, const char *fmt, ... ) {
 =============
 Com_Quit_f
 
-Both client and server can use This, and it will
+Both client and server can use this, and it will
 do the apropriate things.
 =============
 */
@@ -358,7 +358,7 @@ void Com_Quit_f( void ) {
 	if ( !com_errorEntered ) {
 		// Some VMs might execute "quit" command directly,
 		// which would trigger an unload of active VM error.
-		// Sys_Quit will kill This process anyways, so
+		// Sys_Quit will kill this process anyways, so
 		// a corrupt call stack makes no difference
 		VM_Forced_Unload_Start();
 		SV_Shutdown(p[0] ? p : "Server quit");
@@ -401,26 +401,26 @@ Break it up into multiple console lines
 ==================
 */
 void Com_ParseCommandLine( char *commandLine ) {
-	int inq = 0;
-	com_consoleLines[0] = commandLine;
-	com_numConsoleLines = 1;
+    int inq = 0;
+    com_consoleLines[0] = commandLine;
+    com_numConsoleLines = 1;
 
-	while ( *commandLine ) {
-		if (*commandLine == '"') {
-			inq = !inq;
-		}
-		// look for a + seperating character
-		// if commandLine came from a file, we might have real line seperators
-		if ( (*commandLine == '+' && !inq) || *commandLine == '\n'  || *commandLine == '\r' ) {
-			if ( com_numConsoleLines == MAX_CONSOLE_LINES ) {
-				return;
-			}
-			com_consoleLines[com_numConsoleLines] = commandLine + 1;
-			com_numConsoleLines++;
-			*commandLine = 0;
-		}
-		commandLine++;
-	}
+    while ( *commandLine ) {
+        if (*commandLine == '"') {
+            inq = !inq;
+        }
+        // look for a + seperating character
+        // if commandLine came from a file, we might have real line seperators
+        if ( (*commandLine == '+' && !inq) || *commandLine == '\n'  || *commandLine == '\r' ) {
+            if ( com_numConsoleLines == MAX_CONSOLE_LINES ) {
+                return;
+            }
+            com_consoleLines[com_numConsoleLines] = commandLine + 1;
+            com_numConsoleLines++;
+            *commandLine = 0;
+        }
+        commandLine++;
+    }
 }
 
 
@@ -678,28 +678,28 @@ Com_FilterPath
 int Com_FilterPath(char *filter, char *name, int casesensitive)
 {
 	int i;
-	char New_filter[MAX_QPATH];
-	char New_name[MAX_QPATH];
+	char new_filter[MAX_QPATH];
+	char new_name[MAX_QPATH];
 
 	for (i = 0; i < MAX_QPATH-1 && filter[i]; i++) {
 		if ( filter[i] == '\\' || filter[i] == ':' ) {
-			New_filter[i] = '/';
+			new_filter[i] = '/';
 		}
 		else {
-			New_filter[i] = filter[i];
+			new_filter[i] = filter[i];
 		}
 	}
-	New_filter[i] = '\0';
+	new_filter[i] = '\0';
 	for (i = 0; i < MAX_QPATH-1 && name[i]; i++) {
 		if ( name[i] == '\\' || name[i] == ':' ) {
-			New_name[i] = '/';
+			new_name[i] = '/';
 		}
 		else {
-			New_name[i] = name[i];
+			new_name[i] = name[i];
 		}
 	}
-	New_name[i] = '\0';
-	return Com_Filter(New_filter, New_name, casesensitive);
+	new_name[i] = '\0';
+	return Com_Filter(new_filter, new_name, casesensitive);
 }
 
 /*
@@ -933,7 +933,7 @@ void *Z_TagMallocDebug( int size, int tag, char *label, char *file, int line ) {
 void *Z_TagMalloc( int size, int tag ) {
 #endif
 	int		extra;
-	memblock_t	*start, *rover, *New, *base;
+	memblock_t	*start, *rover, *new, *base;
 	memzone_t *zone;
 
 	if (!tag) {
@@ -988,14 +988,14 @@ void *Z_TagMalloc( int size, int tag ) {
 	extra = base->size - size;
 	if (extra > MINFRAGMENT) {
 		// there will be a free fragment after the allocated block
-		New = (memblock_t *) ((byte *)base + size );
-		New->size = extra;
-		New->tag = 0;			// free block
-		New->prev = base;
-		New->id = ZONEID;
-		New->next = base->next;
-		New->next->prev = New;
-		base->next = New;
+		new = (memblock_t *) ((byte *)base + size );
+		new->size = extra;
+		new->tag = 0;			// free block
+		new->prev = base;
+		new->id = ZONEID;
+		new->next = base->next;
+		new->next->prev = new;
+		base->next = new;
 		base->size = size;
 	}
 	
@@ -1182,7 +1182,7 @@ char *CopyString( const char *in ) {
 			return ((char *)&numberstring[in[0]-'0']) + sizeof(memblock_t);
 		}
 	}
-	out = (char*)S_Malloc (strlen(in)+1);
+	out = S_Malloc (strlen(in)+1);
 	strcpy (out, in);
 	return out;
 }
@@ -1214,7 +1214,7 @@ Goals:
   If we have any in-use temp memory, additional temp allocations must come from
   that side.
 
-  If not, we can choose to make either side the New temp side and push future
+  If not, we can choose to make either side the new temp side and push future
   permanent allocations to the other side.  Permanent allocations should be
   kept on the side that has the current greatest wasted highwater mark.
 
@@ -1406,7 +1406,7 @@ Com_InitZoneMemory
 */
 void Com_InitSmallZoneMemory( void ) {
 	s_smallZoneTotal = 512 * 1024;
-	smallzone = (memzone_t*)calloc( s_smallZoneTotal, 1 );
+	smallzone = calloc( s_smallZoneTotal, 1 );
 	if ( !smallzone ) {
 		Com_Error( ERR_FATAL, "Small zone data failed to allocate %1.1f megs", (float)s_smallZoneTotal / (1024*1024) );
 	}
@@ -1418,7 +1418,7 @@ void Com_InitZoneMemory( void ) {
 
 	// Please note: com_zoneMegs can only be set on the command line, and
 	// not in q3config.cfg or Com_StartupVariable, as they haven't been
-	// executed by This point. It's a chicken and egg problem. We need the
+	// executed by this point. It's a chicken and egg problem. We need the
 	// memory manager configured to handle those places where you would
 	// configure the memory manager.
 
@@ -1431,7 +1431,7 @@ void Com_InitZoneMemory( void ) {
 		s_zoneTotal = cv->integer * 1024 * 1024;
 	}
 
-	mainzone = (memzone_t*)calloc( s_zoneTotal, 1 );
+	mainzone = calloc( s_zoneTotal, 1 );
 	if ( !mainzone ) {
 		Com_Error( ERR_FATAL, "Zone data failed to allocate %i megs", s_zoneTotal / (1024*1024) );
 	}
@@ -1528,7 +1528,7 @@ void Com_InitHunkMemory( void ) {
 	char *pMsg = NULL;
 
 	// make sure the file system has allocated and "not" freed any temp blocks
-	// This allows the config and product id files ( journal files too ) to be loaded
+	// this allows the config and product id files ( journal files too ) to be loaded
 	// by the file system without redunant routines in the file system utilizing different 
 	// memory systems
 	if (FS_LoadStack() != 0) {
@@ -1550,12 +1550,12 @@ void Com_InitHunkMemory( void ) {
 
 	if ( cv->integer < nMinAlloc ) {
 		s_hunkTotal = 1024 * 1024 * nMinAlloc;
-		Com_Printf(pMsg, nMinAlloc, s_hunkTotal / (1024 * 1024));
+	    Com_Printf(pMsg, nMinAlloc, s_hunkTotal / (1024 * 1024));
 	} else {
 		s_hunkTotal = cv->integer * 1024 * 1024;
 	}
 
-	s_hunkData = (byte*)calloc( s_hunkTotal + 31, 1 );
+	s_hunkData = calloc( s_hunkTotal + 31, 1 );
 	if ( !s_hunkData ) {
 		Com_Error( ERR_FATAL, "Hunk data failed to allocate %i megs", s_hunkTotal / (1024*1024) );
 	}
@@ -1591,7 +1591,7 @@ int	Hunk_MemoryRemaining( void ) {
 ===================
 Hunk_SetMark
 
-The server calls This after the level and game VM have been loaded
+The server calls this after the level and game VM have been loaded
 ===================
 */
 void Hunk_SetMark( void ) {
@@ -1603,7 +1603,7 @@ void Hunk_SetMark( void ) {
 =================
 Hunk_ClearToMark
 
-The client calls This before starting a vid_restart or snd_restart
+The client calls this before starting a vid_restart or snd_restart
 =================
 */
 void Hunk_ClearToMark( void ) {
@@ -1631,7 +1631,7 @@ void SV_ShutdownGameProgs( void );
 =================
 Hunk_Clear
 
-The server calls This before shutting down or loading a New map
+The server calls this before shutting down or loading a new map
 =================
 */
 void Hunk_Clear( void ) {
@@ -1672,7 +1672,7 @@ static void Hunk_SwapBanks( void ) {
 		return;
 	}
 
-	// if we have a larger highwater mark on This side, start making
+	// if we have a larger highwater mark on this side, start making
 	// our permanent allocations here and use the other side for temp
 	if ( hunk_temp->tempHighwater - hunk_temp->permanent >
 		hunk_permanent->tempHighwater - hunk_permanent->permanent ) {
@@ -1773,7 +1773,7 @@ void *Hunk_AllocateTempMemory( int size ) {
 	hunkHeader_t	*hdr;
 
 	// return a Z_Malloc'd block if the hunk has not been initialized
-	// This allows the config and product id files ( journal files too ) to be loaded
+	// this allows the config and product id files ( journal files too ) to be loaded
 	// by the file system without redunant routines in the file system utilizing different 
 	// memory systems
 	if ( s_hunkData == NULL )
@@ -1821,7 +1821,7 @@ void Hunk_FreeTempMemory( void *buf ) {
 	hunkHeader_t	*hdr;
 
 	  // free with Z_Free if the hunk has not been initialized
-	  // This allows the config and product id files ( journal files too ) to be loaded
+	  // this allows the config and product id files ( journal files too ) to be loaded
 	  // by the file system without redunant routines in the file system utilizing different 
 	  // memory systems
 	if ( s_hunkData == NULL )
@@ -1838,7 +1838,7 @@ void Hunk_FreeTempMemory( void *buf ) {
 
 	hdr->magic = HUNK_FREE_MAGIC;
 
-	// This only works if the files are freed in stack order,
+	// this only works if the files are freed in stack order,
 	// otherwise the memory will stay around until Hunk_ClearTempMemory
 	if ( hunk_temp == &hunk_low ) {
 		if ( hdr == (void *)(s_hunkData + hunk_temp->temp - hdr->size ) ) {
@@ -1861,8 +1861,8 @@ void Hunk_FreeTempMemory( void *buf ) {
 Hunk_ClearTempMemory
 
 The temp space is no longer needed.  If we have left more
-touched but unused memory on This side, have future
-permanent allocs use This side.
+touched but unused memory on this side, have future
+permanent allocs use this side.
 =================
 */
 void Hunk_ClearTempMemory( void ) {
@@ -1998,7 +1998,7 @@ sysEvent_t Com_GetSystemEvent( void )
 		int   len;
 
 		len = strlen( s ) + 1;
-		b = (char*)Z_Malloc( len );
+		b = Z_Malloc( len );
 		strcpy( b, s );
 		Com_QueueEvent( 0, SE_CONSOLE, 0, 0, len, b );
 	}
@@ -2068,7 +2068,7 @@ Com_InitPushEvent
 */
 void Com_InitPushEvent( void ) {
   // clear the static buffer array
-  // This requires SE_NONE to be accepted as a valid but NOP event
+  // this requires SE_NONE to be accepted as a valid but NOP event
   memset( com_pushedEvents, 0, sizeof(com_pushedEvents) );
   // reset counters while we are at it
   // beware: GetEvent might still return an SE_NONE from the buffer
@@ -2320,7 +2320,7 @@ void Com_Setenv_f(void)
 			Com_Printf("%s=%s\n", arg1, env);
 		else
 			Com_Printf("%s undefined\n", arg1);
-		}
+        }
 }
 
 /*
@@ -2350,7 +2350,7 @@ void Com_ExecuteCfg(void)
 ==================
 Com_GameRestart
 
-Change to a New mod properly with cleaning up cvars before switching.
+Change to a new mod properly with cleaning up cvars before switching.
 ==================
 */
 
@@ -2386,7 +2386,7 @@ void Com_GameRestart(int checksumFeed, qboolean disconnect)
 		{
 			// We don't want to change any network settings if gamedir
 			// change was triggered by a connect to server because the
-			// New network settings might make the connection fail.
+			// new network settings might make the connection fail.
 			NET_Restart_f();
 		}
 
@@ -2413,7 +2413,7 @@ void Com_GameRestart_f(void)
 	if(!FS_FilenameCompare(Cmd_Argv(1), com_basegame->string))
 	{
 		// This is the standard base game. Servers and clients should
-		// use "" and not the standard basegame name because This messes
+		// use "" and not the standard basegame name because this messes
 		// up pak file negotiation and lots of other stuff
 		
 		Cvar_Set("fs_game", "");
@@ -2532,8 +2532,8 @@ static void Com_WriteCDKey( const char *filename, const char *ikey ) {
 	FS_Write( key, 16, f );
 
 	FS_Printf( f, "\n// generated by quake, do not modify\r\n" );
-	FS_Printf( f, "// Do not give This file to ANYONE.\r\n" );
-	FS_Printf( f, "// id Software and Activision will NOT ask you to send This file to them.\r\n");
+	FS_Printf( f, "// Do not give this file to ANYONE.\r\n" );
+	FS_Printf( f, "// id Software and Activision will NOT ask you to send this file to them.\r\n");
 
 	FS_FCloseFile( f );
 out:
@@ -2600,7 +2600,7 @@ static void Com_DetectSSE(void)
 		Q_VMftol = qvmftolx87;
 		Q_SnapVector = qsnapvectorx87;
 
-		Com_Printf("No SSE support on This machine\n");
+		Com_Printf("No SSE support on this machine\n");
 	}
 #endif
 }
@@ -2648,7 +2648,7 @@ void Com_Init( char *commandLine ) {
 	// initialize the weak pseudo-random number generator for use later.
 	Com_InitRand();
 
-	// do This before anything else decides to push events
+	// do this before anything else decides to push events
 	Com_InitPushEvent();
 
 	Com_InitSmallZoneMemory();
@@ -2716,7 +2716,7 @@ void Com_Init( char *commandLine ) {
 	// allocate the stack based hunk allocator
 	Com_InitHunkMemory();
 
-	// if any archived cvars are modified after This, we will trigger a writing
+	// if any archived cvars are modified after this, we will trigger a writing
 	// of the config file
 	cvar_modifiedFlags &= ~CVAR_ARCHIVE;
 
@@ -3153,7 +3153,7 @@ void Com_Frame( void ) {
 
 	// if "dedicated" has been modified, start up
 	// or shut down the client system.
-	// Do This after the server may have started,
+	// Do this after the server may have started,
 	// but before the client tries to auto-connect
 	if ( com_dedicated->modified ) {
 		// get the latched value

@@ -48,7 +48,7 @@ typedef my_color_deconverter * my_cconvert_ptr;
  *
  * For even more speed, we avoid doing any multiplications in the inner loop
  * by precalculating the constants times Cb and Cr for all possible values.
- * For 8-bit JSAMPLEs This is very reasonable (only 256 entries per table);
+ * For 8-bit JSAMPLEs this is very reasonable (only 256 entries per table);
  * for 12-bit samples it is still acceptable.  It's not very reasonable for
  * 16-bit samples, but if you want lossless storage you shouldn't be changing
  * colorspace anyway.

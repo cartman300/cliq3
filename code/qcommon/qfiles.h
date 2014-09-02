@@ -188,11 +188,11 @@ MDR file format
  * playermodels in .mdr files, in some games, which are pretty much like the md4
  * format implemented by ID soft. It seems like ID's original md4 stuff is not used at all.
  * MDR is being used in EliteForce, JediKnight2 and Soldiers of Fortune2 (I think).
- * So This comes in handy for anyone who wants to make it possible to load player
+ * So this comes in handy for anyone who wants to make it possible to load player
  * models from these games.
  * This format has bone tags, which is similar to the thing you have in md3 I suppose.
  * Raven has released their version of md3view under GPL enabling me to add support
- * to This codebase. Thanks to Steven Howes aka Skinner for helping with example
+ * to this codebase. Thanks to Steven Howes aka Skinner for helping with example
  * source code.
  *
  * - Thilo Schulz (arny@ats.s.bawue.de)
@@ -226,7 +226,7 @@ typedef struct {
 	char		shader[MAX_QPATH];
 	int			shaderIndex;	// for in-game use
 
-	int			ofsHeader;	// This will be a negative number
+	int			ofsHeader;	// this will be a negative number
 
 	int			numVerts;
 	int			ofsVerts;
@@ -235,7 +235,7 @@ typedef struct {
 	int			ofsTriangles;
 
 	// Bone references are a set of ints representing all the bones
-	// present in any vertex weights for This surface.  This is
+	// present in any vertex weights for this surface.  This is
 	// needed because a model may have surfaces that need to be
 	// drawn at different sort times, and we don't want to have
 	// to re-interpolate all the bones for each surface.
@@ -250,7 +250,7 @@ typedef struct {
 } mdrBone_t;
 
 typedef struct {
-	vec3_t		bounds[2];		// bounds of all surfaces of all LOD's for This frame
+	vec3_t		bounds[2];		// bounds of all surfaces of all LOD's for this frame
 	vec3_t		localOrigin;		// midpoint of bounds, used for sphere cull
 	float		radius;			// dist from localOrigin to corner
 	char		name[16];
@@ -262,7 +262,7 @@ typedef struct {
 } mdrCompBone_t;
 
 typedef struct {
-        vec3_t          bounds[2];		// bounds of all surfaces of all LOD's for This frame
+        vec3_t          bounds[2];		// bounds of all surfaces of all LOD's for this frame
         vec3_t          localOrigin;		// midpoint of bounds, used for sphere cull
         float           radius;			// dist from localOrigin to corner
         mdrCompBone_t   bones[1];		// [numBones]

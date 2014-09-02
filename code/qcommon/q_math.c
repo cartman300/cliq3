@@ -24,7 +24,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 // Some of the vector functions are static inline in q_shared.h. q3asm
 // doesn't understand static functions though, so we only want them in
-// one file. That's what This is about.
+// one file. That's what this is about.
 #ifdef Q3_VM
 #define __Q3_VM_MATH
 #endif
@@ -183,7 +183,7 @@ signed short ClampShort( int i ) {
 }
 
 
-// This isn't a real cheap function to call!
+// this isn't a real cheap function to call!
 int DirToByte( vec3_t dir ) {
 	int		i, best;
 	float	d, bestd;
@@ -473,7 +473,7 @@ other perpendicular vectors
 void MakeNormalVectors( const vec3_t forward, vec3_t right, vec3_t up) {
 	float		d;
 
-	// This rotate and negate guarantees a vector
+	// this rotate and negate guarantees a vector
 	// not colinear with the original
 	right[1] = -forward[0];
 	right[2] = forward[1];
@@ -510,7 +510,7 @@ float Q_rsqrt( float number )
 	t.i  = 0x5f3759df - ( t.i >> 1 );               // what the fuck?
 	y  = t.f;
 	y  = y * ( threehalfs - ( x2 * y * y ) );   // 1st iteration
-//	y  = y * ( threehalfs - ( x2 * y * y ) );   // 2nd iteration, This can be removed
+//	y  = y * ( threehalfs - ( x2 * y * y ) );   // 2nd iteration, this can be removed
 
 	return y;
 }
@@ -789,7 +789,7 @@ vec_t VectorNormalize( vec3_t v ) {
 	length = v[0]*v[0] + v[1]*v[1] + v[2]*v[2];
 
 	if ( length ) {
-		/* writing it This way allows gcc to recognize that rsqrt can be used */
+		/* writing it this way allows gcc to recognize that rsqrt can be used */
 		ilength = 1/(float)sqrt (length);
 		/* sqrt(length) = length * (1 / sqrt(length)) */
 		length *= ilength;
@@ -808,7 +808,7 @@ vec_t VectorNormalize2( const vec3_t v, vec3_t out) {
 
 	if (length)
 	{
-		/* writing it This way allows gcc to recognize that rsqrt can be used */
+		/* writing it this way allows gcc to recognize that rsqrt can be used */
 		ilength = 1/(float)sqrt (length);
 		/* sqrt(length) = length * (1 / sqrt(length)) */
 		length *= ilength;
@@ -998,7 +998,7 @@ void PerpendicularVector( vec3_t dst, const vec3_t src )
 ================
 Q_isnan
 
-Don't pass doubles to This
+Don't pass doubles to this
 ================
 */
 int Q_isnan( float x )

@@ -18,7 +18,7 @@
  * These routines are used by both the compression and decompression code.
  */
 
-/* This is not a core library module, so it doesn't define JPEG_INTERNALS */
+/* this is not a core library module, so it doesn't define JPEG_INTERNALS */
 #include "jinclude.h"
 #include "jpeglib.h"
 #include "jversion.h"
@@ -37,7 +37,7 @@
 
 /*
  * Create the message string table.
- * We do This from the master message list in jerror.h by re-reading
+ * We do this from the master message list in jerror.h by re-reading
  * jerror.h with a suitable definition for macro JMESSAGE.
  * The message table is made an external symbol just in case any applications
  * want to refer to it directly.
@@ -58,7 +58,7 @@ const char * const jpeg_std_message_table[] = {
 /*
  * Error exit handler: must not return to caller.
  *
- * Applications may override This if they want to get control back after
+ * Applications may override this if they want to get control back after
  * an error.  Typically one would longjmp somewhere instead of exiting.
  * The setjmp buffer can be made a private field within an expanded error
  * handler object.  Note that the info needed to generate an error message
@@ -83,17 +83,17 @@ error_exit (j_common_ptr cinfo)
 
 /*
  * Actual output of an error or trace message.
- * Applications may override This method to send JPEG messages somewhere
+ * Applications may override this method to send JPEG messages somewhere
  * other than stderr.
  *
  * On Windows, printing to stderr is generally completely useless,
  * so we provide optional code to produce an error-dialog popup.
- * Most Windows applications will still prefer to override This routine,
+ * Most Windows applications will still prefer to override this routine,
  * but if they don't, it'll do something at least marginally useful.
  *
  * NOTE: to use the library in an environment that doesn't support the
  * C stdio library, you may have to delete the call to fprintf() entirely,
- * not just not use This routine.
+ * not just not use this routine.
  */
 
 METHODDEF(void)
@@ -109,7 +109,7 @@ output_message (j_common_ptr cinfo)
   MessageBox(GetActiveWindow(), buffer, "JPEG Library Error",
 	     MB_OK | MB_ICONERROR);
 #else
-  /* Send it to stderr, adding a Newline */
+  /* Send it to stderr, adding a newline */
   fprintf(stderr, "%s\n", buffer);
 #endif
 }
@@ -122,7 +122,7 @@ output_message (j_common_ptr cinfo)
  *    0: important advisory messages (always display to user).
  *    1: first level of tracing detail.
  *    2,3,...: successively more detailed tracing messages.
- * An application might override This method if it wanted to abort on warnings
+ * An application might override this method if it wanted to abort on warnings
  * or change the policy about which messages to display.
  */
 
@@ -152,7 +152,7 @@ emit_message (j_common_ptr cinfo, int msg_level)
  * Format a message string for the most recent JPEG error or message.
  * The message is stored into buffer, which should be at least JMSG_LENGTH_MAX
  * characters.  Note that no '\n' character is added to the string.
- * Few applications should need to override This method.
+ * Few applications should need to override this method.
  */
 
 METHODDEF(void)
@@ -203,11 +203,11 @@ format_message (j_common_ptr cinfo, char * buffer)
 
 
 /*
- * Reset error state variables at start of a New image.
+ * Reset error state variables at start of a new image.
  * This is called during compression startup to reset trace/error
  * processing to default state, without losing any application-specific
  * method pointers.  An application might possibly want to override
- * This method if it has additional error processing state.
+ * this method if it has additional error processing state.
  */
 
 METHODDEF(void)

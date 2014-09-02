@@ -112,7 +112,7 @@ PlayerModel_UpdateGrid
 static void PlayerModel_UpdateGrid( void )
 {
 	int	i;
-	int	j;
+    int	j;
 
 	j = s_playermodel.modelpage * MAX_MODELSPERPAGE;
 	for (i=0; i<PLAYERGRID_ROWS*PLAYERGRID_COLS; i++,j++)
@@ -120,19 +120,19 @@ static void PlayerModel_UpdateGrid( void )
 		if (j < s_playermodel.nummodels)
 		{ 
 			// model/skin portrait
-			s_playermodel.pics[i].Generic.name         = s_playermodel.modelnames[j];
-			s_playermodel.picbuttons[i].Generic.flags &= ~QMF_INACTIVE;
+ 			s_playermodel.pics[i].generic.name         = s_playermodel.modelnames[j];
+			s_playermodel.picbuttons[i].generic.flags &= ~QMF_INACTIVE;
 		}
 		else
 		{
 			// dead slot
-			s_playermodel.pics[i].Generic.name         = NULL;
-			s_playermodel.picbuttons[i].Generic.flags |= QMF_INACTIVE;
+ 			s_playermodel.pics[i].generic.name         = NULL;
+			s_playermodel.picbuttons[i].generic.flags |= QMF_INACTIVE;
 		}
 
-		s_playermodel.pics[i].Generic.flags       &= ~QMF_HIGHLIGHT;
-		s_playermodel.pics[i].shader               = 0;
-		s_playermodel.picbuttons[i].Generic.flags |= QMF_PULSEIFFOCUS;
+ 		s_playermodel.pics[i].generic.flags       &= ~QMF_HIGHLIGHT;
+ 		s_playermodel.pics[i].shader               = 0;
+ 		s_playermodel.picbuttons[i].generic.flags |= QMF_PULSEIFFOCUS;
 	}
 
 	if (s_playermodel.selectedmodel/MAX_MODELSPERPAGE == s_playermodel.modelpage)
@@ -140,27 +140,27 @@ static void PlayerModel_UpdateGrid( void )
 		// set selected model
 		i = s_playermodel.selectedmodel % MAX_MODELSPERPAGE;
 
-		s_playermodel.pics[i].Generic.flags       |= QMF_HIGHLIGHT;
-		s_playermodel.picbuttons[i].Generic.flags &= ~QMF_PULSEIFFOCUS;
+		s_playermodel.pics[i].generic.flags       |= QMF_HIGHLIGHT;
+		s_playermodel.picbuttons[i].generic.flags &= ~QMF_PULSEIFFOCUS;
 	}
 
 	if (s_playermodel.numpages > 1)
 	{
 		if (s_playermodel.modelpage > 0)
-			s_playermodel.left.Generic.flags &= ~QMF_INACTIVE;
+			s_playermodel.left.generic.flags &= ~QMF_INACTIVE;
 		else
-			s_playermodel.left.Generic.flags |= QMF_INACTIVE;
+			s_playermodel.left.generic.flags |= QMF_INACTIVE;
 
 		if (s_playermodel.modelpage < s_playermodel.numpages-1)
-			s_playermodel.right.Generic.flags &= ~QMF_INACTIVE;
+			s_playermodel.right.generic.flags &= ~QMF_INACTIVE;
 		else
-			s_playermodel.right.Generic.flags |= QMF_INACTIVE;
+			s_playermodel.right.generic.flags |= QMF_INACTIVE;
 	}
 	else
 	{
 		// hide left/right markers
-		s_playermodel.left.Generic.flags |= QMF_INACTIVE;
-		s_playermodel.right.Generic.flags |= QMF_INACTIVE;
+		s_playermodel.left.generic.flags |= QMF_INACTIVE;
+		s_playermodel.right.generic.flags |= QMF_INACTIVE;
 	}
 }
 
@@ -247,7 +247,7 @@ static sfxHandle_t PlayerModel_MenuKey( int key )
 	{
 		case K_KP_LEFTARROW:
 		case K_LEFTARROW:
-			m = (menucommon_s*)Menu_ItemAtCursor(&s_playermodel.menu);
+			m = Menu_ItemAtCursor(&s_playermodel.menu);
 			picnum = m->id - ID_PLAYERPIC0;
 			if (picnum >= 0 && picnum <= 15)
 			{
@@ -271,7 +271,7 @@ static sfxHandle_t PlayerModel_MenuKey( int key )
 
 		case K_KP_RIGHTARROW:
 		case K_RIGHTARROW:
-			m = (menucommon_s*)Menu_ItemAtCursor(&s_playermodel.menu);
+			m = Menu_ItemAtCursor(&s_playermodel.menu);
 			picnum = m->id - ID_PLAYERPIC0;
 			if (picnum >= 0 && picnum <= 15)
 			{
@@ -320,14 +320,14 @@ static void PlayerModel_PicEvent( void* ptr, int event )
 	for (i=0; i<PLAYERGRID_ROWS*PLAYERGRID_COLS; i++)
 	{
 		// reset
-		s_playermodel.pics[i].Generic.flags       &= ~QMF_HIGHLIGHT;
-		s_playermodel.picbuttons[i].Generic.flags |= QMF_PULSEIFFOCUS;
+ 		s_playermodel.pics[i].generic.flags       &= ~QMF_HIGHLIGHT;
+ 		s_playermodel.picbuttons[i].generic.flags |= QMF_PULSEIFFOCUS;
 	}
 
 	// set selected
 	i = ((menucommon_s*)ptr)->id - ID_PLAYERPIC0;
-	s_playermodel.pics[i].Generic.flags       |= QMF_HIGHLIGHT;
-	s_playermodel.picbuttons[i].Generic.flags &= ~QMF_PULSEIFFOCUS;
+	s_playermodel.pics[i].generic.flags       |= QMF_HIGHLIGHT;
+	s_playermodel.picbuttons[i].generic.flags &= ~QMF_PULSEIFFOCUS;
 
 	// get model and strip icon_
 	modelnum = s_playermodel.modelpage*MAX_MODELSPERPAGE + i;
@@ -373,11 +373,11 @@ static void PlayerModel_DrawPlayer( void *self )
 	b = (menubitmap_s*) self;
 
 	if( trap_MemoryRemaining() <= LOW_MEMORY ) {
-		UI_DrawProportionalString( b->Generic.x, b->Generic.y + b->height / 2, "LOW MEMORY", UI_LEFT, color_red );
+		UI_DrawProportionalString( b->generic.x, b->generic.y + b->height / 2, "LOW MEMORY", UI_LEFT, color_red );
 		return;
 	}
 
-	UI_DrawPlayer( b->Generic.x, b->Generic.y, b->width, b->height, &s_playermodel.playerinfo, uis.realtime/2 );
+	UI_DrawPlayer( b->generic.x, b->generic.y, b->width, b->height, &s_playermodel.playerinfo, uis.realtime/2 );
 }
 
 /*
@@ -537,34 +537,34 @@ static void PlayerModel_MenuInit( void )
 	s_playermodel.menu.wrapAround = qtrue;
 	s_playermodel.menu.fullscreen = qtrue;
 
-	s_playermodel.banner.Generic.type  = MTYPE_BTEXT;
-	s_playermodel.banner.Generic.x     = 320;
-	s_playermodel.banner.Generic.y     = 16;
+	s_playermodel.banner.generic.type  = MTYPE_BTEXT;
+	s_playermodel.banner.generic.x     = 320;
+	s_playermodel.banner.generic.y     = 16;
 	s_playermodel.banner.string        = "PLAYER MODEL";
 	s_playermodel.banner.color         = color_white;
 	s_playermodel.banner.style         = UI_CENTER;
 
-	s_playermodel.framel.Generic.type  = MTYPE_BITMAP;
-	s_playermodel.framel.Generic.name  = MODEL_FRAMEL;
-	s_playermodel.framel.Generic.flags = QMF_LEFT_JUSTIFY|QMF_INACTIVE;
-	s_playermodel.framel.Generic.x     = 0;
-	s_playermodel.framel.Generic.y     = 78;
+	s_playermodel.framel.generic.type  = MTYPE_BITMAP;
+	s_playermodel.framel.generic.name  = MODEL_FRAMEL;
+	s_playermodel.framel.generic.flags = QMF_LEFT_JUSTIFY|QMF_INACTIVE;
+	s_playermodel.framel.generic.x     = 0;
+	s_playermodel.framel.generic.y     = 78;
 	s_playermodel.framel.width         = 256;
 	s_playermodel.framel.height        = 329;
 
-	s_playermodel.framer.Generic.type  = MTYPE_BITMAP;
-	s_playermodel.framer.Generic.name  = MODEL_FRAMER;
-	s_playermodel.framer.Generic.flags = QMF_LEFT_JUSTIFY|QMF_INACTIVE;
-	s_playermodel.framer.Generic.x     = 376;
-	s_playermodel.framer.Generic.y     = 76;
+	s_playermodel.framer.generic.type  = MTYPE_BITMAP;
+	s_playermodel.framer.generic.name  = MODEL_FRAMER;
+	s_playermodel.framer.generic.flags = QMF_LEFT_JUSTIFY|QMF_INACTIVE;
+	s_playermodel.framer.generic.x     = 376;
+	s_playermodel.framer.generic.y     = 76;
 	s_playermodel.framer.width         = 256;
 	s_playermodel.framer.height        = 334;
 
-	s_playermodel.ports.Generic.type  = MTYPE_BITMAP;
-	s_playermodel.ports.Generic.name  = MODEL_PORTS;
-	s_playermodel.ports.Generic.flags = QMF_LEFT_JUSTIFY|QMF_INACTIVE;
-	s_playermodel.ports.Generic.x     = 50;
-	s_playermodel.ports.Generic.y     = 59;
+	s_playermodel.ports.generic.type  = MTYPE_BITMAP;
+	s_playermodel.ports.generic.name  = MODEL_PORTS;
+	s_playermodel.ports.generic.flags = QMF_LEFT_JUSTIFY|QMF_INACTIVE;
+	s_playermodel.ports.generic.x     = 50;
+	s_playermodel.ports.generic.y     = 59;
 	s_playermodel.ports.width         = 274;
 	s_playermodel.ports.height        = 274;
 
@@ -574,25 +574,25 @@ static void PlayerModel_MenuInit( void )
 		x =	50;
 		for (j=0; j<PLAYERGRID_COLS; j++,k++)
 		{
-			s_playermodel.pics[k].Generic.type	   = MTYPE_BITMAP;
-			s_playermodel.pics[k].Generic.flags    = QMF_LEFT_JUSTIFY|QMF_INACTIVE;
-			s_playermodel.pics[k].Generic.x		   = x;
-			s_playermodel.pics[k].Generic.y		   = y;
+			s_playermodel.pics[k].generic.type	   = MTYPE_BITMAP;
+			s_playermodel.pics[k].generic.flags    = QMF_LEFT_JUSTIFY|QMF_INACTIVE;
+			s_playermodel.pics[k].generic.x		   = x;
+			s_playermodel.pics[k].generic.y		   = y;
 			s_playermodel.pics[k].width  		   = 64;
 			s_playermodel.pics[k].height  		   = 64;
 			s_playermodel.pics[k].focuspic         = MODEL_SELECTED;
 			s_playermodel.pics[k].focuscolor       = colorRed;
 
-			s_playermodel.picbuttons[k].Generic.type	 = MTYPE_BITMAP;
-			s_playermodel.picbuttons[k].Generic.flags    = QMF_LEFT_JUSTIFY|QMF_NODEFAULTINIT|QMF_PULSEIFFOCUS;
-			s_playermodel.picbuttons[k].Generic.id	     = ID_PLAYERPIC0+k;
-			s_playermodel.picbuttons[k].Generic.callback = PlayerModel_PicEvent;
-			s_playermodel.picbuttons[k].Generic.x    	 = x - 16;
-			s_playermodel.picbuttons[k].Generic.y		 = y - 16;
-			s_playermodel.picbuttons[k].Generic.left	 = x;
-			s_playermodel.picbuttons[k].Generic.top		 = y;
-			s_playermodel.picbuttons[k].Generic.right	 = x + 64;
-			s_playermodel.picbuttons[k].Generic.bottom   = y + 64;
+			s_playermodel.picbuttons[k].generic.type	 = MTYPE_BITMAP;
+			s_playermodel.picbuttons[k].generic.flags    = QMF_LEFT_JUSTIFY|QMF_NODEFAULTINIT|QMF_PULSEIFFOCUS;
+			s_playermodel.picbuttons[k].generic.id	     = ID_PLAYERPIC0+k;
+			s_playermodel.picbuttons[k].generic.callback = PlayerModel_PicEvent;
+			s_playermodel.picbuttons[k].generic.x    	 = x - 16;
+			s_playermodel.picbuttons[k].generic.y		 = y - 16;
+			s_playermodel.picbuttons[k].generic.left	 = x;
+			s_playermodel.picbuttons[k].generic.top		 = y;
+			s_playermodel.picbuttons[k].generic.right	 = x + 64;
+			s_playermodel.picbuttons[k].generic.bottom   = y + 64;
 			s_playermodel.picbuttons[k].width  		     = 128;
 			s_playermodel.picbuttons[k].height  		 = 128;
 			s_playermodel.picbuttons[k].focuspic  		 = MODEL_SELECT;
@@ -603,73 +603,73 @@ static void PlayerModel_MenuInit( void )
 		y += 64+6;
 	}
 
-	s_playermodel.playername.Generic.type  = MTYPE_PTEXT;
-	s_playermodel.playername.Generic.flags = QMF_CENTER_JUSTIFY|QMF_INACTIVE;
-	s_playermodel.playername.Generic.x	   = 320;
-	s_playermodel.playername.Generic.y	   = 440;
+	s_playermodel.playername.generic.type  = MTYPE_PTEXT;
+	s_playermodel.playername.generic.flags = QMF_CENTER_JUSTIFY|QMF_INACTIVE;
+	s_playermodel.playername.generic.x	   = 320;
+	s_playermodel.playername.generic.y	   = 440;
 	s_playermodel.playername.string	       = playername;
 	s_playermodel.playername.style		   = UI_CENTER;
 	s_playermodel.playername.color         = text_color_normal;
 
-	s_playermodel.modelname.Generic.type  = MTYPE_PTEXT;
-	s_playermodel.modelname.Generic.flags = QMF_CENTER_JUSTIFY|QMF_INACTIVE;
-	s_playermodel.modelname.Generic.x	  = 497;
-	s_playermodel.modelname.Generic.y	  = 54;
+	s_playermodel.modelname.generic.type  = MTYPE_PTEXT;
+	s_playermodel.modelname.generic.flags = QMF_CENTER_JUSTIFY|QMF_INACTIVE;
+	s_playermodel.modelname.generic.x	  = 497;
+	s_playermodel.modelname.generic.y	  = 54;
 	s_playermodel.modelname.string	      = modelname;
 	s_playermodel.modelname.style		  = UI_CENTER;
 	s_playermodel.modelname.color         = text_color_normal;
 
-	s_playermodel.skinname.Generic.type   = MTYPE_PTEXT;
-	s_playermodel.skinname.Generic.flags  = QMF_CENTER_JUSTIFY|QMF_INACTIVE;
-	s_playermodel.skinname.Generic.x	  = 497;
-	s_playermodel.skinname.Generic.y	  = 394;
+	s_playermodel.skinname.generic.type   = MTYPE_PTEXT;
+	s_playermodel.skinname.generic.flags  = QMF_CENTER_JUSTIFY|QMF_INACTIVE;
+	s_playermodel.skinname.generic.x	  = 497;
+	s_playermodel.skinname.generic.y	  = 394;
 	s_playermodel.skinname.string	      = skinname;
 	s_playermodel.skinname.style		  = UI_CENTER;
 	s_playermodel.skinname.color          = text_color_normal;
 
-	s_playermodel.player.Generic.type      = MTYPE_BITMAP;
-	s_playermodel.player.Generic.flags     = QMF_INACTIVE;
-	s_playermodel.player.Generic.ownerdraw = PlayerModel_DrawPlayer;
-	s_playermodel.player.Generic.x	       = 400;
-	s_playermodel.player.Generic.y	       = -40;
+	s_playermodel.player.generic.type      = MTYPE_BITMAP;
+	s_playermodel.player.generic.flags     = QMF_INACTIVE;
+	s_playermodel.player.generic.ownerdraw = PlayerModel_DrawPlayer;
+	s_playermodel.player.generic.x	       = 400;
+	s_playermodel.player.generic.y	       = -40;
 	s_playermodel.player.width	           = 32*10;
 	s_playermodel.player.height            = 56*10;
 
-	s_playermodel.arrows.Generic.type		= MTYPE_BITMAP;
-	s_playermodel.arrows.Generic.name		= MODEL_ARROWS;
-	s_playermodel.arrows.Generic.flags		= QMF_INACTIVE;
-	s_playermodel.arrows.Generic.x			= 125;
-	s_playermodel.arrows.Generic.y			= 340;
+	s_playermodel.arrows.generic.type		= MTYPE_BITMAP;
+	s_playermodel.arrows.generic.name		= MODEL_ARROWS;
+	s_playermodel.arrows.generic.flags		= QMF_INACTIVE;
+	s_playermodel.arrows.generic.x			= 125;
+	s_playermodel.arrows.generic.y			= 340;
 	s_playermodel.arrows.width				= 128;
 	s_playermodel.arrows.height				= 32;
 
-	s_playermodel.left.Generic.type			= MTYPE_BITMAP;
-	s_playermodel.left.Generic.flags		= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
-	s_playermodel.left.Generic.callback		= PlayerModel_MenuEvent;
-	s_playermodel.left.Generic.id			= ID_PREVPAGE;
-	s_playermodel.left.Generic.x			= 125;
-	s_playermodel.left.Generic.y			= 340;
+	s_playermodel.left.generic.type			= MTYPE_BITMAP;
+	s_playermodel.left.generic.flags		= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
+	s_playermodel.left.generic.callback		= PlayerModel_MenuEvent;
+	s_playermodel.left.generic.id			= ID_PREVPAGE;
+	s_playermodel.left.generic.x			= 125;
+	s_playermodel.left.generic.y			= 340;
 	s_playermodel.left.width  				= 64;
 	s_playermodel.left.height  				= 32;
 	s_playermodel.left.focuspic				= MODEL_ARROWSL;
 
-	s_playermodel.right.Generic.type	    = MTYPE_BITMAP;
-	s_playermodel.right.Generic.flags		= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
-	s_playermodel.right.Generic.callback	= PlayerModel_MenuEvent;
-	s_playermodel.right.Generic.id			= ID_NEXTPAGE;
-	s_playermodel.right.Generic.x			= 125+61;
-	s_playermodel.right.Generic.y			= 340;
+	s_playermodel.right.generic.type	    = MTYPE_BITMAP;
+	s_playermodel.right.generic.flags		= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
+	s_playermodel.right.generic.callback	= PlayerModel_MenuEvent;
+	s_playermodel.right.generic.id			= ID_NEXTPAGE;
+	s_playermodel.right.generic.x			= 125+61;
+	s_playermodel.right.generic.y			= 340;
 	s_playermodel.right.width  				= 64;
 	s_playermodel.right.height  		    = 32;
 	s_playermodel.right.focuspic			= MODEL_ARROWSR;
 
-	s_playermodel.back.Generic.type	    = MTYPE_BITMAP;
-	s_playermodel.back.Generic.name     = MODEL_BACK0;
-	s_playermodel.back.Generic.flags    = QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
-	s_playermodel.back.Generic.callback = PlayerModel_MenuEvent;
-	s_playermodel.back.Generic.id	    = ID_BACK;
-	s_playermodel.back.Generic.x		= 0;
-	s_playermodel.back.Generic.y		= 480-64;
+	s_playermodel.back.generic.type	    = MTYPE_BITMAP;
+	s_playermodel.back.generic.name     = MODEL_BACK0;
+	s_playermodel.back.generic.flags    = QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
+	s_playermodel.back.generic.callback = PlayerModel_MenuEvent;
+	s_playermodel.back.generic.id	    = ID_BACK;
+	s_playermodel.back.generic.x		= 0;
+	s_playermodel.back.generic.y		= 480-64;
 	s_playermodel.back.width  		    = 128;
 	s_playermodel.back.height  		    = 64;
 	s_playermodel.back.focuspic         = MODEL_BACK1;

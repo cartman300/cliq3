@@ -7,7 +7,7 @@
  * For conditions of distribution and use, see the accompanying README file.
  *
  * This file contains optional default-setting code for the JPEG compressor.
- * Applications do not have to use This file, but those that don't use it
+ * Applications do not have to use this file, but those that don't use it
  * must know a lot more about the innards of the JPEG code.
  */
 
@@ -107,7 +107,7 @@ jpeg_set_linear_quality (j_compress_ptr cinfo, int scale_factor,
 			 boolean force_baseline)
 /* Set or change the 'quality' (quantization) setting, using default tables
  * and a straight percentage-scaling quality scale.  In most cases it's better
- * to use jpeg_set_quality (below); This entry point is provided for
+ * to use jpeg_set_quality (below); this entry point is provided for
  * applications that insist on a linear percentage scaling.
  */
 {
@@ -178,7 +178,7 @@ add_huff_table (j_compress_ptr cinfo,
   /* Copy the number-of-symbols-of-each-code-length counts */
   MEMCOPY((*htblptr)->bits, bits, SIZEOF((*htblptr)->bits));
 
-  /* Validate the counts.  We do This here mainly so we can copy the right
+  /* Validate the counts.  We do this here mainly so we can copy the right
    * number of symbols from the val[] array, without risking marching off
    * the end of memory.  jchuff.c will do a more thorough test later.
    */
@@ -274,10 +274,10 @@ std_huff_tables (j_compress_ptr cinfo)
 /*
  * Default parameter setup for compression.
  *
- * Applications that don't choose to use This routine must do their
- * own setup of all these parameters.  Alternately, you can call This
+ * Applications that don't choose to use this routine must do their
+ * own setup of all these parameters.  Alternately, you can call this
  * to establish defaults and then alter parameters selectively.  This
- * is the recommended approach since, if we add any New parameters,
+ * is the recommended approach since, if we add any new parameters,
  * your code will still work (they'll be set to reasonable defaults).
  */
 

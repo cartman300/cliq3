@@ -20,7 +20,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 ===========================================================================
 */
 
-// This is only used for visualization tools in cm_ debug functions
+// this is only used for visualization tools in cm_ debug functions
 
 typedef struct
 {

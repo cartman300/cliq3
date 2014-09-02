@@ -192,13 +192,13 @@ typedef struct {
 
 typedef struct
 {
-	menucommon_s	Generic;
+	menucommon_s	generic;
 	mfield_t		field;
 } menufield_s;
 
 typedef struct 
 {
-	menucommon_s Generic;
+	menucommon_s generic;
 
 	float minvalue;
 	float maxvalue;
@@ -209,7 +209,7 @@ typedef struct
 
 typedef struct
 {
-	menucommon_s Generic;
+	menucommon_s generic;
 
 	int	oldvalue;
 	int curvalue;
@@ -226,18 +226,18 @@ typedef struct
 
 typedef struct
 {
-	menucommon_s Generic;
+	menucommon_s generic;
 } menuaction_s;
 
 typedef struct
 {
-	menucommon_s Generic;
+	menucommon_s generic;
 	int curvalue;
 } menuradiobutton_s;
 
 typedef struct
 {
-	menucommon_s	Generic;
+	menucommon_s	generic;
 	char*			focuspic;	
 	char*			errorpic;
 	qhandle_t		shader;
@@ -249,7 +249,7 @@ typedef struct
 
 typedef struct
 {
-	menucommon_s	Generic;
+	menucommon_s	generic;
 	char*			string;
 	int				style;
 	float*			color;

@@ -125,7 +125,7 @@ void SV_SetConfigstring (int index, const char *val) {
 	sv.configstrings[index] = CopyString( val );
 
 	// send it to all the clients if we aren't
-	// spawning a New server
+	// spawning a new server
 	if ( sv.state == SS_GAME || sv.restarting ) {
 
 		// send the data to all relevent clients
@@ -259,7 +259,7 @@ SV_Startup
 
 Called when a host starts a map when it wasn't running
 one before.  Successive map or map_restart commands will
-NOT cause This to be called, unless the game is exited to
+NOT cause this to be called, unless the game is exited to
 the menu system first.
 ===============
 */
@@ -333,7 +333,7 @@ void SV_ChangeMaxClients( void ) {
 	// free old clients arrays
 	Z_Free( svs.clients );
 
-	// allocate New clients
+	// allocate new clients
 	svs.clients = Z_Malloc ( sv_maxclients->integer * sizeof(client_t) );
 	Com_Memset( svs.clients, 0, sv_maxclients->integer * sizeof(client_t) );
 
@@ -347,7 +347,7 @@ void SV_ChangeMaxClients( void ) {
 	// free the old clients on the hunk
 	Hunk_FreeTempMemory( oldClients );
 	
-	// allocate New snapshot entities
+	// allocate new snapshot entities
 	if ( com_dedicated->integer ) {
 		svs.numSnapshotEntities = sv_maxclients->integer * PACKET_BACKUP * MAX_SNAPSHOT_ENTITIES;
 	} else {
@@ -394,7 +394,7 @@ static void SV_TouchCGame(void) {
 ================
 SV_SpawnServer
 
-Change the server to a New map, taking all connected
+Change the server to a new map, taking all connected
 clients along with it.
 This is NOT called for map_restart
 ================
@@ -467,7 +467,7 @@ void SV_SpawnServer( char *server, qboolean killBots ) {
 	// make sure we are not paused
 	Cvar_Set("cl_paused", "0");
 
-	// get a New checksum feed and restart the file system
+	// get a new checksum feed and restart the file system
 	sv.checksumFeed = ( ((int) rand() << 16) ^ rand() ) ^ Com_Milliseconds();
 	FS_Restart( sv.checksumFeed );
 
@@ -511,7 +511,7 @@ void SV_SpawnServer( char *server, qboolean killBots ) {
 	SV_CreateBaseline ();
 
 	for (i=0 ; i<sv_maxclients->integer ; i++) {
-		// send the New gamestate to all connected clients
+		// send the new gamestate to all connected clients
 		if (svs.clients[i].state >= CS_CONNECTED) {
 			char	*denied;
 
@@ -529,13 +529,13 @@ void SV_SpawnServer( char *server, qboolean killBots ) {
 			// connect the client again
 			denied = VM_ExplicitArgPtr( gvm, VM_Call( gvm, GAME_CLIENT_CONNECT, i, qfalse, isBot ) );	// firstTime = qfalse
 			if ( denied ) {
-				// This generally shouldn't happen, because the client
+				// this generally shouldn't happen, because the client
 				// was connected before the level change
 				SV_DropClient( &svs.clients[i], denied );
 			} else {
 				if( !isBot ) {
 					// when we get the next packet from a connected client,
-					// the New gamestate will be sent
+					// the new gamestate will be sent
 					svs.clients[i].state = CS_CONNECTED;
 				}
 				else {
@@ -709,7 +709,7 @@ SV_FinalMessage
 Used by SV_Shutdown to send a final message to all
 connected clients before the server goes down.  The messages are sent immediately,
 not just stuck on the outgoing message list, because the server is going
-to totally exit after returning from This function.
+to totally exit after returning from this function.
 ==================
 */
 void SV_FinalMessage( char *message ) {

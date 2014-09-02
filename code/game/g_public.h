@@ -41,7 +41,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define	SVF_USE_CURRENT_ORIGIN	0x00000080	// entity->r.currentOrigin instead of entity->s.origin
 											// for link position (missiles and movers)
 #define SVF_SINGLECLIENT		0x00000100	// only send to a single client (entityShared_t->singleClient)
-#define SVF_NOSERVERINFO		0x00000200	// don't send CS_SERVERINFO updates to This client
+#define SVF_NOSERVERINFO		0x00000200	// don't send CS_SERVERINFO updates to this client
 											// so that it can be updated for ping tools without
 											// lagging clients
 #define SVF_CAPSULE				0x00000400	// use capsule for collision detection instead of bbox
@@ -54,7 +54,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
 typedef struct {
-	entityState_t	unused;			// apparently This field was put here accidentally
+	entityState_t	unused;			// apparently this field was put here accidentally
 									//  (and is kept only for compatibility, as a struct pad)
 
 	qboolean	linked;				// qfalse if not in any good cluster
@@ -62,8 +62,8 @@ typedef struct {
 
 	int			svFlags;			// SVF_NOCLIENT, SVF_BROADCAST, etc
 
-	// only send to This client when SVF_SINGLECLIENT is set	
-	// if SVF_CLIENTMASK is set, use bitmask for clients to send to (maxclients must be <= 32, up to the mod to enforce This)
+	// only send to this client when SVF_SINGLECLIENT is set	
+	// if SVF_CLIENTMASK is set, use bitmask for clients to send to (maxclients must be <= 32, up to the mod to enforce this)
 	int			singleClient;		
 
 	qboolean	bmodel;				// if false, assume an explicit mins / maxs bounding box
@@ -115,7 +115,7 @@ typedef enum {
 
 	G_MILLISECONDS,	// ( void );
 	// get current time for profiling reasons
-	// This should NOT be used for any game related tasks,
+	// this should NOT be used for any game related tasks,
 	// because it is not journaled
 
 	// console variable interaction

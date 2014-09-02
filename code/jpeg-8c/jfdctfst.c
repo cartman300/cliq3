@@ -24,10 +24,10 @@
  * folded into the multiplications or divisions by the JPEG quantization
  * table entries.  The AA&N method leaves only 5 multiplies and 29 adds
  * to be done in the DCT itself.
- * The primary disadvantage of This method is that with fixed-point math,
+ * The primary disadvantage of this method is that with fixed-point math,
  * accuracy is lost due to imprecise representation of the scaled
  * quantization values.  The smaller the quantization table entry, the less
- * precise the scaled value, so This implementation does worse with high-
+ * precise the scaled value, so this implementation does worse with high-
  * quality-setting files than with low-quality ones.
  */
 
@@ -44,7 +44,7 @@
  */
 
 #if DCTSIZE != 8
-  Sorry, This code only copes with 8x8 DCTs. /* deliberate syntax err */
+  Sorry, this code only copes with 8x8 DCTs. /* deliberate syntax err */
 #endif
 
 
@@ -54,7 +54,7 @@
  * rather than carrying additional fractional bits into subsequent additions.
  * This compromises accuracy slightly, but it lets us save a few shifts.
  * More importantly, 16-bit arithmetic is then adequate (for 8-bit samples)
- * everywhere except in the multiplications proper; This saves a good deal
+ * everywhere except in the multiplications proper; this saves a good deal
  * of work on 16-bit-int machines.
  *
  * Again to save a few shifts, the intermediate results between pass 1 and
@@ -71,7 +71,7 @@
 
 /* Some C compilers fail to reduce "FIX(constant)" at compile time, thus
  * causing a lot of useless floating-point operations at run time.
- * To get around This we use the following pre-calculated constants.
+ * To get around this we use the following pre-calculated constants.
  * If you change CONST_BITS you may want to add appropriate values.
  * (With a reasonable C compiler, you can just rely on the FIX() macro...)
  */

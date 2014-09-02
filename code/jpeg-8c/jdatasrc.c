@@ -15,7 +15,7 @@
  * than 8 bits on your machine, you may need to do some tweaking.
  */
 
-/* This is not a core library module, so it doesn't define JPEG_INTERNALS */
+/* this is not a core library module, so it doesn't define JPEG_INTERNALS */
 #include "jinclude.h"
 #include "jpeglib.h"
 #include "jerror.h"
@@ -63,7 +63,7 @@ init_mem_source (j_decompress_ptr cinfo)
 /*
  * Fill the input buffer --- called whenever buffer is emptied.
  *
- * In typical applications, This should read fresh data into the buffer
+ * In typical applications, this should read fresh data into the buffer
  * (ignoring the current state of next_input_byte & bytes_in_buffer),
  * reset the pointer & count to the start of the buffer, and return TRUE
  * indicating that the buffer has been reloaded.  It is not necessary to
@@ -72,14 +72,14 @@ init_mem_source (j_decompress_ptr cinfo)
  * There is no such thing as an EOF return.  If the end of the file has been
  * reached, the routine has a choice of ERREXIT() or inserting fake data into
  * the buffer.  In most cases, generating a warning message and inserting a
- * fake EOI marker is the best course of action --- This will allow the
+ * fake EOI marker is the best course of action --- this will allow the
  * decompressor to output however much of the image is there.  However,
  * the resulting error message is misleading if the real problem is an empty
  * input file, so we handle that case specially.
  *
  * In applications that need to be able to suspend compression due to input
  * not being available yet, a FALSE return indicates that no more data can be
- * obtained right now, but more may be forthcoming later.  In This situation,
+ * obtained right now, but more may be forthcoming later.  In this situation,
  * the decompressor will return to its caller (with an indication of the
  * number of scanlines it has read, if any).  The application should resume
  * decompression after it has loaded more data into the input buffer.  Note
@@ -89,7 +89,7 @@ init_mem_source (j_decompress_ptr cinfo)
  * When suspending, the decompressor will back up to a convenient restart point
  * (typically the start of the current MCU). next_input_byte & bytes_in_buffer
  * indicate where the restart point will be if the current call returns FALSE.
- * Data beyond This point must be rescanned after resumption, so move it to
+ * Data beyond this point must be rescanned after resumption, so move it to
  * the front of the buffer rather than discarding it.
  */
 
@@ -177,7 +177,7 @@ skip_input_data (j_decompress_ptr cinfo, long num_bytes)
 /*
  * An additional method that can be provided by data source modules is the
  * resync_to_restart method for error recovery in the presence of RST markers.
- * For the moment, This source module just uses the default resync method
+ * For the moment, this source module just uses the default resync method
  * provided by the JPEG library.  That method assumes that no backtracking
  * is possible.
  */
@@ -214,10 +214,10 @@ jpeg_stdio_src (j_decompress_ptr cinfo, FILE * infile)
    * of JPEG images can be read from the same file by calling jpeg_stdio_src
    * only before the first one.  (If we discarded the buffer at the end of
    * one image, we'd likely lose the start of the next one.)
-   * This makes it unsafe to use This manager and a different source
+   * This makes it unsafe to use this manager and a different source
    * manager serially with the same JPEG object.  Caveat programmer.
    */
-  if (cinfo->src == NULL) {	/* first time for This JPEG object? */
+  if (cinfo->src == NULL) {	/* first time for this JPEG object? */
     cinfo->src = (struct jpeg_source_mgr *)
       (*cinfo->mem->alloc_small) ((j_common_ptr) cinfo, JPOOL_PERMANENT,
 				  SIZEOF(my_source_mgr));
@@ -257,7 +257,7 @@ jpeg_mem_src (j_decompress_ptr cinfo,
    * can be read from the same buffer by calling jpeg_mem_src only before
    * the first one.
    */
-  if (cinfo->src == NULL) {	/* first time for This JPEG object? */
+  if (cinfo->src == NULL) {	/* first time for this JPEG object? */
     cinfo->src = (struct jpeg_source_mgr *)
       (*cinfo->mem->alloc_small) ((j_common_ptr) cinfo, JPOOL_PERMANENT,
 				  SIZEOF(struct jpeg_source_mgr));

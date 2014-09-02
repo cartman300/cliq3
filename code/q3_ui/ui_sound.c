@@ -188,30 +188,30 @@ static void SoundOptions_UpdateMenuItems( void )
 {
 	if ( soundOptionsInfo.soundSystem.curvalue == UISND_SDL )
 	{
-		soundOptionsInfo.quality.Generic.flags &= ~QMF_GRAYED;
+		soundOptionsInfo.quality.generic.flags &= ~QMF_GRAYED;
 	}
 	else
 	{
-		soundOptionsInfo.quality.Generic.flags |= QMF_GRAYED;
+		soundOptionsInfo.quality.generic.flags |= QMF_GRAYED;
 	}
 
-	soundOptionsInfo.apply.Generic.flags |= QMF_HIDDEN|QMF_INACTIVE;
+	soundOptionsInfo.apply.generic.flags |= QMF_HIDDEN|QMF_INACTIVE;
 
 	if ( soundOptionsInfo.sfxvolume_original != soundOptionsInfo.sfxvolume.curvalue )
 	{
-		soundOptionsInfo.apply.Generic.flags &= ~(QMF_HIDDEN|QMF_INACTIVE);
+		soundOptionsInfo.apply.generic.flags &= ~(QMF_HIDDEN|QMF_INACTIVE);
 	}
 	if ( soundOptionsInfo.musicvolume_original != soundOptionsInfo.musicvolume.curvalue )
 	{
-		soundOptionsInfo.apply.Generic.flags &= ~(QMF_HIDDEN|QMF_INACTIVE);
+		soundOptionsInfo.apply.generic.flags &= ~(QMF_HIDDEN|QMF_INACTIVE);
 	}
 	if ( soundOptionsInfo.soundSystem_original != soundOptionsInfo.soundSystem.curvalue )
 	{
-		soundOptionsInfo.apply.Generic.flags &= ~(QMF_HIDDEN|QMF_INACTIVE);
+		soundOptionsInfo.apply.generic.flags &= ~(QMF_HIDDEN|QMF_INACTIVE);
 	}
 	if ( soundOptionsInfo.quality_original != soundOptionsInfo.quality.curvalue )
 	{
-		soundOptionsInfo.apply.Generic.flags &= ~(QMF_HIDDEN|QMF_INACTIVE);
+		soundOptionsInfo.apply.generic.flags &= ~(QMF_HIDDEN|QMF_INACTIVE);
 	}
 }
 
@@ -244,140 +244,140 @@ static void UI_SoundOptionsMenu_Init( void ) {
 	soundOptionsInfo.menu.fullscreen = qtrue;
 	soundOptionsInfo.menu.draw		= SoundOptions_MenuDraw;
 
-	soundOptionsInfo.banner.Generic.type		= MTYPE_BTEXT;
-	soundOptionsInfo.banner.Generic.flags		= QMF_CENTER_JUSTIFY;
-	soundOptionsInfo.banner.Generic.x			= 320;
-	soundOptionsInfo.banner.Generic.y			= 16;
+	soundOptionsInfo.banner.generic.type		= MTYPE_BTEXT;
+	soundOptionsInfo.banner.generic.flags		= QMF_CENTER_JUSTIFY;
+	soundOptionsInfo.banner.generic.x			= 320;
+	soundOptionsInfo.banner.generic.y			= 16;
 	soundOptionsInfo.banner.string				= "SYSTEM SETUP";
 	soundOptionsInfo.banner.color				= color_white;
 	soundOptionsInfo.banner.style				= UI_CENTER;
 
-	soundOptionsInfo.framel.Generic.type		= MTYPE_BITMAP;
-	soundOptionsInfo.framel.Generic.name		= ART_FRAMEL;
-	soundOptionsInfo.framel.Generic.flags		= QMF_INACTIVE;
-	soundOptionsInfo.framel.Generic.x			= 0;  
-	soundOptionsInfo.framel.Generic.y			= 78;
+	soundOptionsInfo.framel.generic.type		= MTYPE_BITMAP;
+	soundOptionsInfo.framel.generic.name		= ART_FRAMEL;
+	soundOptionsInfo.framel.generic.flags		= QMF_INACTIVE;
+	soundOptionsInfo.framel.generic.x			= 0;  
+	soundOptionsInfo.framel.generic.y			= 78;
 	soundOptionsInfo.framel.width				= 256;
 	soundOptionsInfo.framel.height				= 329;
 
-	soundOptionsInfo.framer.Generic.type		= MTYPE_BITMAP;
-	soundOptionsInfo.framer.Generic.name		= ART_FRAMER;
-	soundOptionsInfo.framer.Generic.flags		= QMF_INACTIVE;
-	soundOptionsInfo.framer.Generic.x			= 376;
-	soundOptionsInfo.framer.Generic.y			= 76;
+	soundOptionsInfo.framer.generic.type		= MTYPE_BITMAP;
+	soundOptionsInfo.framer.generic.name		= ART_FRAMER;
+	soundOptionsInfo.framer.generic.flags		= QMF_INACTIVE;
+	soundOptionsInfo.framer.generic.x			= 376;
+	soundOptionsInfo.framer.generic.y			= 76;
 	soundOptionsInfo.framer.width				= 256;
 	soundOptionsInfo.framer.height				= 334;
 
-	soundOptionsInfo.graphics.Generic.type		= MTYPE_PTEXT;
-	soundOptionsInfo.graphics.Generic.flags		= QMF_RIGHT_JUSTIFY|QMF_PULSEIFFOCUS;
-	soundOptionsInfo.graphics.Generic.id		= ID_GRAPHICS;
-	soundOptionsInfo.graphics.Generic.callback	= UI_SoundOptionsMenu_Event;
-	soundOptionsInfo.graphics.Generic.x			= 216;
-	soundOptionsInfo.graphics.Generic.y			= 240 - 2 * PROP_HEIGHT;
+	soundOptionsInfo.graphics.generic.type		= MTYPE_PTEXT;
+	soundOptionsInfo.graphics.generic.flags		= QMF_RIGHT_JUSTIFY|QMF_PULSEIFFOCUS;
+	soundOptionsInfo.graphics.generic.id		= ID_GRAPHICS;
+	soundOptionsInfo.graphics.generic.callback	= UI_SoundOptionsMenu_Event;
+	soundOptionsInfo.graphics.generic.x			= 216;
+	soundOptionsInfo.graphics.generic.y			= 240 - 2 * PROP_HEIGHT;
 	soundOptionsInfo.graphics.string			= "GRAPHICS";
 	soundOptionsInfo.graphics.style				= UI_RIGHT;
 	soundOptionsInfo.graphics.color				= color_red;
 
-	soundOptionsInfo.display.Generic.type		= MTYPE_PTEXT;
-	soundOptionsInfo.display.Generic.flags		= QMF_RIGHT_JUSTIFY|QMF_PULSEIFFOCUS;
-	soundOptionsInfo.display.Generic.id			= ID_DISPLAY;
-	soundOptionsInfo.display.Generic.callback	= UI_SoundOptionsMenu_Event;
-	soundOptionsInfo.display.Generic.x			= 216;
-	soundOptionsInfo.display.Generic.y			= 240 - PROP_HEIGHT;
+	soundOptionsInfo.display.generic.type		= MTYPE_PTEXT;
+	soundOptionsInfo.display.generic.flags		= QMF_RIGHT_JUSTIFY|QMF_PULSEIFFOCUS;
+	soundOptionsInfo.display.generic.id			= ID_DISPLAY;
+	soundOptionsInfo.display.generic.callback	= UI_SoundOptionsMenu_Event;
+	soundOptionsInfo.display.generic.x			= 216;
+	soundOptionsInfo.display.generic.y			= 240 - PROP_HEIGHT;
 	soundOptionsInfo.display.string				= "DISPLAY";
 	soundOptionsInfo.display.style				= UI_RIGHT;
 	soundOptionsInfo.display.color				= color_red;
 
-	soundOptionsInfo.sound.Generic.type			= MTYPE_PTEXT;
-	soundOptionsInfo.sound.Generic.flags		= QMF_RIGHT_JUSTIFY;
-	soundOptionsInfo.sound.Generic.id			= ID_SOUND;
-	soundOptionsInfo.sound.Generic.callback		= UI_SoundOptionsMenu_Event;
-	soundOptionsInfo.sound.Generic.x			= 216;
-	soundOptionsInfo.sound.Generic.y			= 240;
+	soundOptionsInfo.sound.generic.type			= MTYPE_PTEXT;
+	soundOptionsInfo.sound.generic.flags		= QMF_RIGHT_JUSTIFY;
+	soundOptionsInfo.sound.generic.id			= ID_SOUND;
+	soundOptionsInfo.sound.generic.callback		= UI_SoundOptionsMenu_Event;
+	soundOptionsInfo.sound.generic.x			= 216;
+	soundOptionsInfo.sound.generic.y			= 240;
 	soundOptionsInfo.sound.string				= "SOUND";
 	soundOptionsInfo.sound.style				= UI_RIGHT;
 	soundOptionsInfo.sound.color				= color_red;
 
-	soundOptionsInfo.network.Generic.type		= MTYPE_PTEXT;
-	soundOptionsInfo.network.Generic.flags		= QMF_RIGHT_JUSTIFY|QMF_PULSEIFFOCUS;
-	soundOptionsInfo.network.Generic.id			= ID_NETWORK;
-	soundOptionsInfo.network.Generic.callback	= UI_SoundOptionsMenu_Event;
-	soundOptionsInfo.network.Generic.x			= 216;
-	soundOptionsInfo.network.Generic.y			= 240 + PROP_HEIGHT;
+	soundOptionsInfo.network.generic.type		= MTYPE_PTEXT;
+	soundOptionsInfo.network.generic.flags		= QMF_RIGHT_JUSTIFY|QMF_PULSEIFFOCUS;
+	soundOptionsInfo.network.generic.id			= ID_NETWORK;
+	soundOptionsInfo.network.generic.callback	= UI_SoundOptionsMenu_Event;
+	soundOptionsInfo.network.generic.x			= 216;
+	soundOptionsInfo.network.generic.y			= 240 + PROP_HEIGHT;
 	soundOptionsInfo.network.string				= "NETWORK";
 	soundOptionsInfo.network.style				= UI_RIGHT;
 	soundOptionsInfo.network.color				= color_red;
 
 	y = 240 - 2 * (BIGCHAR_HEIGHT + 2);
-	soundOptionsInfo.sfxvolume.Generic.type		= MTYPE_SLIDER;
-	soundOptionsInfo.sfxvolume.Generic.name		= "Effects Volume:";
-	soundOptionsInfo.sfxvolume.Generic.flags	= QMF_PULSEIFFOCUS|QMF_SMALLFONT;
-	soundOptionsInfo.sfxvolume.Generic.callback	= UI_SoundOptionsMenu_Event;
-	soundOptionsInfo.sfxvolume.Generic.id		= ID_EFFECTSVOLUME;
-	soundOptionsInfo.sfxvolume.Generic.x		= 400;
-	soundOptionsInfo.sfxvolume.Generic.y		= y;
+	soundOptionsInfo.sfxvolume.generic.type		= MTYPE_SLIDER;
+	soundOptionsInfo.sfxvolume.generic.name		= "Effects Volume:";
+	soundOptionsInfo.sfxvolume.generic.flags	= QMF_PULSEIFFOCUS|QMF_SMALLFONT;
+	soundOptionsInfo.sfxvolume.generic.callback	= UI_SoundOptionsMenu_Event;
+	soundOptionsInfo.sfxvolume.generic.id		= ID_EFFECTSVOLUME;
+	soundOptionsInfo.sfxvolume.generic.x		= 400;
+	soundOptionsInfo.sfxvolume.generic.y		= y;
 	soundOptionsInfo.sfxvolume.minvalue			= 0;
 	soundOptionsInfo.sfxvolume.maxvalue			= 10;
 
 	y += BIGCHAR_HEIGHT+2;
-	soundOptionsInfo.musicvolume.Generic.type		= MTYPE_SLIDER;
-	soundOptionsInfo.musicvolume.Generic.name		= "Music Volume:";
-	soundOptionsInfo.musicvolume.Generic.flags		= QMF_PULSEIFFOCUS|QMF_SMALLFONT;
-	soundOptionsInfo.musicvolume.Generic.callback	= UI_SoundOptionsMenu_Event;
-	soundOptionsInfo.musicvolume.Generic.id			= ID_MUSICVOLUME;
-	soundOptionsInfo.musicvolume.Generic.x			= 400;
-	soundOptionsInfo.musicvolume.Generic.y			= y;
+	soundOptionsInfo.musicvolume.generic.type		= MTYPE_SLIDER;
+	soundOptionsInfo.musicvolume.generic.name		= "Music Volume:";
+	soundOptionsInfo.musicvolume.generic.flags		= QMF_PULSEIFFOCUS|QMF_SMALLFONT;
+	soundOptionsInfo.musicvolume.generic.callback	= UI_SoundOptionsMenu_Event;
+	soundOptionsInfo.musicvolume.generic.id			= ID_MUSICVOLUME;
+	soundOptionsInfo.musicvolume.generic.x			= 400;
+	soundOptionsInfo.musicvolume.generic.y			= y;
 	soundOptionsInfo.musicvolume.minvalue			= 0;
 	soundOptionsInfo.musicvolume.maxvalue			= 10;
 
 	y += BIGCHAR_HEIGHT+2;
-	soundOptionsInfo.soundSystem.Generic.type		= MTYPE_SPINCONTROL;
-	soundOptionsInfo.soundSystem.Generic.name		= "Sound System:";
-	soundOptionsInfo.soundSystem.Generic.flags		= QMF_PULSEIFFOCUS|QMF_SMALLFONT;
-	soundOptionsInfo.soundSystem.Generic.callback	= UI_SoundOptionsMenu_Event;
-	soundOptionsInfo.soundSystem.Generic.id			= ID_SOUNDSYSTEM;
-	soundOptionsInfo.soundSystem.Generic.x			= 400;
-	soundOptionsInfo.soundSystem.Generic.y			= y;
+	soundOptionsInfo.soundSystem.generic.type		= MTYPE_SPINCONTROL;
+	soundOptionsInfo.soundSystem.generic.name		= "Sound System:";
+	soundOptionsInfo.soundSystem.generic.flags		= QMF_PULSEIFFOCUS|QMF_SMALLFONT;
+	soundOptionsInfo.soundSystem.generic.callback	= UI_SoundOptionsMenu_Event;
+	soundOptionsInfo.soundSystem.generic.id			= ID_SOUNDSYSTEM;
+	soundOptionsInfo.soundSystem.generic.x			= 400;
+	soundOptionsInfo.soundSystem.generic.y			= y;
 	soundOptionsInfo.soundSystem.itemnames			= soundSystem_items;
 
 	y += BIGCHAR_HEIGHT+2;
-	soundOptionsInfo.quality.Generic.type		= MTYPE_SPINCONTROL;
-	soundOptionsInfo.quality.Generic.name		= "SDL Sound Quality:";
-	soundOptionsInfo.quality.Generic.flags		= QMF_PULSEIFFOCUS|QMF_SMALLFONT;
-	soundOptionsInfo.quality.Generic.callback	= UI_SoundOptionsMenu_Event;
-	soundOptionsInfo.quality.Generic.id			= ID_QUALITY;
-	soundOptionsInfo.quality.Generic.x			= 400;
-	soundOptionsInfo.quality.Generic.y			= y;
+	soundOptionsInfo.quality.generic.type		= MTYPE_SPINCONTROL;
+	soundOptionsInfo.quality.generic.name		= "SDL Sound Quality:";
+	soundOptionsInfo.quality.generic.flags		= QMF_PULSEIFFOCUS|QMF_SMALLFONT;
+	soundOptionsInfo.quality.generic.callback	= UI_SoundOptionsMenu_Event;
+	soundOptionsInfo.quality.generic.id			= ID_QUALITY;
+	soundOptionsInfo.quality.generic.x			= 400;
+	soundOptionsInfo.quality.generic.y			= y;
 	soundOptionsInfo.quality.itemnames			= quality_items;
 
 /*
 	y += BIGCHAR_HEIGHT+2;
-	soundOptionsInfo.a3d.Generic.type			= MTYPE_RADIOBUTTON;
-	soundOptionsInfo.a3d.Generic.name			= "A3D:";
-	soundOptionsInfo.a3d.Generic.flags			= QMF_PULSEIFFOCUS|QMF_SMALLFONT;
-	soundOptionsInfo.a3d.Generic.callback		= UI_SoundOptionsMenu_Event;
-	soundOptionsInfo.a3d.Generic.id				= ID_A3D;
-	soundOptionsInfo.a3d.Generic.x				= 400;
-	soundOptionsInfo.a3d.Generic.y				= y;
+	soundOptionsInfo.a3d.generic.type			= MTYPE_RADIOBUTTON;
+	soundOptionsInfo.a3d.generic.name			= "A3D:";
+	soundOptionsInfo.a3d.generic.flags			= QMF_PULSEIFFOCUS|QMF_SMALLFONT;
+	soundOptionsInfo.a3d.generic.callback		= UI_SoundOptionsMenu_Event;
+	soundOptionsInfo.a3d.generic.id				= ID_A3D;
+	soundOptionsInfo.a3d.generic.x				= 400;
+	soundOptionsInfo.a3d.generic.y				= y;
 */
-	soundOptionsInfo.back.Generic.type			= MTYPE_BITMAP;
-	soundOptionsInfo.back.Generic.name			= ART_BACK0;
-	soundOptionsInfo.back.Generic.flags			= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
-	soundOptionsInfo.back.Generic.callback		= UI_SoundOptionsMenu_Event;
-	soundOptionsInfo.back.Generic.id			= ID_BACK;
-	soundOptionsInfo.back.Generic.x				= 0;
-	soundOptionsInfo.back.Generic.y				= 480-64;
+	soundOptionsInfo.back.generic.type			= MTYPE_BITMAP;
+	soundOptionsInfo.back.generic.name			= ART_BACK0;
+	soundOptionsInfo.back.generic.flags			= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
+	soundOptionsInfo.back.generic.callback		= UI_SoundOptionsMenu_Event;
+	soundOptionsInfo.back.generic.id			= ID_BACK;
+	soundOptionsInfo.back.generic.x				= 0;
+	soundOptionsInfo.back.generic.y				= 480-64;
 	soundOptionsInfo.back.width					= 128;
 	soundOptionsInfo.back.height				= 64;
 	soundOptionsInfo.back.focuspic				= ART_BACK1;
 
-	soundOptionsInfo.apply.Generic.type			= MTYPE_BITMAP;
-	soundOptionsInfo.apply.Generic.name			= ART_ACCEPT0;
-	soundOptionsInfo.apply.Generic.flags		= QMF_RIGHT_JUSTIFY|QMF_PULSEIFFOCUS|QMF_HIDDEN|QMF_INACTIVE;
-	soundOptionsInfo.apply.Generic.callback		= UI_SoundOptionsMenu_Event;
-	soundOptionsInfo.apply.Generic.id			= ID_APPLY;
-	soundOptionsInfo.apply.Generic.x			= 640;
-	soundOptionsInfo.apply.Generic.y			= 480-64;
+	soundOptionsInfo.apply.generic.type			= MTYPE_BITMAP;
+	soundOptionsInfo.apply.generic.name			= ART_ACCEPT0;
+	soundOptionsInfo.apply.generic.flags		= QMF_RIGHT_JUSTIFY|QMF_PULSEIFFOCUS|QMF_HIDDEN|QMF_INACTIVE;
+	soundOptionsInfo.apply.generic.callback		= UI_SoundOptionsMenu_Event;
+	soundOptionsInfo.apply.generic.id			= ID_APPLY;
+	soundOptionsInfo.apply.generic.x			= 640;
+	soundOptionsInfo.apply.generic.y			= 480-64;
 	soundOptionsInfo.apply.width				= 128;
 	soundOptionsInfo.apply.height				= 64;
 	soundOptionsInfo.apply.focuspic				= ART_ACCEPT1;

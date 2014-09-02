@@ -17,7 +17,7 @@
 #include "jdct.h"		/* Private declarations for DCT subsystem */
 
 
-/* Private subobject for This module */
+/* Private subobject for this module */
 
 typedef struct {
   struct jpeg_forward_dct pub;	/* public fields */
@@ -95,7 +95,7 @@ forward_DCT (j_compress_ptr cinfo, jpeg_component_info * compptr,
 	 *
 	 * In most files, at least half of the output values will be zero
 	 * (at default quantization settings, more like three-quarters...)
-	 * so we should ensure that This case is fast.  On many machines,
+	 * so we should ensure that this case is fast.  On many machines,
 	 * a comparison is enough cheaper than a divide to make a special test
 	 * a win.  Since both inputs will be nonnegative, we need only test
 	 * for a < b to discover whether a/b is 0.
@@ -155,7 +155,7 @@ forward_DCT_float (j_compress_ptr cinfo, jpeg_component_info * compptr,
 	/* Round to nearest integer.
 	 * Since C does not specify the direction of rounding for negative
 	 * quotients, we have to force the dividend positive for portability.
-	 * The maximum coefficient size is +-16K (for 12-bit data), so This
+	 * The maximum coefficient size is +-16K (for 12-bit data), so this
 	 * code should work for either 16-bit or 32-bit ints.
 	 */
 	output_ptr[i] = (JCOEF) ((int) (temp + (FAST_FLOAT) 16384.5) - 16384);
@@ -188,7 +188,7 @@ start_pass_fdctmgr (j_compress_ptr cinfo)
 
   for (ci = 0, compptr = cinfo->comp_info; ci < cinfo->num_components;
        ci++, compptr++) {
-    /* Select the proper DCT routine for This component's scaling */
+    /* Select the proper DCT routine for this component's scaling */
     switch ((compptr->DCT_h_scaled_size << 8) + compptr->DCT_v_scaled_size) {
 #ifdef DCT_SCALING_SUPPORTED
     case ((1 << 8) + 1):
@@ -352,8 +352,8 @@ start_pass_fdctmgr (j_compress_ptr cinfo)
 	cinfo->quant_tbl_ptrs[qtblno] == NULL)
       ERREXIT1(cinfo, JERR_NO_QUANT_TABLE, qtblno);
     qtbl = cinfo->quant_tbl_ptrs[qtblno];
-    /* Compute divisors for This quant table */
-    /* We may do This more than once for same table, but it's not a big deal */
+    /* Compute divisors for this quant table */
+    /* We may do this more than once for same table, but it's not a big deal */
     switch (method) {
 #ifdef PROVIDE_ISLOW_TABLES
     case JDCT_ISLOW:

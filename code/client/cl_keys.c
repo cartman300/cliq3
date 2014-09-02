@@ -52,7 +52,7 @@ typedef struct {
 } keyname_t;
 
 
-// names not in This list can either be lowercase ascii, or '0xnn' hex sequences
+// names not in this list can either be lowercase ascii, or '0xnn' hex sequences
 keyname_t keynames[] =
 {
 	{"TAB", K_TAB},
@@ -788,7 +788,7 @@ Returns a key number to be used to index keys[] by looking at
 the given string.  Single ascii characters return themselves, while
 the K_* names are matched up.
 
-0x11 will be interpreted as raw hex, which will allow New controlers
+0x11 will be interpreted as raw hex, which will allow new controlers
 
 to be configured even if they don't have defined names.
 ===================
@@ -885,10 +885,10 @@ void Key_SetBinding( int keynum, const char *binding ) {
 		Z_Free( keys[ keynum ].binding );
 	}
 		
-	// allocate memory for New binding
+	// allocate memory for new binding
 	keys[keynum].binding = CopyString( binding );
 
-	// consider This like modifying an archived cvar, so the
+	// consider this like modifying an archived cvar, so the
 	// file write will be triggered at the next oportunity
 	cvar_modifiedFlags |= CVAR_ARCHIVE;
 }

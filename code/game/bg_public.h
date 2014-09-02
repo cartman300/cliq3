@@ -99,7 +99,7 @@ typedef enum {
 	GT_TOURNAMENT,		// one on one tournament
 	GT_SINGLE_PLAYER,	// single player ffa
 
-	//-- team games go after This --
+	//-- team games go after this --
 
 	GT_TEAM,			// team deathmatch
 	GT_CTF,				// capture the flag
@@ -116,7 +116,7 @@ typedef enum { GENDER_MALE, GENDER_FEMALE, GENDER_NEUTER } gender_t;
 
 PMOVE MODULE
 
-The pmove code takes a player_state_t and a usercmd_t and generates a New player_state_t
+The pmove code takes a player_state_t and a usercmd_t and generates a new player_state_t
 and some other output data.  Used for local prediction on the client game and true
 movement on the server game.
 ===================================================================================
@@ -208,7 +208,7 @@ typedef enum {
 #endif
 	STAT_WEAPONS,					// 16 bit fields
 	STAT_ARMOR,				
-	STAT_DEAD_YAW,					// look This direction when dead (FIXME: get rid of?)
+	STAT_DEAD_YAW,					// look this direction when dead (FIXME: get rid of?)
 	STAT_CLIENTS_READY,				// bit mask of clients wishing to exit the intermission (FIXME: configstring?)
 	STAT_MAX_HEALTH					// health / armor limit, changable by handicap
 } statIndex_t;
@@ -636,8 +636,8 @@ typedef struct gitem_s {
 
 	int			giTag;
 
-	char		*precaches;		// string of all models and images This item will use
-	char		*sounds;		// string of all sounds This item will use
+	char		*precaches;		// string of all models and images this item will use
+	char		*sounds;		// string of all sounds this item will use
 } gitem_t;
 
 // included in both the game dll and the client
@@ -688,7 +688,7 @@ typedef enum {
 
 	ET_EVENTS				// any of the EV_* events can be added freestanding
 							// by setting eType to ET_EVENTS + eventNum
-							// This avoids having to set eFlags and eventNum
+							// this avoids having to set eFlags and eventNum
 } entityType_t;
 
 
@@ -696,7 +696,7 @@ typedef enum {
 void	BG_EvaluateTrajectory( const trajectory_t *tr, int atTime, vec3_t result );
 void	BG_EvaluateTrajectoryDelta( const trajectory_t *tr, int atTime, vec3_t result );
 
-void	BG_AddPredictableEventToPlayerstate( int NewEvent, int eventParm, playerState_t *ps );
+void	BG_AddPredictableEventToPlayerstate( int newEvent, int eventParm, playerState_t *ps );
 
 void	BG_TouchJumpPad( playerState_t *ps, entityState_t *jumppad );
 

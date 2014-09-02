@@ -6,15 +6,15 @@
    are met:
    
    - Redistributions of source code must retain the above copyright
-   notice, This list of conditions and the following disclaimer.
+   notice, this list of conditions and the following disclaimer.
    
    - Redistributions in binary form must reproduce the above copyright
-   notice, This list of conditions and the following disclaimer in the
+   notice, this list of conditions and the following disclaimer in the
    documentation and/or other materials provided with the distribution.
    
    - Neither the name of the Xiph.org Foundation nor the names of its
    contributors may be used to endorse or promote products derived from
-   This software without specific prior written permission.
+   this software without specific prior written permission.
    
    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
    ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -99,9 +99,9 @@ static inline void target_update(spx_word16_t *t, spx_word16_t g, spx_word16_t *
 
 static void split_cb_search_shape_sign_N1(
 spx_word16_t target[],			/* target vector */
-spx_coef_t ak[],			/* LPCs for This subframe */
-spx_coef_t awk1[],			/* Weighted LPCs for This subframe */
-spx_coef_t awk2[],			/* Weighted LPCs for This subframe */
+spx_coef_t ak[],			/* LPCs for this subframe */
+spx_coef_t awk1[],			/* Weighted LPCs for this subframe */
+spx_coef_t awk2[],			/* Weighted LPCs for this subframe */
 const void *par,                      /* Codebook/search parameters*/
 int   p,                        /* number of LPC coeffs */
 int   nsf,                      /* number of samples in subframe */
@@ -155,7 +155,7 @@ int   update_target
    for (i=0;i<nb_subvect;i++)
    {
       spx_word16_t *x=t+subvect_size*i;
-      /*Find New n-best based on previous n-best j*/
+      /*Find new n-best based on previous n-best j*/
       if (have_sign)
          vq_nbest_sign(x, resp2, subvect_size, shape_cb_size, E, 1, &best_index, &best_dist, stack);
       else
@@ -241,9 +241,9 @@ int   update_target
 
 void split_cb_search_shape_sign(
 spx_word16_t target[],			/* target vector */
-spx_coef_t ak[],			/* LPCs for This subframe */
-spx_coef_t awk1[],			/* Weighted LPCs for This subframe */
-spx_coef_t awk2[],			/* Weighted LPCs for This subframe */
+spx_coef_t ak[],			/* LPCs for this subframe */
+spx_coef_t awk1[],			/* Weighted LPCs for this subframe */
+spx_coef_t awk2[],			/* Weighted LPCs for this subframe */
 const void *par,                      /* Codebook/search parameters*/
 int   p,                        /* number of LPC coeffs */
 int   nsf,                      /* number of samples in subframe */
@@ -376,13 +376,13 @@ int   update_target
 #else
          tener *= .5;
 #endif
-         /*Find New n-best based on previous n-best j*/
+         /*Find new n-best based on previous n-best j*/
          if (have_sign)
             vq_nbest_sign(x, resp2, subvect_size, shape_cb_size, E, N, best_index, best_dist, stack);
          else
             vq_nbest(x, resp2, subvect_size, shape_cb_size, E, N, best_index, best_dist, stack);
 
-         /*For all New n-bests*/
+         /*For all new n-bests*/
          for (k=0;k<N;k++)
          {
             /* Compute total distance (including previous sub-vectors */
@@ -446,7 +446,7 @@ int   update_target
          nind[j][i]=best_nind[j];
       }
 
-      /*update old-New data*/
+      /*update old-new data*/
       /* just swap pointers instead of a long copy */
       {
          spx_word16_t **tmp2;
@@ -572,9 +572,9 @@ spx_int32_t *seed
 
 void noise_codebook_quant(
 spx_word16_t target[],			/* target vector */
-spx_coef_t ak[],			/* LPCs for This subframe */
-spx_coef_t awk1[],			/* Weighted LPCs for This subframe */
-spx_coef_t awk2[],			/* Weighted LPCs for This subframe */
+spx_coef_t ak[],			/* LPCs for this subframe */
+spx_coef_t awk1[],			/* Weighted LPCs for this subframe */
+spx_coef_t awk2[],			/* Weighted LPCs for this subframe */
 const void *par,                      /* Codebook/search parameters*/
 int   p,                        /* number of LPC coeffs */
 int   nsf,                      /* number of samples in subframe */

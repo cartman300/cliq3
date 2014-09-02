@@ -273,10 +273,10 @@ long RllDecodeStereoToStereo(unsigned char *from,short *to,unsigned int size,cha
 	}
 
 	for (z=0;z<size;z+=2) {
-				prevL = (short)(prevL + cin.sqrTable[*zz++]); 
-				prevR = (short)(prevR + cin.sqrTable[*zz++]);
-				to[z+0] = (short)(prevL);
-				to[z+1] = (short)(prevR);
+                prevL = (short)(prevL + cin.sqrTable[*zz++]); 
+                prevR = (short)(prevR + cin.sqrTable[*zz++]);
+                to[z+0] = (short)(prevL);
+                to[z+1] = (short)(prevR);
 	}
 	
 	return (size>>1);	//*sizeof(short));
@@ -421,23 +421,23 @@ static void blit2_32( byte *src, byte *dst, int spl  )
 
 static void blitVQQuad32fs( byte **status, unsigned char *data )
 {
-unsigned short	Newd, celdata, code;
+unsigned short	newd, celdata, code;
 unsigned int	index, i;
 int		spl;
 
-	Newd	= 0;
+	newd	= 0;
 	celdata = 0;
 	index	= 0;
 	
-		spl = cinTable[currentHandle].samplesPerLine;
-		
+        spl = cinTable[currentHandle].samplesPerLine;
+        
 	do {
-		if (!Newd) { 
-			Newd = 7;
+		if (!newd) { 
+			newd = 7;
 			celdata = data[0] + data[1]*256;
 			data += 2;
 		} else {
-			Newd--;
+			newd--;
 		}
 
 		code = (unsigned short)(celdata&0xc000); 
@@ -452,12 +452,12 @@ int		spl;
 			case	0xc000:													// drop
 				index++;													// skip 8x8
 				for(i=0;i<4;i++) {
-					if (!Newd) { 
-						Newd = 7;
+					if (!newd) { 
+						newd = 7;
 						celdata = data[0] + data[1]*256;
 						data += 2;
 					} else {
-						Newd--;
+						newd--;
 					}
 						
 					code = (unsigned short)(celdata&0xc000); celdata <<= 2; 
@@ -526,7 +526,7 @@ static void ROQ_GenYUVTables( void )
 }
 
 #define VQ2TO4(a,b,c,d) { \
-		*c++ = a[0];	\
+    	*c++ = a[0];	\
 	*d++ = a[0];	\
 	*d++ = a[0];	\
 	*c++ = a[1];	\
@@ -985,17 +985,17 @@ static void readQuadInfo( byte *qData )
 	cinTable[currentHandle].t[0] = cinTable[currentHandle].screenDelta;
 	cinTable[currentHandle].t[1] = -cinTable[currentHandle].screenDelta;
 
-		cinTable[currentHandle].drawX = cinTable[currentHandle].CIN_WIDTH;
-		cinTable[currentHandle].drawY = cinTable[currentHandle].CIN_HEIGHT;
-		
+        cinTable[currentHandle].drawX = cinTable[currentHandle].CIN_WIDTH;
+        cinTable[currentHandle].drawY = cinTable[currentHandle].CIN_HEIGHT;
+        
 	// rage pro is very slow at 512 wide textures, voodoo can't do it at all
 	if ( cls.glconfig.hardwareType == GLHW_RAGEPRO || cls.glconfig.maxTextureSize <= 256) {
-				if (cinTable[currentHandle].drawX>256) {
-						cinTable[currentHandle].drawX = 256;
-				}
-				if (cinTable[currentHandle].drawY>256) {
-						cinTable[currentHandle].drawY = 256;
-				}
+                if (cinTable[currentHandle].drawX>256) {
+                        cinTable[currentHandle].drawX = 256;
+                }
+                if (cinTable[currentHandle].drawY>256) {
+                        cinTable[currentHandle].drawY = 256;
+                }
 		if (cinTable[currentHandle].CIN_WIDTH != 256 || cinTable[currentHandle].CIN_HEIGHT != 256) {
 			Com_Printf("HACK: approxmimating cinematic for Rage Pro or Voodoo\n");
 		}
@@ -1091,9 +1091,9 @@ static void RoQReset( void ) {
 static void RoQInterrupt(void)
 {
 	byte				*framedata;
-		short		sbuf[32768];
-		int		ssize;
-		
+        short		sbuf[32768];
+        int		ssize;
+        
 	if (currentHandle < 0) return;
 
 	FS_Read( cin.file, cinTable[currentHandle].RoQFrameSize+8, cinTable[currentHandle].iFile );
@@ -1112,7 +1112,7 @@ static void RoQInterrupt(void)
 
 	framedata = cin.file;
 //
-// New frame is ready
+// new frame is ready
 //
 redump:
 	switch(cinTable[currentHandle].roq_id) 
@@ -1141,7 +1141,7 @@ redump:
 		case	ZA_SOUND_MONO:
 			if (!cinTable[currentHandle].silent) {
 				ssize = RllDecodeMonoToStereo( framedata, sbuf, cinTable[currentHandle].RoQFrameSize, 0, (unsigned short)cinTable[currentHandle].roq_flags);
-								S_RawSamples(0, ssize, 22050, 2, 1, (byte *)sbuf, 1.0f, -1);
+                                S_RawSamples(0, ssize, 22050, 2, 1, (byte *)sbuf, 1.0f, -1);
 			}
 			break;
 		case	ZA_SOUND_STEREO:
@@ -1151,7 +1151,7 @@ redump:
 					s_rawend[0] = s_soundtime;
 				}
 				ssize = RllDecodeStereoToStereo( framedata, sbuf, cinTable[currentHandle].RoQFrameSize, 0, (unsigned short)cinTable[currentHandle].roq_flags);
-								S_RawSamples(0, ssize, 22050, 2, 2, (byte *)sbuf, 1.0f, -1);
+                                S_RawSamples(0, ssize, 22050, 2, 2, (byte *)sbuf, 1.0f, -1);
 			}
 			break;
 		case	ROQ_QUAD_INFO:
@@ -1206,10 +1206,7 @@ redump:
 		}
 		return;
 	}
-	if (cinTable[currentHandle].inMemory && (cinTable[currentHandle].status != FMV_EOF)) {
-		cinTable[currentHandle].inMemory = qfalse; framedata += 8;
-		goto redump;
-	}
+	if (cinTable[currentHandle].inMemory && (cinTable[currentHandle].status != FMV_EOF)) { cinTable[currentHandle].inMemory--; framedata += 8; goto redump; }
 //
 // one more frame hits the dust
 //
@@ -1331,7 +1328,7 @@ Fetch and decompress the pending frame
 e_status CIN_RunCinematic (int handle)
 {
 	int	start = 0;
-	int     ThisTime = 0;
+	int     thisTime = 0;
 
 	if (handle < 0 || handle>= MAX_VIDEO_HANDLES || cinTable[handle].status == FMV_EOF) return FMV_EOF;
 
@@ -1359,9 +1356,9 @@ e_status CIN_RunCinematic (int handle)
 		return cinTable[currentHandle].status;
 	}
 
-	ThisTime = CL_ScaledMilliseconds();
-	if (cinTable[currentHandle].shader && (abs((float)ThisTime - cinTable[currentHandle].lastTime))>100) {
-		cinTable[currentHandle].startTime += ThisTime - cinTable[currentHandle].lastTime;
+	thisTime = CL_ScaledMilliseconds();
+	if (cinTable[currentHandle].shader && (abs(thisTime - cinTable[currentHandle].lastTime))>100) {
+		cinTable[currentHandle].startTime += thisTime - cinTable[currentHandle].lastTime;
 	}
 	cinTable[currentHandle].tfps = (((CL_ScaledMilliseconds() - cinTable[currentHandle].startTime)*3)/100);
 
@@ -1376,7 +1373,7 @@ e_status CIN_RunCinematic (int handle)
 		}
 	}
 
-	cinTable[currentHandle].lastTime = ThisTime;
+	cinTable[currentHandle].lastTime = thisTime;
 
 	if (cinTable[currentHandle].status == FMV_LOOPED) {
 		cinTable[currentHandle].status = FMV_PLAY;
@@ -1585,7 +1582,7 @@ void CIN_DrawCinematic (int handle) {
 	if (cinTable[handle].dirty && (cinTable[handle].CIN_WIDTH != cinTable[handle].drawX || cinTable[handle].CIN_HEIGHT != cinTable[handle].drawY)) {
 		int *buf2;
 
-		buf2 = (int*)Hunk_AllocateTempMemory( 256*256*4 );
+		buf2 = Hunk_AllocateTempMemory( 256*256*4 );
 
 		CIN_ResampleCinematic(handle, buf2);
 
@@ -1671,7 +1668,7 @@ void CIN_UploadCinematic(int handle) {
 		if (cinTable[handle].dirty && (cinTable[handle].CIN_WIDTH != cinTable[handle].drawX || cinTable[handle].CIN_HEIGHT != cinTable[handle].drawY))  {
 			int *buf2;
 
-			buf2 = (int*)Hunk_AllocateTempMemory( 256*256*4 );
+			buf2 = Hunk_AllocateTempMemory( 256*256*4 );
 
 			CIN_ResampleCinematic(handle, buf2);
 

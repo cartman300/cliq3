@@ -323,7 +323,7 @@ int PC_ReadSourceToken(source_t *source, token_t *token)
 				PC_PopIndent(source, &type, &skip);
 			} //end if
 		} //end if
-		//if This was the initial script
+		//if this was the initial script
 		if (!source->scriptstack->next) return qfalse;
 		//remove the script and return to the last one
 		script = source->scriptstack;
@@ -1321,12 +1321,12 @@ define_t *PC_DefineFromString(char *string)
 	PC_InitTokenHeap();
 
 	script = LoadScriptMemory(string, strlen(string), "*extern");
-	//create a New source
+	//create a new source
 	Com_Memset(&src, 0, sizeof(source_t));
 	strncpy(src.filename, "*extern", MAX_PATH);
 	src.scriptstack = script;
 #if DEFINEHASHING
-	src.definehash = (define_t**)GetClearedMemory(DEFINEHASHSIZE * sizeof(define_t *));
+	src.definehash = GetClearedMemory(DEFINEHASHSIZE * sizeof(define_t *));
 #endif //DEFINEHASHING
 	//create a define from the source
 	res = PC_Directive_define(&src);
@@ -1443,40 +1443,40 @@ void PC_RemoveAllGlobalDefines(void)
 //============================================================================
 define_t *PC_CopyDefine(source_t *source, define_t *define)
 {
-	define_t *Newdefine;
-	token_t *token, *Newtoken, *lasttoken;
+	define_t *newdefine;
+	token_t *token, *newtoken, *lasttoken;
 
-	Newdefine = (define_t *) GetMemory(sizeof(define_t));
+	newdefine = (define_t *) GetMemory(sizeof(define_t));
 	//copy the define name
-	Newdefine->name = (char *) GetMemory(strlen(define->name) + 1);
-	strcpy(Newdefine->name, define->name);
-	Newdefine->flags = define->flags;
-	Newdefine->builtin = define->builtin;
-	Newdefine->numparms = define->numparms;
+	newdefine->name = (char *) GetMemory(strlen(define->name) + 1);
+	strcpy(newdefine->name, define->name);
+	newdefine->flags = define->flags;
+	newdefine->builtin = define->builtin;
+	newdefine->numparms = define->numparms;
 	//the define is not linked
-	Newdefine->next = NULL;
-	Newdefine->hashnext = NULL;
+	newdefine->next = NULL;
+	newdefine->hashnext = NULL;
 	//copy the define tokens
-	Newdefine->tokens = NULL;
+	newdefine->tokens = NULL;
 	for (lasttoken = NULL, token = define->tokens; token; token = token->next)
 	{
-		Newtoken = PC_CopyToken(token);
-		Newtoken->next = NULL;
-		if (lasttoken) lasttoken->next = Newtoken;
-		else Newdefine->tokens = Newtoken;
-		lasttoken = Newtoken;
+		newtoken = PC_CopyToken(token);
+		newtoken->next = NULL;
+		if (lasttoken) lasttoken->next = newtoken;
+		else newdefine->tokens = newtoken;
+		lasttoken = newtoken;
 	} //end for
 	//copy the define parameters
-	Newdefine->parms = NULL;
+	newdefine->parms = NULL;
 	for (lasttoken = NULL, token = define->parms; token; token = token->next)
 	{
-		Newtoken = PC_CopyToken(token);
-		Newtoken->next = NULL;
-		if (lasttoken) lasttoken->next = Newtoken;
-		else Newdefine->parms = Newtoken;
-		lasttoken = Newtoken;
+		newtoken = PC_CopyToken(token);
+		newtoken->next = NULL;
+		if (lasttoken) lasttoken->next = newtoken;
+		else newdefine->parms = newtoken;
+		lasttoken = newtoken;
 	} //end for
-	return Newdefine;
+	return newdefine;
 } //end of the function PC_CopyDefine
 //============================================================================
 //
@@ -1486,16 +1486,16 @@ define_t *PC_CopyDefine(source_t *source, define_t *define)
 //============================================================================
 void PC_AddGlobalDefinesToSource(source_t *source)
 {
-	define_t *define, *Newdefine;
+	define_t *define, *newdefine;
 
 	for (define = globaldefines; define; define = define->next)
 	{
-		Newdefine = PC_CopyDefine(source, define);
+		newdefine = PC_CopyDefine(source, define);
 #if DEFINEHASHING
-		PC_AddDefineToHash(Newdefine, source->definehash);
+		PC_AddDefineToHash(newdefine, source->definehash);
 #else //DEFINEHASHING
-		Newdefine->next = source->defines;
-		source->defines = Newdefine;
+		newdefine->next = source->defines;
+		source->defines = newdefine;
 #endif //DEFINEHASHING
 	} //end for
 } //end of the function PC_AddGlobalDefinesToSource
@@ -1601,7 +1601,7 @@ int PC_Directive_endif(source_t *source)
 //============================================================================
 typedef struct operator_s
 {
-	int Operator;
+	int operator;
 	int priority;
 	int parentheses;
 	struct operator_s *prev, *next;
@@ -1908,7 +1908,7 @@ int PC_EvaluateTokens(source_t *source, token_t *tokens, signed long int *intval
 				{
 					//o = (operator_t *) GetClearedMemory(sizeof(operator_t));
 					AllocOperator(o);
-					o->Operator = t->subtype;
+					o->operator = t->subtype;
 					o->priority = PC_OperatorPriority(t->subtype);
 					o->parentheses = parentheses;
 					o->next = NULL;
@@ -1963,8 +1963,8 @@ int PC_EvaluateTokens(source_t *source, token_t *tokens, signed long int *intval
 				if (o->priority >= o->next->priority) break;
 			} //end if
 			//if the arity of the operator isn't equal to 1
-			if (o->Operator != P_LOGIC_NOT
-					&& o->Operator != P_BIN_NOT) v = v->next;
+			if (o->operator != P_LOGIC_NOT
+					&& o->operator != P_BIN_NOT) v = v->next;
 			//if there's no value or no next value
 			if (!v)
 			{
@@ -1988,7 +1988,7 @@ int PC_EvaluateTokens(source_t *source, token_t *tokens, signed long int *intval
 			if (v2) Log_Write("value2 = %f", v2->floatvalue);
 		} //end else
 #endif //DEBUG_EVAL
-		switch(o->Operator)
+		switch(o->operator)
 		{
 			case P_LOGIC_NOT:		v1->intvalue = !v1->intvalue;
 									v1->floatvalue = !v1->floatvalue; break;
@@ -2080,11 +2080,11 @@ int PC_EvaluateTokens(source_t *source, token_t *tokens, signed long int *intval
 #endif //DEBUG_EVAL
 		if (error) break;
 		//if not an operator with arity 1
-		if (o->Operator != P_LOGIC_NOT
-				&& o->Operator != P_BIN_NOT)
+		if (o->operator != P_LOGIC_NOT
+				&& o->operator != P_BIN_NOT)
 		{
 			//remove the second value if not question mark operator
-			if (o->Operator != P_QUESTIONMARK) v = v->next;
+			if (o->operator != P_QUESTIONMARK) v = v->next;
 			//
 			if (v)
 			{
@@ -2736,22 +2736,22 @@ int PC_ReadToken(source_t *source, token_t *token)
 		// recursively concatenate strings that are behind each other still resolving defines
 		if (token->type == TT_STRING)
 		{
-			token_t Newtoken;
-			if (PC_ReadToken(source, &Newtoken))
+			token_t newtoken;
+			if (PC_ReadToken(source, &newtoken))
 			{
-				if (Newtoken.type == TT_STRING)
+				if (newtoken.type == TT_STRING)
 				{
 					token->string[strlen(token->string)-1] = '\0';
-					if (strlen(token->string) + strlen(Newtoken.string+1) + 1 >= MAX_TOKEN)
+					if (strlen(token->string) + strlen(newtoken.string+1) + 1 >= MAX_TOKEN)
 					{
 						SourceError(source, "string longer than MAX_TOKEN %d", MAX_TOKEN);
 						return qfalse;
 					}
-					strcat(token->string, Newtoken.string+1);
+					strcat(token->string, newtoken.string+1);
 				}
 				else
 				{
-					PC_UnreadToken(source, &Newtoken);
+					PC_UnreadToken(source, &newtoken);
 				}
 			}
 		} //end if
@@ -3009,7 +3009,7 @@ source_t *LoadSourceFile(const char *filename)
 	source->skip = 0;
 
 #if DEFINEHASHING
-	source->definehash = (define_t**)GetClearedMemory(DEFINEHASHSIZE * sizeof(define_t *));
+	source->definehash = GetClearedMemory(DEFINEHASHSIZE * sizeof(define_t *));
 #endif //DEFINEHASHING
 	PC_AddGlobalDefinesToSource(source);
 	return source;
@@ -3042,7 +3042,7 @@ source_t *LoadSourceMemory(char *ptr, int length, char *name)
 	source->skip = 0;
 
 #if DEFINEHASHING
-	source->definehash = (define_t**)GetClearedMemory(DEFINEHASHSIZE * sizeof(define_t *));
+	source->definehash = GetClearedMemory(DEFINEHASHSIZE * sizeof(define_t *));
 #endif //DEFINEHASHING
 	PC_AddGlobalDefinesToSource(source);
 	return source;

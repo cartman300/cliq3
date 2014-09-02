@@ -32,7 +32,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
   #include <sys/mman.h> // for PROT_ stuff
 
-  /* need This on NX enabled systems (i386 with PAE kernel or
+  /* need this on NX enabled systems (i386 with PAE kernel or
    * noexec32=on x86_64) */
   #define VM_X86_MMAP
   
@@ -1677,7 +1677,7 @@ void VM_Compile(vm_t *vm, vmHeader_t *header)
 
 	vm->destroy = VM_Destroy_Compiled;
 
-	// offset all the instruction pointers for the New location
+	// offset all the instruction pointers for the new location
 	for ( i = 0 ; i < header->instructionCount ; i++ ) {
 		vm->instructionPointers[i] += (intptr_t) vm->codeBase;
 	}
@@ -1721,7 +1721,7 @@ int VM_CallCompiled(vm_t *vm, int *args)
 	// interpret the code
 	vm->currentlyInterpreting = qtrue;
 
-	// we might be called recursively, so This might not be the very top
+	// we might be called recursively, so this might not be the very top
 	programStack = stackOnEntry = vm->programStack;
 
 	// set up the stack frame 

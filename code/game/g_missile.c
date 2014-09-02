@@ -68,8 +68,6 @@ void G_ExplodeMissile( gentity_t *ent ) {
 	vec3_t		dir;
 	vec3_t		origin;
 
-	ent->takedamage = qfalse;
-
 	BG_EvaluateTrajectory( &ent->s.pos, level.time, origin );
 	SnapVector( origin );
 	G_SetOrigin( ent, origin );
@@ -92,13 +90,6 @@ void G_ExplodeMissile( gentity_t *ent ) {
 	}
 
 	trap_LinkEntity( ent );
-}
-
-void G_DieMissile( gentity_t* self, gentity_t* inf, gentity_t* att, int dmg, int mod ) {
-	if (inf == self) return;
-	self->takedamage = qfalse;
-	self->think = G_ExplodeMissile;
-	self->nextthink = level.time + 10;
 }
 
 
@@ -673,21 +664,12 @@ gentity_t *fire_rocket (gentity_t *self, vec3_t start, vec3_t dir) {
 	bolt->clipmask = MASK_SHOT;
 	bolt->target_ent = NULL;
 
-	bolt->health = 5;
-	bolt->takedamage = qtrue;
-	bolt->die = G_DieMissile;
-	bolt->r.contents = CONTENTS_BODY;
-	VectorSet(bolt->r.mins, -10, -3, 0);
-	VectorCopy(bolt->r.mins, bolt->r.absmin);
-	VectorSet(bolt->r.maxs, 10, 3, 6);
-	VectorCopy(bolt->r.maxs, bolt->r.absmax);
-
 	bolt->s.pos.trType = TR_LINEAR;
 	bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;		// move a bit on the very first frame
 	VectorCopy( start, bolt->s.pos.trBase );
 	VectorScale( dir, 900, bolt->s.pos.trDelta );
 	SnapVector( bolt->s.pos.trDelta );			// save net bandwidth
-	VectorCopy(start, bolt->r.currentOrigin);
+	VectorCopy (start, bolt->r.currentOrigin);
 
 	return bolt;
 }

@@ -346,7 +346,7 @@ int BotExportTest(int parm0, char *parm1, vec3_t parm2, vec3_t parm3)
 #ifdef DEBUG
 	static int area = -1;
 	static int line[2];
-	int Newarea, i, highlightarea, flood;
+	int newarea, i, highlightarea, flood;
 //	int reachnum;
 	vec3_t eye, forward, right, end, origin;
 //	vec3_t bottomcenter;
@@ -381,30 +381,30 @@ int BotExportTest(int parm0, char *parm1, vec3_t parm2, vec3_t parm3)
 //	AAS_ClearShownDebugLines();
 
 	//if (AAS_AgainstLadder(parm2)) botimport.Print(PRT_MESSAGE, "against ladder\n");
-	//BotOnGround(parm2, PRESENCE_NORMAL, 1, &Newarea, &Newarea);
+	//BotOnGround(parm2, PRESENCE_NORMAL, 1, &newarea, &newarea);
 	//botimport.Print(PRT_MESSAGE, "%f %f %f\n", parm2[0], parm2[1], parm2[2]);
 	//*
 	highlightarea = LibVarGetValue("bot_highlightarea");
 	if (highlightarea > 0)
 	{
-		Newarea = highlightarea;
+		newarea = highlightarea;
 	} //end if
 	else
 	{
 		VectorCopy(parm2, origin);
 		origin[2] += 0.5;
-		//Newarea = AAS_PointAreaNum(origin);
-		Newarea = BotFuzzyPointReachabilityArea(origin);
+		//newarea = AAS_PointAreaNum(origin);
+		newarea = BotFuzzyPointReachabilityArea(origin);
 	} //end else
 
 	botimport.Print(PRT_MESSAGE, "\rtravel time to goal (%d) = %d  ", botlibglobals.goalareanum,
-		AAS_AreaTravelTimeToGoalArea(Newarea, origin, botlibglobals.goalareanum, TFL_DEFAULT));
-	//Newarea = BotReachabilityArea(origin, qtrue);
-	if (Newarea != area)
+		AAS_AreaTravelTimeToGoalArea(newarea, origin, botlibglobals.goalareanum, TFL_DEFAULT));
+	//newarea = BotReachabilityArea(origin, qtrue);
+	if (newarea != area)
 	{
 		botimport.Print(PRT_MESSAGE, "origin = %f, %f, %f\n", origin[0], origin[1], origin[2]);
-		area = Newarea;
-		botimport.Print(PRT_MESSAGE, "New area %d, cluster %d, presence type %d\n",
+		area = newarea;
+		botimport.Print(PRT_MESSAGE, "new area %d, cluster %d, presence type %d\n",
 					area, AAS_AreaCluster(area), AAS_PointPresenceType(origin));
 		botimport.Print(PRT_MESSAGE, "area contents: ");
 		if (aasworld.areasettings[area].contents & AREACONTENTS_WATER)
@@ -445,7 +445,7 @@ int BotExportTest(int parm0, char *parm1, vec3_t parm2, vec3_t parm3)
 		} //end if
 		botimport.Print(PRT_MESSAGE, "\n");
 		botimport.Print(PRT_MESSAGE, "travel time to goal (%d) = %d\n", botlibglobals.goalareanum,
-					AAS_AreaTravelTimeToGoalArea(Newarea, origin, botlibglobals.goalareanum, TFL_DEFAULT|TFL_ROCKETJUMP));
+					AAS_AreaTravelTimeToGoalArea(newarea, origin, botlibglobals.goalareanum, TFL_DEFAULT|TFL_ROCKETJUMP));
 		/*
 		VectorCopy(origin, end);
 		end[2] += 5;
@@ -454,10 +454,10 @@ int BotExportTest(int parm0, char *parm1, vec3_t parm2, vec3_t parm3)
 		botimport.Print(PRT_MESSAGE, "num areas = %d, area = %d\n", numareas, areas[0]);
 		*/
 		/*
-		botlibglobals.goalareanum = Newarea;
+		botlibglobals.goalareanum = newarea;
 		VectorCopy(parm2, botlibglobals.goalorigin);
-		botimport.Print(PRT_MESSAGE, "New goal %2.1f %2.1f %2.1f area %d\n",
-								origin[0], origin[1], origin[2], Newarea);
+		botimport.Print(PRT_MESSAGE, "new goal %2.1f %2.1f %2.1f area %d\n",
+								origin[0], origin[1], origin[2], newarea);
 		*/
 	} //end if
 	//*
@@ -472,10 +472,10 @@ int BotExportTest(int parm0, char *parm1, vec3_t parm2, vec3_t parm3)
 		}
 		else
 		{
-			botlibglobals.goalareanum = Newarea;
+			botlibglobals.goalareanum = newarea;
 			VectorCopy(parm2, botlibglobals.goalorigin);
-			botimport.Print(PRT_MESSAGE, "New goal %2.1f %2.1f %2.1f area %d\n",
-									origin[0], origin[1], origin[2], Newarea);
+			botimport.Print(PRT_MESSAGE, "new goal %2.1f %2.1f %2.1f area %d\n",
+									origin[0], origin[1], origin[2], newarea);
 		}
 	} //end if*/
 	if (flood)
@@ -488,7 +488,7 @@ int BotExportTest(int parm0, char *parm1, vec3_t parm2, vec3_t parm3)
 		//* /
 		/*
 		goal.areanum = botlibglobals.goalareanum;
-		reachnum = BotGetReachabilityToGoal(parm2, Newarea, 1,
+		reachnum = BotGetReachabilityToGoal(parm2, newarea, 1,
 										ms.avoidreach, ms.avoidreachtimes,
 										&goal, TFL_DEFAULT);
 		if (!reachnum)
@@ -516,19 +516,19 @@ int BotExportTest(int parm0, char *parm1, vec3_t parm2, vec3_t parm3)
 //		AAS_Reachability_WeaponJump(703, 716);
 //	} //end if*/
 
-/*	face = AAS_AreaGroundFace(Newarea, parm2);
+/*	face = AAS_AreaGroundFace(newarea, parm2);
 	if (face)
 	{
 		AAS_ShowFace(face - aasworld.faces);
 	} //end if*/
 	/*
 	AAS_ClearShownDebugLines();
-	AAS_ShowArea(Newarea, parm0 & BUTTON_USE);
+	AAS_ShowArea(newarea, parm0 & BUTTON_USE);
 	AAS_ShowReachableAreas(area);
 	*/
 	AAS_ClearShownPolygons();
 	AAS_ClearShownDebugLines();
-	AAS_ShowAreaPolygons(Newarea, 1, parm0 & 4);
+	AAS_ShowAreaPolygons(newarea, 1, parm0 & 4);
 	if (parm0 & 2) AAS_ShowReachableAreas(area);
 	else
 	{
@@ -543,7 +543,7 @@ int BotExportTest(int parm0, char *parm1, vec3_t parm2, vec3_t parm3)
 		/*
 		goal.areanum = botlibglobals.goalareanum;
 		VectorCopy(botlibglobals.goalorigin, goal.origin);
-		reachnum = BotGetReachabilityToGoal(origin, Newarea,
+		reachnum = BotGetReachabilityToGoal(origin, newarea,
 									  lastgoalareanum, lastareanum,
 									  avoidreach, avoidreachtimes, avoidreachtries,
 									  &goal, TFL_DEFAULT|TFL_FUNCBOB|TFL_ROCKETJUMP,
@@ -557,7 +557,7 @@ int BotExportTest(int parm0, char *parm1, vec3_t parm2, vec3_t parm3)
 		goal.areanum = botlibglobals.goalareanum;
 		VectorCopy(botlibglobals.goalorigin, goal.origin);
 		VectorCopy(origin, curorigin);
-		curarea = Newarea;
+		curarea = newarea;
 		for ( i = 0; i < 100; i++ ) {
 			if ( curarea == goal.areanum ) {
 				break;

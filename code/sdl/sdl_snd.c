@@ -178,8 +178,8 @@ qboolean SNDDMA_Init(void)
 	if(!desired.freq) desired.freq = 22050;
 	desired.format = ((tmp == 16) ? AUDIO_S16SYS : AUDIO_U8);
 
-	// I dunno if This is the best idea, but I'll give it a try...
-	//  should probably check a cvar for This...
+	// I dunno if this is the best idea, but I'll give it a try...
+	//  should probably check a cvar for this...
 	if (s_sdlDevSamps->value)
 		desired.samples = s_sdlDevSamps->value;
 	else
@@ -213,7 +213,7 @@ qboolean SNDDMA_Init(void)
 	//  the callback runs.
 	// 32768 is what the OSS driver filled in here on my system. I don't
 	//  know if it's a good value overall, but at least we know it's
-	//  reasonable...This is why I let the user override.
+	//  reasonable...this is why I let the user override.
 	tmp = s_sdlMixSamps->value;
 	if (!tmp)
 		tmp = (obtained.samples * obtained.channels) * 10;

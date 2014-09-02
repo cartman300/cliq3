@@ -8,7 +8,7 @@
  *
  * This file contains the inverse-DCT management logic.
  * This code selects a particular IDCT implementation to be used,
- * and it performs related housekeeping chores.  No code in This file
+ * and it performs related housekeeping chores.  No code in this file
  * is executed per IDCT step, only during output pass setup.
  *
  * Note that the IDCT routines are responsible for performing coefficient
@@ -34,12 +34,12 @@
  * multiplier tables if necessary.
  * In buffered-image mode, the first output pass may occur before any data
  * has been seen for some components, and thus before their Q-tables have
- * been saved away.  To handle This case, multiplier tables are preset
+ * been saved away.  To handle this case, multiplier tables are preset
  * to zeroes; the result of the IDCT will be a neutral gray level.
  */
 
 
-/* Private subobject for This module */
+/* Private subobject for this module */
 
 typedef struct {
   struct jpeg_inverse_dct pub;	/* public fields */
@@ -98,7 +98,7 @@ start_pass (j_decompress_ptr cinfo)
 
   for (ci = 0, compptr = cinfo->comp_info; ci < cinfo->num_components;
        ci++, compptr++) {
-    /* Select the proper IDCT routine for This component's scaling */
+    /* Select the proper IDCT routine for this component's scaling */
     switch ((compptr->DCT_h_scaled_size << 8) + compptr->DCT_v_scaled_size) {
 #ifdef IDCT_SCALING_SUPPORTED
     case ((1 << 8) + 1):
@@ -258,7 +258,7 @@ start_pass (j_decompress_ptr cinfo)
     }
     idct->pub.inverse_DCT[ci] = method_ptr;
     /* Create multiplier table from quant table.
-     * However, we can skip This if the component is uninteresting
+     * However, we can skip this if the component is uninteresting
      * or if we already built the table.  Also, if no quant table
      * has yet been saved for the component, we leave the
      * multiplier table all-zero; we'll be reading zeroes from the

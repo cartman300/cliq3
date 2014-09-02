@@ -84,7 +84,7 @@ void CM_ProjectPointOntoVector( vec3_t point, vec3_t vStart, vec3_t vDir, vec3_t
 	vec3_t pVec;
 
 	VectorSubtract( point, vStart, pVec );
-	// project onto the directional vector for This segment
+	// project onto the directional vector for this segment
 	VectorMA( vStart, DotProduct( pVec, vDir ), vDir, vProj );
 }
 
@@ -226,7 +226,7 @@ void CM_TestBoxInBrush( traceWork_t *tw, cbrush_t *brush ) {
 		}
 	}
 
-	// inside This brush
+	// inside this brush
 	tw->trace.startsolid = tw->trace.allsolid = qtrue;
 	tw->trace.fraction = 0;
 	tw->trace.contents = brush->contents;
@@ -250,7 +250,7 @@ void CM_TestInLeaf( traceWork_t *tw, cLeaf_t *leaf ) {
 		brushnum = cm.leafbrushes[leaf->firstLeafBrush+k];
 		b = &cm.brushes[brushnum];
 		if (b->checkcount == cm.checkcount) {
-			continue;	// already checked This brush in another leaf
+			continue;	// already checked this brush in another leaf
 		}
 		b->checkcount = cm.checkcount;
 
@@ -276,7 +276,7 @@ void CM_TestInLeaf( traceWork_t *tw, cLeaf_t *leaf ) {
 				continue;
 			}
 			if ( patch->checkcount == cm.checkcount ) {
-				continue;	// already checked This brush in another leaf
+				continue;	// already checked this brush in another leaf
 			}
 			patch->checkcount = cm.checkcount;
 
@@ -678,7 +678,7 @@ void CM_TraceThroughLeaf( traceWork_t *tw, cLeaf_t *leaf ) {
 
 		b = &cm.brushes[brushnum];
 		if ( b->checkcount == cm.checkcount ) {
-			continue;	// already checked This brush in another leaf
+			continue;	// already checked this brush in another leaf
 		}
 		b->checkcount = cm.checkcount;
 
@@ -709,7 +709,7 @@ void CM_TraceThroughLeaf( traceWork_t *tw, cLeaf_t *leaf ) {
 				continue;
 			}
 			if ( patch->checkcount == cm.checkcount ) {
-				continue;	// already checked This patch in another leaf
+				continue;	// already checked this patch in another leaf
 			}
 			patch->checkcount = cm.checkcount;
 
@@ -1070,7 +1070,7 @@ void CM_TraceThroughTree( traceWork_t *tw, int num, float p1f, float p2f, vec3_t
 		if ( tw->isPoint ) {
 			offset = 0;
 		} else {
-			// This is silly
+			// this is silly
 			offset = 2048;
 		}
 	}
@@ -1437,7 +1437,7 @@ void CM_TransformedBoxTrace( trace_t *results, const vec3_t start, const vec3_t 
 		//		 box that is swept through the model is not rotated. We cannot rotate
 		//		 the bounding box or the bmodel because that would make all the brush
 		//		 bevels invalid.
-		//		 However This is correct for capsules since a capsule itself is rotated too.
+		//		 However this is correct for capsules since a capsule itself is rotated too.
 		CreateRotationMatrix(angles, matrix);
 		RotatePoint(start_l, matrix);
 		RotatePoint(end_l, matrix);

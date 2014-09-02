@@ -29,7 +29,7 @@ typedef struct MD5Context {
 	static void byteReverse(unsigned char *buf, unsigned longs);
 
 	/*
-	 * Note: This code is harmless on little-endian machines.
+	 * Note: this code is harmless on little-endian machines.
 	 */
 	static void byteReverse(unsigned char *buf, unsigned longs)
 	{
@@ -71,9 +71,9 @@ static void MD5Init(struct MD5Context *ctx)
 	( w += f(x, y, z) + data,  w = w<<s | w>>(32-s),  w += x )
 
 /*
- * The core of the MD5 algorithm, This alters an existing MD5 hash to
- * reflect the addition of 16 longwords of New data.  MD5Update blocks
- * the data and converts bytes into longwords for This routine.
+ * The core of the MD5 algorithm, this alters an existing MD5 hash to
+ * reflect the addition of 16 longwords of new data.  MD5Update blocks
+ * the data and converts bytes into longwords for this routine.
  */
 static void MD5Transform(uint32_t buf[4],
 	uint32_t const in[16])

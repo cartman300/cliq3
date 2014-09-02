@@ -29,7 +29,7 @@
  * folded into the multiplications or divisions by the JPEG quantization
  * table entries.  The AA&N method leaves only 5 multiplies and 29 adds
  * to be done in the DCT itself.
- * The primary disadvantage of This method is that with a fixed-point
+ * The primary disadvantage of this method is that with a fixed-point
  * implementation, accuracy is lost due to imprecise representation of the
  * scaled quantization values.  However, that problem does not arise if
  * we use floating point arithmetic.
@@ -48,7 +48,7 @@
  */
 
 #if DCTSIZE != 8
-  Sorry, This code only copes with 8x8 DCTs. /* deliberate syntax err */
+  Sorry, this code only copes with 8x8 DCTs. /* deliberate syntax err */
 #endif
 
 

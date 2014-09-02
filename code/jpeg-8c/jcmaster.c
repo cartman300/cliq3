@@ -45,7 +45,7 @@ typedef my_comp_master * my_master_ptr;
 
 /*
  * Compute JPEG image dimensions and related values.
- * NOTE: This is exported for possible use by application.
+ * NOTE: this is exported for possible use by application.
  * Hence it mustn't do anything that can't be done twice.
  */
 
@@ -296,7 +296,7 @@ initial_setup (j_compress_ptr cinfo, boolean transcode_only)
     /* In selecting the actual DCT scaling for each component, we try to
      * scale down the chroma components via DCT scaling rather than downsampling.
      * This saves time if the downsampler gets to use 1:1 scaling.
-     * Note This code adapts subsampling ratios which are powers of 2.
+     * Note this code adapts subsampling ratios which are powers of 2.
      */
     ssize = 1;
 #ifdef DCT_SCALING_SUPPORTED
@@ -339,7 +339,7 @@ initial_setup (j_compress_ptr cinfo, boolean transcode_only)
       jdiv_round_up((long) cinfo->jpeg_height *
 		    (long) (compptr->v_samp_factor * compptr->DCT_v_scaled_size),
 		    (long) (cinfo->max_v_samp_factor * cinfo->block_size));
-    /* Mark component needed (This flag isn't actually used for compression) */
+    /* Mark component needed (this flag isn't actually used for compression) */
     compptr->component_needed = TRUE;
   }
 
@@ -361,7 +361,7 @@ validate_script (j_compress_ptr cinfo)
  */
 {
   const jpeg_scan_info * scanptr;
-  int scanno, ncomps, ci, coefi, Thisi;
+  int scanno, ncomps, ci, coefi, thisi;
   int Ss, Se, Ah, Al;
   boolean component_sent[MAX_COMPONENTS];
 #ifdef C_PROGRESSIVE_SUPPORTED
@@ -374,7 +374,7 @@ validate_script (j_compress_ptr cinfo)
     ERREXIT1(cinfo, JERR_BAD_SCAN_SCRIPT, 0);
 
   /* For sequential JPEG, all scans must have Ss=0, Se=DCTSIZE2-1;
-   * for progressive JPEG, no scan can have This.
+   * for progressive JPEG, no scan can have this.
    */
   scanptr = cinfo->scan_info;
   if (scanptr->Ss != 0 || scanptr->Se != DCTSIZE2-1) {
@@ -399,11 +399,11 @@ validate_script (j_compress_ptr cinfo)
     if (ncomps <= 0 || ncomps > MAX_COMPS_IN_SCAN)
       ERREXIT2(cinfo, JERR_COMPONENT_COUNT, ncomps, MAX_COMPS_IN_SCAN);
     for (ci = 0; ci < ncomps; ci++) {
-      Thisi = scanptr->component_index[ci];
-      if (Thisi < 0 || Thisi >= cinfo->num_components)
+      thisi = scanptr->component_index[ci];
+      if (thisi < 0 || thisi >= cinfo->num_components)
 	ERREXIT1(cinfo, JERR_BAD_SCAN_SCRIPT, scanno);
       /* Components must appear in SOF order within each scan */
-      if (ci > 0 && Thisi <= scanptr->component_index[ci-1])
+      if (ci > 0 && thisi <= scanptr->component_index[ci-1])
 	ERREXIT1(cinfo, JERR_BAD_SCAN_SCRIPT, scanno);
     }
     /* Validate progression parameters */
@@ -441,7 +441,7 @@ validate_script (j_compress_ptr cinfo)
 	  ERREXIT1(cinfo, JERR_BAD_PROG_SCRIPT, scanno);
 	for (coefi = Ss; coefi <= Se; coefi++) {
 	  if (last_bitpos_ptr[coefi] < 0) {
-	    /* first scan of This coefficient */
+	    /* first scan of this coefficient */
 	    if (Ah != 0)
 	      ERREXIT1(cinfo, JERR_BAD_PROG_SCRIPT, scanno);
 	  } else {
@@ -459,10 +459,10 @@ validate_script (j_compress_ptr cinfo)
 	ERREXIT1(cinfo, JERR_BAD_PROG_SCRIPT, scanno);
       /* Make sure components are not sent twice */
       for (ci = 0; ci < ncomps; ci++) {
-	Thisi = scanptr->component_index[ci];
-	if (component_sent[Thisi])
+	thisi = scanptr->component_index[ci];
+	if (component_sent[thisi])
 	  ERREXIT1(cinfo, JERR_BAD_SCAN_SCRIPT, scanno);
-	component_sent[Thisi] = TRUE;
+	component_sent[thisi] = TRUE;
       }
     }
   }
@@ -498,7 +498,7 @@ reduce_script (j_compress_ptr cinfo)
   jpeg_scan_info * scanptr;
   int idxout, idxin;
 
-  /* Circumvent const declaration for This function */
+  /* Circumvent const declaration for this function */
   scanptr = (jpeg_scan_info *) cinfo->scan_info;
   idxout = 0;
 
@@ -510,7 +510,7 @@ reduce_script (j_compress_ptr cinfo)
        */
       scanptr[idxout] = scanptr[idxin];
     if (scanptr[idxout].Ss > cinfo->lim_Se)
-      /* Entire scan out of range - skip This entry */
+      /* Entire scan out of range - skip this entry */
       continue;
     if (scanptr[idxout].Se > cinfo->lim_Se)
       /* Limit scan to end of block */
@@ -656,7 +656,7 @@ per_scan_setup (j_compress_ptr cinfo)
 /*
  * Per-pass setup.
  * This is called at the beginning of each pass.  We determine which modules
- * will be active during This pass and give them appropriate start_pass calls.
+ * will be active during this pass and give them appropriate start_pass calls.
  * We also set is_last_pass to indicate whether any more passes will be
  * required.
  */
@@ -742,11 +742,11 @@ prepare_for_pass (j_compress_ptr cinfo)
 /*
  * Special start-of-pass hook.
  * This is called by jpeg_write_scanlines if call_pass_startup is TRUE.
- * In single-pass processing, we need This hook because we don't want to
+ * In single-pass processing, we need this hook because we don't want to
  * write frame/scan headers during jpeg_start_compress; we want to let the
  * application write COM markers etc. between jpeg_start_compress and the
  * jpeg_write_scanlines loop.
- * In multi-pass processing, This routine is not used.
+ * In multi-pass processing, this routine is not used.
  */
 
 METHODDEF(void)
@@ -846,7 +846,7 @@ jinit_c_master_control (j_compress_ptr cinfo, boolean transcode_only)
     else
       master->pass_type = output_pass;
   } else {
-    /* for normal compression, first pass is always This type: */
+    /* for normal compression, first pass is always this type: */
     master->pass_type = main_pass;
   }
   master->scan_number = 0;

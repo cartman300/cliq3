@@ -159,7 +159,7 @@ void FreeWeightConfig(weightconfig_t *config)
 //===========================================================================
 fuzzyseperator_t *ReadFuzzySeperators_r(source_t *source)
 {
-	int Newindent, index, def, founddefault;
+	int newindent, index, def, founddefault;
 	token_t token;
 	fuzzyseperator_t *fs, *lastfs, *firstfs;
 
@@ -207,10 +207,10 @@ fuzzyseperator_t *ReadFuzzySeperators_r(source_t *source)
 				FreeFuzzySeperators_r(firstfs);
 				return NULL;
 			} //end if
-			Newindent = qfalse;
+			newindent = qfalse;
 			if (!strcmp(token.string, "{"))
 			{
-				Newindent = qtrue;
+				newindent = qtrue;
 				if (!PC_ExpectAnyToken(source, &token))
 				{
 					FreeFuzzySeperators_r(firstfs);
@@ -239,7 +239,7 @@ fuzzyseperator_t *ReadFuzzySeperators_r(source_t *source)
 				SourceError(source, "invalid name %s", token.string);
 				return NULL;
 			} //end else
-			if (Newindent)
+			if (newindent)
 			{
 				if (!PC_ExpectTokenString(source, "}"))
 				{
@@ -284,7 +284,7 @@ fuzzyseperator_t *ReadFuzzySeperators_r(source_t *source)
 //===========================================================================
 weightconfig_t *ReadWeightConfig(char *filename)
 {
-	int Newindent, avail = 0, n;
+	int newindent, avail = 0, n;
 	token_t token;
 	source_t *source;
 	fuzzyseperator_t *fs;
@@ -359,10 +359,10 @@ weightconfig_t *ReadWeightConfig(char *filename)
 				FreeSource(source);
 				return NULL;
 			} //end if
-			Newindent = qfalse;
+			newindent = qfalse;
 			if (!strcmp(token.string, "{"))
 			{
-				Newindent = qtrue;
+				newindent = qtrue;
 				if (!PC_ExpectAnyToken(source, &token))
 				{
 					FreeWeightConfig(config);
@@ -404,7 +404,7 @@ weightconfig_t *ReadWeightConfig(char *filename)
 				FreeSource(source);
 				return NULL;
 			} //end else
-			if (Newindent)
+			if (newindent)
 			{
 				if (!PC_ExpectTokenString(source, "}"))
 				{

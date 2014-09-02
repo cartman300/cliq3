@@ -334,12 +334,12 @@ int	VM_CallInterpreted( vm_t *vm, int *args ) {
 	// interpret the code
 	vm->currentlyInterpreting = qtrue;
 
-	// we might be called recursively, so This might not be the very top
+	// we might be called recursively, so this might not be the very top
 	programStack = stackOnEntry = vm->programStack;
 
 #ifdef DEBUG_VM
 	profileSymbol = VM_ValueToFunctionSymbol( vm, 0 );
-	// uncomment This for debugging breakpoints
+	// uncomment this for debugging breakpoints
 	vm->breakFunction = 0;
 #endif
 	// set up the stack frame 
@@ -407,7 +407,7 @@ nextInstruction2:
 		switch ( opcode ) {
 #ifdef DEBUG_VM
 		default:
-			Com_Error( ERR_DROP, "Bad VM instruction" );  // This should be scanned on load!
+			Com_Error( ERR_DROP, "Bad VM instruction" );  // this should be scanned on load!
 			return 0;
 #endif
 		case OP_BREAK:
@@ -516,7 +516,7 @@ nextInstruction2:
 				}
 
 #ifdef DEBUG_VM
-				// This is just our stack frame pointer, only needed
+				// this is just our stack frame pointer, only needed
 				// for debugging
 				*(int *)&image[ programStack + 4 ] = stomped;
 #endif
@@ -562,7 +562,7 @@ nextInstruction2:
 			if ( vm_debugLevel ) {
 				Com_Printf( "%s---> %s\n", DEBUGSTR, VM_ValueToSymbol( vm, programCounter - 5 ) );
 				if ( vm->breakFunction && programCounter - 5 == vm->breakFunction ) {
-					// This is to allow setting breakpoints here in the debugger
+					// this is to allow setting breakpoints here in the debugger
 					vm->breakCount++;
 //					vm_debugLevel = 2;
 //					VM_StackTrace( vm, programCounter, programStack );

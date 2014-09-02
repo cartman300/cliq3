@@ -63,14 +63,14 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
   area routing cache:
   stores the distances within one cluster to a specific goal area
-  This goal area is in This same cluster and could be a cluster portal
+  this goal area is in this same cluster and could be a cluster portal
   for every cluster there's a list with routing cache for every area
   in that cluster (including the portals of that cluster)
   area cache stores aasworld.clusters[?].numreachabilityareas travel times
 
   portal routing cache:
   stores the distances of all portals to a specific goal area
-  This goal area could be in any cluster and could also be a cluster portal
+  this goal area could be in any cluster and could also be a cluster portal
   for every area (aasworld.numareas) the portal cache stores
   aasworld.numportals travel times
 
@@ -199,7 +199,7 @@ int AAS_TravelFlagForType(int traveltype)
 void AAS_UnlinkCache(aas_routingcache_t *cache)
 {
 	if (cache->time_next) cache->time_next->time_prev = cache->time_prev;
-	else aasworld.Newestcache = cache->time_prev;
+	else aasworld.newestcache = cache->time_prev;
 	if (cache->time_prev) cache->time_prev->time_next = cache->time_next;
 	else aasworld.oldestcache = cache->time_next;
 	cache->time_next = NULL;
@@ -213,10 +213,10 @@ void AAS_UnlinkCache(aas_routingcache_t *cache)
 //===========================================================================
 void AAS_LinkCache(aas_routingcache_t *cache)
 {
-	if (aasworld.Newestcache)
+	if (aasworld.newestcache)
 	{
-		aasworld.Newestcache->time_next = cache;
-		cache->time_prev = aasworld.Newestcache;
+		aasworld.newestcache->time_next = cache;
+		cache->time_prev = aasworld.newestcache;
 	} //end if
 	else
 	{
@@ -224,7 +224,7 @@ void AAS_LinkCache(aas_routingcache_t *cache)
 		cache->time_prev = NULL;
 	} //end else
 	cache->time_next = NULL;
-	aasworld.Newestcache = cache;
+	aasworld.newestcache = cache;
 } //end of the function AAS_LinkCache
 //===========================================================================
 //
@@ -282,7 +282,7 @@ void AAS_RemoveRoutingCacheUsingArea( int areanum )
 	} //end if
 	else
 	{
-		// if This is a portal remove all cache in both the front and back cluster
+		// if this is a portal remove all cache in both the front and back cluster
 		AAS_RemoveRoutingCacheInCluster( aasworld.portals[-clusternum].frontcluster );
 		AAS_RemoveRoutingCacheInCluster( aasworld.portals[-clusternum].backcluster );
 	} //end else
@@ -327,7 +327,7 @@ int AAS_EnableRoutingArea(int areanum, int enable)
 	// if the status of the area changed
 	if ( (flags & AREA_DISABLED) != (aasworld.areasettings[areanum].areaflags & AREA_DISABLED) )
 	{
-		//remove all routing cache involving This area
+		//remove all routing cache involving this area
 		AAS_RemoveRoutingCacheUsingArea( areanum );
 	} //end if
 	return !flags;
@@ -532,7 +532,7 @@ void AAS_CalculateAreaTravelTimes(void)
 	//calcluate the travel times for all the areas
 	for (i = 0; i < aasworld.numareas; i++)
 	{
-		//reversed reachabilities of This area
+		//reversed reachabilities of this area
 		revreach = &aasworld.reversedreachability[i];
 		//settings of the area
 		settings = &aasworld.areasettings[i];
@@ -574,7 +574,7 @@ int AAS_PortalMaxTravelTime(int portalnum)
 	aas_areasettings_t *settings;
 
 	portal = &aasworld.portals[portalnum];
-	//reversed reachabilities of This portal area
+	//reversed reachabilities of this portal area
 	revreach = &aasworld.reversedreachability[portal->areanum];
 	//settings of the portal area
 	settings = &aasworld.areasettings[portal->areanum];
@@ -640,7 +640,7 @@ int AAS_FreeOldestCache(void)
 			{
 				//never remove cache leading towards a portal
 				if (aasworld.areasettings[cache->areanum].cluster < 0) continue;
-				//if This cache is older than the cache we found so far
+				//if this cache is older than the cache we found so far
 				if (cache->time < besttime)
 				{
 					bestcache = cache;
@@ -915,7 +915,7 @@ void AAS_CreateAllRoutingCache(void)
 //===========================================================================
 
 //the route cache header
-//This header is followed by numportalcache + numareacache aas_routingcache_t
+//this header is followed by numportalcache + numareacache aas_routingcache_t
 //structures that store routing cache
 typedef struct routecacheheader_s
 {
@@ -1302,7 +1302,7 @@ void AAS_UpdateAreaRoutingCache(aas_routingcache_t *areacache)
 #ifdef ROUTING_DEBUG
 	numareacacheupdates++;
 #endif //ROUTING_DEBUG
-	//number of reachability areas within This cluster
+	//number of reachability areas within this cluster
 	numreachabilityareas = aasworld.clusters[areacache->cluster].numreachabilityareas;
 	//
 	aasworld.frameroutingupdates++;
@@ -1496,7 +1496,7 @@ void AAS_UpdatePortalRoutingCache(aas_routingcache_t *portalcache)
 		{
 			portalnum = aasworld.portalindex[cluster->firstportal + i];
 			portal = &aasworld.portals[portalnum];
-			//if This is the portal of the current update continue
+			//if this is the portal of the current update continue
 			if (portal->areanum == curupdate->areanum) continue;
 			//
 			clusterareanum = AAS_ClusterAreaNum(curupdate->cluster, portal->areanum);
@@ -1674,7 +1674,7 @@ int AAS_AreaRouteToGoalArea(int areanum, vec3_t origin, int goalareanum, int tra
 		cluster = &aasworld.clusters[clusternum];
 		//if the area is NOT a reachability area
 		if (clusterareanum >= cluster->numreachabilityareas) return 0;
-		//if it is possible to travel to the goal area through This cluster
+		//if it is possible to travel to the goal area through this cluster
 		if (areacache->traveltimes[clusterareanum] != 0)
 		{
 			*reachnum = aasworld.areasettings[areanum].firstreachablearea +
@@ -1729,7 +1729,7 @@ int AAS_AreaRouteToGoalArea(int areanum, vec3_t origin, int goalareanum, int tra
 		clusterareanum = AAS_ClusterAreaNum(clusternum, areanum);
 		//if the area is NOT a reachability area
 		if (clusterareanum >= cluster->numreachabilityareas) continue;
-		//if the portal is NOT reachable from This area
+		//if the portal is NOT reachable from this area
 		if (!areacache->traveltimes[clusterareanum]) continue;
 		//total travel time is the travel time the portal area is from
 		//the goal area plus the travel time towards the portal area
@@ -2140,7 +2140,7 @@ int AAS_NearestHideArea(int srcnum, vec3_t origin, int areanum, int enemynum, ve
 			if (AAS_AreaContentsTravelFlags_inline(reach->areanum) & badtravelflags) continue;
 			//number of the area the reachability leads to
 			nextareanum = reach->areanum;
-			// if This moves us into the enemies area, skip it
+			// if this moves us into the enemies area, skip it
 			if (nextareanum == enemyareanum) continue;
 			//time already travelled plus the traveltime through
 			//the current area plus the travel time from the reachability
@@ -2193,12 +2193,12 @@ int AAS_NearestHideArea(int srcnum, vec3_t origin, int areanum, int enemynum, ve
 				nextupdate = &aasworld.areaupdate[nextareanum];
 				nextupdate->areanum = nextareanum;
 				nextupdate->tmptraveltime = t;
-				//remember where we entered This area
+				//remember where we entered this area
 				VectorCopy(reach->end, nextupdate->start);
-				//if This update is not in the list yet
+				//if this update is not in the list yet
 				if (!nextupdate->inlist)
 				{
-					//add the New update to the end of the list
+					//add the new update to the end of the list
 					nextupdate->next = NULL;
 					nextupdate->prev = updatelistend;
 					if (updatelistend) updatelistend->next = nextupdate;

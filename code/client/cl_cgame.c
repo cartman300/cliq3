@@ -211,7 +211,7 @@ void CL_ConfigstringModified( void ) {
 		return;		// unchanged
 	}
 
-	// build the New gameState_t
+	// build the new gameState_t
 	oldGs = cl.gameState;
 
 	Com_Memset( &cl.gameState, 0, sizeof( cl.gameState ) );
@@ -418,27 +418,27 @@ intptr_t CL_CgameSystemCalls( intptr_t *args ) {
 	case CG_MILLISECONDS:
 		return Sys_Milliseconds();
 	case CG_CVAR_REGISTER:
-		Cvar_Register( (vmCvar_t*)VMA(1), (const char*)VMA(2), (const char*)VMA(3), args[4] ); 
+		Cvar_Register( VMA(1), VMA(2), VMA(3), args[4] ); 
 		return 0;
 	case CG_CVAR_UPDATE:
-		Cvar_Update( (vmCvar_t*)VMA(1) );
+		Cvar_Update( VMA(1) );
 		return 0;
 	case CG_CVAR_SET:
-		Cvar_SetSafe( (const char*)VMA(1), (const char*)VMA(2) );
+		Cvar_SetSafe( VMA(1), VMA(2) );
 		return 0;
 	case CG_CVAR_VARIABLESTRINGBUFFER:
-		Cvar_VariableStringBuffer( (const char*)VMA(1), (char*)VMA(2), args[3] );
+		Cvar_VariableStringBuffer( VMA(1), VMA(2), args[3] );
 		return 0;
 	case CG_ARGC:
 		return Cmd_Argc();
 	case CG_ARGV:
-		Cmd_ArgvBuffer( args[1], (char*)VMA(2), args[3] );
+		Cmd_ArgvBuffer( args[1], VMA(2), args[3] );
 		return 0;
 	case CG_ARGS:
-		Cmd_ArgsBuffer( (char*)VMA(1), args[2] );
+		Cmd_ArgsBuffer( VMA(1), args[2] );
 		return 0;
 	case CG_FS_FOPENFILE:
-		return FS_FOpenFileByMode( (const char*)VMA(1), (fileHandle_t*)VMA(2), (fsMode_t)args[3] );
+		return FS_FOpenFileByMode( VMA(1), VMA(2), args[3] );
 	case CG_FS_READ:
 		FS_Read2( VMA(1), args[2], args[3] );
 		return 0;
@@ -451,56 +451,56 @@ intptr_t CL_CgameSystemCalls( intptr_t *args ) {
 	case CG_FS_SEEK:
 		return FS_Seek( args[1], args[2], args[3] );
 	case CG_SENDCONSOLECOMMAND:
-		Cbuf_AddText( (const char*)VMA(1) );
+		Cbuf_AddText( VMA(1) );
 		return 0;
 	case CG_ADDCOMMAND:
-		CL_AddCgameCommand( (const char*)VMA(1) );
+		CL_AddCgameCommand( VMA(1) );
 		return 0;
 	case CG_REMOVECOMMAND:
-		Cmd_RemoveCommandSafe( (const char*)VMA(1) );
+		Cmd_RemoveCommandSafe( VMA(1) );
 		return 0;
 	case CG_SENDCLIENTCOMMAND:
-		CL_AddReliableCommand((const char*)VMA(1), qfalse);
+		CL_AddReliableCommand(VMA(1), qfalse);
 		return 0;
 	case CG_UPDATESCREEN:
-		// This is used during lengthy level loading, so pump message loop
+		// this is used during lengthy level loading, so pump message loop
 //		Com_EventLoop();	// FIXME: if a server restarts here, BAD THINGS HAPPEN!
-// We can't call Com_EventLoop here, a restart will crash and This _does_ happen
+// We can't call Com_EventLoop here, a restart will crash and this _does_ happen
 // if there is a map change while we are downloading at pk3.
 // ZOID
 		SCR_UpdateScreen();
 		return 0;
 	case CG_CM_LOADMAP:
-		CL_CM_LoadMap( (const char*)VMA(1) );
+		CL_CM_LoadMap( VMA(1) );
 		return 0;
 	case CG_CM_NUMINLINEMODELS:
 		return CM_NumInlineModels();
 	case CG_CM_INLINEMODEL:
 		return CM_InlineModel( args[1] );
 	case CG_CM_TEMPBOXMODEL:
-		return CM_TempBoxModel( (const vec_t*)VMA(1), (const vec_t*)VMA(2), /*int capsule*/ qfalse );
+		return CM_TempBoxModel( VMA(1), VMA(2), /*int capsule*/ qfalse );
 	case CG_CM_TEMPCAPSULEMODEL:
-		return CM_TempBoxModel( (const vec_t*)VMA(1), (const vec_t*)VMA(2), /*int capsule*/ qtrue );
+		return CM_TempBoxModel( VMA(1), VMA(2), /*int capsule*/ qtrue );
 	case CG_CM_POINTCONTENTS:
-		return CM_PointContents( (const vec_t*)VMA(1), args[2] );
+		return CM_PointContents( VMA(1), args[2] );
 	case CG_CM_TRANSFORMEDPOINTCONTENTS:
-		return CM_TransformedPointContents( (const vec_t*)VMA(1), args[2], (const vec_t*)VMA(3), (const vec_t*)VMA(4) );
+		return CM_TransformedPointContents( VMA(1), args[2], VMA(3), VMA(4) );
 	case CG_CM_BOXTRACE:
-		CM_BoxTrace( (trace_t*)VMA(1), (const vec_t*)VMA(2), (const vec_t*)VMA(3), (vec_t*)VMA(4), (vec_t*)VMA(5), args[6], args[7], /*int capsule*/ qfalse );
+		CM_BoxTrace( VMA(1), VMA(2), VMA(3), VMA(4), VMA(5), args[6], args[7], /*int capsule*/ qfalse );
 		return 0;
 	case CG_CM_CAPSULETRACE:
-		CM_BoxTrace( (trace_t*)VMA(1), (const vec_t*)VMA(2), (const vec_t*)VMA(3), (vec_t*)VMA(4), (vec_t*)VMA(5), args[6], args[7], /*int capsule*/ qtrue );
+		CM_BoxTrace( VMA(1), VMA(2), VMA(3), VMA(4), VMA(5), args[6], args[7], /*int capsule*/ qtrue );
 		return 0;
 	case CG_CM_TRANSFORMEDBOXTRACE:
-		CM_TransformedBoxTrace( (trace_t*)VMA(1), (const vec_t*)VMA(2), (const vec_t*)VMA(3), (vec_t*)VMA(4), (vec_t*)VMA(5), args[6], args[7], (const vec_t*)VMA(8), (const vec_t*)VMA(9), /*int capsule*/ qfalse );
+		CM_TransformedBoxTrace( VMA(1), VMA(2), VMA(3), VMA(4), VMA(5), args[6], args[7], VMA(8), VMA(9), /*int capsule*/ qfalse );
 		return 0;
 	case CG_CM_TRANSFORMEDCAPSULETRACE:
-		CM_TransformedBoxTrace( (trace_t*)VMA(1), (const vec_t*)VMA(2), (const vec_t*)VMA(3), (vec_t*)VMA(4), (vec_t*)VMA(5), args[6], args[7], (const vec_t*)VMA(8), (const vec_t*)VMA(9), /*int capsule*/ qtrue );
+		CM_TransformedBoxTrace( VMA(1), VMA(2), VMA(3), VMA(4), VMA(5), args[6], args[7], VMA(8), VMA(9), /*int capsule*/ qtrue );
 		return 0;
 	case CG_CM_MARKFRAGMENTS:
-		return re.MarkFragments( args[1], (const vec3_t*)VMA(2), (const vec_t*)VMA(3), args[4], (vec_t*)VMA(5), args[6], (markFragment_t*)VMA(7) );
+		return re.MarkFragments( args[1], VMA(2), VMA(3), args[4], VMA(5), args[6], VMA(7) );
 	case CG_S_STARTSOUND:
-		S_StartSound( (vec_t*)VMA(1), args[2], args[3], args[4] );
+		S_StartSound( VMA(1), args[2], args[3], args[4] );
 		return 0;
 	case CG_S_STARTLOCALSOUND:
 		S_StartLocalSound( args[1], args[2] );
@@ -509,90 +509,90 @@ intptr_t CL_CgameSystemCalls( intptr_t *args ) {
 		S_ClearLoopingSounds(args[1]);
 		return 0;
 	case CG_S_ADDLOOPINGSOUND:
-		S_AddLoopingSound( args[1], (const vec_t*)VMA(2), (const vec_t*)VMA(3), args[4] );
+		S_AddLoopingSound( args[1], VMA(2), VMA(3), args[4] );
 		return 0;
 	case CG_S_ADDREALLOOPINGSOUND:
-		S_AddRealLoopingSound( args[1], (const vec_t*)VMA(2), (const vec_t*)VMA(3), args[4] );
+		S_AddRealLoopingSound( args[1], VMA(2), VMA(3), args[4] );
 		return 0;
 	case CG_S_STOPLOOPINGSOUND:
 		S_StopLoopingSound( args[1] );
 		return 0;
 	case CG_S_UPDATEENTITYPOSITION:
-		S_UpdateEntityPosition( args[1], (const vec_t*)VMA(2) );
+		S_UpdateEntityPosition( args[1], VMA(2) );
 		return 0;
 	case CG_S_RESPATIALIZE:
-		S_Respatialize( args[1], (const vec_t*)VMA(2), (vec3_t*)VMA(3), args[4] );
+		S_Respatialize( args[1], VMA(2), VMA(3), args[4] );
 		return 0;
 	case CG_S_REGISTERSOUND:
-		return S_RegisterSound( (const char*)VMA(1), args[2] );
+		return S_RegisterSound( VMA(1), args[2] );
 	case CG_S_STARTBACKGROUNDTRACK:
-		S_StartBackgroundTrack( (const char*)VMA(1), (const char*)VMA(2) );
+		S_StartBackgroundTrack( VMA(1), VMA(2) );
 		return 0;
 	case CG_R_LOADWORLDMAP:
-		re.LoadWorld( (const char*)VMA(1) );
+		re.LoadWorld( VMA(1) );
 		return 0; 
 	case CG_R_REGISTERMODEL:
-		return re.RegisterModel( (const char*)VMA(1) );
+		return re.RegisterModel( VMA(1) );
 	case CG_R_REGISTERSKIN:
-		return re.RegisterSkin( (const char*)VMA(1) );
+		return re.RegisterSkin( VMA(1) );
 	case CG_R_REGISTERSHADER:
-		return re.RegisterShader( (const char*)VMA(1) );
+		return re.RegisterShader( VMA(1) );
 	case CG_R_REGISTERSHADERNOMIP:
-		return re.RegisterShaderNoMip( (const char*)VMA(1) );
+		return re.RegisterShaderNoMip( VMA(1) );
 	case CG_R_REGISTERFONT:
-		re.RegisterFont( (const char*)VMA(1), args[2], (fontInfo_t*)VMA(3));
+		re.RegisterFont( VMA(1), args[2], VMA(3));
 		return 0;
 	case CG_R_CLEARSCENE:
 		re.ClearScene();
 		return 0;
 	case CG_R_ADDREFENTITYTOSCENE:
-		re.AddRefEntityToScene( (const refEntity_t*)VMA(1) );
+		re.AddRefEntityToScene( VMA(1) );
 		return 0;
 	case CG_R_ADDPOLYTOSCENE:
-		re.AddPolyToScene( args[1], args[2], (const polyVert_t*)VMA(3), 1 );
+		re.AddPolyToScene( args[1], args[2], VMA(3), 1 );
 		return 0;
 	case CG_R_ADDPOLYSTOSCENE:
-		re.AddPolyToScene( args[1], args[2], (const polyVert_t*)VMA(3), args[4] );
+		re.AddPolyToScene( args[1], args[2], VMA(3), args[4] );
 		return 0;
 	case CG_R_LIGHTFORPOINT:
-		return re.LightForPoint( (vec_t*)VMA(1), (vec_t*)VMA(2), (vec_t*)VMA(3), (vec_t*)VMA(4) );
+		return re.LightForPoint( VMA(1), VMA(2), VMA(3), VMA(4) );
 	case CG_R_ADDLIGHTTOSCENE:
-		re.AddLightToScene( (const vec_t*)VMA(1), VMF(2), VMF(3), VMF(4), VMF(5) );
+		re.AddLightToScene( VMA(1), VMF(2), VMF(3), VMF(4), VMF(5) );
 		return 0;
 	case CG_R_ADDADDITIVELIGHTTOSCENE:
-		re.AddAdditiveLightToScene( (const vec_t*)VMA(1), VMF(2), VMF(3), VMF(4), VMF(5) );
+		re.AddAdditiveLightToScene( VMA(1), VMF(2), VMF(3), VMF(4), VMF(5) );
 		return 0;
 	case CG_R_RENDERSCENE:
-		re.RenderScene( (const refdef_t*)VMA(1) );
+		re.RenderScene( VMA(1) );
 		return 0;
 	case CG_R_SETCOLOR:
-		re.SetColor( (const float*)VMA(1) );
+		re.SetColor( VMA(1) );
 		return 0;
 	case CG_R_DRAWSTRETCHPIC:
 		re.DrawStretchPic( VMF(1), VMF(2), VMF(3), VMF(4), VMF(5), VMF(6), VMF(7), VMF(8), args[9] );
 		return 0;
 	case CG_R_MODELBOUNDS:
-		re.ModelBounds( args[1], (vec_t*)VMA(2), (vec_t*)VMA(3) );
+		re.ModelBounds( args[1], VMA(2), VMA(3) );
 		return 0;
 	case CG_R_LERPTAG:
-		return re.LerpTag( (orientation_t*)VMA(1), args[2], args[3], args[4], VMF(5), (const char*)VMA(6) );
+		return re.LerpTag( VMA(1), args[2], args[3], args[4], VMF(5), VMA(6) );
 	case CG_GETGLCONFIG:
-		CL_GetGlconfig( (glconfig_t*)VMA(1) );
+		CL_GetGlconfig( VMA(1) );
 		return 0;
 	case CG_GETGAMESTATE:
-		CL_GetGameState( (gameState_t*)VMA(1) );
+		CL_GetGameState( VMA(1) );
 		return 0;
 	case CG_GETCURRENTSNAPSHOTNUMBER:
-		CL_GetCurrentSnapshotNumber( (int*)VMA(1), (int*)VMA(2) );
+		CL_GetCurrentSnapshotNumber( VMA(1), VMA(2) );
 		return 0;
 	case CG_GETSNAPSHOT:
-		return CL_GetSnapshot( args[1], (snapshot_t*)VMA(2) );
+		return CL_GetSnapshot( args[1], VMA(2) );
 	case CG_GETSERVERCOMMAND:
 		return CL_GetServerCommand( args[1] );
 	case CG_GETCURRENTCMDNUMBER:
 		return CL_GetCurrentCmdNumber();
 	case CG_GETUSERCMD:
-		return CL_GetUserCmd( args[1], (usercmd_t*)VMA(2) );
+		return CL_GetUserCmd( args[1], VMA(2) );
 	case CG_SETUSERCMDVALUE:
 		CL_SetUserCmdValue( args[1], VMF(2) );
 		return 0;
@@ -605,9 +605,9 @@ intptr_t CL_CgameSystemCalls( intptr_t *args ) {
   case CG_KEY_SETCATCHER:
 		// Don't allow the cgame module to close the console
 		Key_SetCatcher( args[1] | ( Key_GetCatcher( ) & KEYCATCH_CONSOLE ) );
-	return 0;
+    return 0;
   case CG_KEY_GETKEY:
-		return Key_GetKey( (const char*)VMA(1) );
+		return Key_GetKey( VMA(1) );
 
 
 
@@ -618,7 +618,7 @@ intptr_t CL_CgameSystemCalls( intptr_t *args ) {
 		Com_Memcpy( VMA(1), VMA(2), args[3] );
 		return 0;
 	case CG_STRNCPY:
-		strncpy( (char*)VMA(1), (const char*)VMA(2), args[3] );
+		strncpy( VMA(1), VMA(2), args[3] );
 		return args[1];
 	case CG_SIN:
 		return FloatAsInt( sin( VMF(1) ) );
@@ -636,28 +636,28 @@ intptr_t CL_CgameSystemCalls( intptr_t *args ) {
 		return FloatAsInt( Q_acos( VMF(1) ) );
 
 	case CG_PC_ADD_GLOBAL_DEFINE:
-		return botlib_export->PC_AddGlobalDefine( (char*)VMA(1) );
+		return botlib_export->PC_AddGlobalDefine( VMA(1) );
 	case CG_PC_LOAD_SOURCE:
-		return botlib_export->PC_LoadSourceHandle( (char*)VMA(1) );
+		return botlib_export->PC_LoadSourceHandle( VMA(1) );
 	case CG_PC_FREE_SOURCE:
 		return botlib_export->PC_FreeSourceHandle( args[1] );
 	case CG_PC_READ_TOKEN:
-		return botlib_export->PC_ReadTokenHandle( args[1], (pc_token_t*)VMA(2) );
+		return botlib_export->PC_ReadTokenHandle( args[1], VMA(2) );
 	case CG_PC_SOURCE_FILE_AND_LINE:
-		return botlib_export->PC_SourceFileAndLine( args[1], (char*)VMA(2), (int*)VMA(3) );
+		return botlib_export->PC_SourceFileAndLine( args[1], VMA(2), VMA(3) );
 
 	case CG_S_STOPBACKGROUNDTRACK:
 		S_StopBackgroundTrack();
 		return 0;
 
 	case CG_REAL_TIME:
-		return Com_RealTime( (qtime_t*)VMA(1) );
+		return Com_RealTime( VMA(1) );
 	case CG_SNAPVECTOR:
-		Q_SnapVector((vec_t*)VMA(1));
+		Q_SnapVector(VMA(1));
 		return 0;
 
 	case CG_CIN_PLAYCINEMATIC:
-	  return CIN_PlayCinematic((const char*)VMA(1), args[2], args[3], args[4], args[5], args[6]);
+	  return CIN_PlayCinematic(VMA(1), args[2], args[3], args[4], args[5], args[6]);
 
 	case CG_CIN_STOPCINEMATIC:
 	  return CIN_StopCinematic(args[1]);
@@ -674,7 +674,7 @@ intptr_t CL_CgameSystemCalls( intptr_t *args ) {
 	  return 0;
 
 	case CG_R_REMAP_SHADER:
-		re.RemapShader( (const char*)VMA(1), (const char*)VMA(2), (const char*)VMA(3) );
+		re.RemapShader( VMA(1), VMA(2), VMA(3) );
 		return 0;
 
 /*
@@ -689,12 +689,12 @@ intptr_t CL_CgameSystemCalls( intptr_t *args ) {
 		return getCameraInfo(args[1], VMA(2), VMA(3));
 */
 	case CG_GET_ENTITY_TOKEN:
-		return re.GetEntityToken( (char*)VMA(1), args[2] );
+		return re.GetEntityToken( VMA(1), args[2] );
 	case CG_R_INPVS:
-		return re.inPVS( (const vec_t*)VMA(1), (const vec_t*)VMA(2) );
+		return re.inPVS( VMA(1), VMA(2) );
 
 	default:
-			assert(0);
+	        assert(0);
 		Com_Error( ERR_DROP, "Bad cgame system trap: %ld", (long int) args[0] );
 	}
 	return 0;
@@ -725,7 +725,7 @@ void CL_InitCGame( void ) {
 	Com_sprintf( cl.mapname, sizeof( cl.mapname ), "maps/%s.bsp", mapname );
 
 	// load the dll or bytecode
-	interpret = (vmInterpret_t)(int)Cvar_VariableValue("vm_cgame");
+	interpret = Cvar_VariableValue("vm_cgame");
 	if(cl_connectedToPureServer)
 	{
 		// if sv_pure is set we only allow qvms to be loaded
@@ -739,7 +739,7 @@ void CL_InitCGame( void ) {
 	}
 	clc.state = CA_LOADING;
 
-	// init for This gamestate
+	// init for this gamestate
 	// use the lastExecutedServerCommand instead of the serverCommandSequence
 	// otherwise server commands sent just before a gamestate are dropped
 	VM_Call( cgvm, CG_INIT, clc.serverMessageSequence, clc.lastExecutedServerCommand, clc.clientNum );
@@ -748,7 +748,7 @@ void CL_InitCGame( void ) {
 	if ( !clc.demoplaying && !cl_connectedToCheatServer )
 		Cvar_SetCheatState();
 
-	// we will send a usercmd This frame, which
+	// we will send a usercmd this frame, which
 	// will cause the server to send us the first snapshot
 	clc.state = CA_PRIMED;
 
@@ -811,7 +811,7 @@ the internet it will often need to drift a bit to match conditions.
 Our ideal time would be to have the adjusted time approach, but not pass,
 the very latest snapshot.
 
-Adjustments are only made when a New snapshot arrives with a rational
+Adjustments are only made when a new snapshot arrives with a rational
 latency, which keeps the adjustment process framerate independent and
 prevents massive overadjustment during times of significant packet loss
 or bursted delayed packets.
@@ -821,22 +821,22 @@ or bursted delayed packets.
 #define	RESET_TIME	500
 
 void CL_AdjustTimeDelta( void ) {
-	int		NewDelta;
+	int		newDelta;
 	int		deltaDelta;
 
-	cl.NewSnapshots = qfalse;
+	cl.newSnapshots = qfalse;
 
 	// the delta never drifts when replaying a demo
 	if ( clc.demoplaying ) {
 		return;
 	}
 
-	NewDelta = cl.snap.serverTime - cls.realtime;
-	deltaDelta = abs( NewDelta - cl.serverTimeDelta );
+	newDelta = cl.snap.serverTime - cls.realtime;
+	deltaDelta = abs( newDelta - cl.serverTimeDelta );
 
 	if ( deltaDelta > RESET_TIME ) {
-		cl.serverTimeDelta = NewDelta;
-		cl.oldServerTime = cl.snap.serverTime;	// FIXME: is This a problem for cgame?
+		cl.serverTimeDelta = newDelta;
+		cl.oldServerTime = cl.snap.serverTime;	// FIXME: is this a problem for cgame?
 		cl.serverTime = cl.snap.serverTime;
 		if ( cl_showTimeDelta->integer ) {
 			Com_Printf( "<RESET> " );
@@ -846,11 +846,11 @@ void CL_AdjustTimeDelta( void ) {
 		if ( cl_showTimeDelta->integer ) {
 			Com_Printf( "<FAST> " );
 		}
-		cl.serverTimeDelta = ( cl.serverTimeDelta + NewDelta ) >> 1;
+		cl.serverTimeDelta = ( cl.serverTimeDelta + newDelta ) >> 1;
 	} else {
 		// slow drift adjust, only move 1 or 2 msec
 
-		// if any of the frames between This and the previous snapshot
+		// if any of the frames between this and the previous snapshot
 		// had to be extrapolated, nudge our sense of time back a little
 		// the granularity of +1 / -2 is too high for timescale modified frametimes
 		if ( com_timescale->value == 0 || com_timescale->value == 1 ) {
@@ -882,15 +882,15 @@ void CL_FirstSnapshot( void ) {
 	}
 	clc.state = CA_ACTIVE;
 
-	// set the timedelta so we are exactly on This first frame
+	// set the timedelta so we are exactly on this first frame
 	cl.serverTimeDelta = cl.snap.serverTime - cls.realtime;
 	cl.oldServerTime = cl.snap.serverTime;
 
 	clc.timeDemoBaseTime = cl.snap.serverTime;
 
-	// if This is the first frame of active play,
+	// if this is the first frame of active play,
 	// execute the contents of activeAction now
-	// This is to allow scripting a timedemo to start right
+	// this is to allow scripting a timedemo to start right
 	// after loading
 	if ( cl_activeAction->string[0] ) {
 		Cbuf_AddText( cl_activeAction->string );
@@ -913,20 +913,20 @@ void CL_FirstSnapshot( void ) {
 		clc.speexEncoder = speex_encoder_init(&speex_nb_mode);
 
 		speex_encoder_ctl(clc.speexEncoder, SPEEX_GET_FRAME_SIZE,
-						  &clc.speexFrameSize);
+		                  &clc.speexFrameSize);
 		speex_encoder_ctl(clc.speexEncoder, SPEEX_GET_SAMPLING_RATE,
-						  &clc.speexSampleRate);
+		                  &clc.speexSampleRate);
 
 		clc.speexPreprocessor = speex_preprocess_state_init(clc.speexFrameSize,
-														  clc.speexSampleRate);
+		                                                  clc.speexSampleRate);
 
 		i = 1;
 		speex_preprocess_ctl(clc.speexPreprocessor,
-							 SPEEX_PREPROCESS_SET_DENOISE, &i);
+		                     SPEEX_PREPROCESS_SET_DENOISE, &i);
 
 		i = 1;
 		speex_preprocess_ctl(clc.speexPreprocessor,
-							 SPEEX_PREPROCESS_SET_AGC, &i);
+		                     SPEEX_PREPROCESS_SET_AGC, &i);
 
 		for (i = 0; i < MAX_CLIENTS; i++) {
 			speex_bits_init(&clc.speexDecoderBits[i]);
@@ -964,8 +964,8 @@ void CL_SetCGameTime( void ) {
 			}
 			CL_ReadDemoMessage();
 		}
-		if ( cl.NewSnapshots ) {
-			cl.NewSnapshots = qfalse;
+		if ( cl.newSnapshots ) {
+			cl.newSnapshots = qfalse;
 			CL_FirstSnapshot();
 		}
 		if ( clc.state != CA_ACTIVE ) {
@@ -973,7 +973,7 @@ void CL_SetCGameTime( void ) {
 		}
 	}	
 
-	// if we have gotten to This point, cl.snap is guaranteed to be valid
+	// if we have gotten to this point, cl.snap is guaranteed to be valid
 	if ( !cl.snap.valid ) {
 		Com_Error( ERR_DROP, "CL_SetCGameTime: !cl.snap.valid" );
 	}
@@ -1024,10 +1024,10 @@ void CL_SetCGameTime( void ) {
 		}
 	}
 
-	// if we have gotten New snapshots, drift serverTimeDelta
-	// don't do This every frame, or a period of packet loss would
+	// if we have gotten new snapshots, drift serverTimeDelta
+	// don't do this every frame, or a period of packet loss would
 	// make a huge adjustment
-	if ( cl.NewSnapshots ) {
+	if ( cl.newSnapshots ) {
 		CL_AdjustTimeDelta();
 	}
 

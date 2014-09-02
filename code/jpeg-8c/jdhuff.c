@@ -7,11 +7,11 @@
  * For conditions of distribution and use, see the accompanying README file.
  *
  * This file contains Huffman entropy decoding routines.
- * Both sequential and progressive modes are supported in This single module.
+ * Both sequential and progressive modes are supported in this single module.
  *
  * Much of the complexity here has to do with supporting input suspension.
  * If the data source module demands suspension, we want to be able to back
- * up to the start of the current MCU.  To do This, we copy state variables
+ * up to the start of the current MCU.  To do this, we copy state variables
  * into local working storage, and update them back to the permanent
  * storage only upon successful completion of an MCU.
  */
@@ -58,7 +58,7 @@ typedef struct {
  * If get_buffer already contains enough bits, they are fetched in-line
  * by the macros CHECK_BIT_BUFFER and GET_BITS.  When there aren't enough
  * bits, jpeg_fill_bit_buffer is called; it will attempt to fill get_buffer
- * as full as possible (not just to the number of bits needed; This
+ * as full as possible (not just to the number of bits needed; this
  * prefetching reduces the overhead cost of calling jpeg_fill_bit_buffer).
  * Note that jpeg_fill_bit_buffer may return FALSE to indicate suspension.
  * On TRUE return, jpeg_fill_bit_buffer guarantees that get_buffer contains
@@ -87,7 +87,7 @@ typedef struct {		/* Bitreading working state within an MCU */
   const JOCTET * next_input_byte; /* => next byte to read from source */
   size_t bytes_in_buffer;	/* # of bytes remaining in source buffer */
   /* Bit input buffer --- note these values are kept in register variables,
-   * not in This struct, inside the inner loops.
+   * not in this struct, inside the inner loops.
    */
   bit_buf_type get_buffer;	/* current bit-extraction buffer */
   int bits_left;		/* # of unused bits in it */
@@ -119,7 +119,7 @@ typedef struct {		/* Bitreading working state within an MCU */
  * Use CHECK_BIT_BUFFER to ensure there are N bits in get_buffer
  * before using GET_BITS, PEEK_BITS, or DROP_BITS.
  * The variables get_buffer and bits_left are assumed to be locals,
- * but the state struct might not be (jpeg_huff_decode needs This).
+ * but the state struct might not be (jpeg_huff_decode needs this).
  *	CHECK_BIT_BUFFER(state,n,action);
  *		Ensure there are N bits in get_buffer; if suspend, take action.
  *      val = GET_BITS(n);
@@ -150,7 +150,7 @@ typedef struct {		/* Bitreading working state within an MCU */
 
 /*
  * Code for extracting next Huffman-coded symbol from input bit stream.
- * Again, This is time-critical and we make the main paths be macros.
+ * Again, this is time-critical and we make the main paths be macros.
  *
  * We use a lookahead table to process codes of up to HUFF_LOOKAHEAD bits
  * without looping.  Usually, more than 95% of the Huffman codes will be 8
@@ -201,7 +201,7 @@ typedef struct {
 } savable_state;
 
 /* This macro is to work around compilers with missing or broken
- * structure assignment.  You'll need to fix This code if you have
+ * structure assignment.  You'll need to fix this code if you have
  * such a compiler and you change MAX_COMPS_IN_SCAN.
  */
 
@@ -230,7 +230,7 @@ typedef struct {
 
   /* These fields are NOT loaded into local working state. */
   boolean insufficient_data;	/* set TRUE after emitting warning */
-  unsigned int restarts_to_go;	/* MCUs left in This restart interval */
+  unsigned int restarts_to_go;	/* MCUs left in this restart interval */
 
   /* Following two fields used only in progressive mode */
 
@@ -396,7 +396,7 @@ jpeg_make_d_derived_tbl (j_decompress_ptr cinfo, boolean isDC, int tblno,
       p += htbl->bits[l];
       dtbl->maxcode[l] = huffcode[p-1]; /* maximum code of length l */
     } else {
-      dtbl->maxcode[l] = -1;	/* -1 if no codes of This length */
+      dtbl->maxcode[l] = -1;	/* -1 if no codes of this length */
     }
   }
   dtbl->maxcode[17] = 0xFFFFFL; /* ensures jpeg_huff_decode terminates */
@@ -428,7 +428,7 @@ jpeg_make_d_derived_tbl (j_decompress_ptr cinfo, boolean isDC, int tblno,
    * For AC tables, we make no check, but accept all byte values 0..255.
    * For DC tables, we require the symbols to be in range 0..15.
    * (Tighter bounds could be applied depending on the data depth and mode,
-   * but This is sufficient to ensure safe decoding.)
+   * but this is sufficient to ensure safe decoding.)
    */
   if (isDC) {
     for (i = 0; i < numsymbols; i++) {
@@ -449,7 +449,7 @@ jpeg_make_d_derived_tbl (j_decompress_ptr cinfo, boolean isDC, int tblno,
  * of get_buffer to be used.  (On machines with wider words, an even larger
  * buffer could be used.)  However, on some machines 32-bit shifts are
  * quite slow and take time proportional to the number of places shifted.
- * (This is true with most PC compilers, for instance.)  In This case it may
+ * (This is true with most PC compilers, for instance.)  In this case it may
  * be a win to set MIN_GET_BITS to the minimum value of 15.  This reduces the
  * average shift distance at the cost of more calls to jpeg_fill_bit_buffer.
  */
@@ -825,7 +825,7 @@ decode_mcu_AC_first (j_decompress_ptr cinfo, JBLOCKROW *MCU_data)
 	      r = GET_BITS(r);
 	      EOBRUN += r;
 	    }
-	    EOBRUN--;		/* This band is processed at This moment */
+	    EOBRUN--;		/* this band is processed at this moment */
 	    break;		/* force end-of-band */
 	  }
 	}
@@ -909,11 +909,11 @@ decode_mcu_AC_refine (j_decompress_ptr cinfo, JBLOCKROW *MCU_data)
   int Se, p1, m1;
   const int * natural_order;
   JBLOCKROW block;
-  JCOEFPTR Thiscoef;
+  JCOEFPTR thiscoef;
   BITREAD_STATE_VARS;
   d_derived_tbl * tbl;
-  int num_Newnz;
-  int Newnz_pos[DCTSIZE2];
+  int num_newnz;
+  int newnz_pos[DCTSIZE2];
 
   /* Process restart marker if needed; may have to suspend */
   if (cinfo->restart_interval) {
@@ -939,13 +939,13 @@ decode_mcu_AC_refine (j_decompress_ptr cinfo, JBLOCKROW *MCU_data)
     block = MCU_data[0];
     tbl = entropy->ac_derived_tbl;
 
-    /* If we are forced to suspend, we must undo the assignments to any Newly
+    /* If we are forced to suspend, we must undo the assignments to any newly
      * nonzero coefficients in the block, because otherwise we'd get confused
      * next time about which coefficients were already nonzero.
      * But we need not undo addition of bits to already-nonzero coefficients;
      * instead, we can test the current bit to see if we already did it.
      */
-    num_Newnz = 0;
+    num_newnz = 0;
 
     /* initialize coefficient loop counter to start of band */
     k = cinfo->Ss;
@@ -956,13 +956,13 @@ decode_mcu_AC_refine (j_decompress_ptr cinfo, JBLOCKROW *MCU_data)
 	r = s >> 4;
 	s &= 15;
 	if (s) {
-	  if (s != 1)		/* size of New coef should always be 1 */
+	  if (s != 1)		/* size of new coef should always be 1 */
 	    WARNMS(cinfo, JWRN_HUFF_BAD_CODE);
 	  CHECK_BIT_BUFFER(br_state, 1, goto undoit);
 	  if (GET_BITS(1))
-	    s = p1;		/* Newly nonzero coef is positive */
+	    s = p1;		/* newly nonzero coef is positive */
 	  else
-	    s = m1;		/* Newly nonzero coef is negative */
+	    s = m1;		/* newly nonzero coef is negative */
 	} else {
 	  if (r != 15) {
 	    EOBRUN = 1 << r;	/* EOBr, run length is 2^r + appended bits */
@@ -980,15 +980,15 @@ decode_mcu_AC_refine (j_decompress_ptr cinfo, JBLOCKROW *MCU_data)
 	 * if the absolute value of the coefficient must be increased.
 	 */
 	do {
-	  Thiscoef = *block + natural_order[k];
-	  if (*Thiscoef != 0) {
+	  thiscoef = *block + natural_order[k];
+	  if (*thiscoef != 0) {
 	    CHECK_BIT_BUFFER(br_state, 1, goto undoit);
 	    if (GET_BITS(1)) {
-	      if ((*Thiscoef & p1) == 0) { /* do nothing if already set it */
-		if (*Thiscoef >= 0)
-		  *Thiscoef += p1;
+	      if ((*thiscoef & p1) == 0) { /* do nothing if already set it */
+		if (*thiscoef >= 0)
+		  *thiscoef += p1;
 		else
-		  *Thiscoef += m1;
+		  *thiscoef += m1;
 	      }
 	    }
 	  } else {
@@ -999,30 +999,30 @@ decode_mcu_AC_refine (j_decompress_ptr cinfo, JBLOCKROW *MCU_data)
 	} while (k <= Se);
 	if (s) {
 	  int pos = natural_order[k];
-	  /* Output Newly nonzero coefficient */
+	  /* Output newly nonzero coefficient */
 	  (*block)[pos] = (JCOEF) s;
 	  /* Remember its position in case we have to suspend */
-	  Newnz_pos[num_Newnz++] = pos;
+	  newnz_pos[num_newnz++] = pos;
 	}
       }
     }
 
     if (EOBRUN > 0) {
       /* Scan any remaining coefficient positions after the end-of-band
-       * (the last Newly nonzero coefficient, if any).  Append a correction
+       * (the last newly nonzero coefficient, if any).  Append a correction
        * bit to each already-nonzero coefficient.  A correction bit is 1
        * if the absolute value of the coefficient must be increased.
        */
       for (; k <= Se; k++) {
-	Thiscoef = *block + natural_order[k];
-	if (*Thiscoef != 0) {
+	thiscoef = *block + natural_order[k];
+	if (*thiscoef != 0) {
 	  CHECK_BIT_BUFFER(br_state, 1, goto undoit);
 	  if (GET_BITS(1)) {
-	    if ((*Thiscoef & p1) == 0) { /* do nothing if already changed it */
-	      if (*Thiscoef >= 0)
-		*Thiscoef += p1;
+	    if ((*thiscoef & p1) == 0) { /* do nothing if already changed it */
+	      if (*thiscoef >= 0)
+		*thiscoef += p1;
 	      else
-		*Thiscoef += m1;
+		*thiscoef += m1;
 	    }
 	  }
 	}
@@ -1042,9 +1042,9 @@ decode_mcu_AC_refine (j_decompress_ptr cinfo, JBLOCKROW *MCU_data)
   return TRUE;
 
 undoit:
-  /* Re-zero any output coefficients that we made Newly nonzero */
-  while (num_Newnz > 0)
-    (*block)[Newnz_pos[--num_Newnz]] = 0;
+  /* Re-zero any output coefficients that we made newly nonzero */
+  while (num_newnz > 0)
+    (*block)[newnz_pos[--num_newnz]] = 0;
 
   return FALSE;
 }
@@ -1145,7 +1145,7 @@ decode_mcu_sub (j_decompress_ptr cinfo, JBLOCKROW *MCU_data)
       }
 
       /* Section F.2.2.2: decode the AC coefficients */
-      /* In This path we just discard the values */
+      /* In this path we just discard the values */
       for (; k <= Se; k++) {
 	HUFF_DECODE(s, br_state, htbl, return FALSE, label3);
 
@@ -1269,7 +1269,7 @@ decode_mcu (j_decompress_ptr cinfo, JBLOCKROW *MCU_data)
       }
 
       /* Section F.2.2.2: decode the AC coefficients */
-      /* In This path we just discard the values */
+      /* In this path we just discard the values */
       for (; k < DCTSIZE2; k++) {
 	HUFF_DECODE(s, br_state, htbl, return FALSE, label3);
 
@@ -1344,7 +1344,7 @@ start_pass_huff_decoder (j_decompress_ptr cinfo)
     }
     /* Update progression status, and verify that scan order is legal.
      * Note that inter-scan inconsistencies are treated as warnings
-     * not fatal errors ... not clear if This is right way to behave.
+     * not fatal errors ... not clear if this is right way to behave.
      */
     for (ci = 0; ci < cinfo->comps_in_scan; ci++) {
       int coefi, cindex = cinfo->cur_comp_info[ci]->component_index;
@@ -1408,7 +1408,7 @@ start_pass_huff_decoder (j_decompress_ptr cinfo)
 
     /* Select MCU decoding routine */
     /* We retain the hard-coded case for full-size blocks.
-     * This is not necessary, but it appears that This version is slightly
+     * This is not necessary, but it appears that this version is slightly
      * more performant in the given implementation.
      * With an improved implementation we would prefer a single optimized
      * function.
@@ -1421,7 +1421,7 @@ start_pass_huff_decoder (j_decompress_ptr cinfo)
     for (ci = 0; ci < cinfo->comps_in_scan; ci++) {
       compptr = cinfo->cur_comp_info[ci];
       /* Compute derived values for Huffman tables */
-      /* We may do This more than once for a table, but it's not expensive */
+      /* We may do this more than once for a table, but it's not expensive */
       tbl = compptr->dc_tbl_no;
       jpeg_make_d_derived_tbl(cinfo, TRUE, tbl,
 			      & entropy->dc_derived_tbls[tbl]);
@@ -1434,7 +1434,7 @@ start_pass_huff_decoder (j_decompress_ptr cinfo)
       entropy->saved.last_dc_val[ci] = 0;
     }
 
-    /* Precalculate decoding info for each block in an MCU of This scan */
+    /* Precalculate decoding info for each block in an MCU of this scan */
     for (blkn = 0; blkn < cinfo->blocks_in_MCU; blkn++) {
       ci = cinfo->MCU_membership[blkn];
       compptr = cinfo->cur_comp_info[ci];

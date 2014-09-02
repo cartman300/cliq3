@@ -199,11 +199,11 @@ void UI_DrawConnectScreen( qboolean overlay ) {
 		s_ingame_menu.nitems = 0;
 		s_ingame_menu.wrapAround = qtrue;
 
-		passwordField.Generic.type = MTYPE_FIELD;
-		passwordField.Generic.name = "Password:";
-		passwordField.Generic.callback = 0;
-		passwordField.Generic.x		= 10;
-		passwordField.Generic.y		= 180;
+		passwordField.generic.type = MTYPE_FIELD;
+		passwordField.generic.name = "Password:";
+		passwordField.generic.callback = 0;
+		passwordField.generic.x		= 10;
+		passwordField.generic.y		= 180;
 		Field_Clear( &passwordField.field );
 		passwordField.width = 256;
 		passwordField.field.widthInChars = 16;

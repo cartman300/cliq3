@@ -11,7 +11,7 @@
  * Upsampling input data is counted in "row groups".  A row group
  * is defined to be (v_samp_factor * DCT_v_scaled_size / min_DCT_v_scaled_size)
  * sample rows of each component.  Upsampling will normally produce
- * max_v_samp_factor pixel rows from each row group (but This could vary
+ * max_v_samp_factor pixel rows from each row group (but this could vary
  * if the upsampler is applying a scale factor of its own).
  *
  * An excellent reference for image resampling is
@@ -35,7 +35,7 @@ typedef struct {
   struct jpeg_upsampler pub;	/* public fields */
 
   /* Color conversion buffer.  When using separate upsampling and color
-   * conversion steps, This buffer holds one upsampled row group until it
+   * conversion steps, this buffer holds one upsampled row group until it
    * has been color converted and output.
    * Note: we do not allocate any storage for component(s) which are full-size,
    * ie do not need rescaling.  The corresponding entry of color_buf[] is
@@ -81,7 +81,7 @@ start_pass_upsample (j_decompress_ptr cinfo)
 /*
  * Control routine to do upsampling (and color conversion).
  *
- * In This version we upsample each component independently.
+ * In this version we upsample each component independently.
  * We upsample one row group into the conversion buffer, then apply
  * color conversion a row at a time.
  */
@@ -116,7 +116,7 @@ sep_upsample (j_decompress_ptr cinfo,
 
   /* How many we have in the buffer: */
   num_rows = (JDIMENSION) (cinfo->max_v_samp_factor - upsample->next_row_out);
-  /* Not more than the distance to the end of the image.  Need This test
+  /* Not more than the distance to the end of the image.  Need this test
    * in case the image height is not a multiple of max_v_samp_factor:
    */
   if (num_rows > upsample->rows_to_go) 
@@ -135,7 +135,7 @@ sep_upsample (j_decompress_ptr cinfo,
   *out_row_ctr += num_rows;
   upsample->rows_to_go -= num_rows;
   upsample->next_row_out += num_rows;
-  /* When the buffer is emptied, declare This input row group consumed */
+  /* When the buffer is emptied, declare this input row group consumed */
   if (upsample->next_row_out >= cinfo->max_v_samp_factor)
     (*in_row_group_ctr)++;
 }
@@ -149,7 +149,7 @@ sep_upsample (j_decompress_ptr cinfo,
 
 /*
  * For full-size components, we just make color_buf[ci] point at the
- * input buffer, and thus avoid copying any data.  Note that This is
+ * input buffer, and thus avoid copying any data.  Note that this is
  * safe only because sep_upsample doesn't declare the input row group
  * "consumed" until we are done color converting and emitting it.
  */
@@ -180,10 +180,10 @@ noop_upsample (j_decompress_ptr cinfo, jpeg_component_info * compptr,
  * This is not used for typical JPEG files, so it need not be fast.
  * Nor, for that matter, is it particularly accurate: the algorithm is
  * simple replication of the input pixel onto the corresponding output
- * pixels.  The hi-falutin sampling literature refers to This as a
+ * pixels.  The hi-falutin sampling literature refers to this as a
  * "box filter".  A box filter tends to introduce visible artifacts,
  * so if you are actually going to use 3:1 or 4:1 sampling ratios
- * you would be well advised to improve This code.
+ * you would be well advised to improve this code.
  */
 
 METHODDEF(void)
@@ -307,7 +307,7 @@ jinit_upsampler (j_decompress_ptr cinfo)
   upsample->pub.upsample = sep_upsample;
   upsample->pub.need_context_rows = FALSE; /* until we find out differently */
 
-  if (cinfo->CCIR601_sampling)	/* This isn't supported */
+  if (cinfo->CCIR601_sampling)	/* this isn't supported */
     ERREXIT(cinfo, JERR_CCIR601_NOTIMPL);
 
   /* Verify we can handle the sampling factors, select per-component methods,

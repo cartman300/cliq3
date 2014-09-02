@@ -74,7 +74,7 @@ void AAS_AltRoutingFloodCluster_r(int areanum)
 	numclusterareas++;
 	//remove the area from the mid range areas
 	midrangeareas[areanum].valid = qfalse;
-	//flood to other areas through the faces of This area
+	//flood to other areas through the faces of this area
 	area = &aasworld.areas[areanum];
 	for (i = 0; i < area->numfaces; i++)
 	{
@@ -82,7 +82,7 @@ void AAS_AltRoutingFloodCluster_r(int areanum)
 		//get the area at the other side of the face
 		if (face->frontarea == areanum) otherareanum = face->backarea;
 		else otherareanum = face->frontarea;
-		//if there is an area at the other side of This face
+		//if there is an area at the other side of this face
 		if (!otherareanum) continue;
 		//if the other area is not a midrange area
 		if (!midrangeareas[otherareanum].valid) continue;
@@ -149,7 +149,7 @@ int AAS_AlternativeRouteGoals(vec3_t start, int startareanum, vec3_t goal, int g
 		if (!goaltime) continue;
 		//if the travel time from the area to the goal is greater than the shortest goal travel time
 		if (goaltime > (float) 0.8 * goaltraveltime) continue;
-		//This is a mid range area
+		//this is a mid range area
 		midrangeareas[i].valid = qtrue;
 		midrangeareas[i].starttime = starttime;
 		midrangeareas[i].goaltime = goaltime;

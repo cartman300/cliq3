@@ -28,7 +28,7 @@ All bones should be an identity orientation to display the mesh exactly
 as it is specified.
 
 For all other frames, the bones represent the transformation from the 
-orientation of the bone in the base frame to the orientation in This
+orientation of the bone in the base frame to the orientation in this
 frame.
 
 */
@@ -44,21 +44,21 @@ R_MDRCullModel
 
 static int R_MDRCullModel( mdrHeader_t *header, trRefEntity_t *ent ) {
 	vec3_t		bounds[2];
-	mdrFrame_t	*oldFrame, *NewFrame;
+	mdrFrame_t	*oldFrame, *newFrame;
 	int			i, frameSize;
 
 	frameSize = (size_t)( &((mdrFrame_t *)0)->bones[ header->numBones ] );
 	
 	// compute frame pointers
-	NewFrame = ( mdrFrame_t * ) ( ( byte * ) header + header->ofsFrames + frameSize * ent->e.frame);
+	newFrame = ( mdrFrame_t * ) ( ( byte * ) header + header->ofsFrames + frameSize * ent->e.frame);
 	oldFrame = ( mdrFrame_t * ) ( ( byte * ) header + header->ofsFrames + frameSize * ent->e.oldframe);
 
-	// cull bounding sphere ONLY if This is not an upscaled entity
+	// cull bounding sphere ONLY if this is not an upscaled entity
 	if ( !ent->e.nonNormalizedAxes )
 	{
 		if ( ent->e.frame == ent->e.oldframe )
 		{
-			switch ( R_CullLocalPointAndRadius( NewFrame->localOrigin, NewFrame->radius ) )
+			switch ( R_CullLocalPointAndRadius( newFrame->localOrigin, newFrame->radius ) )
 			{
 				// Ummm... yeah yeah I know we don't really have an md3 here.. but we pretend
 				// we do. After all, the purpose of mdrs are not that different, are they?
@@ -80,8 +80,8 @@ static int R_MDRCullModel( mdrHeader_t *header, trRefEntity_t *ent ) {
 		{
 			int sphereCull, sphereCullB;
 
-			sphereCull  = R_CullLocalPointAndRadius( NewFrame->localOrigin, NewFrame->radius );
-			if ( NewFrame == oldFrame ) {
+			sphereCull  = R_CullLocalPointAndRadius( newFrame->localOrigin, newFrame->radius );
+			if ( newFrame == oldFrame ) {
 				sphereCullB = sphereCull;
 			} else {
 				sphereCullB = R_CullLocalPointAndRadius( oldFrame->localOrigin, oldFrame->radius );
@@ -109,8 +109,8 @@ static int R_MDRCullModel( mdrHeader_t *header, trRefEntity_t *ent ) {
 	
 	// calculate a bounding box in the current coordinate system
 	for (i = 0 ; i < 3 ; i++) {
-		bounds[0][i] = oldFrame->bounds[0][i] < NewFrame->bounds[0][i] ? oldFrame->bounds[0][i] : NewFrame->bounds[0][i];
-		bounds[1][i] = oldFrame->bounds[1][i] > NewFrame->bounds[1][i] ? oldFrame->bounds[1][i] : NewFrame->bounds[1][i];
+		bounds[0][i] = oldFrame->bounds[0][i] < newFrame->bounds[0][i] ? oldFrame->bounds[0][i] : newFrame->bounds[0][i];
+		bounds[1][i] = oldFrame->bounds[1][i] > newFrame->bounds[1][i] ? oldFrame->bounds[1][i] : newFrame->bounds[1][i];
 	}
 
 	switch ( R_CullLocalBox( bounds ) )
@@ -228,7 +228,7 @@ void R_MDRAddAnimSurfaces( trRefEntity_t *ent ) {
 
 	// figure out the current LOD of the model we're rendering, and set the lod pointer respectively.
 	lodnum = R_ComputeLOD(ent);
-	// check whether This model has as that many LODs at all. If not, try the closest thing we got.
+	// check whether this model has as that many LODs at all. If not, try the closest thing we got.
 	if(header->numLODs <= 0)
 		return;
 	if(header->numLODs <= lodnum)
@@ -324,7 +324,7 @@ void RB_MDRSurfaceAnim( mdrSurface_t *surface )
 
 	int			frameSize;
 
-	// don't lerp if lerping off, or This is the only frame, or the last frame...
+	// don't lerp if lerping off, or this is the only frame, or the last frame...
 	//
 	if (backEnd.currentEntity->e.oldframe == backEnd.currentEntity->e.frame) 
 	{

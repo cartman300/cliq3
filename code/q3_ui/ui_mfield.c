@@ -300,7 +300,7 @@ void MenuField_Init( menufield_s* m ) {
 
 	MField_Clear( &m->field );
 
-	if (m->Generic.flags & QMF_SMALLFONT)
+	if (m->generic.flags & QMF_SMALLFONT)
 	{
 		w = SMALLCHAR_WIDTH;
 		h = SMALLCHAR_HEIGHT;
@@ -311,17 +311,17 @@ void MenuField_Init( menufield_s* m ) {
 		h = BIGCHAR_HEIGHT;
 	}	
 
-	if (m->Generic.name) {
-		l = (strlen( m->Generic.name )+1) * w;		
+	if (m->generic.name) {
+		l = (strlen( m->generic.name )+1) * w;		
 	}
 	else {
 		l = 0;
 	}
 
-	m->Generic.left   = m->Generic.x - l;
-	m->Generic.top    = m->Generic.y;
-	m->Generic.right  = m->Generic.x + w + m->field.widthInChars*w;
-	m->Generic.bottom = m->Generic.y + h;
+	m->generic.left   = m->generic.x - l;
+	m->generic.top    = m->generic.y;
+	m->generic.right  = m->generic.x + w + m->field.widthInChars*w;
+	m->generic.bottom = m->generic.y + h;
 }
 
 /*
@@ -338,10 +338,10 @@ void MenuField_Draw( menufield_s *f )
 	qboolean focus;
 	float	*color;
 
-	x =	f->Generic.x;
-	y =	f->Generic.y;
+	x =	f->generic.x;
+	y =	f->generic.y;
 
-	if (f->Generic.flags & QMF_SMALLFONT)
+	if (f->generic.flags & QMF_SMALLFONT)
 	{
 		w = SMALLCHAR_WIDTH;
 		style = UI_SMALLFONT;
@@ -352,7 +352,7 @@ void MenuField_Draw( menufield_s *f )
 		style = UI_BIGFONT;
 	}	
 
-	if (Menu_ItemAtCursor( f->Generic.parent ) == f) {
+	if (Menu_ItemAtCursor( f->generic.parent ) == f) {
 		focus = qtrue;
 		style |= UI_PULSE;
 	}
@@ -360,7 +360,7 @@ void MenuField_Draw( menufield_s *f )
 		focus = qfalse;
 	}
 
-	if (f->Generic.flags & QMF_GRAYED)
+	if (f->generic.flags & QMF_GRAYED)
 		color = text_color_disabled;
 	else if (focus)
 		color = text_color_highlight;
@@ -370,12 +370,12 @@ void MenuField_Draw( menufield_s *f )
 	if ( focus )
 	{
 		// draw cursor
-		UI_FillRect( f->Generic.left, f->Generic.top, f->Generic.right-f->Generic.left+1, f->Generic.bottom-f->Generic.top+1, listbar_color ); 
+		UI_FillRect( f->generic.left, f->generic.top, f->generic.right-f->generic.left+1, f->generic.bottom-f->generic.top+1, listbar_color ); 
 		UI_DrawChar( x, y, 13, UI_CENTER|UI_BLINK|style, color);
 	}
 
-	if ( f->Generic.name ) {
-		UI_DrawString( x - w, y, f->Generic.name, style|UI_RIGHT, color );
+	if ( f->generic.name ) {
+		UI_DrawString( x - w, y, f->generic.name, style|UI_RIGHT, color );
 	}
 
 	MField_Draw( &f->field, x + w, y, style, color );
@@ -416,11 +416,11 @@ sfxHandle_t MenuField_Key( menufield_s* m, int* key )
 			{
 				keycode &= ~K_CHAR_FLAG;
 
-				if ((m->Generic.flags & QMF_UPPERCASE) && Q_islower( keycode ))
+				if ((m->generic.flags & QMF_UPPERCASE) && Q_islower( keycode ))
 					keycode -= 'a' - 'A';
-				else if ((m->Generic.flags & QMF_LOWERCASE) && Q_isupper( keycode ))
+				else if ((m->generic.flags & QMF_LOWERCASE) && Q_isupper( keycode ))
 					keycode -= 'A' - 'a';
-				else if ((m->Generic.flags & QMF_NUMBERSONLY) && Q_isalpha( keycode ))
+				else if ((m->generic.flags & QMF_NUMBERSONLY) && Q_isalpha( keycode ))
 					return (menu_buzz_sound);
 
 				MField_CharEvent( &m->field, keycode);

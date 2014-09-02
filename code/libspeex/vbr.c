@@ -8,15 +8,15 @@
    are met:
    
    - Redistributions of source code must retain the above copyright
-   notice, This list of conditions and the following disclaimer.
+   notice, this list of conditions and the following disclaimer.
    
    - Redistributions in binary form must reproduce the above copyright
-   notice, This list of conditions and the following disclaimer in the
+   notice, this list of conditions and the following disclaimer in the
    documentation and/or other materials provided with the distribution.
    
    - Neither the name of the Xiph.org Foundation nor the names of its
    contributors may be used to endorse or promote products derived from
-   This software without specific prior written permission.
+   this software without specific prior written permission.
    
    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
    ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -92,7 +92,7 @@ void vbr_init(VBRState *vbr)
 
 
    for (i=0;i<VBR_MEMORY_SIZE;i++)
-      vbr->last_log_energy[i] = log((float)MIN_ENERGY);
+      vbr->last_log_energy[i] = log(MIN_ENERGY);
 }
 
 
@@ -149,7 +149,7 @@ float vbr_analysis(VBRState *vbr, spx_word16_t *sig, int len, int pitch, float p
    voicing = 3*(pitch_coef-.4)*fabs(pitch_coef-.4);
    vbr->average_energy = (1-vbr->energy_alpha)*vbr->average_energy + vbr->energy_alpha*ener;
    vbr->noise_level=vbr->noise_accum/vbr->noise_accum_count;
-   pow_ener = pow(ener, (float)NOISE_POW);
+   pow_ener = pow(ener,NOISE_POW);
    if (vbr->noise_accum_count<.06 && ener>MIN_ENERGY)
       vbr->noise_accum = .05*pow_ener;
 
@@ -237,16 +237,16 @@ float vbr_analysis(VBRState *vbr, spx_word16_t *sig, int len, int pitch, float p
       qual=4;
 
    if (vbr->consec_noise)
-      qual -= 1.0 * (log(3.0 + vbr->consec_noise)-log((float)3));
+      qual -= 1.0 * (log(3.0 + vbr->consec_noise)-log(3));
    if (qual<0)
       qual=0;
    
    if (ener<60000)
    {
       if (vbr->consec_noise>2)
-         qual-=0.5*(log(3.0 + vbr->consec_noise)-log((float)3));
+         qual-=0.5*(log(3.0 + vbr->consec_noise)-log(3));
       if (ener<10000&&vbr->consec_noise>2)
-         qual-=0.5*(log(3.0 + vbr->consec_noise)-log((float)3));
+         qual-=0.5*(log(3.0 + vbr->consec_noise)-log(3));
       if (qual<0)
          qual=0;
       qual += .3*log(.0001+ener/60000.0);

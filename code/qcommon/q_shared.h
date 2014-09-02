@@ -24,7 +24,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define __Q_SHARED_H
 
 // q_shared.h -- included first by ALL program modules.
-// A user mod should never modify This file
+// A user mod should never modify this file
 
 #ifdef STANDALONE
   #define PRODUCT_NAME			"cliq3"
@@ -35,7 +35,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
   #define HOMEPATH_NAME_WIN		"CLIq3"
   #define HOMEPATH_NAME_MACOSX		HOMEPATH_NAME_WIN
   #define GAMENAME_FOR_MASTER		"CLIQuake3Arena"	// must NOT contain whitespace
-//  #define LEGACY_PROTOCOL	// You probably don't need This for your standalone game
+//  #define LEGACY_PROTOCOL	// You probably don't need this for your standalone game
 #else
   #define PRODUCT_NAME			"ioq3"
   #define BASEGAME			"baseq3"
@@ -48,11 +48,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
   #define LEGACY_PROTOCOL
 #endif
 
-// Heartbeat for dpmaster protocol. You shouldn't change This unless you know what you're doing
+// Heartbeat for dpmaster protocol. You shouldn't change this unless you know what you're doing
 #define HEARTBEAT_FOR_MASTER		"DarkPlaces"
 
 // When com_gamename is LEGACY_MASTER_GAMENAME, use quake3 master protocol.
-// You shouldn't change This unless you know what you're doing
+// You shouldn't change this unless you know what you're doing
 #define LEGACY_MASTER_GAMENAME		"Quake3Arena"
 #define LEGACY_HEARTBEAT_FOR_MASTER	"QuakeArena-1"
 
@@ -109,17 +109,13 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #endif
 
 #if (defined _MSC_VER)
-#	ifdef __cplusplus
-#		define Q_EXPORT extern "C" __declspec(dllexport)
-#	else
-#		define Q_EXPORT __declspec(dllexport)
-#	endif
+#define Q_EXPORT __declspec(dllexport)
 #elif (defined __SUNPRO_C)
-#	define Q_EXPORT __global
+#define Q_EXPORT __global
 #elif ((__GNUC__ >= 3) && (!__EMX__) && (!sun))
-#	define Q_EXPORT __attribute__((visibility("default")))
+#define Q_EXPORT __attribute__((visibility("default")))
 #else
-#	define Q_EXPORT
+#define Q_EXPORT
 #endif
 
 /**********************************************************************
@@ -169,7 +165,7 @@ typedef int intptr_t;
   typedef unsigned __int8 uint8_t;
 
   // vsnprintf is ISO/IEC 9899:1999
-  // abstracting This to make it portable
+  // abstracting this to make it portable
   int Q_vsnprintf(char *str, size_t size, const char *format, va_list ap);
 #else
   #include <stdint.h>
@@ -186,14 +182,7 @@ typedef int intptr_t;
 
 typedef unsigned char 		byte;
 
-#ifdef __cplusplus
-	typedef bool qboolean;
-	#define qfalse false
-	#define qtrue true
-#else
-	typedef enum {qfalse, qtrue}	qboolean;
-#endif
-
+typedef enum {qfalse, qtrue}	qboolean;
 
 typedef union {
 	float f;
@@ -264,7 +253,7 @@ typedef int		clipHandle_t;
 
 // paramters for command buffer stuffing
 typedef enum {
-	EXEC_NOW,			// don't return until completed, a VM should NEVER use This,
+	EXEC_NOW,			// don't return until completed, a VM should NEVER use this,
 						// because some commands might cause the VM to be unloaded...
 	EXEC_INSERT,		// insert at current position, but don't run yet
 	EXEC_APPEND			// add to end of the command buffer (normal case)
@@ -287,7 +276,7 @@ typedef enum {
 
 
 #ifdef ERR_FATAL
-#undef ERR_FATAL			// This is be defined in malloc.h
+#undef ERR_FATAL			// this is be defined in malloc.h
 #endif
 
 // parameters to the main Error routine
@@ -480,7 +469,7 @@ int Q_isnan(float x);
 	} while(0)
 #endif
 /*
-// if your system does not have lrintf() and round() you can try This block. Please also open a bug report at bugzilla.icculus.org
+// if your system does not have lrintf() and round() you can try this block. Please also open a bug report at bugzilla.icculus.org
 // or write a mail to the ioq3 mailing list.
 #else
   #define Q_ftol(v) ((long) (v))
@@ -531,7 +520,7 @@ float Q_rsqrt( float f );		// reciprocal square root
 signed char ClampChar( int i );
 signed short ClampShort( int i );
 
-// This isn't a real cheap function to call!
+// this isn't a real cheap function to call!
 int DirToByte( vec3_t dir );
 void ByteToDir( int b, vec3_t dir );
 
@@ -558,7 +547,7 @@ void ByteToDir( int b, vec3_t dir );
 #ifdef Q3_VM
 #ifdef VectorCopy
 #undef VectorCopy
-// This is a little hack to get more efficient copies in our interpreter
+// this is a little hack to get more efficient copies in our interpreter
 typedef struct {
 	float	v[3];
 } vec3struct_t;
@@ -710,7 +699,7 @@ void ProjectPointOnPlane( vec3_t dst, const vec3_t p, const vec3_t normal );
 void RotatePointAroundVector( vec3_t dst, const vec3_t dir, const vec3_t point, float degrees );
 void RotateAroundDirection( vec3_t axis[3], float yaw );
 void MakeNormalVectors( const vec3_t forward, vec3_t right, vec3_t up );
-// perpendicular vector could be replaced by This
+// perpendicular vector could be replaced by this
 
 //int	PlaneTypeForNormal (vec3_t normal);
 
@@ -873,7 +862,7 @@ void Info_SetValueForKey_Big( char *s, const char *key, const char *value );
 qboolean Info_Validate( const char *s );
 void Info_NextPair( const char **s, char *key, char *value );
 
-// This is only here so the functions in q_shared.c and bg_*.c can link
+// this is only here so the functions in q_shared.c and bg_*.c can link
 void	QDECL Com_Error( int level, const char *error, ... ) __attribute__ ((noreturn, format(printf, 2, 3)));
 void	QDECL Com_Printf( const char *msg, ... ) __attribute__ ((format (printf, 1, 2)));
 
@@ -910,7 +899,7 @@ default values.
 
 #define CVAR_SERVER_CREATED	0x0800	// cvar was created by a server the client connected to.
 #define CVAR_VM_CREATED		0x1000	// cvar was created exclusively in one of the VMs.
-#define CVAR_PROTECTED		0x2000	// prevent modifying This var from VMs or the server
+#define CVAR_PROTECTED		0x2000	// prevent modifying this var from VMs or the server
 // These flags are only returned by the Cvar_Flags() function
 #define CVAR_MODIFIED		0x40000000	// Cvar was modified
 #define CVAR_NONEXISTENT	0x80000000	// Cvar doesn't exist.
@@ -921,7 +910,7 @@ typedef struct cvar_s cvar_t;
 struct cvar_s {
 	char			*name;
 	char			*string;
-	char			*resetString;		// cvar_restart will reset to This value
+	char			*resetString;		// cvar_restart will reset to this value
 	char			*latchedString;		// for CVAR_LATCH vars
 	int				flags;
 	qboolean	modified;			// set each time the cvar is changed
@@ -968,7 +957,7 @@ VoIP
 #define VOIP_DIRECT		0x02		// non-spatialized voip message
 
 // number of flags voip knows. You will have to bump protocol version number if you
-// change This.
+// change this.
 #define VOIP_FLAGCNT		2
 
 /*
@@ -998,7 +987,7 @@ PlaneTypeForNormal
 #define PlaneTypeForNormal(x) (x[0] == 1.0 ? PLANE_X : (x[1] == 1.0 ? PLANE_Y : (x[2] == 1.0 ? PLANE_Z : PLANE_NON_AXIAL) ) )
 
 // plane_t structure
-// !!! if This is changed, it must be changed in asm code too !!!
+// !!! if this is changed, it must be changed in asm code too !!!
 typedef struct cplane_s {
 	vec3_t	normal;
 	float	dist;
@@ -1089,7 +1078,7 @@ typedef enum {
 
 // entitynums are communicated with GENTITY_BITS, so any reserved
 // values that are going to be communcated over the net need to
-// also be in This range
+// also be in this range
 #define	ENTITYNUM_NONE		(MAX_GENTITIES-1)
 #define	ENTITYNUM_WORLD		(MAX_GENTITIES-2)
 #define	ENTITYNUM_MAX_NORMAL	(MAX_GENTITIES-2)
@@ -1106,7 +1095,7 @@ typedef enum {
 #define	CS_SERVERINFO		0		// an info string with all the serverinfo cvars
 #define	CS_SYSTEMINFO		1		// an info string for server system to client system configuration (timescale, etc)
 
-#define	RESERVED_CONFIGSTRINGS	2	// game can't modify below This, only the system can
+#define	RESERVED_CONFIGSTRINGS	2	// game can't modify below this, only the system can
 
 #define	MAX_GAMESTATE_CHARS	16000
 typedef struct {
@@ -1132,7 +1121,7 @@ typedef struct {
 // nothing outside of pmove should modify these, or some degree of prediction error
 // will occur
 
-// you can't add anything to This without modifying the code in msg.c
+// you can't add anything to this without modifying the code in msg.c
 
 // playerState_t is a full superset of entityState_t as it is used by players,
 // so if a playerState_t is transmitted, the entityState_t can be fully derived
@@ -1154,10 +1143,10 @@ typedef struct playerState_s {
 
 	int			groundEntityNum;// ENTITYNUM_NONE = in air
 
-	int			legsTimer;		// don't change low priority animations until This runs out
+	int			legsTimer;		// don't change low priority animations until this runs out
 	int			legsAnim;		// mask off ANIM_TOGGLEBIT
 
-	int			torsoTimer;		// don't change low priority animations until This runs out
+	int			torsoTimer;		// don't change low priority animations until this runs out
 	int			torsoAnim;		// mask off ANIM_TOGGLEBIT
 
 	int			movementDir;	// a number 0 to 7 that represents the relative angle
@@ -1195,9 +1184,9 @@ typedef struct playerState_s {
 	int			powerups[MAX_POWERUPS];	// level.time that the powerup runs out
 	int			ammo[MAX_WEAPONS];
 
-	int			Generic1;
+	int			generic1;
 	int			loopSound;
-	int			jumppad_ent;	// jumppad entity hit This frame
+	int			jumppad_ent;	// jumppad entity hit this frame
 
 	// not communicated over the net at all
 	int			ping;			// server to game info for scoreboard
@@ -1297,14 +1286,14 @@ typedef struct entityState_s {
 	int		groundEntityNum;	// ENTITYNUM_NONE = in air
 
 	int		constantLight;	// r + (g<<8) + (b<<16) + (intensity<<24)
-	int		loopSound;		// constantly loop This sound
+	int		loopSound;		// constantly loop this sound
 
 	int		modelindex;
 	int		modelindex2;
 	int		clientNum;		// 0 to (MAX_CLIENTS - 1), for players and corpses
 	int		frame;
 
-	int		solid;			// for client side prediction, trap_linkentity sets This properly
+	int		solid;			// for client side prediction, trap_linkentity sets this properly
 
 	int		event;			// impulse events -- muzzle flashes, footsteps, etc
 	int		eventParm;
@@ -1315,7 +1304,7 @@ typedef struct entityState_s {
 	int		legsAnim;		// mask off ANIM_TOGGLEBIT
 	int		torsoAnim;		// mask off ANIM_TOGGLEBIT
 
-	int		Generic1;
+	int		generic1;
 } entityState_t;
 
 typedef enum {

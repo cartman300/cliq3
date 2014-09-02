@@ -94,7 +94,7 @@ typedef struct {
 	void    (*A3D_RenderGeometry) (void *pVoidA3D, void *pVoidGeom, void *pVoidMat, void *pVoidGeomStatus);
 #endif
 	void	(*RegisterFont)(const char *fontName, int pointSize, fontInfo_t *font);
-	void	(*RemapShader)(const char *oldShader, const char *NewShader, const char *offsetTime);
+	void	(*RemapShader)(const char *oldShader, const char *newShader, const char *offsetTime);
 	qboolean (*GetEntityToken)( char *buffer, int size );
 	qboolean (*inPVS)( const vec3_t p1, const vec3_t p2 );
 
@@ -182,7 +182,7 @@ typedef struct {
 } refimport_t;
 
 
-// This is the only function actually exported at the linker level
+// this is the only function actually exported at the linker level
 // If the module can't init to a valid rendering state, NULL will be
 // returned.
 #ifdef USE_RENDERER_DLOPEN

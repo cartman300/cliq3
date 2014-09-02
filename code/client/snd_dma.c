@@ -248,7 +248,7 @@ static long S_HashSFXName(const char *name) {
 ==================
 S_FindName
 
-Will allocate a New sfx if it isn't found
+Will allocate a new sfx if it isn't found
 ==================
 */
 static sfx_t *S_FindName( const char *name ) {
@@ -501,7 +501,7 @@ static qboolean S_Base_HearingThroughEntity( int entityNum, vec3_t origin )
 		// whether or not the player is rendering in third person or not. We can't
 		// ask the renderer because the renderer has no notion of entities and we
 		// can't ask cgame since that would involve changing the API and hence mod
-		// compatibility. I don't think there is any way around This, but I'll leave
+		// compatibility. I don't think there is any way around this, but I'll leave
 		// the FIXME just in case anyone has a bright idea.
 		distanceSq = DistanceSquared(
 				sorigin,
@@ -948,8 +948,8 @@ void S_AddLoopSounds (void) {
 =================
 S_ByteSwapRawSamples
 
-If raw data has been loaded in little endien binary form, This must be done.
-If raw data was calculated, as with ADPCM, This should not be called.
+If raw data has been loaded in little endien binary form, this must be done.
+If raw data was calculated, as with ADPCM, this should not be called.
 =================
 */
 void S_ByteSwapRawSamples( int samples, int width, int s_channels, const byte *data ) {
@@ -1165,27 +1165,27 @@ void S_Base_Respatialize( int entityNum, const vec3_t head, vec3_t axis[3], int 
 ========================
 S_ScanChannelStarts
 
-Returns qtrue if any New sounds were started since the last mix
+Returns qtrue if any new sounds were started since the last mix
 ========================
 */
 qboolean S_ScanChannelStarts( void ) {
 	channel_t		*ch;
 	int				i;
-	qboolean		NewSamples;
+	qboolean		newSamples;
 
-	NewSamples = qfalse;
+	newSamples = qfalse;
 	ch = s_channels;
 
 	for (i=0; i<MAX_CHANNELS ; i++, ch++) {
 		if ( !ch->thesfx ) {
 			continue;
 		}
-		// if This channel was just started This frame,
+		// if this channel was just started this frame,
 		// set the sample count to it begins mixing
 		// into the very first sample
 		if ( ch->startSample == START_SAMPLE_IMMEDIATE ) {
 			ch->startSample = s_paintedtime;
-			NewSamples = qtrue;
+			newSamples = qtrue;
 			continue;
 		}
 
@@ -1195,7 +1195,7 @@ qboolean S_ScanChannelStarts( void ) {
 		}
 	}
 
-	return NewSamples;
+	return newSamples;
 }
 
 /*
@@ -1299,14 +1299,14 @@ void S_Update_(void) {
 	int				samps;
 	static			float	lastTime = 0.0f;
 	float			ma, op;
-	float			ThisTime, sane;
+	float			thisTime, sane;
 	static			int ot = -1;
 
 	if ( !s_soundStarted || s_soundMuted ) {
 		return;
 	}
 
-	ThisTime = Com_Milliseconds();
+	thisTime = Com_Milliseconds();
 
 	// Updates s_soundtime
 	S_GetSoundtime();
@@ -1317,10 +1317,10 @@ void S_Update_(void) {
 	ot = s_soundtime;
 
 	// clear any sound effects that end before the current time,
-	// and start any New sounds
+	// and start any new sounds
 	S_ScanChannelStarts();
 
-	sane = ThisTime - lastTime;
+	sane = thisTime - lastTime;
 	if (sane<11) {
 		sane = 11;			// 85hz
 	}
@@ -1352,7 +1352,7 @@ void S_Update_(void) {
 
 	SNDDMA_Submit ();
 
-	lastTime = ThisTime;
+	lastTime = thisTime;
 }
 
 

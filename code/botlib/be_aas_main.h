@@ -41,9 +41,9 @@ void AAS_SetInitialized(void);
 int AAS_Setup(void);
 //shutdown AAS
 void AAS_Shutdown(void);
-//start a New map
+//start a new map
 int AAS_LoadMap(const char *mapname);
-//start a New time frame
+//start a new time frame
 int AAS_StartFrame(float time);
 #endif //AASINTERN
 

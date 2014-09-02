@@ -29,7 +29,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define	REFENTITYNUM_BITS	10		// can't be increased without changing drawsurf bit packing
 #define	REFENTITYNUM_MASK	((1<<REFENTITYNUM_BITS) - 1)
 // the last N-bit number (2^REFENTITYNUM_BITS - 1) is reserved for the special world refentity,
-//  and This is reflected by the value of MAX_REFENTITIES (which therefore is not a power-of-2)
+//  and this is reflected by the value of MAX_REFENTITIES (which therefore is not a power-of-2)
 #define	MAX_REFENTITIES		((1<<REFENTITYNUM_BITS) - 1)
 #define	REFENTITYNUM_WORLD	((1<<REFENTITYNUM_BITS) - 1)
 
@@ -158,15 +158,15 @@ typedef enum {
 */
 typedef enum {
 	TC_NONE,
-	TC_S3TC,  // This is for the GL_S3_s3tc extension.
-	TC_S3TC_ARB  // This is for the GL_EXT_texture_compression_s3tc extension.
+	TC_S3TC,  // this is for the GL_S3_s3tc extension.
+	TC_S3TC_ARB  // this is for the GL_EXT_texture_compression_s3tc extension.
 } textureCompression_t;
 
 typedef enum {
 	GLDRV_ICD,					// driver is integrated with window system
 								// WARNING: there are tests that check for
-								// > GLDRV_ICD for minidriverness, so This
-								// should always be the lowest value in This
+								// > GLDRV_ICD for minidriverness, so this
+								// should always be the lowest value in this
 								// enum set
 	GLDRV_STANDALONE,			// driver is a non-3Dfx standalone driver
 	GLDRV_VOODOO				// driver is a 3Dfx standalone driver
@@ -174,7 +174,7 @@ typedef enum {
 
 typedef enum {
 	GLHW_GENERIC,			// where everthing works the way it should
-	GLHW_3DFX_2D3D,			// Voodoo Banshee or Voodoo3, relevant since if This is
+	GLHW_3DFX_2D3D,			// Voodoo Banshee or Voodoo3, relevant since if this is
 							// the hardware type then there can NOT exist a secondary
 							// display adapter
 	GLHW_RIVA128,			// where you can't interpolate alpha
@@ -209,7 +209,7 @@ typedef struct {
 	int						displayFrequency;
 
 	// synonymous with "does rendering consume the entire screen?", therefore
-	// a Voodoo or Voodoo2 will have This set to TRUE, as will a Win32 ICD that
+	// a Voodoo or Voodoo2 will have this set to TRUE, as will a Win32 ICD that
 	// used CDS.
 	qboolean				isFullscreen;
 	qboolean				stereoEnabled;

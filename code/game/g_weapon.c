@@ -182,7 +182,7 @@ void Bullet_Fire (gentity_t *ent, float spread, int damage, int mod ) {
 	VectorMA (end, r, right, end);
 	VectorMA (end, u, up, end);
 
-	passent = ENTITYNUM_NONE; //ent->s.number;
+	passent = ent->s.number;
 	for (i = 0; i < 10; i++) {
 
 		trap_Trace (&tr, muzzle, NULL, NULL, end, passent, MASK_SHOT);

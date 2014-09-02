@@ -94,7 +94,7 @@ base game is a variable to allow mods based on other mods
 (such as baseq3 + missionpack content combination in a mod for instance)
 BASEGAME is the hardcoded base game ("baseq3")
 
-e.g. the qpath "sound/Newstuff/test.wav" would be searched for in the following places:
+e.g. the qpath "sound/newstuff/test.wav" would be searched for in the following places:
 
 home path + current game's zip files
 home path + current game's directory
@@ -172,7 +172,7 @@ or configs will never get loaded from disk!
 
 */
 
-// every time a New demo pk3 file is built, This checksum must be updated.
+// every time a new demo pk3 file is built, this checksum must be updated.
 // the easiest way to get it is to just run the game and see what it spits out
 #define	DEMO_PAK0_CHECKSUM	2985612116u
 static const unsigned int pak_checksums[] = {
@@ -195,7 +195,7 @@ static const unsigned int missionpak_checksums[] =
 	1438664554u
 };
 
-// if This is defined, the executable positively won't work with any paks other
+// if this is defined, the executable positively won't work with any paks other
 // than the demo pak, even if productid is present.  This is only used for our
 // last demo release to prevent the mac and linux users from using the demo
 // executable with the production windows pak before the mac/linux products
@@ -242,7 +242,7 @@ typedef struct searchpath_s {
 	directory_t	*dir;
 } searchpath_t;
 
-static	char		fs_gamedir[MAX_OSPATH];	// This will be a single file name with no separators
+static	char		fs_gamedir[MAX_OSPATH];	// this will be a single file name with no separators
 static	cvar_t		*fs_debug;
 static	cvar_t		*fs_homepath;
 
@@ -339,7 +339,7 @@ qboolean FS_PakIsPure( pack_t *pack ) {
 		for ( i = 0 ; i < fs_numServerPaks ; i++ ) {
 			// FIXME: also use hashed file names
 			// NOTE TTimo: a pk3 with same checksum but different name would be validated too
-			//   I don't see This as allowing for any exploit, it would only happen if the client does manips of its file names 'not a bug'
+			//   I don't see this as allowing for any exploit, it would only happen if the client does manips of its file names 'not a bug'
 			if ( pack->checksum == fs_serverPaks[i] ) {
 				return qtrue;		// on the aproved list
 			}
@@ -442,7 +442,7 @@ long FS_fplength(FILE *h)
 ================
 FS_filelength
 
-If This is called on a non-unique FILE (from a pak file),
+If this is called on a non-unique FILE (from a pak file),
 it will return the size of the pak file, not the expected
 size of the file.
 ================
@@ -621,10 +621,10 @@ qboolean FS_FileInPathExists(const char *testpath)
 ================
 FS_FileExists
 
-Tests if the file exists in the current gamedir, This DOES NOT
+Tests if the file exists in the current gamedir, this DOES NOT
 search the paths.  This is to determine if opening a file to write
 (which always goes into the current gamedir) will cause any overwrites.
-NOTE TTimo: This goes with FS_FOpenFileWrite for opening the file afterwards
+NOTE TTimo: this goes with FS_FOpenFileWrite for opening the file afterwards
 ================
 */
 qboolean FS_FileExists(const char *file)
@@ -977,7 +977,7 @@ fileHandle_t FS_FCreateOpenPipeFile( const char *filename ) {
 	}
 	else
 	{
-		Com_Printf( S_COLOR_YELLOW "WARNING: Could not create New com_pipefile at %s. "
+		Com_Printf( S_COLOR_YELLOW "WARNING: Could not create new com_pipefile at %s. "
 			"com_pipefile will not be used.\n", ospath );
 		f = 0;
 	}
@@ -1244,7 +1244,7 @@ long FS_FOpenFileReadDir(const char *filename, searchpath_t *search, fileHandle_
 
 					if(uniqueFILE)
 					{
-						// open a New file on the pakfile
+						// open a new file on the pakfile
 						fsh[*file].handleFiles.file.z = unzOpen(pak->pakFilename);
 
 						if(fsh[*file].handleFiles.file.z == NULL)
@@ -1286,7 +1286,7 @@ long FS_FOpenFileReadDir(const char *filename, searchpath_t *search, fileHandle_
 		len = strlen(filename);
 		// FIXME TTimo I'm not sure about the fs_numServerPaks test
 		// if you are using FS_ReadFile to find out if a file exists,
-		//   This test can make the search fail although the file is in the directory
+		//   this test can make the search fail although the file is in the directory
 		// I had the problem on https://zerowing.idsoftware.com/bugzilla/show_bug.cgi?id=8
 		// turned out I used FS_FileExists instead
 		if(!unpure && fs_numServerPaks)
@@ -1638,7 +1638,7 @@ int FS_Seek( fileHandle_t f, long offset, int origin ) {
 	}
 
 	if (fsh[f].zipFile == qtrue) {
-		//FIXME: This is really, really crappy
+		//FIXME: this is really, really crappy
 		//(but better than what was here before)
 		byte	buffer[PK3_SEEK_BUFFER_SIZE];
 		int		remainder;
@@ -1814,7 +1814,7 @@ long FS_ReadFileDir(const char *qpath, void *searchPath, qboolean unpure, void *
 
 	buf = NULL;	// quiet compiler warning
 
-	// if This is a .cfg file and we are playing back a journal, read
+	// if this is a .cfg file and we are playing back a journal, read
 	// it from the journal file
 	if ( strstr( qpath, ".cfg" ) ) {
 		isConfig = qtrue;
@@ -1996,7 +1996,7 @@ ZIP FILE LOADING
 =================
 FS_LoadZipFile
 
-Creates a New pak_t in the search chain for the contents
+Creates a new pak_t in the search chain for the contents
 of a zip file.
 =================
 */
@@ -2155,9 +2155,9 @@ DIRECTORY SCANNING FUNCTIONS
 #define	MAX_FOUND_FILES	0x1000
 
 static int FS_ReturnPath( const char *zname, char *zpath, int *depth ) {
-	int len, at, Newdep;
+	int len, at, newdep;
 
-	Newdep = 0;
+	newdep = 0;
 	zpath[0] = 0;
 	len = 0;
 	at = 0;
@@ -2166,13 +2166,13 @@ static int FS_ReturnPath( const char *zname, char *zpath, int *depth ) {
 	{
 		if (zname[at]=='/' || zname[at]=='\\') {
 			len = at;
-			Newdep++;
+			newdep++;
 		}
 		at++;
 	}
 	strcpy(zpath, zname);
 	zpath[len] = 0;
-	*depth = Newdep;
+	*depth = newdep;
 
 	return len;
 }
@@ -2409,7 +2409,7 @@ int	FS_GetFileList(  const char *path, const char *extension, char *listbuf, int
 Sys_ConcatenateFileLists
 
 mkv: Naive implementation. Concatenates three lists into a
-     New list, and frees the old lists from the heap.
+     new list, and frees the old lists from the heap.
 bk001129 - from cvs1.17 (mkv)
 
 FIXME TTimo those two should move to common.c next to Sys_ListFiles
@@ -2438,7 +2438,7 @@ static char** Sys_ConcatenateFileLists( char **list0, char **list1 )
 	totalLength += Sys_CountFileList(list0);
 	totalLength += Sys_CountFileList(list1);
 
-	/* Create New list. */
+	/* Create new list. */
 	dst = cat = Z_Malloc( ( totalLength + 1 ) * sizeof( char* ) );
 
 	/* Copy over lists. */
@@ -2505,7 +2505,7 @@ int	FS_GetModList( char *listbuf, int bufsize ) {
 			for(j=0; j<i; j++)
 			{
 				if (Q_stricmp(pFiles[j],name)==0) {
-					// This one can be dropped
+					// this one can be dropped
 					bDrop = qtrue;
 					break;
 				}
@@ -2884,13 +2884,13 @@ void FS_AddGameDirectory( const char *path, const char *dir ) {
 	// Unique
 	for ( sp = fs_searchpaths ; sp ; sp = sp->next ) {
 		if ( sp->dir && !Q_stricmp(sp->dir->path, path) && !Q_stricmp(sp->dir->gamedir, dir)) {
-			return;			// we've already got This one
+			return;			// we've already got this one
 		}
 	}
 
 	Q_strncpyz( fs_gamedir, dir, sizeof( fs_gamedir ) );
 
-	// find all pak files in This directory
+	// find all pak files in this directory
 	Q_strncpyz(curpath, FS_BuildOSPath(path, dir, ""), sizeof(curpath));
 	curpath[strlen(curpath) - 1] = '\0';	// strip the trailing slash
 
@@ -2955,7 +2955,7 @@ void FS_AddGameDirectory( const char *path, const char *dir ) {
 		}
 		else {
 			// The next .pk3dir is before the next .pk3 file
-			// But wait, This could be any directory, we're filtering to only ending with ".pk3dir" here.
+			// But wait, this could be any directory, we're filtering to only ending with ".pk3dir" here.
 			len = strlen(pakdirs[pakdirsi]);
 			if (!FS_IsExt(pakdirs[pakdirsi], ".pk3dir", len)) {
 				// This isn't a .pk3dir! Next!
@@ -3057,7 +3057,7 @@ static char		*fs_serverReferencedPakNames[MAX_SEARCH_PATHS];
 dlstring == qfalse
 
 we are not interested in a download string format, we want something human-readable
-(This is used for diagnostics while connecting to a pure server)
+(this is used for diagnostics while connecting to a pure server)
 
 ================
 */
@@ -3074,7 +3074,7 @@ qboolean FS_ComparePaks( char *neededpaks, int len, qboolean dlstring ) {
 
 	for ( i = 0 ; i < fs_numServerReferencedPaks ; i++ )
 	{
-		// Ok, see if we have This pak file
+		// Ok, see if we have this pak file
 		havepak = qfalse;
 
 		// never autodownload any of the id paks
@@ -3106,7 +3106,7 @@ qboolean FS_ComparePaks( char *neededpaks, int len, qboolean dlstring ) {
 
 			if (dlstring)
 			{
-				// We need This to make sure we won't hit the end of the buffer or the server could
+				// We need this to make sure we won't hit the end of the buffer or the server could
 				// overwrite non-pk3 files on clients by writing so much crap into neededpaks that
 				// Q_strcat cuts off the .pk3 extension.
 
@@ -3123,7 +3123,7 @@ qboolean FS_ComparePaks( char *neededpaks, int len, qboolean dlstring ) {
 				if ( FS_SV_FileExists( va( "%s.pk3", fs_serverReferencedPakNames[i] ) ) )
 				{
 					char st[MAX_ZPATH];
-					// We already have one called This, we need to download it to another name
+					// We already have one called this, we need to download it to another name
 					// Make something up with the checksum in it
 					Com_sprintf( st, sizeof( st ), "%s.%08x.pk3", fs_serverReferencedPakNames[i], fs_serverReferencedPaks[i] );
 					Q_strcat( neededpaks, len, st );
@@ -3134,7 +3134,7 @@ qboolean FS_ComparePaks( char *neededpaks, int len, qboolean dlstring ) {
 					Q_strcat( neededpaks, len, ".pk3" );
 				}
 
-				// Find out whether it might have overflowed the buffer and don't add This file to the
+				// Find out whether it might have overflowed the buffer and don't add this file to the
 				// list if that is the case.
 				if(strlen(origpos) + (origpos - neededpaks) >= len - 1)
 				{
@@ -3218,7 +3218,7 @@ void Com_ReadCDKey( const char *filename );
 ================
 FS_ReorderPurePaks
 NOTE TTimo: the reordering that happens here is not reflected in the cvars (\cvarlist *pak*)
-  This can lead to misleading situations, see https://zerowing.idsoftware.com/bugzilla/show_bug.cgi?id=540
+  this can lead to misleading situations, see https://zerowing.idsoftware.com/bugzilla/show_bug.cgi?id=540
 ================
 */
 static void FS_ReorderPurePaks( void )
@@ -3241,7 +3241,7 @@ static void FS_ReorderPurePaks( void )
 			// the part of the list before p_insert_index has been sorted already
 			if (s->pack && fs_serverPaks[i] == s->pack->checksum) {
 				fs_reordered = qtrue;
-				// move This element to the insert list
+				// move this element to the insert list
 				*p_previous = s->next;
 				s->next = *p_insert_index;
 				*p_insert_index = s;
@@ -3364,7 +3364,7 @@ Check whether any of the original id pak files is present,
 and start up in standalone mode, if there are none and a
 different com_basegame was set.
 Note: If you're building a game that doesn't depend on the
-Q3 media pak0.pk3, you'll want to remove This by defining
+Q3 media pak0.pk3, you'll want to remove this by defining
 STANDALONE in q_shared.h
 ===================
 */
@@ -3441,8 +3441,8 @@ static void FS_CheckPak0( void )
 		{
 			int index;
 
-			// Finally check whether This pak's checksum is listed because the user tried
-			// to trick us by renaming the file, and set foundPak's highest bit to indicate This case.
+			// Finally check whether this pak's checksum is listed because the user tried
+			// to trick us by renaming the file, and set foundPak's highest bit to indicate this case.
 
 			for(index = 0; index < ARRAY_LEN(pak_checksums); index++)
 			{
@@ -3452,7 +3452,7 @@ static void FS_CheckPak0( void )
 							"**************************************************\n"
 							"WARNING: %s is renamed pak file %s%cpak%d.pk3\n"
 							"Running in standalone mode won't work\n"
-							"Please rename, or remove This file\n"
+							"Please rename, or remove this file\n"
 							"**************************************************\n\n\n",
 							curpack->pakFilename, BASEGAME, PATH_SEP, index);
 
@@ -3469,7 +3469,7 @@ static void FS_CheckPak0( void )
 							"**************************************************\n"
 							"WARNING: %s is renamed pak file %s%cpak%d.pk3\n"
 							"Running in standalone mode won't work\n"
-							"Please rename, or remove This file\n"
+							"Please rename, or remove this file\n"
 							"**************************************************\n\n\n",
 							curpack->pakFilename, BASETA, PATH_SEP, index);
 
@@ -3559,7 +3559,7 @@ static void FS_CheckPak0( void )
 FS_LoadedPakChecksums
 
 Returns a space separated string containing the checksums of all loaded pk3 files.
-Servers with sv_pure set will get This string and pass it to clients.
+Servers with sv_pure set will get this string and pass it to clients.
 =====================
 */
 const char *FS_LoadedPakChecksums( void ) {
@@ -3585,7 +3585,7 @@ const char *FS_LoadedPakChecksums( void ) {
 FS_LoadedPakNames
 
 Returns a space separated string containing the names of all loaded pk3 files.
-Servers with sv_pure set will get This string and pass it to clients.
+Servers with sv_pure set will get this string and pass it to clients.
 =====================
 */
 const char *FS_LoadedPakNames( void ) {
@@ -3641,7 +3641,7 @@ const char *FS_LoadedPakPureChecksums( void ) {
 FS_ReferencedPakChecksums
 
 Returns a space separated string containing the checksums of all referenced pk3 files.
-The server will send This to the clients so they can check which files should be auto-downloaded. 
+The server will send this to the clients so they can check which files should be auto-downloaded. 
 =====================
 */
 const char *FS_ReferencedPakChecksums( void ) {
@@ -3668,7 +3668,7 @@ const char *FS_ReferencedPakChecksums( void ) {
 FS_ReferencedPakPureChecksums
 
 Returns a space separated string containing the pure checksums of all referenced pk3 files.
-Servers with sv_pure set will get This string back from clients for pure validation 
+Servers with sv_pure set will get this string back from clients for pure validation 
 
 The string has a specific order, "cgame ui @ ref1 ref2 ref3 ..."
 =====================
@@ -3715,7 +3715,7 @@ const char *FS_ReferencedPakPureChecksums( void ) {
 FS_ReferencedPakNames
 
 Returns a space separated string containing the names of all referenced pk3 files.
-The server will send This to the clients so they can check which files should be auto-downloaded. 
+The server will send this to the clients so they can check which files should be auto-downloaded. 
 =====================
 */
 const char *FS_ReferencedPakNames( void ) {
@@ -3885,7 +3885,7 @@ is resetting due to a game change
 */
 void FS_InitFilesystem( void ) {
 	// allow command line parms to override our defaults
-	// we have to specially handle This, because normal command
+	// we have to specially handle this, because normal command
 	// line variable sets don't happen until after the filesystem
 	// has already been initialized
 	Com_StartupVariable("fs_basepath");
@@ -3941,7 +3941,7 @@ void FS_Restart( int checksumFeed ) {
 	// busted and error out now, rather than getting an unreadable
 	// graphics screen when the font fails to load
 	if ( FS_ReadFile( "default.cfg", NULL ) <= 0 ) {
-		// This might happen when connecting to a pure server not using BASEGAME/pak0.pk3
+		// this might happen when connecting to a pure server not using BASEGAME/pak0.pk3
 		// (for instance a TA demo server)
 		if (lastValidBase[0]) {
 			FS_PureServerSetLoadedPaks("", "");

@@ -221,7 +221,7 @@ void SV_LinkEntity( sharedEntity_t *gEnt ) {
 
 	// encode the size into the entityState_t for client prediction
 	if ( gEnt->r.bmodel ) {
-		gEnt->s.solid = SOLID_BMODEL;		// a solid_box will never create This value
+		gEnt->s.solid = SOLID_BMODEL;		// a solid_box will never create this value
 	} else if ( gEnt->r.contents & ( CONTENTS_SOLID | CONTENTS_BODY ) ) {
 		// assume that x/y are equal and symetric
 		i = gEnt->r.maxs[0];
@@ -529,7 +529,7 @@ static void SV_ClipMoveToEntities( moveclip_t *clip ) {
 		}
 		touch = SV_GentityNum( touchlist[i] );
 
-		// see if we should ignore This entity
+		// see if we should ignore this entity
 		if ( clip->passEntityNum != ENTITYNUM_NONE ) {
 			if ( touchlist[i] == clip->passEntityNum ) {
 				continue;	// don't clip against the pass entity

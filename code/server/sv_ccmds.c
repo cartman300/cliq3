@@ -57,7 +57,7 @@ static client_t *SV_GetPlayerByHandle( void ) {
 
 	s = Cmd_Argv(1);
 
-	// Check whether This is a numeric player handle
+	// Check whether this is a numeric player handle
 	for(i = 0; s[i] >= '0' && s[i] <= '9'; i++);
 	
 	if(!s[i])
@@ -222,7 +222,7 @@ static void SV_Map_f( void ) {
 ================
 SV_MapRestart_f
 
-Completely restarts a level, but doesn't send a New gamestate to the clients.
+Completely restarts a level, but doesn't send a new gamestate to the clients.
 This allows fair starts with variable load times.
 ================
 */
@@ -277,7 +277,7 @@ static void SV_MapRestart_f( void ) {
 	// map_restart has happened
 	svs.snapFlagServerBit ^= SNAPFLAG_SERVERCOUNT;
 
-	// generate a New serverid	
+	// generate a new serverid	
 	// TTimo - don't update restartedserverId there, otherwise we won't deal correctly with multiple map_restart
 	sv.serverId = com_frameTime;
 	Cvar_Set( "sv_serverid", va("%i", sv.serverId ) );
@@ -314,7 +314,7 @@ static void SV_MapRestart_f( void ) {
 	for (i=0 ; i<sv_maxclients->integer ; i++) {
 		client = &svs.clients[i];
 
-		// send the New gamestate to all connected clients
+		// send the new gamestate to all connected clients
 		if ( client->state < CS_CONNECTED) {
 			continue;
 		}
@@ -331,7 +331,7 @@ static void SV_MapRestart_f( void ) {
 		// connect the client again, without the firstTime flag
 		denied = VM_ExplicitArgPtr( gvm, VM_Call( gvm, GAME_CLIENT_CONNECT, i, qfalse, isBot ) );
 		if ( denied ) {
-			// This generally shouldn't happen, because the client
+			// this generally shouldn't happen, because the client
 			// was connected before the level change
 			SV_DropClient( client, denied );
 			Com_Printf( "SV_MapRestart_f(%d): dropped client %i - denied!\n", delay, i );
@@ -518,7 +518,7 @@ static void SV_KickNum_f( void ) {
 ==================
 SV_Ban_f
 
-Ban a user from being able to play on This server through the auth
+Ban a user from being able to play on this server through the auth
 server
 ==================
 */
@@ -574,7 +574,7 @@ static void SV_Ban_f( void ) {
 ==================
 SV_BanNum_f
 
-Ban a user from being able to play on This server through the auth
+Ban a user from being able to play on this server through the auth
 server
 ==================
 */
@@ -636,7 +636,7 @@ static void SV_RehashBans_f(void)
 {
 	int index, filelen;
 	fileHandle_t readfrom;
-	char *textbuf, *curpos, *maskpos, *Newlinepos, *endpos;
+	char *textbuf, *curpos, *maskpos, *newlinepos, *endpos;
 	char filepath[MAX_QPATH];
 	
 	// make sure server is running
@@ -679,12 +679,12 @@ static void SV_RehashBans_f(void)
 			maskpos++;
 			
 			// find the end of the subnet specifier
-			for(Newlinepos = maskpos; Newlinepos < endpos && *Newlinepos != '\n'; Newlinepos++);
+			for(newlinepos = maskpos; newlinepos < endpos && *newlinepos != '\n'; newlinepos++);
 			
-			if(Newlinepos >= endpos)
+			if(newlinepos >= endpos)
 				break;
 			
-			*Newlinepos = '\0';
+			*newlinepos = '\0';
 			
 			if(NET_StringToAdr(curpos + 2, &serverBans[index].ip, NA_UNSPEC))
 			{
@@ -703,7 +703,7 @@ static void SV_RehashBans_f(void)
 				}
 			}
 			
-			curpos = Newlinepos + 1;
+			curpos = newlinepos + 1;
 		}
 			
 		serverBansCount = index;
@@ -820,7 +820,7 @@ static qboolean SV_ParseCIDRNotation(netadr_t *dest, int *mask, char *adrstr)
 ==================
 SV_AddBanToList
 
-Ban a user from being able to play on This server based on his ip address.
+Ban a user from being able to play on this server based on his ip address.
 ==================
 */
 
@@ -905,7 +905,7 @@ static void SV_AddBanToList(qboolean isexception)
 		return;
 	}
 
-	// first check whether a conflicting ban exists that would supersede the New one.
+	// first check whether a conflicting ban exists that would supersede the new one.
 	for(index = 0; index < serverBansCount; index++)
 	{
 		curban = &serverBans[index];
@@ -936,7 +936,7 @@ static void SV_AddBanToList(qboolean isexception)
 		}
 	}
 
-	// now delete bans that are superseded by the New one
+	// now delete bans that are superseded by the new one
 	index = 0;
 	while(index < serverBansCount)
 	{

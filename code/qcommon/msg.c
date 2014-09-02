@@ -110,7 +110,7 @@ void MSG_WriteBits( msg_t *msg, int value, int bits ) {
 
 	oldsize += bits;
 
-	// This isn't an exact overflow check, but close enough
+	// this isn't an exact overflow check, but close enough
 	if ( msg->maxsize - msg->cursize < 4 ) {
 		msg->overflowed = qtrue;
 		return;
@@ -564,13 +564,13 @@ extern cvar_t *cl_shownet;
 
 #define	LOG(x) if( cl_shownet && cl_shownet->integer == 4 ) { Com_Printf("%s ", x ); };
 
-void MSG_WriteDelta( msg_t *msg, int oldV, int NewV, int bits ) {
-	if ( oldV == NewV ) {
+void MSG_WriteDelta( msg_t *msg, int oldV, int newV, int bits ) {
+	if ( oldV == newV ) {
 		MSG_WriteBits( msg, 0, 1 );
 		return;
 	}
 	MSG_WriteBits( msg, 1, 1 );
-	MSG_WriteBits( msg, NewV, bits );
+	MSG_WriteBits( msg, newV, bits );
 }
 
 int	MSG_ReadDelta( msg_t *msg, int oldV, int bits ) {
@@ -580,13 +580,13 @@ int	MSG_ReadDelta( msg_t *msg, int oldV, int bits ) {
 	return oldV;
 }
 
-void MSG_WriteDeltaFloat( msg_t *msg, float oldV, float NewV ) {
+void MSG_WriteDeltaFloat( msg_t *msg, float oldV, float newV ) {
 	floatint_t fi;
-	if ( oldV == NewV ) {
+	if ( oldV == newV ) {
 		MSG_WriteBits( msg, 0, 1 );
 		return;
 	}
-	fi.f = NewV;
+	fi.f = newV;
 	MSG_WriteBits( msg, 1, 1 );
 	MSG_WriteBits( msg, fi.i, 32 );
 }
@@ -620,13 +620,13 @@ int kbitmask[32] = {
 	0x1FFFFFFF,	0x3FFFFFFF,	0x7FFFFFFF,	0xFFFFFFFF,
 };
 
-void MSG_WriteDeltaKey( msg_t *msg, int key, int oldV, int NewV, int bits ) {
-	if ( oldV == NewV ) {
+void MSG_WriteDeltaKey( msg_t *msg, int key, int oldV, int newV, int bits ) {
+	if ( oldV == newV ) {
 		MSG_WriteBits( msg, 0, 1 );
 		return;
 	}
 	MSG_WriteBits( msg, 1, 1 );
-	MSG_WriteBits( msg, NewV ^ key, bits );
+	MSG_WriteBits( msg, newV ^ key, bits );
 }
 
 int	MSG_ReadDeltaKey( msg_t *msg, int key, int oldV, int bits ) {
@@ -636,13 +636,13 @@ int	MSG_ReadDeltaKey( msg_t *msg, int key, int oldV, int bits ) {
 	return oldV;
 }
 
-void MSG_WriteDeltaKeyFloat( msg_t *msg, int key, float oldV, float NewV ) {
+void MSG_WriteDeltaKeyFloat( msg_t *msg, int key, float oldV, float newV ) {
 	floatint_t fi;
-	if ( oldV == NewV ) {
+	if ( oldV == newV ) {
 		MSG_WriteBits( msg, 0, 1 );
 		return;
 	}
-	fi.f = NewV;
+	fi.f = newV;
 	MSG_WriteBits( msg, 1, 1 );
 	MSG_WriteBits( msg, fi.i ^ key, 32 );
 }
@@ -810,7 +810,7 @@ netField_t	entityStateFields[] =
 { NETF(modelindex), 8 },
 { NETF(otherEntityNum2), GENTITYNUM_BITS },
 { NETF(loopSound), 8 },
-{ NETF(Generic1), 8 },
+{ NETF(generic1), 8 },
 { NETF(origin2[2]), 0 },
 { NETF(origin2[0]), 0 },
 { NETF(origin2[1]), 0 },
@@ -861,7 +861,7 @@ void MSG_WriteDeltaEntity( msg_t *msg, struct entityState_s *from, struct entity
 
 	// all fields should be 32 bits to avoid any compiler packing issues
 	// the "number" field is not part of the field list
-	// if This assert fails, someone added a field to the entityState_t
+	// if this assert fails, someone added a field to the entityState_t
 	// struct without updating the message fields
 	assert( numFields + 1 == sizeof( *from )/4 );
 
@@ -1128,7 +1128,7 @@ netField_t	playerStateFields[] =
 { PSF(damageYaw), 8 },
 { PSF(damagePitch), 8 },
 { PSF(damageCount), 8 },
-{ PSF(Generic1), 8 },
+{ PSF(generic1), 8 },
 { PSF(pm_type), 8 },					
 { PSF(delta_angles[0]), 16 },
 { PSF(delta_angles[2]), 16 },

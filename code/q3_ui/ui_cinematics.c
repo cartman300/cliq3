@@ -124,173 +124,173 @@ static void UI_CinematicsMenu_Init( void ) {
 	memset( &cinematicsMenuInfo, 0, sizeof(cinematicsMenuInfo) );
 	cinematicsMenuInfo.menu.fullscreen = qtrue;
 
-	cinematicsMenuInfo.banner.Generic.type		= MTYPE_BTEXT;
-	cinematicsMenuInfo.banner.Generic.x			= 320;
-	cinematicsMenuInfo.banner.Generic.y			= 16;
+	cinematicsMenuInfo.banner.generic.type		= MTYPE_BTEXT;
+	cinematicsMenuInfo.banner.generic.x			= 320;
+	cinematicsMenuInfo.banner.generic.y			= 16;
 	cinematicsMenuInfo.banner.string			= "CINEMATICS";
 	cinematicsMenuInfo.banner.color				= color_white;
 	cinematicsMenuInfo.banner.style				= UI_CENTER;
 
-	cinematicsMenuInfo.framel.Generic.type		= MTYPE_BITMAP;
-	cinematicsMenuInfo.framel.Generic.name		= ART_FRAMEL;
-	cinematicsMenuInfo.framel.Generic.flags		= QMF_INACTIVE;
-	cinematicsMenuInfo.framel.Generic.x			= 0;  
-	cinematicsMenuInfo.framel.Generic.y			= 78;
+	cinematicsMenuInfo.framel.generic.type		= MTYPE_BITMAP;
+	cinematicsMenuInfo.framel.generic.name		= ART_FRAMEL;
+	cinematicsMenuInfo.framel.generic.flags		= QMF_INACTIVE;
+	cinematicsMenuInfo.framel.generic.x			= 0;  
+	cinematicsMenuInfo.framel.generic.y			= 78;
 	cinematicsMenuInfo.framel.width  			= 256;
 	cinematicsMenuInfo.framel.height  			= 329;
 
-	cinematicsMenuInfo.framer.Generic.type		= MTYPE_BITMAP;
-	cinematicsMenuInfo.framer.Generic.name		= ART_FRAMER;
-	cinematicsMenuInfo.framer.Generic.flags		= QMF_INACTIVE;
-	cinematicsMenuInfo.framer.Generic.x			= 376;
-	cinematicsMenuInfo.framer.Generic.y			= 76;
+	cinematicsMenuInfo.framer.generic.type		= MTYPE_BITMAP;
+	cinematicsMenuInfo.framer.generic.name		= ART_FRAMER;
+	cinematicsMenuInfo.framer.generic.flags		= QMF_INACTIVE;
+	cinematicsMenuInfo.framer.generic.x			= 376;
+	cinematicsMenuInfo.framer.generic.y			= 76;
 	cinematicsMenuInfo.framer.width  			= 256;
 	cinematicsMenuInfo.framer.height  			= 334;
 
 	y = 100;
-	cinematicsMenuInfo.cin_idlogo.Generic.type		= MTYPE_PTEXT;
-	cinematicsMenuInfo.cin_idlogo.Generic.flags		= QMF_CENTER_JUSTIFY|QMF_PULSEIFFOCUS;
-	cinematicsMenuInfo.cin_idlogo.Generic.x			= 320;
-	cinematicsMenuInfo.cin_idlogo.Generic.y			= y;
-	cinematicsMenuInfo.cin_idlogo.Generic.id		= ID_CIN_IDLOGO;
-	cinematicsMenuInfo.cin_idlogo.Generic.callback	= UI_CinematicsMenu_Event; 
+	cinematicsMenuInfo.cin_idlogo.generic.type		= MTYPE_PTEXT;
+	cinematicsMenuInfo.cin_idlogo.generic.flags		= QMF_CENTER_JUSTIFY|QMF_PULSEIFFOCUS;
+	cinematicsMenuInfo.cin_idlogo.generic.x			= 320;
+	cinematicsMenuInfo.cin_idlogo.generic.y			= y;
+	cinematicsMenuInfo.cin_idlogo.generic.id		= ID_CIN_IDLOGO;
+	cinematicsMenuInfo.cin_idlogo.generic.callback	= UI_CinematicsMenu_Event; 
 	cinematicsMenuInfo.cin_idlogo.string			= "ID LOGO";
 	cinematicsMenuInfo.cin_idlogo.color				= color_red;
 	cinematicsMenuInfo.cin_idlogo.style				= UI_CENTER;
 
 	y += VERTICAL_SPACING;
-	cinematicsMenuInfo.cin_intro.Generic.type		= MTYPE_PTEXT;
-	cinematicsMenuInfo.cin_intro.Generic.flags		= QMF_CENTER_JUSTIFY|QMF_PULSEIFFOCUS;
-	cinematicsMenuInfo.cin_intro.Generic.x			= 320;
-	cinematicsMenuInfo.cin_intro.Generic.y			= y;
-	cinematicsMenuInfo.cin_intro.Generic.id			= ID_CIN_INTRO;
-	cinematicsMenuInfo.cin_intro.Generic.callback	= UI_CinematicsMenu_Event; 
+	cinematicsMenuInfo.cin_intro.generic.type		= MTYPE_PTEXT;
+	cinematicsMenuInfo.cin_intro.generic.flags		= QMF_CENTER_JUSTIFY|QMF_PULSEIFFOCUS;
+	cinematicsMenuInfo.cin_intro.generic.x			= 320;
+	cinematicsMenuInfo.cin_intro.generic.y			= y;
+	cinematicsMenuInfo.cin_intro.generic.id			= ID_CIN_INTRO;
+	cinematicsMenuInfo.cin_intro.generic.callback	= UI_CinematicsMenu_Event; 
 	cinematicsMenuInfo.cin_intro.string				= "INTRO";
 	cinematicsMenuInfo.cin_intro.color				= color_red;
 	cinematicsMenuInfo.cin_intro.style				= UI_CENTER;
 	if( uis.demoversion ) {
-		cinematicsMenuInfo.cin_intro.Generic.flags |= QMF_GRAYED;
+		cinematicsMenuInfo.cin_intro.generic.flags |= QMF_GRAYED;
 	}
 
 	y += VERTICAL_SPACING;
-	cinematicsMenuInfo.cin_tier1.Generic.type		= MTYPE_PTEXT;
-	cinematicsMenuInfo.cin_tier1.Generic.flags		= QMF_CENTER_JUSTIFY|QMF_PULSEIFFOCUS;
-	cinematicsMenuInfo.cin_tier1.Generic.x			= 320;
-	cinematicsMenuInfo.cin_tier1.Generic.y			= y;
-	cinematicsMenuInfo.cin_tier1.Generic.id			= ID_CIN_TIER1;
-	cinematicsMenuInfo.cin_tier1.Generic.callback	= UI_CinematicsMenu_Event; 
+	cinematicsMenuInfo.cin_tier1.generic.type		= MTYPE_PTEXT;
+	cinematicsMenuInfo.cin_tier1.generic.flags		= QMF_CENTER_JUSTIFY|QMF_PULSEIFFOCUS;
+	cinematicsMenuInfo.cin_tier1.generic.x			= 320;
+	cinematicsMenuInfo.cin_tier1.generic.y			= y;
+	cinematicsMenuInfo.cin_tier1.generic.id			= ID_CIN_TIER1;
+	cinematicsMenuInfo.cin_tier1.generic.callback	= UI_CinematicsMenu_Event; 
 	cinematicsMenuInfo.cin_tier1.string				= "Tier 1";
 	cinematicsMenuInfo.cin_tier1.color				= color_red;
 	cinematicsMenuInfo.cin_tier1.style				= UI_CENTER;
 	if( !UI_CanShowTierVideo( 1 ) ) {
-		cinematicsMenuInfo.cin_tier1.Generic.flags |= QMF_GRAYED;
+		cinematicsMenuInfo.cin_tier1.generic.flags |= QMF_GRAYED;
 	}
 
 	y += VERTICAL_SPACING;
-	cinematicsMenuInfo.cin_tier2.Generic.type		= MTYPE_PTEXT;
-	cinematicsMenuInfo.cin_tier2.Generic.flags		= QMF_CENTER_JUSTIFY|QMF_PULSEIFFOCUS;
-	cinematicsMenuInfo.cin_tier2.Generic.x			= 320;
-	cinematicsMenuInfo.cin_tier2.Generic.y			= y;
-	cinematicsMenuInfo.cin_tier2.Generic.id			= ID_CIN_TIER2;
-	cinematicsMenuInfo.cin_tier2.Generic.callback	= UI_CinematicsMenu_Event; 
+	cinematicsMenuInfo.cin_tier2.generic.type		= MTYPE_PTEXT;
+	cinematicsMenuInfo.cin_tier2.generic.flags		= QMF_CENTER_JUSTIFY|QMF_PULSEIFFOCUS;
+	cinematicsMenuInfo.cin_tier2.generic.x			= 320;
+	cinematicsMenuInfo.cin_tier2.generic.y			= y;
+	cinematicsMenuInfo.cin_tier2.generic.id			= ID_CIN_TIER2;
+	cinematicsMenuInfo.cin_tier2.generic.callback	= UI_CinematicsMenu_Event; 
 	cinematicsMenuInfo.cin_tier2.string				= "Tier 2";
 	cinematicsMenuInfo.cin_tier2.color				= color_red;
 	cinematicsMenuInfo.cin_tier2.style				= UI_CENTER;
 	if( !UI_CanShowTierVideo( 2 ) ) {
-		cinematicsMenuInfo.cin_tier2.Generic.flags |= QMF_GRAYED;
+		cinematicsMenuInfo.cin_tier2.generic.flags |= QMF_GRAYED;
 	}
 
 	y += VERTICAL_SPACING;
-	cinematicsMenuInfo.cin_tier3.Generic.type		= MTYPE_PTEXT;
-	cinematicsMenuInfo.cin_tier3.Generic.flags		= QMF_CENTER_JUSTIFY|QMF_PULSEIFFOCUS;
-	cinematicsMenuInfo.cin_tier3.Generic.x			= 320;
-	cinematicsMenuInfo.cin_tier3.Generic.y			= y;
-	cinematicsMenuInfo.cin_tier3.Generic.id			= ID_CIN_TIER3;
-	cinematicsMenuInfo.cin_tier3.Generic.callback	= UI_CinematicsMenu_Event; 
+	cinematicsMenuInfo.cin_tier3.generic.type		= MTYPE_PTEXT;
+	cinematicsMenuInfo.cin_tier3.generic.flags		= QMF_CENTER_JUSTIFY|QMF_PULSEIFFOCUS;
+	cinematicsMenuInfo.cin_tier3.generic.x			= 320;
+	cinematicsMenuInfo.cin_tier3.generic.y			= y;
+	cinematicsMenuInfo.cin_tier3.generic.id			= ID_CIN_TIER3;
+	cinematicsMenuInfo.cin_tier3.generic.callback	= UI_CinematicsMenu_Event; 
 	cinematicsMenuInfo.cin_tier3.string				= "Tier 3";
 	cinematicsMenuInfo.cin_tier3.color				= color_red;
 	cinematicsMenuInfo.cin_tier3.style				= UI_CENTER;
 	if( !UI_CanShowTierVideo( 3 ) ) {
-		cinematicsMenuInfo.cin_tier3.Generic.flags |= QMF_GRAYED;
+		cinematicsMenuInfo.cin_tier3.generic.flags |= QMF_GRAYED;
 	}
 
 	y += VERTICAL_SPACING;
-	cinematicsMenuInfo.cin_tier4.Generic.type		= MTYPE_PTEXT;
-	cinematicsMenuInfo.cin_tier4.Generic.flags		= QMF_CENTER_JUSTIFY|QMF_PULSEIFFOCUS;
-	cinematicsMenuInfo.cin_tier4.Generic.x			= 320;
-	cinematicsMenuInfo.cin_tier4.Generic.y			= y;
-	cinematicsMenuInfo.cin_tier4.Generic.id			= ID_CIN_TIER4;
-	cinematicsMenuInfo.cin_tier4.Generic.callback	= UI_CinematicsMenu_Event; 
+	cinematicsMenuInfo.cin_tier4.generic.type		= MTYPE_PTEXT;
+	cinematicsMenuInfo.cin_tier4.generic.flags		= QMF_CENTER_JUSTIFY|QMF_PULSEIFFOCUS;
+	cinematicsMenuInfo.cin_tier4.generic.x			= 320;
+	cinematicsMenuInfo.cin_tier4.generic.y			= y;
+	cinematicsMenuInfo.cin_tier4.generic.id			= ID_CIN_TIER4;
+	cinematicsMenuInfo.cin_tier4.generic.callback	= UI_CinematicsMenu_Event; 
 	cinematicsMenuInfo.cin_tier4.string				= "Tier 4";
 	cinematicsMenuInfo.cin_tier4.color				= color_red;
 	cinematicsMenuInfo.cin_tier4.style				= UI_CENTER;
 	if( !UI_CanShowTierVideo( 4 ) ) {
-		cinematicsMenuInfo.cin_tier4.Generic.flags |= QMF_GRAYED;
+		cinematicsMenuInfo.cin_tier4.generic.flags |= QMF_GRAYED;
 	}
 
 	y += VERTICAL_SPACING;
-	cinematicsMenuInfo.cin_tier5.Generic.type		= MTYPE_PTEXT;
-	cinematicsMenuInfo.cin_tier5.Generic.flags		= QMF_CENTER_JUSTIFY|QMF_PULSEIFFOCUS;
-	cinematicsMenuInfo.cin_tier5.Generic.x			= 320;
-	cinematicsMenuInfo.cin_tier5.Generic.y			= y;
-	cinematicsMenuInfo.cin_tier5.Generic.id			= ID_CIN_TIER5;
-	cinematicsMenuInfo.cin_tier5.Generic.callback	= UI_CinematicsMenu_Event; 
+	cinematicsMenuInfo.cin_tier5.generic.type		= MTYPE_PTEXT;
+	cinematicsMenuInfo.cin_tier5.generic.flags		= QMF_CENTER_JUSTIFY|QMF_PULSEIFFOCUS;
+	cinematicsMenuInfo.cin_tier5.generic.x			= 320;
+	cinematicsMenuInfo.cin_tier5.generic.y			= y;
+	cinematicsMenuInfo.cin_tier5.generic.id			= ID_CIN_TIER5;
+	cinematicsMenuInfo.cin_tier5.generic.callback	= UI_CinematicsMenu_Event; 
 	cinematicsMenuInfo.cin_tier5.string				= "Tier 5";
 	cinematicsMenuInfo.cin_tier5.color				= color_red;
 	cinematicsMenuInfo.cin_tier5.style				= UI_CENTER;
 	if( !UI_CanShowTierVideo( 5 ) ) {
-		cinematicsMenuInfo.cin_tier5.Generic.flags |= QMF_GRAYED;
+		cinematicsMenuInfo.cin_tier5.generic.flags |= QMF_GRAYED;
 	}
 
 	y += VERTICAL_SPACING;
-	cinematicsMenuInfo.cin_tier6.Generic.type		= MTYPE_PTEXT;
-	cinematicsMenuInfo.cin_tier6.Generic.flags		= QMF_CENTER_JUSTIFY|QMF_PULSEIFFOCUS;
-	cinematicsMenuInfo.cin_tier6.Generic.x			= 320;
-	cinematicsMenuInfo.cin_tier6.Generic.y			= y;
-	cinematicsMenuInfo.cin_tier6.Generic.id			= ID_CIN_TIER6;
-	cinematicsMenuInfo.cin_tier6.Generic.callback	= UI_CinematicsMenu_Event; 
+	cinematicsMenuInfo.cin_tier6.generic.type		= MTYPE_PTEXT;
+	cinematicsMenuInfo.cin_tier6.generic.flags		= QMF_CENTER_JUSTIFY|QMF_PULSEIFFOCUS;
+	cinematicsMenuInfo.cin_tier6.generic.x			= 320;
+	cinematicsMenuInfo.cin_tier6.generic.y			= y;
+	cinematicsMenuInfo.cin_tier6.generic.id			= ID_CIN_TIER6;
+	cinematicsMenuInfo.cin_tier6.generic.callback	= UI_CinematicsMenu_Event; 
 	cinematicsMenuInfo.cin_tier6.string				= "Tier 6";
 	cinematicsMenuInfo.cin_tier6.color				= color_red;
 	cinematicsMenuInfo.cin_tier6.style				= UI_CENTER;
 	if( !UI_CanShowTierVideo( 6 ) ) {
-		cinematicsMenuInfo.cin_tier6.Generic.flags |= QMF_GRAYED;
+		cinematicsMenuInfo.cin_tier6.generic.flags |= QMF_GRAYED;
 	}
 
 	y += VERTICAL_SPACING;
-	cinematicsMenuInfo.cin_tier7.Generic.type		= MTYPE_PTEXT;
-	cinematicsMenuInfo.cin_tier7.Generic.flags		= QMF_CENTER_JUSTIFY|QMF_PULSEIFFOCUS;
-	cinematicsMenuInfo.cin_tier7.Generic.x			= 320;
-	cinematicsMenuInfo.cin_tier7.Generic.y			= y;
-	cinematicsMenuInfo.cin_tier7.Generic.id			= ID_CIN_TIER7;
-	cinematicsMenuInfo.cin_tier7.Generic.callback	= UI_CinematicsMenu_Event; 
+	cinematicsMenuInfo.cin_tier7.generic.type		= MTYPE_PTEXT;
+	cinematicsMenuInfo.cin_tier7.generic.flags		= QMF_CENTER_JUSTIFY|QMF_PULSEIFFOCUS;
+	cinematicsMenuInfo.cin_tier7.generic.x			= 320;
+	cinematicsMenuInfo.cin_tier7.generic.y			= y;
+	cinematicsMenuInfo.cin_tier7.generic.id			= ID_CIN_TIER7;
+	cinematicsMenuInfo.cin_tier7.generic.callback	= UI_CinematicsMenu_Event; 
 	cinematicsMenuInfo.cin_tier7.string				= "Tier 7";
 	cinematicsMenuInfo.cin_tier7.color				= color_red;
 	cinematicsMenuInfo.cin_tier7.style				= UI_CENTER;
 	if( !UI_CanShowTierVideo( 7 ) ) {
-		cinematicsMenuInfo.cin_tier7.Generic.flags |= QMF_GRAYED;
+		cinematicsMenuInfo.cin_tier7.generic.flags |= QMF_GRAYED;
 	}
 
 	y += VERTICAL_SPACING;
-	cinematicsMenuInfo.cin_end.Generic.type			= MTYPE_PTEXT;
-	cinematicsMenuInfo.cin_end.Generic.flags		= QMF_CENTER_JUSTIFY|QMF_PULSEIFFOCUS;
-	cinematicsMenuInfo.cin_end.Generic.x			= 320;
-	cinematicsMenuInfo.cin_end.Generic.y			= y;
-	cinematicsMenuInfo.cin_end.Generic.id			= ID_CIN_END;
-	cinematicsMenuInfo.cin_end.Generic.callback		= UI_CinematicsMenu_Event; 
+	cinematicsMenuInfo.cin_end.generic.type			= MTYPE_PTEXT;
+	cinematicsMenuInfo.cin_end.generic.flags		= QMF_CENTER_JUSTIFY|QMF_PULSEIFFOCUS;
+	cinematicsMenuInfo.cin_end.generic.x			= 320;
+	cinematicsMenuInfo.cin_end.generic.y			= y;
+	cinematicsMenuInfo.cin_end.generic.id			= ID_CIN_END;
+	cinematicsMenuInfo.cin_end.generic.callback		= UI_CinematicsMenu_Event; 
 	cinematicsMenuInfo.cin_end.string				= "END";
 	cinematicsMenuInfo.cin_end.color				= color_red;
 	cinematicsMenuInfo.cin_end.style				= UI_CENTER;
 	if( !UI_CanShowTierVideo( 8 ) ) {
-		cinematicsMenuInfo.cin_end.Generic.flags |= QMF_GRAYED;
+		cinematicsMenuInfo.cin_end.generic.flags |= QMF_GRAYED;
 	}
 
-	cinematicsMenuInfo.back.Generic.type		= MTYPE_BITMAP;
-	cinematicsMenuInfo.back.Generic.name		= ART_BACK0;
-	cinematicsMenuInfo.back.Generic.flags		= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
-	cinematicsMenuInfo.back.Generic.id			= ID_BACK;
-	cinematicsMenuInfo.back.Generic.callback	= UI_CinematicsMenu_BackEvent;
-	cinematicsMenuInfo.back.Generic.x			= 0;
-	cinematicsMenuInfo.back.Generic.y			= 480-64;
+	cinematicsMenuInfo.back.generic.type		= MTYPE_BITMAP;
+	cinematicsMenuInfo.back.generic.name		= ART_BACK0;
+	cinematicsMenuInfo.back.generic.flags		= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
+	cinematicsMenuInfo.back.generic.id			= ID_BACK;
+	cinematicsMenuInfo.back.generic.callback	= UI_CinematicsMenu_BackEvent;
+	cinematicsMenuInfo.back.generic.x			= 0;
+	cinematicsMenuInfo.back.generic.y			= 480-64;
 	cinematicsMenuInfo.back.width				= 128;
 	cinematicsMenuInfo.back.height				= 64;
 	cinematicsMenuInfo.back.focuspic			= ART_BACK1;

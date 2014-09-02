@@ -412,7 +412,7 @@ static void SetViewportAndScissor( void ) {
 RB_BeginDrawingView
 
 Any mirrored or portaled views have already been drawn, so prepare
-to actually render the visible surfaces for This view
+to actually render the visible surfaces for this view
 =================
 */
 void RB_BeginDrawingView (void) {
@@ -468,7 +468,7 @@ void RB_BeginDrawingView (void) {
 
 	glState.faceCulling = -1;		// force face culling to set next time
 
-	// we will only draw a sun if there was sky rendered in This view
+	// we will only draw a sun if there was sky rendered in this view
 	backEnd.skyRenderedThisView = qfalse;
 
 	// clip to the plane of the portal
@@ -651,7 +651,7 @@ void RB_RenderDrawSurfList( drawSurf_t *drawSurfs, int numDrawSurfs ) {
 			oldEntityNum = entityNum;
 		}
 
-		// add the triangles for This surface
+		// add the triangles for this surface
 		rb_surfaceTable[ *drawSurf->surface ]( drawSurf->surface );
 	}
 
@@ -760,7 +760,7 @@ void RE_StretchRaw (int x, int y, int w, int h, int cols, int rows, const byte *
 
 	GL_Bind( tr.scratchImage[client] );
 
-	// if the scratchImage isn't in the format we want, specify it as a New texture
+	// if the scratchImage isn't in the format we want, specify it as a new texture
 	if ( cols != tr.scratchImage[client]->width || rows != tr.scratchImage[client]->height ) {
 		tr.scratchImage[client]->width = tr.scratchImage[client]->uploadWidth = cols;
 		tr.scratchImage[client]->height = tr.scratchImage[client]->uploadHeight = rows;
@@ -802,7 +802,7 @@ void RE_UploadCinematic (int w, int h, int cols, int rows, const byte *data, int
 
 	GL_Bind( tr.scratchImage[client] );
 
-	// if the scratchImage isn't in the format we want, specify it as a New texture
+	// if the scratchImage isn't in the format we want, specify it as a new texture
 	if ( cols != tr.scratchImage[client]->width || rows != tr.scratchImage[client]->height ) {
 		tr.scratchImage[client]->width = tr.scratchImage[client]->uploadWidth = cols;
 		tr.scratchImage[client]->height = tr.scratchImage[client]->uploadHeight = rows;

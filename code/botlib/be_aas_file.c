@@ -533,7 +533,7 @@ qboolean AAS_WriteAASFile(char *filename)
 	header.ident = LittleLong(AASID);
 	header.version = LittleLong(AASVERSION);
 	header.bspchecksum = LittleLong(aasworld.bspchecksum);
-	//open a New file
+	//open a new file
 	botimport.FS_FOpenFile( filename, &fp, FS_WRITE );
 	if (!fp)
 	{

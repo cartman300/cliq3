@@ -50,7 +50,7 @@ int AAS_NextModelReachability(int num, int modelnum);
 float AAS_AreaGroundFaceArea(int areanum);
 //returns true if the area is crouch only
 int AAS_AreaCrouch(int areanum);
-//returns true if a player can swim in This area
+//returns true if a player can swim in this area
 int AAS_AreaSwim(int areanum);
 //returns true if the area is filled with a liquid
 int AAS_AreaLiquid(int areanum);

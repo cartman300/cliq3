@@ -119,7 +119,7 @@ void Sys_In_Restart_f( void )
 =================
 Sys_ConsoleInput
 
-Handle New console input
+Handle new console input
 =================
 */
 char *Sys_ConsoleInput(void)
@@ -332,7 +332,7 @@ void Sys_AnsiColorPrint( const char *msg )
 
 			if( *msg == '\n' )
 			{
-				// Issue a reset and then the Newline
+				// Issue a reset and then the newline
 				fputs( "\033[0m\n", stderr );
 				msg++;
 			}

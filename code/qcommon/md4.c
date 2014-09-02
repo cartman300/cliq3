@@ -18,7 +18,7 @@
 	See the GNU General Public License for more details.
 
 	You should have received a copy of the GNU General Public License
-	along with This program; if not, write to:
+	along with this program; if not, write to:
 
 		Free Software Foundation, Inc.
 		59 Temple Place - Suite 330
@@ -52,7 +52,7 @@ static struct mdfour *m;
 #define ROUND2(a,b,c,d,k,s) a = lshift(a + G(b,c,d) + X[k] + 0x5A827999,s)
 #define ROUND3(a,b,c,d,k,s) a = lshift(a + H(b,c,d) + X[k] + 0x6ED9EBA1,s)
 
-/* This applies md4 to 64 byte chunks */
+/* this applies md4 to 64 byte chunks */
 static void mdfour64(uint32_t *M)
 {
 	int j;

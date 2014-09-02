@@ -205,22 +205,22 @@ void UI_ConfirmMenu_Style( const char *question, int style, void (*draw)( void )
 		s_confirm.menu.fullscreen = qtrue;
 	}
 
-	s_confirm.yes.Generic.type		= MTYPE_PTEXT;      
-	s_confirm.yes.Generic.flags		= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS; 
-	s_confirm.yes.Generic.callback	= ConfirmMenu_Event;
-	s_confirm.yes.Generic.id		= ID_CONFIRM_YES;
-	s_confirm.yes.Generic.x			= l1;
-	s_confirm.yes.Generic.y			= 264;
+	s_confirm.yes.generic.type		= MTYPE_PTEXT;      
+	s_confirm.yes.generic.flags		= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS; 
+	s_confirm.yes.generic.callback	= ConfirmMenu_Event;
+	s_confirm.yes.generic.id		= ID_CONFIRM_YES;
+	s_confirm.yes.generic.x			= l1;
+	s_confirm.yes.generic.y			= 264;
 	s_confirm.yes.string			= "YES";
 	s_confirm.yes.color				= color_red;
 	s_confirm.yes.style				= UI_LEFT;
 
-	s_confirm.no.Generic.type		= MTYPE_PTEXT;      
-	s_confirm.no.Generic.flags		= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS; 
-	s_confirm.no.Generic.callback	= ConfirmMenu_Event;
-	s_confirm.no.Generic.id			= ID_CONFIRM_NO;
-	s_confirm.no.Generic.x		    = l3;
-	s_confirm.no.Generic.y		    = 264;
+	s_confirm.no.generic.type		= MTYPE_PTEXT;      
+	s_confirm.no.generic.flags		= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS; 
+	s_confirm.no.generic.callback	= ConfirmMenu_Event;
+	s_confirm.no.generic.id			= ID_CONFIRM_NO;
+	s_confirm.no.generic.x		    = l3;
+	s_confirm.no.generic.y		    = 264;
 	s_confirm.no.string				= "NO";
 	s_confirm.no.color			    = color_red;
 	s_confirm.no.style			    = UI_LEFT;
@@ -275,12 +275,12 @@ void UI_Message( const char **lines ) {
 		s_confirm.menu.fullscreen = qtrue;
 	}
 
-	s_confirm.yes.Generic.type		= MTYPE_PTEXT;      
-	s_confirm.yes.Generic.flags		= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS; 
-	s_confirm.yes.Generic.callback	= ConfirmMenu_Event;
-	s_confirm.yes.Generic.id		= ID_CONFIRM_YES;
-	s_confirm.yes.Generic.x			= l1;
-	s_confirm.yes.Generic.y			= 280;
+	s_confirm.yes.generic.type		= MTYPE_PTEXT;      
+	s_confirm.yes.generic.flags		= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS; 
+	s_confirm.yes.generic.callback	= ConfirmMenu_Event;
+	s_confirm.yes.generic.id		= ID_CONFIRM_YES;
+	s_confirm.yes.generic.x			= l1;
+	s_confirm.yes.generic.y			= 280;
 	s_confirm.yes.string			= "OK";
 	s_confirm.yes.color				= color_red;
 	s_confirm.yes.style				= UI_LEFT;

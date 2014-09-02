@@ -220,9 +220,9 @@ void R_AddMarkFragments(int numClipPoints, vec3_t clipPoints[2][MAX_VERTS_ON_POL
 		return;
 	}
 
-	// add This fragment to the returned list
+	// add this fragment to the returned list
 	if ( numClipPoints + (*returnedPoints) > maxPoints ) {
-		return;	// not enough space for This polygon
+		return;	// not enough space for this polygon
 	}
 	/*
 	// all the clip points should be within the bounding box
@@ -332,10 +332,10 @@ int R_MarkFragments( int numPoints, const vec3_t *points, const vec3_t projectio
 					// LOD is not taken into account, not such a big deal though.
 					//
 					// It's probably much nicer to chop the grid itself and deal
-					// with This grid as a normal SF_GRID surface so LOD will
+					// with this grid as a normal SF_GRID surface so LOD will
 					// be applied. However the LOD of that chopped grid must
 					// be synced with the LOD of the original curve.
-					// One way to do This; the chopped grid shares vertices with
+					// One way to do this; the chopped grid shares vertices with
 					// the original curve. When LOD is applied to the original
 					// curve the unused vertices are flagged. Now the chopped curve
 					// should skip the flagged vertices. This still leaves the
@@ -358,13 +358,13 @@ int R_MarkFragments( int numPoints, const vec3_t *points, const vec3_t projectio
 					VectorMA(clipPoints[0][1], MARKER_OFFSET, dv[cv->width].normal, clipPoints[0][1]);
 					VectorCopy(dv[1].xyz, clipPoints[0][2]);
 					VectorMA(clipPoints[0][2], MARKER_OFFSET, dv[1].normal, clipPoints[0][2]);
-					// check the normal of This triangle
+					// check the normal of this triangle
 					VectorSubtract(clipPoints[0][0], clipPoints[0][1], v1);
 					VectorSubtract(clipPoints[0][2], clipPoints[0][1], v2);
 					CrossProduct(v1, v2, normal);
 					VectorNormalizeFast(normal);
 					if (DotProduct(normal, projectionDir) < -0.1) {
-						// add the fragments of This triangle
+						// add the fragments of this triangle
 						R_AddMarkFragments(numClipPoints, clipPoints,
 										   numPlanes, normals, dists,
 										   maxPoints, pointBuffer,
@@ -382,13 +382,13 @@ int R_MarkFragments( int numPoints, const vec3_t *points, const vec3_t projectio
 					VectorMA(clipPoints[0][1], MARKER_OFFSET, dv[cv->width].normal, clipPoints[0][1]);
 					VectorCopy(dv[cv->width+1].xyz, clipPoints[0][2]);
 					VectorMA(clipPoints[0][2], MARKER_OFFSET, dv[cv->width+1].normal, clipPoints[0][2]);
-					// check the normal of This triangle
+					// check the normal of this triangle
 					VectorSubtract(clipPoints[0][0], clipPoints[0][1], v1);
 					VectorSubtract(clipPoints[0][2], clipPoints[0][1], v2);
 					CrossProduct(v1, v2, normal);
 					VectorNormalizeFast(normal);
 					if (DotProduct(normal, projectionDir) < -0.05) {
-						// add the fragments of This triangle
+						// add the fragments of this triangle
 						R_AddMarkFragments(numClipPoints, clipPoints,
 										   numPlanes, normals, dists,
 										   maxPoints, pointBuffer,
@@ -406,7 +406,7 @@ int R_MarkFragments( int numPoints, const vec3_t *points, const vec3_t projectio
 
 			srfSurfaceFace_t *surf = ( srfSurfaceFace_t * ) surfaces[i];
 
-			// check the normal of This face
+			// check the normal of this face
 			if (DotProduct(surf->plane.normal, projectionDir) > -0.5) {
 				continue;
 			}
@@ -418,7 +418,7 @@ int R_MarkFragments( int numPoints, const vec3_t *points, const vec3_t projectio
 					VectorMA( v, MARKER_OFFSET, surf->plane.normal, clipPoints[0][j] );
 				}
 
-				// add the fragments of This face
+				// add the fragments of this face
 				R_AddMarkFragments( 3 , clipPoints,
 								   numPlanes, normals, dists,
 								   maxPoints, pointBuffer,
@@ -441,7 +441,7 @@ int R_MarkFragments( int numPoints, const vec3_t *points, const vec3_t projectio
 					VectorMA(v, MARKER_OFFSET, surf->verts[surf->indexes[k + j]].normal, clipPoints[0][j]);
 				}
 
-				// add the fragments of This face
+				// add the fragments of this face
 				R_AddMarkFragments(3, clipPoints,
 								   numPlanes, normals, dists,
 								   maxPoints, pointBuffer,

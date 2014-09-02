@@ -9,14 +9,14 @@
    met:
 
    1. Redistributions of source code must retain the above copyright notice,
-   This list of conditions and the following disclaimer.
+   this list of conditions and the following disclaimer.
 
    2. Redistributions in binary form must reproduce the above copyright
-   notice, This list of conditions and the following disclaimer in the
+   notice, this list of conditions and the following disclaimer in the
    documentation and/or other materials provided with the distribution.
 
    3. The name of the author may not be used to endorse or promote products
-   derived from This software without specific prior written permission.
+   derived from this software without specific prior written permission.
 
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -593,7 +593,7 @@ static void speex_compute_agc(SpeexPreprocessState *st, spx_word16_t Pframe, spx
    }
    /*printf ("%f %f %f %f\n", Pframe, loudness, pow(st->loudness, 1.0f/LOUDNESS_EXP), st->loudness2);*/
    
-   target_gain = AMP_SCALE*st->agc_level*pow((float)st->loudness/(1e-4+st->loudness_accum), (int)(-1.0f / LOUDNESS_EXP));
+   target_gain = AMP_SCALE*st->agc_level*pow(st->loudness/(1e-4+st->loudness_accum), -1.0f/LOUDNESS_EXP);
 
    if ((Pframe>.5  && st->nb_adapt > 20) || target_gain < st->agc_gain)
    {
@@ -830,7 +830,7 @@ int speex_preprocess_run(SpeexPreprocessState *st, spx_int16_t *x)
    compute_gain_floor(st->noise_suppress, effective_echo_suppress, st->noise+N, st->echo_noise+N, st->gain_floor+N, M);
          
    /* Compute Ephraim & Malah gain speech probability of presence for each critical band (Bark scale) 
-      Technically This is actually wrong because the EM gaim assumes a slightly different probability 
+      Technically this is actually wrong because the EM gaim assumes a slightly different probability 
       distribution */
    for (i=N;i<N+M;i++)
    {
@@ -919,7 +919,7 @@ int speex_preprocess_run(SpeexPreprocessState *st, spx_int16_t *x)
          tmp = MULT16_16_P15(p,spx_sqrt(SHL32(EXTEND32(st->gain[i]),15))) + MULT16_16_P15(SUB16(Q15_ONE,p),spx_sqrt(SHL32(EXTEND32(st->gain_floor[i]),15)));
          st->gain2[i]=SQR16_Q15(tmp);
 
-         /* Use This if you want a log-domain MMSE estimator instead */
+         /* Use this if you want a log-domain MMSE estimator instead */
          /*st->gain2[i] = pow(st->gain[i], p) * pow(st->gain_floor[i],1.f-p);*/
       }
    } else {
@@ -934,7 +934,7 @@ int speex_preprocess_run(SpeexPreprocessState *st, spx_int16_t *x)
       filterbank_compute_psd16(st->bank,st->gain2+N, st->gain2);
    }
    
-   /* If noise suppression is off, don't apply the gain (but then why call This in the first place!) */
+   /* If noise suppression is off, don't apply the gain (but then why call this in the first place!) */
    if (!st->denoise_enabled)
    {
       for (i=0;i<N+M;i++)
@@ -1173,7 +1173,7 @@ int speex_preprocess_ctl(SpeexPreprocessState *state, int request, void *ptr)
       break;
 #ifndef FIXED_POINT
    case SPEEX_PREPROCESS_GET_AGC_LOUDNESS:
-      (*(spx_int32_t*)ptr) = pow(st->loudness, (int)(1.0f / LOUDNESS_EXP));
+      (*(spx_int32_t*)ptr) = pow(st->loudness, 1.0/LOUDNESS_EXP);
       break;
 #endif
 

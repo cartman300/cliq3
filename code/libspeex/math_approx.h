@@ -39,9 +39,9 @@
 
 #ifndef FIXED_POINT
 
-#define spx_sqrt(n) sqrt(n)
+#define spx_sqrt sqrt
 #define spx_acos acos
-#define spx_exp(a,b) exp(a,b)
+#define spx_exp exp
 #define spx_cos_norm(x) (cos((.5f*M_PI)*(x)))
 #define spx_atan atan
 

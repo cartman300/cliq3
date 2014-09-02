@@ -77,19 +77,19 @@ R_CullModel
 */
 static int R_CullModel( md3Header_t *header, trRefEntity_t *ent ) {
 	vec3_t		bounds[2];
-	md3Frame_t	*oldFrame, *NewFrame;
+	md3Frame_t	*oldFrame, *newFrame;
 	int			i;
 
 	// compute frame pointers
-	NewFrame = ( md3Frame_t * ) ( ( byte * ) header + header->ofsFrames ) + ent->e.frame;
+	newFrame = ( md3Frame_t * ) ( ( byte * ) header + header->ofsFrames ) + ent->e.frame;
 	oldFrame = ( md3Frame_t * ) ( ( byte * ) header + header->ofsFrames ) + ent->e.oldframe;
 
-	// cull bounding sphere ONLY if This is not an upscaled entity
+	// cull bounding sphere ONLY if this is not an upscaled entity
 	if ( !ent->e.nonNormalizedAxes )
 	{
 		if ( ent->e.frame == ent->e.oldframe )
 		{
-			switch ( R_CullLocalPointAndRadius( NewFrame->localOrigin, NewFrame->radius ) )
+			switch ( R_CullLocalPointAndRadius( newFrame->localOrigin, newFrame->radius ) )
 			{
 			case CULL_OUT:
 				tr.pc.c_sphere_cull_md3_out++;
@@ -108,8 +108,8 @@ static int R_CullModel( md3Header_t *header, trRefEntity_t *ent ) {
 		{
 			int sphereCull, sphereCullB;
 
-			sphereCull  = R_CullLocalPointAndRadius( NewFrame->localOrigin, NewFrame->radius );
-			if ( NewFrame == oldFrame ) {
+			sphereCull  = R_CullLocalPointAndRadius( newFrame->localOrigin, newFrame->radius );
+			if ( newFrame == oldFrame ) {
 				sphereCullB = sphereCull;
 			} else {
 				sphereCullB = R_CullLocalPointAndRadius( oldFrame->localOrigin, oldFrame->radius );
@@ -137,8 +137,8 @@ static int R_CullModel( md3Header_t *header, trRefEntity_t *ent ) {
 	
 	// calculate a bounding box in the current coordinate system
 	for (i = 0 ; i < 3 ; i++) {
-		bounds[0][i] = oldFrame->bounds[0][i] < NewFrame->bounds[0][i] ? oldFrame->bounds[0][i] : NewFrame->bounds[0][i];
-		bounds[1][i] = oldFrame->bounds[1][i] > NewFrame->bounds[1][i] ? oldFrame->bounds[1][i] : NewFrame->bounds[1][i];
+		bounds[0][i] = oldFrame->bounds[0][i] < newFrame->bounds[0][i] ? oldFrame->bounds[0][i] : newFrame->bounds[0][i];
+		bounds[1][i] = oldFrame->bounds[1][i] > newFrame->bounds[1][i] ? oldFrame->bounds[1][i] : newFrame->bounds[1][i];
 	}
 
 	switch ( R_CullLocalBox( bounds ) )

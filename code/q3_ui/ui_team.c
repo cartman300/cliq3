@@ -98,55 +98,55 @@ void TeamMain_MenuInit( void ) {
 	s_teammain.menu.wrapAround = qtrue;
 	s_teammain.menu.fullscreen = qfalse;
 
-	s_teammain.frame.Generic.type   = MTYPE_BITMAP;
-	s_teammain.frame.Generic.flags	= QMF_INACTIVE;
-	s_teammain.frame.Generic.name   = TEAMMAIN_FRAME;
-	s_teammain.frame.Generic.x		= 142;
-	s_teammain.frame.Generic.y		= 118;
+	s_teammain.frame.generic.type   = MTYPE_BITMAP;
+	s_teammain.frame.generic.flags	= QMF_INACTIVE;
+	s_teammain.frame.generic.name   = TEAMMAIN_FRAME;
+	s_teammain.frame.generic.x		= 142;
+	s_teammain.frame.generic.y		= 118;
 	s_teammain.frame.width			= 359;
 	s_teammain.frame.height			= 256;
 
 	y = 194;
 
-	s_teammain.joinred.Generic.type     = MTYPE_PTEXT;
-	s_teammain.joinred.Generic.flags    = QMF_CENTER_JUSTIFY|QMF_PULSEIFFOCUS;
-	s_teammain.joinred.Generic.id       = ID_JOINRED;
-	s_teammain.joinred.Generic.callback = TeamMain_MenuEvent;
-	s_teammain.joinred.Generic.x        = 320;
-	s_teammain.joinred.Generic.y        = y;
+	s_teammain.joinred.generic.type     = MTYPE_PTEXT;
+	s_teammain.joinred.generic.flags    = QMF_CENTER_JUSTIFY|QMF_PULSEIFFOCUS;
+	s_teammain.joinred.generic.id       = ID_JOINRED;
+	s_teammain.joinred.generic.callback = TeamMain_MenuEvent;
+	s_teammain.joinred.generic.x        = 320;
+	s_teammain.joinred.generic.y        = y;
 	s_teammain.joinred.string           = "JOIN RED";
 	s_teammain.joinred.style            = UI_CENTER|UI_SMALLFONT;
 	s_teammain.joinred.color            = colorRed;
 	y += 20;
 
-	s_teammain.joinblue.Generic.type     = MTYPE_PTEXT;
-	s_teammain.joinblue.Generic.flags    = QMF_CENTER_JUSTIFY|QMF_PULSEIFFOCUS;
-	s_teammain.joinblue.Generic.id       = ID_JOINBLUE;
-	s_teammain.joinblue.Generic.callback = TeamMain_MenuEvent;
-	s_teammain.joinblue.Generic.x        = 320;
-	s_teammain.joinblue.Generic.y        = y;
+	s_teammain.joinblue.generic.type     = MTYPE_PTEXT;
+	s_teammain.joinblue.generic.flags    = QMF_CENTER_JUSTIFY|QMF_PULSEIFFOCUS;
+	s_teammain.joinblue.generic.id       = ID_JOINBLUE;
+	s_teammain.joinblue.generic.callback = TeamMain_MenuEvent;
+	s_teammain.joinblue.generic.x        = 320;
+	s_teammain.joinblue.generic.y        = y;
 	s_teammain.joinblue.string           = "JOIN BLUE";
 	s_teammain.joinblue.style            = UI_CENTER|UI_SMALLFONT;
 	s_teammain.joinblue.color            = colorRed;
 	y += 20;
 
-	s_teammain.joingame.Generic.type     = MTYPE_PTEXT;
-	s_teammain.joingame.Generic.flags    = QMF_CENTER_JUSTIFY|QMF_PULSEIFFOCUS;
-	s_teammain.joingame.Generic.id       = ID_JOINGAME;
-	s_teammain.joingame.Generic.callback = TeamMain_MenuEvent;
-	s_teammain.joingame.Generic.x        = 320;
-	s_teammain.joingame.Generic.y        = y;
+	s_teammain.joingame.generic.type     = MTYPE_PTEXT;
+	s_teammain.joingame.generic.flags    = QMF_CENTER_JUSTIFY|QMF_PULSEIFFOCUS;
+	s_teammain.joingame.generic.id       = ID_JOINGAME;
+	s_teammain.joingame.generic.callback = TeamMain_MenuEvent;
+	s_teammain.joingame.generic.x        = 320;
+	s_teammain.joingame.generic.y        = y;
 	s_teammain.joingame.string           = "JOIN GAME";
 	s_teammain.joingame.style            = UI_CENTER|UI_SMALLFONT;
 	s_teammain.joingame.color            = colorRed;
 	y += 20;
 
-	s_teammain.spectate.Generic.type     = MTYPE_PTEXT;
-	s_teammain.spectate.Generic.flags    = QMF_CENTER_JUSTIFY|QMF_PULSEIFFOCUS;
-	s_teammain.spectate.Generic.id       = ID_SPECTATE;
-	s_teammain.spectate.Generic.callback = TeamMain_MenuEvent;
-	s_teammain.spectate.Generic.x        = 320;
-	s_teammain.spectate.Generic.y        = y;
+	s_teammain.spectate.generic.type     = MTYPE_PTEXT;
+	s_teammain.spectate.generic.flags    = QMF_CENTER_JUSTIFY|QMF_PULSEIFFOCUS;
+	s_teammain.spectate.generic.id       = ID_SPECTATE;
+	s_teammain.spectate.generic.callback = TeamMain_MenuEvent;
+	s_teammain.spectate.generic.x        = 320;
+	s_teammain.spectate.generic.y        = y;
 	s_teammain.spectate.string           = "SPECTATE";
 	s_teammain.spectate.style            = UI_CENTER|UI_SMALLFONT;
 	s_teammain.spectate.color            = colorRed;
@@ -159,14 +159,14 @@ void TeamMain_MenuInit( void ) {
 	case GT_SINGLE_PLAYER:
 	case GT_FFA:
 	case GT_TOURNAMENT:
-		s_teammain.joinred.Generic.flags  |= QMF_GRAYED;
-		s_teammain.joinblue.Generic.flags |= QMF_GRAYED;
+		s_teammain.joinred.generic.flags  |= QMF_GRAYED;
+		s_teammain.joinblue.generic.flags |= QMF_GRAYED;
 		break;
 
 	default:
 	case GT_TEAM:
 	case GT_CTF:
-		s_teammain.joingame.Generic.flags |= QMF_GRAYED;
+		s_teammain.joingame.generic.flags |= QMF_GRAYED;
 		break;
 	}
 

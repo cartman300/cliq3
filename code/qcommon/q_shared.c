@@ -159,7 +159,7 @@ float	LittleFloat (const float *l) {return _LittleFloat(l);}
 
 void CopyShortSwap(void *dest, void *src)
 {
-	byte *to = (byte*)dest, *from = (byte*)src;
+	byte *to = dest, *from = src;
 
 	to[0] = from[1];
 	to[1] = from[0];
@@ -167,7 +167,7 @@ void CopyShortSwap(void *dest, void *src)
 
 void CopyLongSwap(void *dest, void *src)
 {
-	byte *to = (byte*)dest, *from = (byte*)src;
+	byte *to = dest, *from = src;
 
 	to[0] = from[3];
 	to[1] = from[2];
@@ -347,7 +347,7 @@ Will never return NULL, just empty strings
 
 If "allowLineBreaks" is qtrue then an empty
 string will be returned if the next token is
-a Newline.
+a newline.
 ==============
 */
 static char *SkipWhitespace( char *data, qboolean *hasNewLines ) {
@@ -370,7 +370,7 @@ static char *SkipWhitespace( char *data, qboolean *hasNewLines ) {
 int COM_Compress( char *data_p ) {
 	char *in, *out;
 	int c;
-	qboolean Newline = qfalse, whitespace = qfalse;
+	qboolean newline = qfalse, whitespace = qfalse;
 
 	in = out = data_p;
 	if (in) {
@@ -386,9 +386,9 @@ int COM_Compress( char *data_p ) {
 					in++;
 				if ( *in ) 
 					in += 2;
-				// record when we hit a Newline
+				// record when we hit a newline
 			} else if ( c == '\n' || c == '\r' ) {
-				Newline = qtrue;
+				newline = qtrue;
 				in++;
 				// record when we hit whitespace
 			} else if ( c == ' ' || c == '\t') {
@@ -396,10 +396,10 @@ int COM_Compress( char *data_p ) {
 				in++;
 				// an actual token
 			} else {
-				// if we have a pending Newline, emit it (and it counts as whitespace)
-				if (Newline) {
+				// if we have a pending newline, emit it (and it counts as whitespace)
+				if (newline) {
 					*out++ = '\n';
-					Newline = qfalse;
+					newline = qfalse;
 					whitespace = qfalse;
 				} if (whitespace) {
 					*out++ = ' ';
@@ -502,7 +502,7 @@ char *COM_ParseExt( char **data_p, qboolean allowLineBreaks )
 		}
 	}
 
-	// token starts on This line
+	// token starts on this line
 	com_tokenline = com_lines;
 
 	// handle quoted strings
@@ -788,7 +788,7 @@ Safe strncpy that ensures a trailing zero
 */
 void Q_strncpyz( char *dest, const char *src, int destsize ) {
   if ( !dest ) {
-	Com_Error( ERR_FATAL, "Q_strncpyz: NULL dest" );
+    Com_Error( ERR_FATAL, "Q_strncpyz: NULL dest" );
   }
 	if ( !src ) {
 		Com_Error( ERR_FATAL, "Q_strncpyz: NULL src" );
@@ -800,18 +800,18 @@ void Q_strncpyz( char *dest, const char *src, int destsize ) {
 	strncpy( dest, src, destsize-1 );
   dest[destsize-1] = 0;
 }
-				 
+                 
 int Q_stricmpn (const char *s1, const char *s2, int n) {
 	int		c1, c2;
 
-		if ( s1 == NULL ) {
-		   if ( s2 == NULL )
-			 return 0;
-		   else
-			 return -1;
-		}
-		else if ( s2==NULL )
-		  return 1;
+        if ( s1 == NULL ) {
+           if ( s2 == NULL )
+             return 0;
+           else
+             return -1;
+        }
+        else if ( s2==NULL )
+          return 1;
 
 
 	
@@ -864,25 +864,25 @@ int Q_stricmp (const char *s1, const char *s2) {
 
 
 char *Q_strlwr( char *s1 ) {
-	char	*s;
+    char	*s;
 
-	s = s1;
+    s = s1;
 	while ( *s ) {
 		*s = tolower(*s);
 		s++;
 	}
-	return s1;
+    return s1;
 }
 
 char *Q_strupr( char *s1 ) {
-	char	*s;
+    char	*s;
 
-	s = s1;
+    s = s1;
 	while ( *s ) {
 		*s = toupper(*s);
 		s++;
 	}
-	return s1;
+    return s1;
 }
 
 
@@ -907,24 +907,24 @@ const char *Q_stristr( const char *s, const char *find)
 
   if ((c = *find++) != 0)
   {
-	if (c >= 'a' && c <= 'z')
-	{
-	  c -= ('a' - 'A');
-	}
-	len = strlen(find);
-	do
-	{
-	  do
-	  {
-		if ((sc = *s++) == 0)
-		  return NULL;
-		if (sc >= 'a' && sc <= 'z')
-		{
-		  sc -= ('a' - 'A');
-		}
-	  } while (sc != c);
-	} while (Q_stricmpn(s, find, len) != 0);
-	s--;
+    if (c >= 'a' && c <= 'z')
+    {
+      c -= ('a' - 'A');
+    }
+    len = strlen(find);
+    do
+    {
+      do
+      {
+        if ((sc = *s++) == 0)
+          return NULL;
+        if (sc >= 'a' && sc <= 'z')
+        {
+          sc -= ('a' - 'A');
+        }
+      } while (sc != c);
+    } while (Q_stricmpn(s, find, len) != 0);
+    s--;
   }
   return s;
 }
@@ -1200,7 +1200,7 @@ void Info_RemoveKey( char *s, const char *key ) {
 
 		if (!strcmp (key, pkey) )
 		{
-			memmove(start, s, strlen(s) + 1); // remove This part
+			memmove(start, s, strlen(s) + 1); // remove this part
 			
 			return;
 		}
@@ -1256,7 +1256,7 @@ void Info_RemoveKey_Big( char *s, const char *key ) {
 
 		if (!strcmp (key, pkey) )
 		{
-			strcpy (start, s);	// remove This part
+			strcpy (start, s);	// remove this part
 			return;
 		}
 
@@ -1295,7 +1295,7 @@ Changes or adds a key/value pair
 ==================
 */
 void Info_SetValueForKey( char *s, const char *key, const char *value ) {
-	char	Newi[MAX_INFO_STRING];
+	char	newi[MAX_INFO_STRING];
 	const char* blacklist = "\\;\"";
 
 	if ( strlen( s ) >= MAX_INFO_STRING ) {
@@ -1315,16 +1315,16 @@ void Info_SetValueForKey( char *s, const char *key, const char *value ) {
 	if (!value || !strlen(value))
 		return;
 
-	Com_sprintf (Newi, sizeof(Newi), "\\%s\\%s", key, value);
+	Com_sprintf (newi, sizeof(newi), "\\%s\\%s", key, value);
 
-	if (strlen(Newi) + strlen(s) >= MAX_INFO_STRING)
+	if (strlen(newi) + strlen(s) >= MAX_INFO_STRING)
 	{
 		Com_Printf ("Info string length exceeded\n");
 		return;
 	}
 
-	strcat (Newi, s);
-	strcpy (s, Newi);
+	strcat (newi, s);
+	strcpy (s, newi);
 }
 
 /*
@@ -1336,7 +1336,7 @@ Includes and retains zero-length values
 ==================
 */
 void Info_SetValueForKey_Big( char *s, const char *key, const char *value ) {
-	char	Newi[BIG_INFO_STRING];
+	char	newi[BIG_INFO_STRING];
 	const char* blacklist = "\\;\"";
 
 	if ( strlen( s ) >= BIG_INFO_STRING ) {
@@ -1356,15 +1356,15 @@ void Info_SetValueForKey_Big( char *s, const char *key, const char *value ) {
 	if (!value)
 		return;
 
-	Com_sprintf (Newi, sizeof(Newi), "\\%s\\%s", key, value);
+	Com_sprintf (newi, sizeof(newi), "\\%s\\%s", key, value);
 
-	if (strlen(Newi) + strlen(s) >= BIG_INFO_STRING)
+	if (strlen(newi) + strlen(s) >= BIG_INFO_STRING)
 	{
 		Com_Printf ("BIG Info string length exceeded\n");
 		return;
 	}
 
-	strcat (s, Newi);
+	strcat (s, newi);
 }
 
 

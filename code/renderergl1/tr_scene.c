@@ -84,7 +84,7 @@ DISCRETE POLYS
 =====================
 R_AddPolygonSurfaces
 
-Adds all the scene's polys into This view's drawsurf list
+Adds all the scene's polys into this view's drawsurf list
 =====================
 */
 void R_AddPolygonSurfaces( void ) {
@@ -126,10 +126,10 @@ void RE_AddPolyToScene( qhandle_t hShader, int numVerts, const polyVert_t *verts
 	for ( j = 0; j < numPolys; j++ ) {
 		if ( r_numpolyverts + numVerts > max_polyverts || r_numpolys >= max_polys ) {
       /*
-      NOTE TTimo This was initially a PRINT_WARNING
+      NOTE TTimo this was initially a PRINT_WARNING
       but it happens a lot with high fighting scenes and particles
       since we don't plan on changing the const and making for room for those effects
-      simply cut This message to developer only
+      simply cut this message to developer only
       */
 			ri.Printf( PRINT_DEVELOPER, "WARNING: RE_AddPolyToScene: r_max_polys or r_max_polyverts reached\n");
 			return;
@@ -401,7 +401,7 @@ void RE_RenderScene( const refdef_t *fd ) {
 
 	R_RenderView( &parms );
 
-	// the next scene rendered in This frame will tack on after This one
+	// the next scene rendered in this frame will tack on after this one
 	r_firstSceneDrawSurf = tr.refdef.numDrawSurfs;
 	r_firstSceneEntity = r_numentities;
 	r_firstSceneDlight = r_numdlights;

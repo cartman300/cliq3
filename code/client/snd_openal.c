@@ -132,7 +132,7 @@ typedef struct alSfx_s
 {
 	char			filename[MAX_QPATH];
 	ALuint		buffer;					// OpenAL buffer
-	snd_info_t	info;					// information for This sound like rate, sample count..
+	snd_info_t	info;					// information for this sound like rate, sample count..
 
 	qboolean	isDefault;				// Couldn't be loaded - use default FX
 	qboolean	isDefaultChecked;		// Sound has been check if it isDefault
@@ -140,9 +140,9 @@ typedef struct alSfx_s
 	qboolean	isLocked;				// Sound is locked (can not be unloaded)
 	int				lastUsedTime;		// Time last used
 
-	int				loopCnt;		// number of loops using This sfx
-	int				loopActiveCnt;		// number of playing loops using This sfx
-	int				masterLoopSrc;		// All other sources looping This buffer are synced to This master src
+	int				loopCnt;		// number of loops using this sfx
+	int				loopActiveCnt;		// number of playing loops using this sfx
+	int				masterLoopSrc;		// All other sources looping this buffer are synced to this master src
 } alSfx_t;
 
 static qboolean alBuffersInitialised = qfalse;
@@ -343,7 +343,7 @@ static qboolean S_AL_GenBuffers(ALsizei numBuffers, ALuint *buffers, const char 
 	if( error != AL_NO_ERROR )
 	{
 		Com_Printf( S_COLOR_RED "ERROR: Can't create a sound buffer for %s - %s\n",
-					name, S_AL_ErrorMsg(error));
+				    name, S_AL_ErrorMsg(error));
 		return qfalse;
 	}
 
@@ -565,21 +565,21 @@ typedef struct src_s
 	int		entity;			// Owning entity (-1 if none)
 	int		channel;		// Associated channel (-1 if none)
 
-	qboolean	isActive;		// Is This source currently in use?
-	qboolean	isPlaying;		// Is This source currently playing, or stopped?
+	qboolean	isActive;		// Is this source currently in use?
+	qboolean	isPlaying;		// Is this source currently playing, or stopped?
 	qboolean	isLocked;		// This is locked (un-allocatable)
-	qboolean	isLooping;		// Is This a looping effect (attached to an entity)
-	qboolean	isTracking;		// Is This object tracking its owner
-	qboolean	isStream;		// Is This source a stream
+	qboolean	isLooping;		// Is this a looping effect (attached to an entity)
+	qboolean	isTracking;		// Is this object tracking its owner
+	qboolean	isStream;		// Is this source a stream
 
 	float		curGain;		// gain employed if source is within maxdistance.
-	float		scaleGain;		// Last gain value for This source. 0 if muted.
+	float		scaleGain;		// Last gain value for this source. 0 if muted.
 	
 	float		lastTimePos;		// On stopped loops, the last position in the buffer
-	int		lastSampleTime;		// Time when This was stopped
+	int		lastSampleTime;		// Time when this was stopped
 	vec3_t		loopSpeakerPos;		// Origin of the loop speaker
 	
-	qboolean	local;			// Is This local (relative to the cam)
+	qboolean	local;			// Is this local (relative to the cam)
 } src_t;
 
 #ifdef MACOS_X
@@ -598,7 +598,7 @@ typedef struct sentity_s
 {
 	vec3_t					origin;
 
-	qboolean						srcAllocated; // If a src_t has been allocated to This entity
+	qboolean						srcAllocated; // If a src_t has been allocated to this entity
 	int							srcIndex;
 
 	qboolean				loopAddedThisFrame;
@@ -697,7 +697,7 @@ static qboolean S_AL_HearingThroughEntity( int entityNum )
 		// whether or not the player is rendering in third person or not. We can't
 		// ask the renderer because the renderer has no notion of entities and we
 		// can't ask cgame since that would involve changing the API and hence mod
-		// compatibility. I don't think there is any way around This, but I'll leave
+		// compatibility. I don't think there is any way around this, but I'll leave
 		// the FIXME just in case anyone has a bright idea.
 		distanceSq = DistanceSquared(
 				entityList[ entityNum ].origin,
@@ -745,7 +745,7 @@ qboolean S_AL_SrcInit( void )
 		srcCount++;
 	}
 
-	// All done. Print This for informational purposes
+	// All done. Print this for informational purposes
 	Com_Printf( "Allocated %d sources.\n", srcCount);
 	alSourcesInitialised = qtrue;
 	return qtrue;
@@ -815,9 +815,9 @@ static void S_AL_SrcSetup(srcHandle_t src, sfxHandle_t sfx, alSrcPriority_t prio
 	// Set up OpenAL source
 	if(sfx >= 0)
 	{
-			// Mark the SFX as used, and grab the raw AL buffer
-			S_AL_BufferUse(sfx);
-			qalSourcei(curSource->alSource, AL_BUFFER, S_AL_BufferGet(sfx));
+        	// Mark the SFX as used, and grab the raw AL buffer
+        	S_AL_BufferUse(sfx);
+        	qalSourcei(curSource->alSource, AL_BUFFER, S_AL_BufferGet(sfx));
 	}
 
 	qalSourcef(curSource->alSource, AL_PITCH, 1.0f);
@@ -842,7 +842,7 @@ static void S_AL_SrcSetup(srcHandle_t src, sfxHandle_t sfx, alSrcPriority_t prio
 /*
 =================
 S_AL_SaveLoopPos
-Remove given source as loop master if it is the master and hand off master status to another source in This case.
+Remove given source as loop master if it is the master and hand off master status to another source in this case.
 =================
 */
 
@@ -872,7 +872,7 @@ static void S_AL_SaveLoopPos(src_t *dest, ALuint alSource)
 /*
 =================
 S_AL_NewLoopMaster
-Remove given source as loop master if it is the master and hand off master status to another source in This case.
+Remove given source as loop master if it is the master and hand off master status to another source in this case.
 =================
 */
 
@@ -905,7 +905,7 @@ static void S_AL_NewLoopMaster(src_t *rmSource, qboolean iskilled)
 			int firstInactive = -1;
 
 			// Only if rmSource was the master and if there are still playing loops for
-			// This sound will we need to find a New master.
+			// this sound will we need to find a new master.
 	
 			if(iskilled || curSfx->loopActiveCnt)
 			{
@@ -944,14 +944,14 @@ static void S_AL_NewLoopMaster(src_t *rmSource, qboolean iskilled)
 
 				if(rmSource->isPlaying)
 				{
-					// This was the last not stopped source, save last sample position + time
+					// this was the last not stopped source, save last sample position + time
 					S_AL_SaveLoopPos(curSource, rmSource->alSource);
 				}
 				else
 				{
-					// second case: all loops using This sound have stopped due to listener being of of range,
+					// second case: all loops using this sound have stopped due to listener being of of range,
 					// and now the inactive master gets deleted. Just move over the soundpos settings to the
-					// New master.
+					// new master.
 					curSource->lastTimePos = rmSource->lastTimePos;
 					curSource->lastSampleTime = rmSource->lastSampleTime;
 				}
@@ -1323,7 +1323,7 @@ static void S_AL_SrcLoop( alSrcPriority_t priority, sfxHandle_t sfx,
 	if(S_AL_CheckInput(entityNum, sfx))
 		return;
 
-	// Do we need to allocate a New source for This entity
+	// Do we need to allocate a new source for this entity
 	if( !sent->srcAllocated )
 	{
 		// Try to get a channel
@@ -1354,7 +1354,7 @@ static void S_AL_SrcLoop( alSrcPriority_t priority, sfxHandle_t sfx,
 	sent->loopPriority = priority;
 	sent->loopSfx = sfx;
 
-	// If This is not set then the looping sound is stopped.
+	// If this is not set then the looping sound is stopped.
 	sent->loopAddedThisFrame = qtrue;
 
 	// UGH
@@ -1469,7 +1469,7 @@ void S_AL_SrcUpdate( void )
 		{
 			sentity_t *sent = &entityList[ entityNum ];
 
-			// If a looping effect hasn't been touched This frame, pause or kill it
+			// If a looping effect hasn't been touched this frame, pause or kill it
 			if(sent->loopAddedThisFrame)
 			{
 				alSfx_t *curSfx;
@@ -1610,15 +1610,15 @@ void S_AL_SrcUpdate( void )
 
 		if(!curSource->isStream)
 		{
-				// Check if it's done, and flag it
-				qalGetSourcei(curSource->alSource, AL_SOURCE_STATE, &state);
-				if(state == AL_STOPPED)
-				{
-					curSource->isPlaying = qfalse;
-					S_AL_SrcKill(i);
-					continue;
-				}
-				}
+        		// Check if it's done, and flag it
+	        	qalGetSourcei(curSource->alSource, AL_SOURCE_STATE, &state);
+	        	if(state == AL_STOPPED)
+        		{
+	        		curSource->isPlaying = qfalse;
+		        	S_AL_SrcKill(i);
+		        	continue;
+        		}
+                }
 
 		// Query relativity of source, don't move if it's true
 		qalGetSourcei(curSource->alSource, AL_SOURCE_RELATIVE, &state);
@@ -1627,7 +1627,7 @@ void S_AL_SrcUpdate( void )
 		if(curSource->isTracking && !state)
 		{
 			qalSourcefv(curSource->alSource, AL_POSITION, entityList[entityNum].origin);
-			S_AL_ScaleGain(curSource, entityList[entityNum].origin);
+ 			S_AL_ScaleGain(curSource, entityList[entityNum].origin);
 		}
 	}
 }
@@ -1676,55 +1676,55 @@ S_AL_AllocateStreamChannel
 */
 static void S_AL_AllocateStreamChannel(int stream, int entityNum)
 {
-		srcHandle_t cursrc;
-		ALuint alsrc;
-		
+        srcHandle_t cursrc;
+        ALuint alsrc;
+        
 	if ((stream < 0) || (stream >= MAX_RAW_STREAMS))
 		return;
 
-		if(entityNum >= 0)
-		{
-				// This is a stream that tracks an entity
-			// Allocate a streamSource at normal priority
-			cursrc = S_AL_SrcAlloc(SRCPRI_ENTITY, entityNum, 0);
-			if(cursrc < 0)
-				return;
+        if(entityNum >= 0)
+        {
+                // This is a stream that tracks an entity
+        	// Allocate a streamSource at normal priority
+        	cursrc = S_AL_SrcAlloc(SRCPRI_ENTITY, entityNum, 0);
+        	if(cursrc < 0)
+	        	return;
 
-			S_AL_SrcSetup(cursrc, -1, SRCPRI_ENTITY, entityNum, 0, qfalse);
-			alsrc = S_AL_SrcGet(cursrc);
-			srcList[cursrc].isTracking = qtrue;
-			srcList[cursrc].isStream = qtrue;
-		}
-		else
-		{
-				// Unspatialized stream source
+        	S_AL_SrcSetup(cursrc, -1, SRCPRI_ENTITY, entityNum, 0, qfalse);
+        	alsrc = S_AL_SrcGet(cursrc);
+        	srcList[cursrc].isTracking = qtrue;
+        	srcList[cursrc].isStream = qtrue;
+        }
+        else
+        {
+                // Unspatialized stream source
 
-			// Allocate a streamSource at high priority
-			cursrc = S_AL_SrcAlloc(SRCPRI_STREAM, -2, 0);
-			if(cursrc < 0)
-				return;
+        	// Allocate a streamSource at high priority
+        	cursrc = S_AL_SrcAlloc(SRCPRI_STREAM, -2, 0);
+        	if(cursrc < 0)
+	        	return;
 
-			alsrc = S_AL_SrcGet(cursrc);
+        	alsrc = S_AL_SrcGet(cursrc);
 
-			// Lock the streamSource so nobody else can use it, and get the raw streamSource
-			S_AL_SrcLock(cursrc);
-		
-			// make sure that after unmuting the S_AL_Gain in S_Update() does not turn
-			// volume up prematurely for This source
-			srcList[cursrc].scaleGain = 0.0f;
+        	// Lock the streamSource so nobody else can use it, and get the raw streamSource
+        	S_AL_SrcLock(cursrc);
+        
+        	// make sure that after unmuting the S_AL_Gain in S_Update() does not turn
+        	// volume up prematurely for this source
+        	srcList[cursrc].scaleGain = 0.0f;
 
-			// Set some streamSource parameters
-			qalSourcei (alsrc, AL_BUFFER,          0            );
-			qalSourcei (alsrc, AL_LOOPING,         AL_FALSE     );
-			qalSource3f(alsrc, AL_POSITION,        0.0, 0.0, 0.0);
-			qalSource3f(alsrc, AL_VELOCITY,        0.0, 0.0, 0.0);
-			qalSource3f(alsrc, AL_DIRECTION,       0.0, 0.0, 0.0);
-			qalSourcef (alsrc, AL_ROLLOFF_FACTOR,  0.0          );
-			qalSourcei (alsrc, AL_SOURCE_RELATIVE, AL_TRUE      );
-		}
+        	// Set some streamSource parameters
+        	qalSourcei (alsrc, AL_BUFFER,          0            );
+        	qalSourcei (alsrc, AL_LOOPING,         AL_FALSE     );
+        	qalSource3f(alsrc, AL_POSITION,        0.0, 0.0, 0.0);
+        	qalSource3f(alsrc, AL_VELOCITY,        0.0, 0.0, 0.0);
+        	qalSource3f(alsrc, AL_DIRECTION,       0.0, 0.0, 0.0);
+        	qalSourcef (alsrc, AL_ROLLOFF_FACTOR,  0.0          );
+        	qalSourcei (alsrc, AL_SOURCE_RELATIVE, AL_TRUE      );
+        }
 
-		streamSourceHandles[stream] = cursrc;
-		streamSources[stream] = alsrc;
+        streamSourceHandles[stream] = cursrc;
+       	streamSources[stream] = alsrc;
 
 	streamNumBuffers[stream] = 0;
 	streamBufIndex[stream] = 0;
@@ -1794,7 +1794,7 @@ void S_AL_RawSamples(int stream, int samples, int rate, int width, int channels,
 		return;
 	}
 
-	// Allocate a New AL buffer if needed
+	// Allocate a new AL buffer if needed
 	if (numBuffers == streamNumBuffers[stream])
 	{
 		ALuint oldBuffers[MAX_STREAM_BUFFERS];
@@ -1805,11 +1805,11 @@ void S_AL_RawSamples(int stream, int samples, int rate, int width, int channels,
 
 		Com_Memcpy(oldBuffers, &streamBuffers[stream], sizeof (oldBuffers));
 
-		// Reorder buffer array in order of oldest to Newest
+		// Reorder buffer array in order of oldest to newest
 		for ( i = 0; i < streamNumBuffers[stream]; ++i )
 			streamBuffers[stream][i] = oldBuffers[(streamBufIndex[stream] + i) % streamNumBuffers[stream]];
 
-		// Add the New buffer to end
+		// Add the new buffer to end
 		streamBuffers[stream][streamNumBuffers[stream]] = buffer;
 		streamBufIndex[stream] = streamNumBuffers[stream];
 		streamNumBuffers[stream]++;
@@ -1827,9 +1827,9 @@ void S_AL_RawSamples(int stream, int samples, int rate, int width, int channels,
 
 	if(entityNum < 0)
 	{
-			// Volume
-			S_AL_Gain (streamSources[stream], volume * s_volume->value * s_alGain->value);
-		}
+        	// Volume
+        	S_AL_Gain (streamSources[stream], volume * s_volume->value * s_alGain->value);
+        }
 
 	// Start stream
 	if(!streamPlaying[stream])
@@ -1939,7 +1939,7 @@ static void S_AL_MusicSourceGet( void )
 	musicSource = S_AL_SrcGet(musicSourceHandle);
 
 	// make sure that after unmuting the S_AL_Gain in S_Update() does not turn
-	// volume up prematurely for This source
+	// volume up prematurely for this source
 	srcList[musicSourceHandle].scaleGain = 0.0f;
 
 	// Set some musicSource parameters
@@ -2179,7 +2179,7 @@ void S_AL_MusicUpdate( void )
 	}
 
 	// Hitches can cause OpenAL to be starved of buffers when streaming.
-	// If This happens, it will stop playback. This restarts the source if
+	// If this happens, it will stop playback. This restarts the source if
 	// it is no longer playing, and if there are buffers available
 	qalGetSourcei( musicSource, AL_SOURCE_STATE, &state );
 	qalGetSourcei( musicSource, AL_BUFFERS_QUEUED, &numBuffers );
@@ -2693,7 +2693,7 @@ qboolean S_AL_Init( soundInterface_t *si )
 				alCaptureDevice = qalcCaptureOpenDevice(NULL, 8000, AL_FORMAT_MONO16, 4096);
 			}
 			Com_Printf( "OpenAL capture device %s.\n",
-					(alCaptureDevice == NULL) ? "failed to open" : "opened");
+				    (alCaptureDevice == NULL) ? "failed to open" : "opened");
 		}
 	}
 #endif

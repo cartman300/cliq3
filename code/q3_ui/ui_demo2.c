@@ -129,85 +129,85 @@ static void Demos_MenuInit( void ) {
 	s_demos.menu.fullscreen = qtrue;
 	s_demos.menu.wrapAround = qtrue;
 
-	s_demos.banner.Generic.type		= MTYPE_BTEXT;
-	s_demos.banner.Generic.x		= 320;
-	s_demos.banner.Generic.y		= 16;
+	s_demos.banner.generic.type		= MTYPE_BTEXT;
+	s_demos.banner.generic.x		= 320;
+	s_demos.banner.generic.y		= 16;
 	s_demos.banner.string			= "DEMOS";
 	s_demos.banner.color			= color_white;
 	s_demos.banner.style			= UI_CENTER;
 
-	s_demos.framel.Generic.type		= MTYPE_BITMAP;
-	s_demos.framel.Generic.name		= ART_FRAMEL;
-	s_demos.framel.Generic.flags	= QMF_INACTIVE;
-	s_demos.framel.Generic.x		= 0;  
-	s_demos.framel.Generic.y		= 78;
+	s_demos.framel.generic.type		= MTYPE_BITMAP;
+	s_demos.framel.generic.name		= ART_FRAMEL;
+	s_demos.framel.generic.flags	= QMF_INACTIVE;
+	s_demos.framel.generic.x		= 0;  
+	s_demos.framel.generic.y		= 78;
 	s_demos.framel.width			= 256;
 	s_demos.framel.height			= 329;
 
-	s_demos.framer.Generic.type		= MTYPE_BITMAP;
-	s_demos.framer.Generic.name		= ART_FRAMER;
-	s_demos.framer.Generic.flags	= QMF_INACTIVE;
-	s_demos.framer.Generic.x		= 376;
-	s_demos.framer.Generic.y		= 76;
+	s_demos.framer.generic.type		= MTYPE_BITMAP;
+	s_demos.framer.generic.name		= ART_FRAMER;
+	s_demos.framer.generic.flags	= QMF_INACTIVE;
+	s_demos.framer.generic.x		= 376;
+	s_demos.framer.generic.y		= 76;
 	s_demos.framer.width			= 256;
 	s_demos.framer.height			= 334;
 
-	s_demos.arrows.Generic.type		= MTYPE_BITMAP;
-	s_demos.arrows.Generic.name		= ART_ARROWS;
-	s_demos.arrows.Generic.flags	= QMF_INACTIVE;
-	s_demos.arrows.Generic.x		= 320-ARROWS_WIDTH/2;
-	s_demos.arrows.Generic.y		= 400;
+	s_demos.arrows.generic.type		= MTYPE_BITMAP;
+	s_demos.arrows.generic.name		= ART_ARROWS;
+	s_demos.arrows.generic.flags	= QMF_INACTIVE;
+	s_demos.arrows.generic.x		= 320-ARROWS_WIDTH/2;
+	s_demos.arrows.generic.y		= 400;
 	s_demos.arrows.width			= ARROWS_WIDTH;
 	s_demos.arrows.height			= ARROWS_HEIGHT;
 
-	s_demos.left.Generic.type		= MTYPE_BITMAP;
-	s_demos.left.Generic.flags		= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS|QMF_MOUSEONLY;
-	s_demos.left.Generic.x			= 320-ARROWS_WIDTH/2;
-	s_demos.left.Generic.y			= 400;
-	s_demos.left.Generic.id			= ID_LEFT;
-	s_demos.left.Generic.callback	= Demos_MenuEvent;
+	s_demos.left.generic.type		= MTYPE_BITMAP;
+	s_demos.left.generic.flags		= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS|QMF_MOUSEONLY;
+	s_demos.left.generic.x			= 320-ARROWS_WIDTH/2;
+	s_demos.left.generic.y			= 400;
+	s_demos.left.generic.id			= ID_LEFT;
+	s_demos.left.generic.callback	= Demos_MenuEvent;
 	s_demos.left.width				= ARROWS_WIDTH/2;
 	s_demos.left.height				= ARROWS_HEIGHT;
 	s_demos.left.focuspic			= ART_ARROWLEFT;
 
-	s_demos.right.Generic.type		= MTYPE_BITMAP;
-	s_demos.right.Generic.flags		= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS|QMF_MOUSEONLY;
-	s_demos.right.Generic.x			= 320;
-	s_demos.right.Generic.y			= 400;
-	s_demos.right.Generic.id		= ID_RIGHT;
-	s_demos.right.Generic.callback	= Demos_MenuEvent;
+	s_demos.right.generic.type		= MTYPE_BITMAP;
+	s_demos.right.generic.flags		= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS|QMF_MOUSEONLY;
+	s_demos.right.generic.x			= 320;
+	s_demos.right.generic.y			= 400;
+	s_demos.right.generic.id		= ID_RIGHT;
+	s_demos.right.generic.callback	= Demos_MenuEvent;
 	s_demos.right.width				= ARROWS_WIDTH/2;
 	s_demos.right.height			= ARROWS_HEIGHT;
 	s_demos.right.focuspic			= ART_ARROWRIGHT;
 
-	s_demos.back.Generic.type		= MTYPE_BITMAP;
-	s_demos.back.Generic.name		= ART_BACK0;
-	s_demos.back.Generic.flags		= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
-	s_demos.back.Generic.id			= ID_BACK;
-	s_demos.back.Generic.callback	= Demos_MenuEvent;
-	s_demos.back.Generic.x			= 0;
-	s_demos.back.Generic.y			= 480-64;
+	s_demos.back.generic.type		= MTYPE_BITMAP;
+	s_demos.back.generic.name		= ART_BACK0;
+	s_demos.back.generic.flags		= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
+	s_demos.back.generic.id			= ID_BACK;
+	s_demos.back.generic.callback	= Demos_MenuEvent;
+	s_demos.back.generic.x			= 0;
+	s_demos.back.generic.y			= 480-64;
 	s_demos.back.width				= 128;
 	s_demos.back.height				= 64;
 	s_demos.back.focuspic			= ART_BACK1;
 
-	s_demos.go.Generic.type			= MTYPE_BITMAP;
-	s_demos.go.Generic.name			= ART_GO0;
-	s_demos.go.Generic.flags		= QMF_RIGHT_JUSTIFY|QMF_PULSEIFFOCUS;
-	s_demos.go.Generic.id			= ID_GO;
-	s_demos.go.Generic.callback		= Demos_MenuEvent;
-	s_demos.go.Generic.x			= 640;
-	s_demos.go.Generic.y			= 480-64;
+	s_demos.go.generic.type			= MTYPE_BITMAP;
+	s_demos.go.generic.name			= ART_GO0;
+	s_demos.go.generic.flags		= QMF_RIGHT_JUSTIFY|QMF_PULSEIFFOCUS;
+	s_demos.go.generic.id			= ID_GO;
+	s_demos.go.generic.callback		= Demos_MenuEvent;
+	s_demos.go.generic.x			= 640;
+	s_demos.go.generic.y			= 480-64;
 	s_demos.go.width				= 128;
 	s_demos.go.height				= 64;
 	s_demos.go.focuspic				= ART_GO1;
 
-	s_demos.list.Generic.type		= MTYPE_SCROLLLIST;
-	s_demos.list.Generic.flags		= QMF_PULSEIFFOCUS;
-	s_demos.list.Generic.callback	= Demos_MenuEvent;
-	s_demos.list.Generic.id			= ID_LIST;
-	s_demos.list.Generic.x			= 118;
-	s_demos.list.Generic.y			= 130;
+	s_demos.list.generic.type		= MTYPE_SCROLLLIST;
+	s_demos.list.generic.flags		= QMF_PULSEIFFOCUS;
+	s_demos.list.generic.callback	= Demos_MenuEvent;
+	s_demos.list.generic.id			= ID_LIST;
+	s_demos.list.generic.x			= 118;
+	s_demos.list.generic.y			= 130;
 	s_demos.list.width				= 16;
 	s_demos.list.height				= 14;
 	s_demos.list.itemnames			= (const char **)s_demos.demolist;
@@ -262,7 +262,7 @@ static void Demos_MenuInit( void ) {
 		s_demos.list.numitems = 1;
 
 		//degenerate case, not selectable
-		s_demos.go.Generic.flags |= (QMF_INACTIVE|QMF_HIDDEN);
+		s_demos.go.generic.flags |= (QMF_INACTIVE|QMF_HIDDEN);
 	}
 
 	Menu_AddItem( &s_demos.menu, &s_demos.banner );

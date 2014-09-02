@@ -54,7 +54,7 @@ void GLimp_SetGamma( unsigned char red[256], unsigned char green[256], unsigned 
 #ifdef _WIN32
 #include <windows.h>
 
-	// Win2K and Newer put This odd restriction on gamma ramps...
+	// Win2K and newer put this odd restriction on gamma ramps...
 	{
 		OSVERSIONINFO	vinfo;
 

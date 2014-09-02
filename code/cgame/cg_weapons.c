@@ -1208,7 +1208,7 @@ void CG_AddPlayerWeapon( refEntity_t *parent, playerState_t *ps, centity_t *cent
 	centity_t	*nonPredictedCent;
 	orientation_t	lerped;
 
-	weaponNum = (weapon_t)cent->currentState.weapon;
+	weaponNum = cent->currentState.weapon;
 
 	CG_RegisterWeapon( weaponNum );
 	weapon = &cg_weapons[weaponNum];

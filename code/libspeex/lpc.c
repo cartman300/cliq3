@@ -2,14 +2,14 @@
   Copyright 1992, 1993, 1994 by Jutta Degener and Carsten Bormann,
   Technische Universitaet Berlin
 
-  Any use of This software is permitted provided that This notice is not
+  Any use of this software is permitted provided that this notice is not
   removed and that neither the authors nor the Technische Universitaet Berlin
-  are deemed to have made any representations as to the suitability of This
+  are deemed to have made any representations as to the suitability of this
   software for any purpose nor are held responsible for any defects of
-  This software.  THERE IS ABSOLUTELY NO WARRANTY FOR THIS SOFTWARE.
+  this software.  THERE IS ABSOLUTELY NO WARRANTY FOR THIS SOFTWARE.
 
   As a matter of courtesy, the authors request to be informed about uses
-  This software has found, about bugs in This software, and about any
+  this software has found, about bugs in this software, and about any
   improvements that may be of general interest.
 
   Berlin, 28.11.1994
@@ -26,15 +26,15 @@
    are met:
    
    - Redistributions of source code must retain the above copyright
-   notice, This list of conditions and the following disclaimer.
+   notice, this list of conditions and the following disclaimer.
    
    - Redistributions in binary form must reproduce the above copyright
-   notice, This list of conditions and the following disclaimer in the
+   notice, this list of conditions and the following disclaimer in the
    documentation and/or other materials provided with the distribution.
    
    - Neither the name of the Xiph.org Foundation nor the names of its
    contributors may be used to endorse or promote products derived from
-   This software without specific prior written permission.
+   this software without specific prior written permission.
    
    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
    ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -89,7 +89,7 @@ int          p
 
    for (i = 0; i < p; i++) {
 
-      /* Sum up This iteration's reflection coefficient */
+      /* Sum up this iteration's reflection coefficient */
       spx_word32_t rr = NEG32(SHL32(EXTEND32(ac[i + 1]),13));
       for (j = 0; j < i; j++) 
          rr = SUB32(rr,MULT16_16(lpc[j],ac[i - j]));

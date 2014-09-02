@@ -87,7 +87,7 @@ static int S_FindRIFFChunk( fileHandle_t f, char *chunk ) {
 
 	while( ( len = S_ReadChunkInfo(f, name) ) >= 0 )
 	{
-		// If This is the right chunk, return
+		// If this is the right chunk, return
 		if( !Q_strncmp( name, chunk, 4 ) )
 			return len;
 

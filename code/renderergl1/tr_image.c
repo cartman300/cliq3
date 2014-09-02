@@ -899,7 +899,7 @@ image_t *R_CreateImage( const char *name, byte *pic, int width, int height,
 	qglTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, glWrapClampMode );
 	qglTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, glWrapClampMode );
 
-	// FIXME: This stops fog from setting border color?
+	// FIXME: this stops fog from setting border color?
 	glState.currenttextures[glState.currenttmu] = 0;
 	qglBindTexture( GL_TEXTURE_2D, 0 );
 
@@ -1551,7 +1551,7 @@ qhandle_t RE_RegisterSkin( const char *name ) {
 		}
 	}
 
-	// allocate a New skin
+	// allocate a new skin
 	if ( tr.numSkins == MAX_SKINS ) {
 		ri.Printf( PRINT_WARNING, "WARNING: RE_RegisterSkin( '%s' ) MAX_SKINS hit\n", name );
 		return 0;

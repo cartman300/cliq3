@@ -282,7 +282,7 @@ R_AddWorldSurface
 */
 static void R_AddWorldSurface( msurface_t *surf, int dlightBits ) {
 	if ( surf->viewCount == tr.viewCount ) {
-		return;		// already in This view
+		return;		// already in this view
 	}
 
 	surf->viewCount = tr.viewCount;
@@ -356,7 +356,7 @@ R_RecursiveWorldNode
 static void R_RecursiveWorldNode( mnode_t *node, int planeBits, int dlightBits ) {
 
 	do {
-		int			NewDlights[2];
+		int			newDlights[2];
 
 		// if the node wasn't marked as potentially visible, exit
 		if (node->visframe != tr.visCount) {
@@ -364,7 +364,7 @@ static void R_RecursiveWorldNode( mnode_t *node, int planeBits, int dlightBits )
 		}
 
 		// if the bounding volume is outside the frustum, nothing
-		// inside can be visible OPTIMIZE: don't do This all the way to leafs?
+		// inside can be visible OPTIMIZE: don't do this all the way to leafs?
 
 		if ( !r_nocull->integer ) {
 			int		r;
@@ -419,8 +419,8 @@ static void R_RecursiveWorldNode( mnode_t *node, int planeBits, int dlightBits )
 		// since we don't care about sort orders, just go positive to negative
 
 		// determine which dlights are needed
-		NewDlights[0] = 0;
-		NewDlights[1] = 0;
+		newDlights[0] = 0;
+		newDlights[1] = 0;
 		if ( dlightBits ) {
 			int	i;
 
@@ -433,21 +433,21 @@ static void R_RecursiveWorldNode( mnode_t *node, int planeBits, int dlightBits )
 					dist = DotProduct( dl->origin, node->plane->normal ) - node->plane->dist;
 					
 					if ( dist > -dl->radius ) {
-						NewDlights[0] |= ( 1 << i );
+						newDlights[0] |= ( 1 << i );
 					}
 					if ( dist < dl->radius ) {
-						NewDlights[1] |= ( 1 << i );
+						newDlights[1] |= ( 1 << i );
 					}
 				}
 			}
 		}
 
 		// recurse down the children, front side first
-		R_RecursiveWorldNode (node->children[0], planeBits, NewDlights[0] );
+		R_RecursiveWorldNode (node->children[0], planeBits, newDlights[0] );
 
 		// tail recurse
 		node = node->children[1];
-		dlightBits = NewDlights[1];
+		dlightBits = newDlights[1];
 	} while ( 1 );
 
 	{

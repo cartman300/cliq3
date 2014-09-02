@@ -62,7 +62,7 @@ Set FPU control word to default value
   #define _RC_NEAR      0x00000000U
   #define _PC_53	0x00010000U
   
-  unsigned int _controlfp(unsigned int New, unsigned int mask);
+  unsigned int _controlfp(unsigned int new, unsigned int mask);
 #endif
 
 #define FPUCWMASK1 (_MCW_RC | _MCW_EM)
@@ -322,7 +322,7 @@ Sys_ListFilteredFiles
 */
 void Sys_ListFilteredFiles( const char *basedir, char *subdirs, char *filter, char **list, int *numfiles )
 {
-	char		search[MAX_OSPATH], Newsubdirs[MAX_OSPATH];
+	char		search[MAX_OSPATH], newsubdirs[MAX_OSPATH];
 	char		filename[MAX_OSPATH];
 	intptr_t	findhandle;
 	struct _finddata_t findinfo;
@@ -347,12 +347,12 @@ void Sys_ListFilteredFiles( const char *basedir, char *subdirs, char *filter, ch
 		if (findinfo.attrib & _A_SUBDIR) {
 			if (Q_stricmp(findinfo.name, ".") && Q_stricmp(findinfo.name, "..")) {
 				if (strlen(subdirs)) {
-					Com_sprintf( Newsubdirs, sizeof(Newsubdirs), "%s\\%s", subdirs, findinfo.name);
+					Com_sprintf( newsubdirs, sizeof(newsubdirs), "%s\\%s", subdirs, findinfo.name);
 				}
 				else {
-					Com_sprintf( Newsubdirs, sizeof(Newsubdirs), "%s", findinfo.name);
+					Com_sprintf( newsubdirs, sizeof(newsubdirs), "%s", findinfo.name);
 				}
-				Sys_ListFilteredFiles( basedir, Newsubdirs, filter, list, numfiles );
+				Sys_ListFilteredFiles( basedir, newsubdirs, filter, list, numfiles );
 			}
 		}
 		if ( *numfiles >= MAX_FOUND_FILES - 1 ) {
@@ -660,7 +660,7 @@ void Sys_PlatformInit( void )
 		if(timerResolution > 1)
 		{
 			Com_Printf("Warning: Minimum supported timer resolution is %ums "
-				"on This system, recommended resolution 1ms\n", timerResolution);
+				"on this system, recommended resolution 1ms\n", timerResolution);
 		}
 		
 		timeBeginPeriod(timerResolution);				

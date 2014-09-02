@@ -62,8 +62,8 @@ typedef struct {
   int next_buf_row;		/* index of next row to store in color_buf */
 
 #ifdef CONTEXT_ROWS_SUPPORTED	/* only needed for context case */
-  int This_row_group;		/* starting row index of group to process */
-  int next_buf_stop;		/* downsample when we reach This index */
+  int this_row_group;		/* starting row index of group to process */
+  int next_buf_stop;		/* downsample when we reach this index */
 #endif
 } my_prep_controller;
 
@@ -90,7 +90,7 @@ start_pass_prep (j_compress_ptr cinfo, J_BUF_MODE pass_mode)
   /* Preset additional state variables for context mode.
    * These aren't used in non-context mode, so we needn't test which mode.
    */
-  prep->This_row_group = 0;
+  prep->this_row_group = 0;
   /* Set next_buf_stop to stop after two row groups have been read in. */
   prep->next_buf_stop = 2 * cinfo->max_v_samp_factor;
 #endif
@@ -120,7 +120,7 @@ expand_bottom_edge (JSAMPARRAY image_data, JDIMENSION num_cols,
  *
  * Preprocessor output data is counted in "row groups".  A row group
  * is defined to be v_samp_factor sample rows of each component.
- * Downsampling will produce This much data from each max_v_samp_factor
+ * Downsampling will produce this much data from each max_v_samp_factor
  * input rows.
  */
 
@@ -246,13 +246,13 @@ pre_process_context (j_compress_ptr cinfo,
     if (prep->next_buf_row == prep->next_buf_stop) {
       (*cinfo->downsample->downsample) (cinfo,
 					prep->color_buf,
-					(JDIMENSION) prep->This_row_group,
+					(JDIMENSION) prep->this_row_group,
 					output_buf, *out_row_group_ctr);
       (*out_row_group_ctr)++;
       /* Advance pointers with wraparound as necessary. */
-      prep->This_row_group += cinfo->max_v_samp_factor;
-      if (prep->This_row_group >= buf_height)
-	prep->This_row_group = 0;
+      prep->this_row_group += cinfo->max_v_samp_factor;
+      if (prep->this_row_group >= buf_height)
+	prep->this_row_group = 0;
       if (prep->next_buf_row >= buf_height)
 	prep->next_buf_row = 0;
       prep->next_buf_stop = prep->next_buf_row + cinfo->max_v_samp_factor;
@@ -284,7 +284,7 @@ create_context_buffer (j_compress_ptr cinfo)
 
   for (ci = 0, compptr = cinfo->comp_info; ci < cinfo->num_components;
        ci++, compptr++) {
-    /* Allocate the actual buffer space (3 row groups) for This component.
+    /* Allocate the actual buffer space (3 row groups) for this component.
      * We make the buffer wide enough to allow the downsampler to edge-expand
      * horizontally within the buffer, if it so chooses.
      */

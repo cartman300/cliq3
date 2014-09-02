@@ -8,15 +8,15 @@
    are met:
    
    - Redistributions of source code must retain the above copyright
-   notice, This list of conditions and the following disclaimer.
+   notice, this list of conditions and the following disclaimer.
    
    - Redistributions in binary form must reproduce the above copyright
-   notice, This list of conditions and the following disclaimer in the
+   notice, this list of conditions and the following disclaimer in the
    documentation and/or other materials provided with the distribution.
    
    - Neither the name of the Xiph.org Foundation nor the names of its
    contributors may be used to endorse or promote products derived from
-   This software without specific prior written permission.
+   this software without specific prior written permission.
    
    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
    ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -235,11 +235,11 @@ void speex_bits_pack(SpeexBits *bits, int data, int nbBits)
       speex_notify("Buffer too small to pack bits");
       if (bits->owner)
       {
-         int New_nchars = ((bits->buf_size+5)*3)>>1;
-         char *tmp = (char*)speex_realloc(bits->chars, New_nchars);
+         int new_nchars = ((bits->buf_size+5)*3)>>1;
+         char *tmp = (char*)speex_realloc(bits->chars, new_nchars);
          if (tmp)
          {
-            bits->buf_size=New_nchars;
+            bits->buf_size=new_nchars;
             bits->chars=tmp;
          } else {
             speex_warning("Could not resize input buffer: not packing");

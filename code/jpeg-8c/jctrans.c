@@ -25,14 +25,14 @@ LOCAL(void) transencode_coef_controller
 
 /*
  * Compression initialization for writing raw-coefficient data.
- * Before calling This, all parameters and a data destination must be set up.
+ * Before calling this, all parameters and a data destination must be set up.
  * Call jpeg_finish_compress() to actually write the data.
  *
  * The number of passed virtual arrays must match cinfo->num_components.
  * Note that the virtual arrays need not be filled or even realized at
  * the time write_coefficients is called; indeed, if the virtual arrays
- * were requested from This compression object's memory manager, they
- * typically will be realized during This routine and filled afterwards.
+ * were requested from this compression object's memory manager, they
+ * typically will be realized during this routine and filled afterwards.
  */
 
 GLOBAL(void)
@@ -115,8 +115,8 @@ jpeg_copy_critical_parameters (j_decompress_ptr srcinfo,
     outcomp->v_samp_factor = incomp->v_samp_factor;
     outcomp->quant_tbl_no = incomp->quant_tbl_no;
     /* Make sure saved quantization table for component matches the qtable
-     * slot.  If not, the input file re-used This qtable slot.
-     * IJG encoder currently cannot duplicate This.
+     * slot.  If not, the input file re-used this qtable slot.
+     * IJG encoder currently cannot duplicate this.
      */
     tblno = outcomp->quant_tbl_no;
     if (tblno < 0 || tblno >= NUM_QUANT_TBLS ||
@@ -135,7 +135,7 @@ jpeg_copy_critical_parameters (j_decompress_ptr srcinfo,
      */
   }
   /* Also copy JFIF version and resolution information, if available.
-   * Strictly speaking This isn't "critical" info, but it's nearly
+   * Strictly speaking this isn't "critical" info, but it's nearly
    * always appropriate to copy it if available.  In particular,
    * if the application chooses to copy JFIF 1.02 extension markers from
    * the source file, we need to copy the version to make sure we don't
@@ -190,7 +190,7 @@ transencode_master_selection (j_compress_ptr cinfo,
 
 
 /*
- * The rest of This file is a special implementation of the coefficient
+ * The rest of this file is a special implementation of the coefficient
  * buffer controller.  This is similar to jccoefct.c, but it handles only
  * output from presupplied virtual arrays.  Furthermore, we generate any
  * dummy padding blocks on-the-fly rather than expecting them to be present
@@ -219,7 +219,7 @@ typedef my_coef_controller * my_coef_ptr;
 
 LOCAL(void)
 start_iMCU_row (j_compress_ptr cinfo)
-/* Reset within-iMCU-row counters for a New row */
+/* Reset within-iMCU-row counters for a new row */
 {
   my_coef_ptr coef = (my_coef_ptr) cinfo->coef;
 
@@ -282,7 +282,7 @@ compress_output (j_compress_ptr cinfo, JSAMPIMAGE input_buf)
   JBLOCKROW buffer_ptr;
   jpeg_component_info *compptr;
 
-  /* Align the virtual buffers for the components used in This scan. */
+  /* Align the virtual buffers for the components used in this scan. */
   for (ci = 0; ci < cinfo->comps_in_scan; ci++) {
     compptr = cinfo->cur_comp_info[ci];
     buffer[ci] = (*cinfo->mem->access_virt_barray)
@@ -296,7 +296,7 @@ compress_output (j_compress_ptr cinfo, JSAMPIMAGE input_buf)
        yoffset++) {
     for (MCU_col_num = coef->mcu_ctr; MCU_col_num < cinfo->MCUs_per_row;
 	 MCU_col_num++) {
-      /* Construct list of pointers to DCT blocks belonging to This MCU */
+      /* Construct list of pointers to DCT blocks belonging to this MCU */
       blkn = 0;			/* index of current DCT block within MCU */
       for (ci = 0; ci < cinfo->comps_in_scan; ci++) {
 	compptr = cinfo->cur_comp_info[ci];
@@ -306,7 +306,7 @@ compress_output (j_compress_ptr cinfo, JSAMPIMAGE input_buf)
 	for (yindex = 0; yindex < compptr->MCU_height; yindex++) {
 	  if (coef->iMCU_row_num < last_iMCU_row ||
 	      yindex+yoffset < compptr->last_row_height) {
-	    /* Fill in pointers to real blocks in This row */
+	    /* Fill in pointers to real blocks in this row */
 	    buffer_ptr = buffer[ci][yindex+yoffset] + start_col;
 	    for (xindex = 0; xindex < blockcnt; xindex++)
 	      MCU_buffer[blkn++] = buffer_ptr++;
@@ -314,7 +314,7 @@ compress_output (j_compress_ptr cinfo, JSAMPIMAGE input_buf)
 	    /* At bottom of image, need a whole row of dummy blocks */
 	    xindex = 0;
 	  }
-	  /* Fill in any dummy blocks needed in This row.
+	  /* Fill in any dummy blocks needed in this row.
 	   * Dummy blocks are filled in the same way as in jccoefct.c:
 	   * all zeroes in the AC entries, DC entries equal to previous
 	   * block's DC value.  The init routine has already zeroed the

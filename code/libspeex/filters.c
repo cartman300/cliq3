@@ -7,15 +7,15 @@
    are met:
    
    - Redistributions of source code must retain the above copyright
-   notice, This list of conditions and the following disclaimer.
+   notice, this list of conditions and the following disclaimer.
    
    - Redistributions in binary form must reproduce the above copyright
-   notice, This list of conditions and the following disclaimer in the
+   notice, this list of conditions and the following disclaimer in the
    documentation and/or other materials provided with the distribution.
    
    - Neither the name of the Xiph.org Foundation nor the names of its
    contributors may be used to endorse or promote products derived from
-   This software without specific prior written permission.
+   this software without specific prior written permission.
    
    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
    ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -652,7 +652,7 @@ int len
 
 void multicomb(
 spx_word16_t *exc,          /*decoded excitation*/
-spx_word16_t *New_exc,      /*enhanced excitation*/
+spx_word16_t *new_exc,      /*enhanced excitation*/
 spx_coef_t *ak,           /*LPC filter coefs*/
 int p,               /*LPC order*/
 int nsf,             /*sub-frame size*/
@@ -664,7 +664,7 @@ char *stack
 {
    int i; 
    VARDECL(spx_word16_t *iexc);
-   spx_word16_t old_ener, New_ener;
+   spx_word16_t old_ener, new_ener;
    int corr_pitch;
    
    spx_word16_t iexc0_mag, iexc1_mag, exc_mag;
@@ -793,28 +793,28 @@ char *stack
       gain1 = MULT16_16_Q15(QCONST16(.6,15),MULT16_16_Q14(g2,gg2));
    }
    for (i=0;i<nsf;i++)
-      New_exc[i] = ADD16(exc[i], EXTRACT16(PSHR32(ADD32(MULT16_16(gain0,iexc[i]), MULT16_16(gain1,iexc[i+nsf])),8)));
+      new_exc[i] = ADD16(exc[i], EXTRACT16(PSHR32(ADD32(MULT16_16(gain0,iexc[i]), MULT16_16(gain1,iexc[i+nsf])),8)));
    /* FIXME: compute_rms16 is currently not quite accurate enough (but close) */
-   New_ener = compute_rms16(New_exc, nsf);
+   new_ener = compute_rms16(new_exc, nsf);
    old_ener = compute_rms16(exc, nsf);
    
    if (old_ener < 1)
       old_ener = 1;
-   if (New_ener < 1)
-      New_ener = 1;
-   if (old_ener > New_ener)
-      old_ener = New_ener;
-   ngain = PDIV32_16(SHL32(EXTEND32(old_ener),14),New_ener);
+   if (new_ener < 1)
+      new_ener = 1;
+   if (old_ener > new_ener)
+      old_ener = new_ener;
+   ngain = PDIV32_16(SHL32(EXTEND32(old_ener),14),new_ener);
    
    for (i=0;i<nsf;i++)
-      New_exc[i] = MULT16_16_Q14(ngain, New_exc[i]);
+      new_exc[i] = MULT16_16_Q14(ngain, new_exc[i]);
 #ifdef FIXED_POINT
    if (scaledown)
    {
       for (i=0;i<nsf;i++)
          exc[i] = SHL16(exc[i],1);
       for (i=0;i<nsf;i++)
-         New_exc[i] = SHL16(SATURATE16(New_exc[i],16383),1);
+         new_exc[i] = SHL16(SATURATE16(new_exc[i],16383),1);
    }
 #endif
 }

@@ -7,7 +7,7 @@
  * For conditions of distribution and use, see the accompanying README file.
  *
  * This file contains a slow-but-accurate integer implementation of the
- * inverse DCT (Discrete Cosine Transform).  In the IJG code, This routine
+ * inverse DCT (Discrete Cosine Transform).  In the IJG code, this routine
  * must also perform dequantization of the input coefficients.
  *
  * A 2-D IDCT can be done by 1-D IDCT on each column followed by 1-D IDCT
@@ -21,8 +21,8 @@
  *   Speech, and Signal Processing 1989 (ICASSP '89), pp. 988-991.
  * The primary algorithm described there uses 11 multiplies and 29 adds.
  * We use their alternate method with 12 multiplies and 32 adds.
- * The advantage of This method is that no data path contains more than one
- * multiplication; This allows a very simple and accurate implementation in
+ * The advantage of this method is that no data path contains more than one
+ * multiplication; this allows a very simple and accurate implementation in
  * scaled fixed-point arithmetic, with a minimal number of shifts.
  *
  * We also provide IDCT routines with various output sample block sizes for
@@ -61,18 +61,18 @@
  */
 
 #if DCTSIZE != 8
-  Sorry, This code only copes with 8x8 DCT blocks. /* deliberate syntax err */
+  Sorry, this code only copes with 8x8 DCT blocks. /* deliberate syntax err */
 #endif
 
 
 /*
- * The poop on This scaling stuff is as follows:
+ * The poop on this scaling stuff is as follows:
  *
  * Each 1-D IDCT step produces outputs which are a factor of sqrt(N)
  * larger than the true IDCT outputs.  The final outputs are therefore
- * a factor of N larger than desired; since N=8 This can be cured by
+ * a factor of N larger than desired; since N=8 this can be cured by
  * a simple right shift at the end of the algorithm.  The advantage of
- * This arrangement is that we save two multiplications per 1-D IDCT,
+ * this arrangement is that we save two multiplications per 1-D IDCT,
  * because the y0 and y4 inputs need not be divided by sqrt(N).
  *
  * We have to do addition and subtraction of the integer inputs, which
@@ -88,7 +88,7 @@
  *
  * The outputs of the first pass are scaled up by PASS1_BITS bits so that
  * they are represented to better-than-integral precision.  These outputs
- * require BITS_IN_JSAMPLE + PASS1_BITS + 3 bits; This fits in a 16-bit word
+ * require BITS_IN_JSAMPLE + PASS1_BITS + 3 bits; this fits in a 16-bit word
  * with the recommended scaling.  (To scale up 12-bit sample data further, an
  * intermediate INT32 array would be needed.)
  *
@@ -107,7 +107,7 @@
 
 /* Some C compilers fail to reduce "FIX(constant)" at compile time, thus
  * causing a lot of useless floating-point operations at run time.
- * To get around This we use the following pre-calculated constants.
+ * To get around this we use the following pre-calculated constants.
  * If you change CONST_BITS you may want to add appropriate values.
  * (With a reasonable C compiler, you can just rely on the FIX() macro...)
  */
@@ -156,7 +156,7 @@
 
 
 /* Dequantize a coefficient by multiplying it by the multiplier-table
- * entry; produce an int result.  In This module, both inputs and result
+ * entry; produce an int result.  In this module, both inputs and result
  * are 16 bits or less, so either int or short multiply will work.
  */
 
@@ -193,12 +193,12 @@ jpeg_idct_islow (j_decompress_ptr cinfo, jpeg_component_info * compptr,
   wsptr = workspace;
   for (ctr = DCTSIZE; ctr > 0; ctr--) {
     /* Due to quantization, we will usually find that many of the input
-     * coefficients are zero, especially the AC terms.  We can exploit This
+     * coefficients are zero, especially the AC terms.  We can exploit this
      * by short-circuiting the IDCT calculation for any column in which all
      * the AC terms are zero.  In that case each output is equal to the
      * DC coefficient (with scale factor as needed).
      * With typical images and quantization tables, half or more of the
-     * column DCT calculations can be simplified This way.
+     * column DCT calculations can be simplified this way.
      */
 
     if (inptr[DCTSIZE*1] == 0 && inptr[DCTSIZE*2] == 0 &&
@@ -305,7 +305,7 @@ jpeg_idct_islow (j_decompress_ptr cinfo, jpeg_component_info * compptr,
      * However, the column calculation has created many nonzero AC terms, so
      * the simplification applies less often (typically 5% to 10% of the time).
      * On machines with very fast multiplication, it's possible that the
-     * test takes more time than it's worth.  In that case This section
+     * test takes more time than it's worth.  In that case this section
      * may be commented out.
      */
 
@@ -1054,7 +1054,7 @@ jpeg_idct_2x2 (j_decompress_ptr cinfo, jpeg_component_info * compptr,
  * Perform dequantization and inverse DCT on one block of coefficients,
  * producing a reduced-size 1x1 output block.
  *
- * We hardly need an inverse DCT routine for This: just take the
+ * We hardly need an inverse DCT routine for this: just take the
  * average pixel value, which is one-eighth of the DC coefficient.
  */
 
@@ -2844,12 +2844,12 @@ jpeg_idct_16x8 (j_decompress_ptr cinfo, jpeg_component_info * compptr,
   wsptr = workspace;
   for (ctr = DCTSIZE; ctr > 0; ctr--) {
     /* Due to quantization, we will usually find that many of the input
-     * coefficients are zero, especially the AC terms.  We can exploit This
+     * coefficients are zero, especially the AC terms.  We can exploit this
      * by short-circuiting the IDCT calculation for any column in which all
      * the AC terms are zero.  In that case each output is equal to the
      * DC coefficient (with scale factor as needed).
      * With typical images and quantization tables, half or more of the
-     * column DCT calculations can be simplified This way.
+     * column DCT calculations can be simplified this way.
      */
     
     if (inptr[DCTSIZE*1] == 0 && inptr[DCTSIZE*2] == 0 &&
@@ -4759,12 +4759,12 @@ jpeg_idct_4x8 (j_decompress_ptr cinfo, jpeg_component_info * compptr,
   wsptr = workspace;
   for (ctr = 4; ctr > 0; ctr--) {
     /* Due to quantization, we will usually find that many of the input
-     * coefficients are zero, especially the AC terms.  We can exploit This
+     * coefficients are zero, especially the AC terms.  We can exploit this
      * by short-circuiting the IDCT calculation for any column in which all
      * the AC terms are zero.  In that case each output is equal to the
      * DC coefficient (with scale factor as needed).
      * With typical images and quantization tables, half or more of the
-     * column DCT calculations can be simplified This way.
+     * column DCT calculations can be simplified this way.
      */
 
     if (inptr[DCTSIZE*1] == 0 && inptr[DCTSIZE*2] == 0 &&

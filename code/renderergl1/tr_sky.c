@@ -108,7 +108,7 @@ static void AddSkyPolygon (int nump, vec3_t vecs)
 			axis = 4;
 	}
 
-	// project New texture coords
+	// project new texture coords
 	for (i=0 ; i<nump ; i++, vecs+=3)
 	{
 		j = vec_to_st[axis][2];
@@ -155,8 +155,8 @@ static void ClipSkyPolygon (int nump, vec3_t vecs, int stage)
 	float	d, e;
 	float	dists[MAX_CLIP_VERTS];
 	int		sides[MAX_CLIP_VERTS];
-	vec3_t	Newv[2][MAX_CLIP_VERTS];
-	int		Newc[2];
+	vec3_t	newv[2][MAX_CLIP_VERTS];
+	int		newc[2];
 	int		i, j;
 
 	if (nump > MAX_CLIP_VERTS-2)
@@ -197,25 +197,25 @@ static void ClipSkyPolygon (int nump, vec3_t vecs, int stage)
 	sides[i] = sides[0];
 	dists[i] = dists[0];
 	VectorCopy (vecs, (vecs+(i*3)) );
-	Newc[0] = Newc[1] = 0;
+	newc[0] = newc[1] = 0;
 
 	for (i=0, v = vecs ; i<nump ; i++, v+=3)
 	{
 		switch (sides[i])
 		{
 		case SIDE_FRONT:
-			VectorCopy (v, Newv[0][Newc[0]]);
-			Newc[0]++;
+			VectorCopy (v, newv[0][newc[0]]);
+			newc[0]++;
 			break;
 		case SIDE_BACK:
-			VectorCopy (v, Newv[1][Newc[1]]);
-			Newc[1]++;
+			VectorCopy (v, newv[1][newc[1]]);
+			newc[1]++;
 			break;
 		case SIDE_ON:
-			VectorCopy (v, Newv[0][Newc[0]]);
-			Newc[0]++;
-			VectorCopy (v, Newv[1][Newc[1]]);
-			Newc[1]++;
+			VectorCopy (v, newv[0][newc[0]]);
+			newc[0]++;
+			VectorCopy (v, newv[1][newc[1]]);
+			newc[1]++;
 			break;
 		}
 
@@ -226,16 +226,16 @@ static void ClipSkyPolygon (int nump, vec3_t vecs, int stage)
 		for (j=0 ; j<3 ; j++)
 		{
 			e = v[j] + d*(v[j+3] - v[j]);
-			Newv[0][Newc[0]][j] = e;
-			Newv[1][Newc[1]][j] = e;
+			newv[0][newc[0]][j] = e;
+			newv[1][newc[1]][j] = e;
 		}
-		Newc[0]++;
-		Newc[1]++;
+		newc[0]++;
+		newc[1]++;
 	}
 
 	// continue
-	ClipSkyPolygon (Newc[0], Newv[0][0], stage+1);
-	ClipSkyPolygon (Newc[1], Newv[1][0], stage+1);
+	ClipSkyPolygon (newc[0], newv[0][0], stage+1);
+	ClipSkyPolygon (newc[1], newv[1][0], stage+1);
 }
 
 /*

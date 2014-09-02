@@ -555,7 +555,7 @@ void UI_DrawProportionalString( int x, int y, const char* str, int style, vec4_t
 		drawcolor[0] = color[0];
 		drawcolor[1] = color[1];
 		drawcolor[2] = color[2];
-		drawcolor[3] = 0.5 + 0.5 * sin( (float)uis.realtime / PULSE_DIVISOR );
+		drawcolor[3] = 0.5 + 0.5 * sin( uis.realtime / PULSE_DIVISOR );
 		UI_DrawProportionalString2( x, y, str, drawcolor, sizeScale, uis.charsetPropGlow );
 		return;
 	}
@@ -601,16 +601,16 @@ void UI_DrawProportionalString_AutoWrapped( int x, int y, int xmax, int ystep, c
 			UI_DrawProportionalString(x, y, s1, style, color);
 			y += ystep;
 			if (c_bcp == '\0')
-	  {
-		// that was the last word
-		// we could start a new loop, but that wouldn't be much use
-		// even if the word is too long, we would overflow it (see above)
-		// so just print it now if needed
-		s2++;
-		if (*s2 != '\0') // if we are printing an overflowing line we have s2 == s3
-		  UI_DrawProportionalString(x, y, s2, style, color);
+      {
+        // that was the last word
+        // we could start a new loop, but that wouldn't be much use
+        // even if the word is too long, we would overflow it (see above)
+        // so just print it now if needed
+        s2++;
+        if (*s2 != '\0') // if we are printing an overflowing line we have s2 == s3
+          UI_DrawProportionalString(x, y, s2, style, color);
 				break; 
-	  }
+      }
 			s2++;
 			s1 = s2;
 			s3 = s2;
@@ -731,7 +731,7 @@ void UI_DrawString( int x, int y, const char* str, int style, vec4_t color )
 		lowlight[1] = 0.8*color[1];
 		lowlight[2] = 0.8*color[2];
 		lowlight[3] = 0.8*color[3];
-		UI_LerpColor(color,lowlight,newcolor,0.5+0.5*sin((float)uis.realtime/PULSE_DIVISOR));
+		UI_LerpColor(color,lowlight,newcolor,0.5+0.5*sin(uis.realtime/PULSE_DIVISOR));
 		drawcolor = newcolor;
 	}	
 	else

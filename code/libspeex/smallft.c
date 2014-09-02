@@ -16,7 +16,7 @@
  ********************************************************************/
 
 /* FFT implementation from OggSquish, minus cosine transforms,
- * minus all but radix 2/4 case.  In Vorbis we only need This
+ * minus all but radix 2/4 case.  In Vorbis we only need this
  * cut-down version.
  *
  * To do more than just power-of-two sized vectors, see the full

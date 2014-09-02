@@ -345,7 +345,7 @@ static void GlobalVectorToLocal( const vec3_t in, vec3_t out ) {
 =====================
 AutospriteDeform
 
-Assuming all the triangles for This shader are independant
+Assuming all the triangles for this shader are independant
 quads, rebuild them as forward facing sprites
 =====================
 */
@@ -448,7 +448,7 @@ static void Autosprite2Deform( void ) {
 		VectorCopy( backEnd.viewParms.or.axis[0], forward );
 	}
 
-	// This is a lot of work for two triangles...
+	// this is a lot of work for two triangles...
 	// we could precalculate a lot of it is an issue, but it would mess up
 	// the shader abstraction
 	for ( i = 0, indexes = 0 ; i < tess.numVertexes ; i+=4, indexes+=6 ) {
@@ -498,7 +498,7 @@ static void Autosprite2Deform( void ) {
 		// find the vector of the major axis
 		VectorSubtract( mid[1], mid[0], major );
 
-		// cross This with the view direction to get minor axis
+		// cross this with the view direction to get minor axis
 		CrossProduct( major, forward, minor );
 		VectorNormalize( minor );
 		
@@ -511,7 +511,7 @@ static void Autosprite2Deform( void ) {
 
 			l = 0.5 * sqrt( lengths[j] );
 			
-			// we need to see which direction This edge
+			// we need to see which direction this edge
 			// is used to determine direction of projection
 			for ( k = 0 ; k < 5 ; k++ ) {
 				if ( tess.indexes[ indexes + k ] == i + edgeVerts[nums[j]][0]
@@ -628,7 +628,7 @@ void RB_CalcColorFromOneMinusEntity( unsigned char *dstColors )
 	invModulate[0] = 255 - backEnd.currentEntity->e.shaderRGBA[0];
 	invModulate[1] = 255 - backEnd.currentEntity->e.shaderRGBA[1];
 	invModulate[2] = 255 - backEnd.currentEntity->e.shaderRGBA[2];
-	invModulate[3] = 255 - backEnd.currentEntity->e.shaderRGBA[3];	// This trashes alpha, but the AGEN block fixes it
+	invModulate[3] = 255 - backEnd.currentEntity->e.shaderRGBA[3];	// this trashes alpha, but the AGEN block fixes it
 
 	c = * ( int * ) invModulate;
 
@@ -736,7 +736,7 @@ void RB_CalcModulateColorsByFog( unsigned char *colors ) {
 	float	texCoords[SHADER_MAX_VERTEXES][2];
 
 	// calculate texcoords so we can derive density
-	// This is not wasted, because it would only have
+	// this is not wasted, because it would only have
 	// been previously called if the surface was opaque
 	RB_CalcFogTexCoords( texCoords[0] );
 
@@ -756,7 +756,7 @@ void RB_CalcModulateAlphasByFog( unsigned char *colors ) {
 	float	texCoords[SHADER_MAX_VERTEXES][2];
 
 	// calculate texcoords so we can derive density
-	// This is not wasted, because it would only have
+	// this is not wasted, because it would only have
 	// been previously called if the surface was opaque
 	RB_CalcFogTexCoords( texCoords[0] );
 
@@ -774,7 +774,7 @@ void RB_CalcModulateRGBAsByFog( unsigned char *colors ) {
 	float	texCoords[SHADER_MAX_VERTEXES][2] = {{0.0f}};
 
 	// calculate texcoords so we can derive density
-	// This is not wasted, because it would only have
+	// this is not wasted, because it would only have
 	// been previously called if the surface was opaque
 	RB_CalcFogTexCoords( texCoords[0] );
 
@@ -830,7 +830,7 @@ void RB_CalcFogTexCoords( float *st ) {
 	fogDistanceVector[2] *= fog->tcScale;
 	fogDistanceVector[3] *= fog->tcScale;
 
-	// rotate the gradient vector for This orientation
+	// rotate the gradient vector for this orientation
 	if ( fog->hasSurface ) {
 		fogDepthVector[0] = fog->surface[0] * backEnd.or.axis[0][0] + 
 			fog->surface[1] * backEnd.or.axis[0][1] + fog->surface[2] * backEnd.or.axis[0][2];
@@ -846,7 +846,7 @@ void RB_CalcFogTexCoords( float *st ) {
 	}
 
 	// see if the viewpoint is outside
-	// This is needed for clipping distance even for constant fog
+	// this is needed for clipping distance even for constant fog
 
 	if ( eyeT < 0 ) {
 		eyeOutside = qtrue;
@@ -1051,7 +1051,7 @@ void RB_CalcSpecularAlpha( unsigned char *alphas ) {
 		d = DotProduct (normal, lightDir);
 //		d *= ilength;
 
-		// we don't optimize for the d < 0 case since This tends to
+		// we don't optimize for the d < 0 case since this tends to
 		// cause visual artifacts such as faceted "snapping"
 		reflected[0] = normal[0]*2*d - lightDir[0];
 		reflected[1] = normal[1]*2*d - lightDir[1];
@@ -1106,7 +1106,7 @@ static void RB_CalcDiffuseColor_altivec( unsigned char *colors )
 	vector unsigned char jVecChar, normalPerm;
 	ent = backEnd.currentEntity;
 	ambientLightInt = ent->ambientLightInt;
-	// A lot of This could be simplified if we made sure
+	// A lot of this could be simplified if we made sure
 	// entities light info was 16-byte aligned.
 	jVecChar = vec_lvsl(0, ent->ambientLight);
 	ambientLightVec = vec_ld(0, (vector float *)ent->ambientLight);

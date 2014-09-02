@@ -174,7 +174,7 @@ void RB_AddFlare( void *surface, int fogNum, vec3_t point, vec3_t color, vec3_t 
 		}
 	}
 
-	// allocate a New one
+	// allocate a new one
 	if (!f ) {
 		if ( !r_inactiveFlares ) {
 			// the list is completely full
@@ -342,7 +342,7 @@ void RB_RenderFlare( flare_t *f ) {
 
 /*
  * This is an alternative to intensity scaling. It changes the size of the flare on screen instead
- * with growing distance. See in the description at the top why This is not the way to go.
+ * with growing distance. See in the description at the top why this is not the way to go.
 	// size will change ~ 1/r.
 	size = backEnd.viewParms.viewportWidth * (r_flareSize->value / (distance * -2.0f));
 */
@@ -476,7 +476,7 @@ void RB_RenderFlares (void) {
 
 //	RB_AddDlightFlares();
 
-	// perform z buffer readback on each flare in This view
+	// perform z buffer readback on each flare in this view
 	draw = qfalse;
 	prev = &r_activeFlares;
 	while ( ( f = *prev ) != NULL ) {
@@ -488,7 +488,7 @@ void RB_RenderFlares (void) {
 			continue;
 		}
 
-		// don't draw any here that aren't from This scene / portal
+		// don't draw any here that aren't from this scene / portal
 		f->drawIntensity = 0;
 		if ( f->frameSceneNum == backEnd.viewParms.frameSceneNum
 			&& f->inPortal == backEnd.viewParms.isPortal ) {
@@ -496,7 +496,7 @@ void RB_RenderFlares (void) {
 			if ( f->drawIntensity ) {
 				draw = qtrue;
 			} else {
-				// This flare has completely faded out, so remove it from the chain
+				// this flare has completely faded out, so remove it from the chain
 				*prev = f->next;
 				f->next = r_inactiveFlares;
 				r_inactiveFlares = f;

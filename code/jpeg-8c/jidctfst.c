@@ -6,7 +6,7 @@
  * For conditions of distribution and use, see the accompanying README file.
  *
  * This file contains a fast, not so accurate integer implementation of the
- * inverse DCT (Discrete Cosine Transform).  In the IJG code, This routine
+ * inverse DCT (Discrete Cosine Transform).  In the IJG code, this routine
  * must also perform dequantization of the input coefficients.
  *
  * A 2-D IDCT can be done by 1-D IDCT on each column followed by 1-D IDCT
@@ -25,10 +25,10 @@
  * folded into the multiplications or divisions by the JPEG quantization
  * table entries.  The AA&N method leaves only 5 multiplies and 29 adds
  * to be done in the DCT itself.
- * The primary disadvantage of This method is that with fixed-point math,
+ * The primary disadvantage of this method is that with fixed-point math,
  * accuracy is lost due to imprecise representation of the scaled
  * quantization values.  The smaller the quantization table entry, the less
- * precise the scaled value, so This implementation does worse with high-
+ * precise the scaled value, so this implementation does worse with high-
  * quality-setting files than with low-quality ones.
  */
 
@@ -45,7 +45,7 @@
  */
 
 #if DCTSIZE != 8
-  Sorry, This code only copes with 8x8 DCTs. /* deliberate syntax err */
+  Sorry, this code only copes with 8x8 DCTs. /* deliberate syntax err */
 #endif
 
 
@@ -55,14 +55,14 @@
  * rather than carrying additional fractional bits into subsequent additions.
  * This compromises accuracy slightly, but it lets us save a few shifts.
  * More importantly, 16-bit arithmetic is then adequate (for 8-bit samples)
- * everywhere except in the multiplications proper; This saves a good deal
+ * everywhere except in the multiplications proper; this saves a good deal
  * of work on 16-bit-int machines.
  *
  * The dequantized coefficients are not integers because the AA&N scaling
  * factors have been incorporated.  We represent them scaled up by PASS1_BITS,
  * so that the first and second IDCT rounds have the same input scaling.
  * For 8-bit JSAMPLEs, we choose IFAST_SCALE_BITS = PASS1_BITS so as to
- * avoid a descaling shift; This compromises accuracy rather drastically
+ * avoid a descaling shift; this compromises accuracy rather drastically
  * for small quantization table entries, but it saves a lot of shifts.
  * For 12-bit JSAMPLEs, there's no hope of using 16x16 multiplies anyway,
  * so we use a much larger scaling factor to preserve accuracy.
@@ -83,7 +83,7 @@
 
 /* Some C compilers fail to reduce "FIX(constant)" at compile time, thus
  * causing a lot of useless floating-point operations at run time.
- * To get around This we use the following pre-calculated constants.
+ * To get around this we use the following pre-calculated constants.
  * If you change CONST_BITS you may want to add appropriate values.
  * (With a reasonable C compiler, you can just rely on the FIX() macro...)
  */
@@ -189,12 +189,12 @@ jpeg_idct_ifast (j_decompress_ptr cinfo, jpeg_component_info * compptr,
   wsptr = workspace;
   for (ctr = DCTSIZE; ctr > 0; ctr--) {
     /* Due to quantization, we will usually find that many of the input
-     * coefficients are zero, especially the AC terms.  We can exploit This
+     * coefficients are zero, especially the AC terms.  We can exploit this
      * by short-circuiting the IDCT calculation for any column in which all
      * the AC terms are zero.  In that case each output is equal to the
      * DC coefficient (with scale factor as needed).
      * With typical images and quantization tables, half or more of the
-     * column DCT calculations can be simplified This way.
+     * column DCT calculations can be simplified this way.
      */
     
     if (inptr[DCTSIZE*1] == 0 && inptr[DCTSIZE*2] == 0 &&
@@ -285,7 +285,7 @@ jpeg_idct_ifast (j_decompress_ptr cinfo, jpeg_component_info * compptr,
      * However, the column calculation has created many nonzero AC terms, so
      * the simplification applies less often (typically 5% to 10% of the time).
      * On machines with very fast multiplication, it's possible that the
-     * test takes more time than it's worth.  In that case This section
+     * test takes more time than it's worth.  In that case this section
      * may be commented out.
      */
     

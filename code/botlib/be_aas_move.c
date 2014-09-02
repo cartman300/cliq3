@@ -391,18 +391,18 @@ void AAS_Accelerate(vec3_t velocity, float frametime, vec3_t wishdir, float wish
 void AAS_ApplyFriction(vec3_t vel, float friction, float stopspeed,
 													float frametime)
 {
-	float speed, control, Newspeed;
+	float speed, control, newspeed;
 
 	//horizontal speed
 	speed = sqrt(vel[0] * vel[0] + vel[1] * vel[1]);
 	if (speed)
 	{
 		control = speed < stopspeed ? stopspeed : speed;
-		Newspeed = speed - frametime * control * friction;
-		if (Newspeed < 0) Newspeed = 0;
-		Newspeed /= speed;
-		vel[0] *= Newspeed;
-		vel[1] *= Newspeed;
+		newspeed = speed - frametime * control * friction;
+		if (newspeed < 0) newspeed = 0;
+		newspeed /= speed;
+		vel[0] *= newspeed;
+		vel[1] *= newspeed;
 	} //end if
 } //end of the function AAS_ApplyFriction
 //===========================================================================
@@ -486,7 +486,7 @@ int AAS_ClipToBBox(aas_trace_t *trace, vec3_t start, vec3_t end, int presencetyp
 //						maxframes		: maximum number of predicted frames
 //						frametime		: duration of one predicted frame
 //						stopevent		: events that stop the prediction
-//						stopareanum		: stop as soon as entered This area
+//						stopareanum		: stop as soon as entered this area
 // Returns:				aas_clientmove_t
 // Changes Globals:		-
 //===========================================================================
@@ -505,7 +505,7 @@ int AAS_ClientMovementPrediction(struct aas_clientmove_s *move,
 	float phys_maxwalkvelocity, phys_maxcrouchvelocity, phys_maxswimvelocity;
 	float phys_maxstep, phys_maxsteepness, phys_jumpvel, friction;
 	float gravity, delta, maxvel, wishspeed, accelerate;
-	//float velchange, Newvel;
+	//float velchange, newvel;
 	//int ax;
 	int n, i, j, pc, step, swimming, crouch, event, jump_frame, areanum;
 	int areas[20], numareas;
@@ -611,11 +611,11 @@ int AAS_ClientMovementPrediction(struct aas_clientmove_s *move,
 				velchange = (cmdmove[i] * frametime) - frame_test_vel[i];
 				if (velchange > phys_maxacceleration) velchange = phys_maxacceleration;
 				else if (velchange < -phys_maxacceleration) velchange = -phys_maxacceleration;
-				Newvel = frame_test_vel[i] + velchange;
+				newvel = frame_test_vel[i] + velchange;
 				//
-				if (frame_test_vel[i] <= maxvel && Newvel > maxvel) frame_test_vel[i] = maxvel;
-				else if (frame_test_vel[i] >= -maxvel && Newvel < -maxvel) frame_test_vel[i] = -maxvel;
-				else frame_test_vel[i] = Newvel;
+				if (frame_test_vel[i] <= maxvel && newvel > maxvel) frame_test_vel[i] = maxvel;
+				else if (frame_test_vel[i] >= -maxvel && newvel < -maxvel) frame_test_vel[i] = -maxvel;
+				else frame_test_vel[i] = newvel;
 			} //end for
 			*/
 		} //end if
@@ -805,7 +805,7 @@ int AAS_ClientMovementPrediction(struct aas_clientmove_s *move,
 				//
 				if (!step)
 				{
-					//velocity left to test for This frame is the projection
+					//velocity left to test for this frame is the projection
 					//of the current test velocity into the hit plane 
 					VectorMA(left_test_vel, -DotProduct(left_test_vel, plane->normal),
 										plane->normal, left_test_vel);

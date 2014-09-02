@@ -9,8 +9,8 @@
  * This routine is in charge of selecting the modules to be executed and
  * making an initialization call to each one.
  *
- * Logically, This code belongs in jcmaster.c.  It's split out because
- * linking This routine implies linking the entire compression library.
+ * Logically, this code belongs in jcmaster.c.  It's split out because
+ * linking this routine implies linking the entire compression library.
  * For a transcoding-only application, we want to be able to use jcmaster.c
  * without linking in the whole library.
  */

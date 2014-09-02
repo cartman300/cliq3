@@ -282,7 +282,7 @@ qhandle_t RE_RegisterModel( const char *name ) {
 		}
 	}
 
-	// allocate a New model_t
+	// allocate a new model_t
 
 	if ( ( mod = R_AllocModel() ) == NULL ) {
 		ri.Printf( PRINT_WARNING, "RE_RegisterModel: R_AllocModel() failed for '%s'\n", name);
@@ -471,7 +471,7 @@ static qboolean R_LoadMD3 (model_t *mod, int lod, void *buffer, const char *mod_
 		Q_strlwr( surf->name );
 
 		// strip off a trailing _1 or _2
-		// This is a crutch for q3data being a mess
+		// this is a crutch for q3data being a mess
 		j = strlen( surf->name );
 		if ( j > 2 && surf->name[j-2] == '_' ) {
 			surf->name[j-2] = 0;
@@ -569,7 +569,7 @@ static qboolean R_LoadMDR( model_t *mod, void *buffer, int filesize, const char 
 	LL(pinmodel->ofsFrames);
 
 	// This is a model that uses some type of compressed Bones. We don't want to uncompress every bone for each rendered frame
-	// over and over again, we'll uncompress it in This function already, so we must adjust the size of the target mdr.
+	// over and over again, we'll uncompress it in this function already, so we must adjust the size of the target mdr.
 	if(pinmodel->ofsFrames < 0)
 	{
 		// mdrFrame_t is larger than mdrCompFrame_t:
@@ -592,7 +592,7 @@ static qboolean R_LoadMDR( model_t *mod, void *buffer, int filesize, const char 
 	// Copy all the values over from the file and fix endian issues in the process, if necessary.
 	
 	mdr->ident = LittleLong(pinmodel->ident);
-	mdr->version = pinmodel->version;	// Don't need to swap byte order on This one, we already did above.
+	mdr->version = pinmodel->version;	// Don't need to swap byte order on this one, we already did above.
 	Q_strncpyz(mdr->name, pinmodel->name, sizeof(mdr->name));
 	mdr->numFrames = pinmodel->numFrames;
 	mdr->numBones = pinmodel->numBones;
@@ -636,7 +636,7 @@ static qboolean R_LoadMDR( model_t *mod, void *buffer, int filesize, const char 
 				for(k = 0; k < (sizeof(cframe->bones[j].Comp) / 2); k++)
 				{
 					// Do swapping for the uncompressing functions. They seem to use shorts
-					// values only, so I assume This will work. Never tested it on other
+					// values only, so I assume this will work. Never tested it on other
 					// platforms, though.
 					
 					((unsigned short *)(cframe->bones[j].Comp))[k] =
@@ -931,7 +931,7 @@ void R_Modellist_f( void ) {
 	}
 	ri.Printf( PRINT_ALL, "%8i : Total models\n", total );
 
-#if	0		// not working right with New hunk
+#if	0		// not working right with new hunk
 	if ( tr.world ) {
 		ri.Printf( PRINT_ALL, "\n%8i : %s\n", tr.world->dataSize, tr.world->name );
 	}

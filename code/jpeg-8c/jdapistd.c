@@ -10,7 +10,7 @@
  * used in the normal full-decompression case.  They are not used by a
  * transcoding-only application.  Note that if an application links in
  * jpeg_start_decompress, it will end up linking in the entire decompressor.
- * We thus must separate This file from jdapimin.c to avoid linking the
+ * We thus must separate this file from jdapimin.c to avoid linking the
  * whole decompression library into a transcoder.
  */
 
@@ -25,9 +25,9 @@ LOCAL(boolean) output_pass_setup JPP((j_decompress_ptr cinfo));
 
 /*
  * Decompression initialization.
- * jpeg_read_header must be completed before calling This.
+ * jpeg_read_header must be completed before calling this.
  *
- * If a multipass operating mode was selected, This will do all but the
+ * If a multipass operating mode was selected, this will do all but the
  * last pass, and thus may take a great deal of time.
  *
  * Returns FALSE if suspended.  The return value need be inspected only if
@@ -144,7 +144,7 @@ output_pass_setup (j_decompress_ptr cinfo)
  * modes that emit multiple scanlines at a time.
  *
  * Note: we warn about excess calls to jpeg_read_scanlines() since
- * This likely signals an application programmer error.  However,
+ * this likely signals an application programmer error.  However,
  * an oversize buffer (max_lines > scanlines remaining) is not an error.
  */
 
@@ -254,7 +254,7 @@ jpeg_finish_output (j_decompress_ptr cinfo)
 {
   if ((cinfo->global_state == DSTATE_SCANNING ||
        cinfo->global_state == DSTATE_RAW_OK) && cinfo->buffered_image) {
-    /* Terminate This pass. */
+    /* Terminate this pass. */
     /* We do not require the whole pass to have been completed. */
     (*cinfo->master->finish_output_pass) (cinfo);
     cinfo->global_state = DSTATE_BUFPOST;

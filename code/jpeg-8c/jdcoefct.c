@@ -9,7 +9,7 @@
  * This controller is the top level of the JPEG decompressor proper.
  * The coefficient buffer lies between entropy decoding and inverse-DCT steps.
  *
- * In buffered-image mode, This controller is the interface between
+ * In buffered-image mode, this controller is the interface between
  * input-oriented processing and output-oriented processing.
  * Also, the input side (only) is used when reading a file for transcoding.
  */
@@ -29,7 +29,7 @@ typedef struct {
   struct jpeg_d_coef_controller pub; /* public fields */
 
   /* These variables keep track of the current location of the input side. */
-  /* cinfo->input_iMCU_row is also used for This. */
+  /* cinfo->input_iMCU_row is also used for this. */
   JDIMENSION MCU_ctr;		/* counts MCUs processed in current row */
   int MCU_vert_offset;		/* counts MCU rows within iMCU row */
   int MCU_rows_per_iMCU_row;	/* number of such rows needed */
@@ -40,9 +40,9 @@ typedef struct {
    * We allocate a workspace of D_MAX_BLOCKS_IN_MCU coefficient blocks,
    * and let the entropy decoder write into that workspace each time.
    * (On 80x86, the workspace is FAR even though it's not really very big;
-   * This is to keep the module interfaces unchanged when a large coefficient
+   * this is to keep the module interfaces unchanged when a large coefficient
    * buffer is necessary.)
-   * In multi-pass modes, This array points to the current MCU's blocks
+   * In multi-pass modes, this array points to the current MCU's blocks
    * within the virtual arrays; it is used only by the input side.
    */
   JBLOCKROW MCU_buffer[D_MAX_BLOCKS_IN_MCU];
@@ -77,7 +77,7 @@ METHODDEF(int) decompress_smooth_data
 
 LOCAL(void)
 start_iMCU_row (j_decompress_ptr cinfo)
-/* Reset within-iMCU-row counters for a New row (input side) */
+/* Reset within-iMCU-row counters for a new row (input side) */
 {
   my_coef_ptr coef = (my_coef_ptr) cinfo->coef;
 
@@ -121,7 +121,7 @@ start_output_pass (j_decompress_ptr cinfo)
 #ifdef BLOCK_SMOOTHING_SUPPORTED
   my_coef_ptr coef = (my_coef_ptr) cinfo->coef;
 
-  /* If multipass, check to see whether to use block smoothing on This pass */
+  /* If multipass, check to see whether to use block smoothing on this pass */
   if (coef->pub.coef_arrays != NULL) {
     if (cinfo->do_block_smoothing && smoothing_ok(cinfo))
       coef->pub.decompress_data = decompress_smooth_data;
@@ -251,7 +251,7 @@ consume_data (j_decompress_ptr cinfo)
   JBLOCKROW buffer_ptr;
   jpeg_component_info *compptr;
 
-  /* Align the virtual buffers for the components used in This scan. */
+  /* Align the virtual buffers for the components used in this scan. */
   for (ci = 0; ci < cinfo->comps_in_scan; ci++) {
     compptr = cinfo->cur_comp_info[ci];
     buffer[ci] = (*cinfo->mem->access_virt_barray)
@@ -259,7 +259,7 @@ consume_data (j_decompress_ptr cinfo)
        cinfo->input_iMCU_row * compptr->v_samp_factor,
        (JDIMENSION) compptr->v_samp_factor, TRUE);
     /* Note: entropy decoder expects buffer to be zeroed,
-     * but This is handled automatically by the memory manager
+     * but this is handled automatically by the memory manager
      * because we requested a pre-zeroed array.
      */
   }
@@ -269,7 +269,7 @@ consume_data (j_decompress_ptr cinfo)
        yoffset++) {
     for (MCU_col_num = coef->MCU_ctr; MCU_col_num < cinfo->MCUs_per_row;
 	 MCU_col_num++) {
-      /* Construct list of pointers to DCT blocks belonging to This MCU */
+      /* Construct list of pointers to DCT blocks belonging to this MCU */
       blkn = 0;			/* index of current DCT block within MCU */
       for (ci = 0; ci < cinfo->comps_in_scan; ci++) {
 	compptr = cinfo->cur_comp_info[ci];
@@ -339,12 +339,12 @@ decompress_data (j_decompress_ptr cinfo, JSAMPIMAGE output_buf)
     /* Don't bother to IDCT an uninteresting component. */
     if (! compptr->component_needed)
       continue;
-    /* Align the virtual buffer for This component. */
+    /* Align the virtual buffer for this component. */
     buffer = (*cinfo->mem->access_virt_barray)
       ((j_common_ptr) cinfo, coef->whole_image[ci],
        cinfo->output_iMCU_row * compptr->v_samp_factor,
        (JDIMENSION) compptr->v_samp_factor, FALSE);
-    /* Count non-dummy DCT block rows in This iMCU row. */
+    /* Count non-dummy DCT block rows in this iMCU row. */
     if (cinfo->output_iMCU_row < last_iMCU_row)
       block_rows = compptr->v_samp_factor;
     else {
@@ -397,7 +397,7 @@ decompress_data (j_decompress_ptr cinfo, JSAMPIMAGE output_buf)
  * Determine whether block smoothing is applicable and safe.
  * We also latch the current states of the coef_bits[] entries for the
  * AC coefficients; otherwise, if the input side of the decompressor
- * advances into a New scan, we might think the coefficients are known
+ * advances into a new scan, we might think the coefficients are known
  * more accurately than they really are.
  */
 
@@ -501,19 +501,19 @@ decompress_smooth_data (j_decompress_ptr cinfo, JSAMPIMAGE output_buf)
     /* Don't bother to IDCT an uninteresting component. */
     if (! compptr->component_needed)
       continue;
-    /* Count non-dummy DCT block rows in This iMCU row. */
+    /* Count non-dummy DCT block rows in this iMCU row. */
     if (cinfo->output_iMCU_row < last_iMCU_row) {
       block_rows = compptr->v_samp_factor;
-      access_rows = block_rows * 2; /* This and next iMCU row */
+      access_rows = block_rows * 2; /* this and next iMCU row */
       last_row = FALSE;
     } else {
       /* NB: can't use last_row_height here; it is input-side-dependent! */
       block_rows = (int) (compptr->height_in_blocks % compptr->v_samp_factor);
       if (block_rows == 0) block_rows = compptr->v_samp_factor;
-      access_rows = block_rows; /* This iMCU row only */
+      access_rows = block_rows; /* this iMCU row only */
       last_row = TRUE;
     }
-    /* Align the virtual buffer for This component. */
+    /* Align the virtual buffer for this component. */
     if (cinfo->output_iMCU_row > 0) {
       access_rows += compptr->v_samp_factor; /* prior iMCU row too */
       buffer = (*cinfo->mem->access_virt_barray)
