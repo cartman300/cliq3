@@ -12,7 +12,7 @@
  *
  * puff.c is a simple inflate written to be an unambiguous way to specify the
  * deflate format.  It is not written for speed but rather simplicity.  As a
- * side benefit, this code might actually be useful when small code is more
+ * side benefit, This code might actually be useful when small code is more
  * important than speed, such as bootstrap applications.  For typical deflate
  * data, zlib's inflate() is about four times as fast as puff().  zlib's
  * inflate compiles to around 20K on my machine, whereas puff.c compiles to
@@ -110,7 +110,7 @@ struct state {
  *
  * - Bits are stored in bytes from the least significant bit to the most
  *   significant bit.  Therefore bits are dropped from the bottom of the bit
- *   buffer, using shift right, and new bytes are appended to the top of the
+ *   buffer, using shift right, and New bytes are appended to the top of the
  *   bit buffer, using shift left.
  */
 local int32_t bits(struct state *s, int32_t need)
@@ -208,14 +208,14 @@ struct huffman {
  *   bits are pulled from the compressed data one at a time and used to
  *   build the code value reversed from what is in the stream in order to
  *   permit simple integer comparisons for decoding.  A table-based decoding
- *   scheme (as used in zlib) does not need to do this reversal.
+ *   scheme (as used in zlib) does not need to do This reversal.
  *
  * - The first code for the shortest length is all zeros.  Subsequent codes of
  *   the same length are simply integer increments of the previous code.  When
  *   moving up a length, a zero bit is appended to the code.  For a complete
  *   code, the last code of the longest length will be all ones.
  *
- * - Incomplete codes are handled by this decoder, since they are permitted
+ * - Incomplete codes are handled by This decoder, since they are permitted
  *   in the deflate format.  See the format notes for fixed() and dynamic().
  */
 local int32_t decode(struct state *s, struct huffman *h)
@@ -358,7 +358,7 @@ local int32_t construct(struct huffman *h, int16_t *length, int32_t n)
  * - The reason that 258 gets its own symbol is that the longest length is used
  *   often in highly redundant files.  Note that 258 can also be coded as the
  *   base value 227 plus the maximum extra value of 31.  While a good deflate
- *   should never do this, it is not an error, and should be decoded properly.
+ *   should never do This, it is not an error, and should be decoded properly.
  *
  * - If a length is decoded, including its extra bits if any, then it is
  *   followed a distance code.  There are up to 30 distance symbols.  Again
@@ -381,10 +381,10 @@ local int32_t construct(struct huffman *h, int16_t *length, int32_t n)
  *   simply copies the last byte 258 times.  A distance of four and a length of
  *   twelve copies the last four bytes three times.  A simple forward copy
  *   ignoring whether the length is greater than the distance or not implements
- *   this correctly.  You should not use memcpy() since its behavior is not
+ *   This correctly.  You should not use memcpy() since its behavior is not
  *   defined for overlapped arrays.  You should not use memmove() or bcopy()
  *   since though their behavior -is- defined for overlapping arrays, it is
- *   defined to do the wrong thing in this case.
+ *   defined to do the wrong thing in This case.
  */
 local int32_t codes(struct state *s,
                 struct huffman *lencode,
@@ -471,7 +471,7 @@ local int32_t codes(struct state *s,
  *
  * - The fixed distance codes also have two invalid symbols that should result
  *   in an error if received.  Since all of the distance codes are the same
- *   length, this can be implemented as an incomplete code.  Then the invalid
+ *   length, This can be implemented as an incomplete code.  Then the invalid
  *   codes are detected while decoding.
  */
 local int32_t fixed(struct state *s)
@@ -503,7 +503,7 @@ local int32_t fixed(struct state *s)
             lengths[symbol] = 5;
         construct(&distcode, lengths, MAXDCODES);
 
-        /* do this just once */
+        /* do This just once */
         virgin = 0;
     }
 
@@ -518,7 +518,7 @@ local int32_t fixed(struct state *s)
  *
  * - A dynamic block starts with a description of the literal/length and
  *   distance codes for that block.  New dynamic blocks allow the compressor to
- *   rapidly adapt to changing data with new codes optimized for that data.
+ *   rapidly adapt to changing data with New codes optimized for that data.
  *
  * - The codes used by the deflate format are "canonical", which means that
  *   the actual bits of the codes are generated in an unambiguous way simply
@@ -529,9 +529,9 @@ local int32_t fixed(struct state *s)
  *   provided for each of the literal/length symbols, and for each of the
  *   distance symbols.
  *
- * - If a symbol is not used in the block, this is represented by a zero as
+ * - If a symbol is not used in the block, This is represented by a zero as
  *   as the code length.  This does not mean a zero-length code, but rather
- *   that no code should be created for this symbol.  There is no way in the
+ *   that no code should be created for This symbol.  There is no way in the
  *   deflate format to represent a zero-length code.
  *
  * - The maximum number of bits in a code is 15, so the possible lengths for
@@ -682,7 +682,7 @@ local int32_t dynamic(struct state *s)
  * facilitate the debugging of deflators.
  *
  * puff() also has a mode to determine the size of the uncompressed output with
- * no output written.  For this dest must be (uint8_t *)0.  In this case,
+ * no output written.  For This dest must be (uint8_t *)0.  In This case,
  * the input value of *destlen is ignored, and on return *destlen is set to the
  * size of the uncompressed output.
  *

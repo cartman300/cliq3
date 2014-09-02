@@ -316,8 +316,8 @@ typedef struct shader_s {
 	char		name[MAX_QPATH];		// game path, including extension
 	int			lightmapIndex;			// for a shader to match, both name and lightmapIndex must match
 
-	int			index;					// this shader == tr.shaders[index]
-	int			sortedIndex;			// this shader == tr.sortedShaders[sortedIndex]
+	int			index;					// This shader == tr.shaders[index]
+	int			sortedIndex;			// This shader == tr.sortedShaders[sortedIndex]
 
 	float		sort;					// lower numbered shaders draw before higher numbered
 
@@ -329,7 +329,7 @@ typedef struct shader_s {
 
 	qboolean	explicitlyDefined;		// found in a .shader file
 
-	int			surfaceFlags;			// if explicitlyDefined, this will have SURF_* flags
+	int			surfaceFlags;			// if explicitlyDefined, This will have SURF_* flags
 	int			contentFlags;
 
 	qboolean	entityMergable;			// merge across entites optimizable (smoke, blood)
@@ -362,10 +362,10 @@ typedef struct shader_s {
 
 	void		(*optimalStageIteratorFunc)( void );
 
-  float clampTime;                                  // time this shader is clamped to
-  float timeOffset;                                 // current time offset for this shader
+  float clampTime;                                  // time This shader is clamped to
+  float timeOffset;                                 // current time offset for This shader
 
-  struct shader_s *remappedShader;                  // current shader this one is remapped too
+  struct shader_s *remappedShader;                  // current shader This one is remapped too
 
 	struct	shader_s	*next;
 } shader_t;
@@ -441,11 +441,11 @@ typedef struct {
 	orientationr_t	or;
 	orientationr_t	world;
 	vec3_t		pvsOrigin;			// may be different than or.origin for portals
-	qboolean	isPortal;			// true if this view is through a portal
+	qboolean	isPortal;			// true if This view is through a portal
 	qboolean	isMirror;			// the portal is a mirror, invert the face culling
 	int			frameSceneNum;		// copied from tr.frameSceneNum
 	int			frameCount;			// copied from tr.frameCount
-	cplane_t	portalPlane;		// clip anything behind this if mirroring
+	cplane_t	portalPlane;		// clip anything behind This if mirroring
 	int			viewportX, viewportY, viewportWidth, viewportHeight;
 	float		fovX, fovY;
 	float		projectionMatrix[16];
@@ -568,7 +568,7 @@ typedef struct {
 	// dynamic lighting information
 	int				dlightBits;
 
-	// culling information (FIXME: use this!)
+	// culling information (FIXME: use This!)
 	vec3_t			bounds[2];
 	vec3_t			localOrigin;
 	float			radius;
@@ -854,7 +854,7 @@ typedef struct {
 	qboolean	projection2D;	// if qtrue, drawstretchpic doesn't need to change modes
 	byte		color2D[4];
 	qboolean	vertexes2D;		// shader needs to be finished
-	trRefEntity_t	entity2D;	// currentEntity will point at this when doing 2D rendering
+	trRefEntity_t	entity2D;	// currentEntity will point at This when doing 2D rendering
 } backEndState_t;
 
 /*
@@ -868,7 +868,7 @@ typedef struct {
 typedef struct {
 	qboolean				registered;		// cleared at shutdown, set at beginRegistration
 
-	int						visCount;		// incremented every time a new vis cluster is entered
+	int						visCount;		// incremented every time a New vis cluster is entered
 	int						frameCount;		// incremented every frame
 	int						sceneCount;		// incremented every scene
 	int						viewCount;		// incremented every view (twice a scene if portaled)
@@ -900,7 +900,7 @@ typedef struct {
 	image_t					**lightmaps;
 
 	trRefEntity_t			*currentEntity;
-	trRefEntity_t			worldEntity;		// point currentEntity at this when rendering world
+	trRefEntity_t			worldEntity;		// point currentEntity at This when rendering world
 	int						currentEntityNum;
 	int						shiftedEntityNum;	// currentEntityNum << QSORT_REFENTITYNUM_SHIFT
 	model_t					*currentModel;
@@ -917,7 +917,7 @@ typedef struct {
 
 	int						viewCluster;
 
-	vec3_t					sunLight;			// from the sky shader for this level
+	vec3_t					sunLight;			// from the sky shader for This level
 	vec3_t					sunDirection;
 
 	frontEndCounters_t		pc;
@@ -1185,7 +1185,7 @@ shader_t	*R_GetShaderByState( int index, long *cycleTime );
 shader_t *R_FindShaderByName( const char *name );
 void		R_InitShaders( void );
 void		R_ShaderList_f( void );
-void    R_RemapShader(const char *oldShader, const char *newShader, const char *timeOffset);
+void    R_RemapShader(const char *oldShader, const char *NewShader, const char *timeOffset);
 
 /*
 ====================================================================

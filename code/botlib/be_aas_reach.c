@@ -197,7 +197,7 @@ int AAS_BestReachableLinkArea(aas_link_t *areas)
 	for (link = areas; link; link = link->next_area)
 	{
 		if (link->areanum) return link->areanum;
-		//FIXME: this is a bad idea when the reachability is not yet
+		//FIXME: This is a bad idea when the reachability is not yet
 		// calculated when the level items are loaded
 		if (AAS_AreaReachability(link->areanum))
 			return link->areanum;
@@ -873,7 +873,7 @@ int AAS_Reachability_Swim(int area1num, int area2num)
 				{
 					//
 					face1 = &aasworld.faces[face1num];
-					//create a new reachability link
+					//create a New reachability link
 					lreach = AAS_AllocReachability();
 					if (!lreach) return qfalse;
 					lreach->areanum = area2num;
@@ -987,8 +987,8 @@ int AAS_Reachability_EqualFloorHeight(int area1num, int area2num)
 					end[2] += 0.125;
 					//
 					height = DotProduct(invgravity, start);
-					//NOTE: if there's nearby solid or a gap area after this area
-					//disabled this crap
+					//NOTE: if there's nearby solid or a gap area after This area
+					//disabled This crap
 					//if (AAS_NearbySolidOrGap(start, end)) height += 200;
 					//NOTE: disabled because it disables reachabilities to very small areas
 					//if (AAS_PointAreaNum(end) != area2num) continue;
@@ -998,7 +998,7 @@ int AAS_Reachability_EqualFloorHeight(int area1num, int area2num)
 					{
 						bestheight = height;
 						bestlength = length;
-						//create a new reachability link
+						//create a New reachability link
 						lr.areanum = area2num;
 						lr.facenum = 0;
 						lr.edgenum = edgenum;
@@ -1014,7 +1014,7 @@ int AAS_Reachability_EqualFloorHeight(int area1num, int area2num)
 	} //end for
 	if (foundreach)
 	{
-		//create a new reachability link
+		//create a New reachability link
 		lreach = AAS_AllocReachability();
 		if (!lreach) return qfalse;
 		lreach->areanum = lr.areanum;
@@ -1032,7 +1032,7 @@ int AAS_Reachability_EqualFloorHeight(int area1num, int area2num)
 			lreach->traveltime += aassettings.rs_startcrouch;
 		} //end if
 		/*
-		//NOTE: if there's nearby solid or a gap area after this area
+		//NOTE: if there's nearby solid or a gap area after This area
 		if (!AAS_NearbySolidOrGap(lreach->start, lreach->end))
 		{
 			lreach->traveltime += 100;
@@ -1107,7 +1107,7 @@ int AAS_Reachability_Step_Barrier_WaterJump_WalkOffLedge(int area1num, int area2
 		groundface1num = aasworld.faceindex[area1->firstface + i];
 		faceside1 = groundface1num < 0;
 		groundface1 = &aasworld.faces[abs(groundface1num)];
-		//if this isn't a ground face
+		//if This isn't a ground face
 		if (!(groundface1->faceflags & FACE_GROUND))
 		{
 			//if we can swim in the first area
@@ -1150,7 +1150,7 @@ int AAS_Reachability_Step_Barrier_WaterJump_WalkOffLedge(int area1num, int area2
 				groundface2 = &aasworld.faces[abs(aasworld.faceindex[area2->firstface + j])];
 				//must be a ground face
 				if (!(groundface2->faceflags & FACE_GROUND)) continue;
-				//check the edges of this ground face
+				//check the edges of This ground face
 				for (l = 0; l < groundface2->numedges; l++)
 				{
 					edge2num = abs(aasworld.edgeindex[groundface2->firstedge + l]);
@@ -1173,7 +1173,7 @@ int AAS_Reachability_Step_Barrier_WaterJump_WalkOffLedge(int area1num, int area2
 					//invgravitydot = DotProduct(invgravity, invgravity);
 					ortdot = DotProduct(ort, ort);
 					//projection into the step plane
-					//NOTE: since gravity is vertical this is just the z coordinate
+					//NOTE: since gravity is vertical This is just the z coordinate
 					y1 = v1[2];//DotProduct(v1, invgravity) / invgravitydot;
 					y2 = v2[2];//DotProduct(v2, invgravity) / invgravitydot;
 					y3 = v3[2];//DotProduct(v3, invgravity) / invgravitydot;
@@ -1374,7 +1374,7 @@ int AAS_Reachability_Step_Barrier_WaterJump_WalkOffLedge(int area1num, int area2
 			} //end if
 			lreach->next = areareachability[area1num];
 			areareachability[area1num] = lreach;
-			//NOTE: if there's nearby solid or a gap area after this area
+			//NOTE: if there's nearby solid or a gap area after This area
 			/*
 			if (!AAS_NearbySolidOrGap(lreach->start, lreach->end))
 			{
@@ -2093,7 +2093,7 @@ float AAS_ClosestEdgePoints(vec3_t v1, vec3_t v2, vec3_t v3, vec3_t v4,
 // The two closest points on the ground of the areas are calculated
 // One of the points will be on an edge of a ground face of area1 and
 // one on an edge of a ground face of area2.
-// If there is a range of closest points the point in the middle of this range
+// If there is a range of closest points the point in the middle of This range
 // is selected.
 // Between these two points there must be one or more gaps.
 // If the gaps exist a potential jump is predicted.
@@ -2199,7 +2199,7 @@ int AAS_Reachability_Jump(int area1num, int area2num)
 		} //end else if
 		else
 		{
-			//get the horizontal speed for the jump, if it isn't possible to calculate this
+			//get the horizontal speed for the jump, if it isn't possible to calculate This
 			//speed (the jump is not possible) then there's no jump reachability created
 			if (!AAS_HorizontalVelocityForJump(phys_jumpvel, beststart, bestend, &speed))
 				return qfalse;
@@ -2323,7 +2323,7 @@ int AAS_Reachability_Jump(int area1num, int area2num)
 		//create the reachability
 		Log_Write("jump reachability between %d and %d\r\n", area1num, area2num);
 #endif //REACH_DEBUG
-		//create a new reachability link
+		//create a New reachability link
 		lreach = AAS_AllocReachability();
 		if (!lreach) return qfalse;
 		lreach->areanum = area2num;
@@ -2476,7 +2476,7 @@ int AAS_Reachability_Ladder(int area1num, int area2num)
 					//and the shared edge is not too vertical
 					&& abs(DotProduct(sharededgevec, up)) < 0.7)
 		{
-			//create a new reachability link
+			//create a New reachability link
 			lreach = AAS_AllocReachability();
 			if (!lreach) return qfalse;
 			lreach->areanum = area2num;
@@ -2491,7 +2491,7 @@ int AAS_Reachability_Ladder(int area1num, int area2num)
 			areareachability[area1num] = lreach;
 			//
 			reach_ladder++;
-			//create a new reachability link
+			//create a New reachability link
 			lreach = AAS_AllocReachability();
 			if (!lreach) return qfalse;
 			lreach->areanum = area1num;
@@ -2514,7 +2514,7 @@ int AAS_Reachability_Ladder(int area1num, int area2num)
 		//walk off a ladder (ledge) reachability
 		if (ladderface1vertical && (ladderface2->faceflags & FACE_GROUND))
 		{
-			//create a new reachability link
+			//create a New reachability link
 			lreach = AAS_AllocReachability();
 			if (!lreach) return qfalse;
 			lreach->areanum = area2num;
@@ -2530,7 +2530,7 @@ int AAS_Reachability_Ladder(int area1num, int area2num)
 			areareachability[area1num] = lreach;
 			//
 			reach_ladder++;
-			//create a new reachability link
+			//create a New reachability link
 			lreach = AAS_AllocReachability();
 			if (!lreach) return qfalse;
 			lreach->areanum = area1num;
@@ -2571,7 +2571,7 @@ int AAS_Reachability_Ladder(int area1num, int area2num)
 			} //end for
 			//
 			plane1 = &aasworld.planes[ladderface1->planenum];
-			//trace down in the middle of this edge
+			//trace down in the middle of This edge
 			VectorMA(lowestpoint, 5, plane1->normal, start);
 			VectorCopy(start, end);
 			start[2] += 5;
@@ -2611,7 +2611,7 @@ int AAS_Reachability_Ladder(int area1num, int area2num)
 				//if the height is jumpable
 				if (start[2] - trace.endpos[2] < maxjumpheight)
 				{
-					//create a new reachability link
+					//create a New reachability link
 					lreach = AAS_AllocReachability();
 					if (!lreach) return qfalse;
 					lreach->areanum = area2num;
@@ -2625,7 +2625,7 @@ int AAS_Reachability_Ladder(int area1num, int area2num)
 					areareachability[area1num] = lreach;
 					//
 					reach_ladder++;
-					//create a new reachability link
+					//create a New reachability link
 					lreach = AAS_AllocReachability();
 					if (!lreach) return qfalse;
 					lreach->areanum = area1num;
@@ -2659,7 +2659,7 @@ int AAS_Reachability_Ladder(int area1num, int area2num)
 			{
 				for (i = 20; i <= 120; i += 20)
 				{
-					//trace down in the middle of this edge
+					//trace down in the middle of This edge
 					VectorMA(lowestpoint, i, plane1->normal, start);
 					VectorCopy(start, end);
 					start[2] += 5;
@@ -2676,7 +2676,7 @@ int AAS_Reachability_Ladder(int area1num, int area2num)
 					if (aasworld.areasettings[area2num].contents & (AREACONTENTS_SLIME
 												| AREACONTENTS_LAVA)) continue;
 					//
-					//create a new reachability link
+					//create a New reachability link
 					lreach = AAS_AllocReachability();
 					if (!lreach) return qfalse;
 					lreach->areanum = area1num;
@@ -2721,7 +2721,7 @@ int AAS_TravelFlagsForTeam(int ent)
 } //end of the function AAS_TravelFlagsForTeam
 //===========================================================================
 // create possible teleporter reachabilities
-// this is very game dependent.... :(
+// This is very game dependent.... :(
 //
 // classname = trigger_multiple or trigger_teleport
 // target = "t1"
@@ -2903,7 +2903,7 @@ void AAS_Reachability_Teleport(void)
 			if (!AAS_AreaTeleporter(link->areanum)) continue;
 			//
 			area1num = link->areanum;
-			//create a new reachability link
+			//create a New reachability link
 			lreach = AAS_AllocReachability();
 			if (!lreach) break;
 			lreach->areanum = area2num;
@@ -2925,7 +2925,7 @@ void AAS_Reachability_Teleport(void)
 } //end of the function AAS_Reachability_Teleport
 //===========================================================================
 // create possible elevator (func_plat) reachabilities
-// this is very game dependent.... :(
+// This is very game dependent.... :(
 //
 // Parameter:			-
 // Returns:				-
@@ -3110,7 +3110,7 @@ void AAS_Reachability_Elevator(void)
 						for (p = 0; p < 3; p++)
 							if (dir[p] < origin[p] + mins[p] || dir[p] > origin[p] + maxs[p]) break;
 						if (p >= 3) continue;
-						//create a new reachability link
+						//create a New reachability link
 						lreach = AAS_AllocReachability();
 						if (!lreach) continue;
 						lreach->areanum = area2num;
@@ -3704,7 +3704,7 @@ void AAS_Reachability_JumpPad(void)
 				if (facecenter[2] < areastart[2]) continue;
 				//get the jumppad jump z velocity
 				zvel = velocity[2];
-				//get the horizontal speed for the jump, if it isn't possible to calculate this
+				//get the horizontal speed for the jump, if it isn't possible to calculate This
 				//speed
 				ret = AAS_HorizontalVelocityForJump(zvel, areastart, facecenter, &speed);
 				if (ret && speed < 150)
@@ -3894,7 +3894,7 @@ int AAS_Reachability_Grapple(int area1num, int area2num)
 			if (aasworld.areasettings[areas[j]].contents & AREACONTENTS_CLUSTERPORTAL) break;
 		} //end for
 		if (j < numareas) continue;
-		//create a new reachability link
+		//create a New reachability link
 		lreach = AAS_AllocReachability();
 		if (!lreach) return qfalse;
 		lreach->areanum = areanum;
@@ -3961,7 +3961,7 @@ void AAS_SetWeaponJumpAreaFlags(void)
 				} //end if
 				//areanum = AAS_PointAreaNum(origin);
 				areanum = AAS_BestReachableArea(origin, mins, maxs, origin);
-				//the bot may rocket jump towards this area
+				//the bot may rocket jump towards This area
 				aasworld.areasettings[areanum].areaflags |= AREA_WEAPONJUMP;
 				//
 				//if (!AAS_AreaGrounded(areanum))
@@ -4048,7 +4048,7 @@ int AAS_Reachability_WeaponJump(int area1num, int area2num)
 			//get the rocket jump z velocity
 			if (n) zvel = AAS_BFGJumpZVelocity(areastart);
 			else zvel = AAS_RocketJumpZVelocity(areastart);
-			//get the horizontal speed for the jump, if it isn't possible to calculate this
+			//get the horizontal speed for the jump, if it isn't possible to calculate This
 			//speed (the jump is not possible) then there's no jump reachability created
 			ret = AAS_HorizontalVelocityForJump(zvel, areastart, facecenter, &speed);
 			if (ret && speed < 300)
@@ -4142,11 +4142,11 @@ void AAS_Reachability_WalkOffLedge(int areanum)
 		face1 = &aasworld.faces[abs(face1num)];
 		//face 1 must be a ground face
 		if (!(face1->faceflags & FACE_GROUND)) continue;
-		//go through all the edges of this ground face
+		//go through all the edges of This ground face
 		for (k = 0; k < face1->numedges; k++)
 		{
 			edge1num = aasworld.edgeindex[face1->firstedge + k];
-			//find another not ground face using this same edge
+			//find another not ground face using This same edge
 			for (j = 0; j < area->numfaces; j++)
 			{
 				face2num = aasworld.faceindex[area->firstface + j];
@@ -4373,7 +4373,7 @@ int AAS_ContinueInitReachability(float time)
 		framereachability = 2000;
 		reachability_delay = 1000;
 	} //end if
-	//number of areas to calculate reachability for this cycle
+	//number of areas to calculate reachability for This cycle
 	todo = aasworld.numreachabilityareas + (int) framereachability;
 	start_time = Sys_MilliSeconds();
 	//loop over the areas
@@ -4438,7 +4438,7 @@ int AAS_ContinueInitReachability(float time)
 		botimport.Print(PRT_MESSAGE, "\nplease wait while storing reachability...\n");
 		aasworld.numreachabilityareas++;
 	} //end if
-	//if this is the last step in the reachability calculations
+	//if This is the last step in the reachability calculations
 	else if (aasworld.numreachabilityareas == aasworld.numareas + 1)
 	{
 		//create additional walk off ledge reachabilities for every area

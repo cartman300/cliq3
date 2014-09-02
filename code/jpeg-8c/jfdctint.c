@@ -19,8 +19,8 @@
  *   Speech, and Signal Processing 1989 (ICASSP '89), pp. 988-991.
  * The primary algorithm described there uses 11 multiplies and 29 adds.
  * We use their alternate method with 12 multiplies and 32 adds.
- * The advantage of this method is that no data path contains more than one
- * multiplication; this allows a very simple and accurate implementation in
+ * The advantage of This method is that no data path contains more than one
+ * multiplication; This allows a very simple and accurate implementation in
  * scaled fixed-point arithmetic, with a minimal number of shifts.
  *
  * We also provide FDCT routines with various input sample block sizes for
@@ -54,21 +54,21 @@
  */
 
 #if DCTSIZE != 8
-  Sorry, this code only copes with 8x8 DCT blocks. /* deliberate syntax err */
+  Sorry, This code only copes with 8x8 DCT blocks. /* deliberate syntax err */
 #endif
 
 
 /*
- * The poop on this scaling stuff is as follows:
+ * The poop on This scaling stuff is as follows:
  *
  * Each 1-D DCT step produces outputs which are a factor of sqrt(N)
  * larger than the true DCT outputs.  The final outputs are therefore
- * a factor of N larger than desired; since N=8 this can be cured by
+ * a factor of N larger than desired; since N=8 This can be cured by
  * a simple right shift at the end of the algorithm.  The advantage of
- * this arrangement is that we save two multiplications per 1-D DCT,
+ * This arrangement is that we save two multiplications per 1-D DCT,
  * because the y0 and y4 outputs need not be divided by sqrt(N).
- * In the IJG code, this factor of 8 is removed by the quantization step
- * (in jcdctmgr.c), NOT in this module.
+ * In the IJG code, This factor of 8 is removed by the quantization step
+ * (in jcdctmgr.c), NOT in This module.
  *
  * We have to do addition and subtraction of the integer inputs, which
  * is no problem, and multiplication by fractional constants, which is
@@ -83,7 +83,7 @@
  *
  * The outputs of the first pass are scaled up by PASS1_BITS bits so that
  * they are represented to better-than-integral precision.  These outputs
- * require BITS_IN_JSAMPLE + PASS1_BITS + 3 bits; this fits in a 16-bit word
+ * require BITS_IN_JSAMPLE + PASS1_BITS + 3 bits; This fits in a 16-bit word
  * with the recommended scaling.  (For 12-bit sample data, the intermediate
  * array is INT32 anyway.)
  *
@@ -102,7 +102,7 @@
 
 /* Some C compilers fail to reduce "FIX(constant)" at compile time, thus
  * causing a lot of useless floating-point operations at run time.
- * To get around this we use the following pre-calculated constants.
+ * To get around This we use the following pre-calculated constants.
  * If you change CONST_BITS you may want to add appropriate values.
  * (With a reasonable C compiler, you can just rely on the FIX() macro...)
  */

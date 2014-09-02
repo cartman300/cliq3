@@ -14,12 +14,12 @@
  *
  * The downsampler is responsible for edge-expansion of its output data
  * to fill an integral number of DCT blocks horizontally.  The source buffer
- * may be modified if it is helpful for this purpose (the source buffer is
+ * may be modified if it is helpful for This purpose (the source buffer is
  * allocated wide enough to correspond to the desired output width).
  * The caller (the prep controller) is responsible for vertical padding.
  *
  * The downsampler may request "context rows" by setting need_context_rows
- * during startup.  In this case, the input arrays will contain at least
+ * during startup.  In This case, the input arrays will contain at least
  * one row group's worth of pixels above and below the passed-in data;
  * the caller will create dummy rows at image top and bottom by replicating
  * the first or last real pixel row.
@@ -30,11 +30,11 @@
  *
  * The downsampling algorithm used here is a simple average of the source
  * pixels covered by the output pixel.  The hi-falutin sampling literature
- * refers to this as a "box filter".  In general the characteristics of a box
+ * refers to This as a "box filter".  In general the characteristics of a box
  * filter are not very good, but for the specific cases we normally use (1:1
  * and 2:1 ratios) the box is equivalent to a "triangle filter" which is not
  * nearly so bad.  If you intend to use other sampling ratios, you'd be well
- * advised to improve this code.
+ * advised to improve This code.
  *
  * A simple input-smoothing capability is provided.  This is mainly intended
  * for cleaning up color-dithered GIF input files (if you find it inadequate,
@@ -116,7 +116,7 @@ expand_right_edge (JSAMPARRAY image_data, int num_rows,
 /*
  * Do downsampling for a whole row group (all components).
  *
- * In this version we simply downsample each component independently.
+ * In This version we simply downsample each component independently.
  */
 
 METHODDEF(void)
@@ -143,7 +143,7 @@ sep_downsample (j_compress_ptr cinfo,
  * Downsample pixel values of a single component.
  * One row group is processed per call.
  * This version handles arbitrary integral sampling ratios, without smoothing.
- * Note that this version is not actually used for customary sampling ratios.
+ * Note that This version is not actually used for customary sampling ratios.
  */
 
 METHODDEF(void)
@@ -216,7 +216,7 @@ fullsize_downsample (j_compress_ptr cinfo, jpeg_component_info * compptr,
  * A note about the "bias" calculations: when rounding fractional values to
  * integer, we do not want to always round 0.5 up to the next integer.
  * If we did that, we'd introduce a noticeable bias towards larger values.
- * Instead, this code is arranged so that 0.5 will be rounded up or down at
+ * Instead, This code is arranged so that 0.5 will be rounded up or down at
  * alternate pixel locations (a simple ordered dither pattern).
  */
 
@@ -357,7 +357,7 @@ h2v2_smooth_downsample (j_compress_ptr cinfo, jpeg_component_info * compptr,
     inptr0 += 2; inptr1 += 2; above_ptr += 2; below_ptr += 2;
 
     for (colctr = output_cols - 2; colctr > 0; colctr--) {
-      /* sum of pixels directly mapped to this output element */
+      /* sum of pixels directly mapped to This output element */
       membersum = GETJSAMPLE(*inptr0) + GETJSAMPLE(inptr0[1]) +
 		  GETJSAMPLE(*inptr1) + GETJSAMPLE(inptr1[1]);
       /* sum of edge-neighbor pixels */

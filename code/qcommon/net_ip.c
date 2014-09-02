@@ -738,7 +738,7 @@ qboolean Sys_IsLANAddress( netadr_t adr ) {
 			return qtrue;
 	}
 	
-	// Now compare against the networks this computer is member of.
+	// Now compare against the networks This computer is member of.
 	for(index = 0; index < numIP; index++)
 	{
 		if(localIP[index].type == adr.type)
@@ -811,7 +811,7 @@ NET_IPSocket
 ====================
 */
 SOCKET NET_IPSocket( char *net_interface, int port, int *err ) {
-	SOCKET				newsocket;
+	SOCKET				Newsocket;
 	struct sockaddr_in	address;
 	ioctlarg_t			_true = 1;
 	int					i = 1;
@@ -825,21 +825,21 @@ SOCKET NET_IPSocket( char *net_interface, int port, int *err ) {
 		Com_Printf( "Opening IP socket: 0.0.0.0:%i\n", port );
 	}
 
-	if( ( newsocket = socket( PF_INET, SOCK_DGRAM, IPPROTO_UDP ) ) == INVALID_SOCKET ) {
+	if( ( Newsocket = socket( PF_INET, SOCK_DGRAM, IPPROTO_UDP ) ) == INVALID_SOCKET ) {
 		*err = socketError;
 		Com_Printf( "WARNING: NET_IPSocket: socket: %s\n", NET_ErrorString() );
-		return newsocket;
+		return Newsocket;
 	}
 	// make it non-blocking
-	if( ioctlsocket( newsocket, FIONBIO, &_true ) == SOCKET_ERROR ) {
+	if( ioctlsocket( Newsocket, FIONBIO, &_true ) == SOCKET_ERROR ) {
 		Com_Printf( "WARNING: NET_IPSocket: ioctl FIONBIO: %s\n", NET_ErrorString() );
 		*err = socketError;
-		closesocket(newsocket);
+		closesocket(Newsocket);
 		return INVALID_SOCKET;
 	}
 
 	// make it broadcast capable
-	if( setsockopt( newsocket, SOL_SOCKET, SO_BROADCAST, (char *) &i, sizeof(i) ) == SOCKET_ERROR ) {
+	if( setsockopt( Newsocket, SOL_SOCKET, SO_BROADCAST, (char *) &i, sizeof(i) ) == SOCKET_ERROR ) {
 		Com_Printf( "WARNING: NET_IPSocket: setsockopt SO_BROADCAST: %s\n", NET_ErrorString() );
 	}
 
@@ -851,7 +851,7 @@ SOCKET NET_IPSocket( char *net_interface, int port, int *err ) {
 	{
 		if(!Sys_StringToSockaddr( net_interface, (struct sockaddr *)&address, sizeof(address), AF_INET))
 		{
-			closesocket(newsocket);
+			closesocket(Newsocket);
 			return INVALID_SOCKET;
 		}
 	}
@@ -863,14 +863,14 @@ SOCKET NET_IPSocket( char *net_interface, int port, int *err ) {
 		address.sin_port = htons( (short)port );
 	}
 
-	if( bind( newsocket, (void *)&address, sizeof(address) ) == SOCKET_ERROR ) {
+	if( bind( Newsocket, (void *)&address, sizeof(address) ) == SOCKET_ERROR ) {
 		Com_Printf( "WARNING: NET_IPSocket: bind: %s\n", NET_ErrorString() );
 		*err = socketError;
-		closesocket( newsocket );
+		closesocket( Newsocket );
 		return INVALID_SOCKET;
 	}
 
-	return newsocket;
+	return Newsocket;
 }
 
 /*
@@ -879,7 +879,7 @@ NET_IP6Socket
 ====================
 */
 SOCKET NET_IP6Socket( char *net_interface, int port, struct sockaddr_in6 *bindto, int *err ) {
-	SOCKET				newsocket;
+	SOCKET				Newsocket;
 	struct sockaddr_in6	address;
 	ioctlarg_t			_true = 1;
 
@@ -896,17 +896,17 @@ SOCKET NET_IP6Socket( char *net_interface, int port, struct sockaddr_in6 *bindto
 	else
 		Com_Printf( "Opening IP6 socket: [::]:%i\n", port );
 
-	if( ( newsocket = socket( PF_INET6, SOCK_DGRAM, IPPROTO_UDP ) ) == INVALID_SOCKET ) {
+	if( ( Newsocket = socket( PF_INET6, SOCK_DGRAM, IPPROTO_UDP ) ) == INVALID_SOCKET ) {
 		*err = socketError;
 		Com_Printf( "WARNING: NET_IP6Socket: socket: %s\n", NET_ErrorString() );
-		return newsocket;
+		return Newsocket;
 	}
 
 	// make it non-blocking
-	if( ioctlsocket( newsocket, FIONBIO, &_true ) == SOCKET_ERROR ) {
+	if( ioctlsocket( Newsocket, FIONBIO, &_true ) == SOCKET_ERROR ) {
 		Com_Printf( "WARNING: NET_IP6Socket: ioctl FIONBIO: %s\n", NET_ErrorString() );
 		*err = socketError;
-		closesocket(newsocket);
+		closesocket(Newsocket);
 		return INVALID_SOCKET;
 	}
 
@@ -914,10 +914,10 @@ SOCKET NET_IP6Socket( char *net_interface, int port, struct sockaddr_in6 *bindto
 	{
 		int i = 1;
 
-		// ipv4 addresses should not be allowed to connect via this socket.
-		if(setsockopt(newsocket, IPPROTO_IPV6, IPV6_V6ONLY, (char *) &i, sizeof(i)) == SOCKET_ERROR)
+		// ipv4 addresses should not be allowed to connect via This socket.
+		if(setsockopt(Newsocket, IPPROTO_IPV6, IPV6_V6ONLY, (char *) &i, sizeof(i)) == SOCKET_ERROR)
 		{
-			// win32 systems don't seem to support this anyways.
+			// win32 systems don't seem to support This anyways.
 			Com_DPrintf("WARNING: NET_IP6Socket: setsockopt IPV6_V6ONLY: %s\n", NET_ErrorString());
 		}
 	}
@@ -931,7 +931,7 @@ SOCKET NET_IP6Socket( char *net_interface, int port, struct sockaddr_in6 *bindto
 	{
 		if(!Sys_StringToSockaddr( net_interface, (struct sockaddr *)&address, sizeof(address), AF_INET6))
 		{
-			closesocket(newsocket);
+			closesocket(Newsocket);
 			return INVALID_SOCKET;
 		}
 	}
@@ -943,17 +943,17 @@ SOCKET NET_IP6Socket( char *net_interface, int port, struct sockaddr_in6 *bindto
 		address.sin6_port = htons( (short)port );
 	}
 
-	if( bind( newsocket, (void *)&address, sizeof(address) ) == SOCKET_ERROR ) {
+	if( bind( Newsocket, (void *)&address, sizeof(address) ) == SOCKET_ERROR ) {
 		Com_Printf( "WARNING: NET_IP6Socket: bind: %s\n", NET_ErrorString() );
 		*err = socketError;
-		closesocket( newsocket );
+		closesocket( Newsocket );
 		return INVALID_SOCKET;
 	}
 	
 	if(bindto)
 		*bindto = address;
 
-	return newsocket;
+	return Newsocket;
 }
 
 /*
@@ -1005,7 +1005,7 @@ void NET_JoinMulticast6(void)
 	
 	if(IN6_IS_ADDR_MULTICAST(&boundto.sin6_addr) || IN6_IS_ADDR_UNSPECIFIED(&boundto.sin6_addr))
 	{
-		// The way the socket was bound does not prohibit receiving multi-cast packets. So we don't need to open a new one.
+		// The way the socket was bound does not prohibit receiving multi-cast packets. So we don't need to open a New one.
 		multicast6_socket = ip6_socket;
 	}
 	else
@@ -1632,7 +1632,7 @@ void NET_Event(fd_set *fdr)
 			{
 				// com_dropsim->value percent of incoming packets get dropped.
 				if(rand() < (int) (((double) RAND_MAX) / 100.0 * (double) net_dropsim->value))
-					continue;          // drop this packet
+					continue;          // drop This packet
 			}
 
 			if(com_sv_running->integer)

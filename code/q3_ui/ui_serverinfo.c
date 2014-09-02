@@ -199,49 +199,49 @@ void UI_ServerInfoMenu( void )
 	s_serverinfo.menu.wrapAround = qtrue;
 	s_serverinfo.menu.fullscreen = qtrue;
 
-	s_serverinfo.banner.generic.type  = MTYPE_BTEXT;
-	s_serverinfo.banner.generic.x	  = 320;
-	s_serverinfo.banner.generic.y	  = 16;
+	s_serverinfo.banner.Generic.type  = MTYPE_BTEXT;
+	s_serverinfo.banner.Generic.x	  = 320;
+	s_serverinfo.banner.Generic.y	  = 16;
 	s_serverinfo.banner.string		  = "SERVER INFO";
 	s_serverinfo.banner.color	      = color_white;
 	s_serverinfo.banner.style	      = UI_CENTER;
 
-	s_serverinfo.framel.generic.type  = MTYPE_BITMAP;
-	s_serverinfo.framel.generic.name  = SERVERINFO_FRAMEL;
-	s_serverinfo.framel.generic.flags = QMF_INACTIVE;
-	s_serverinfo.framel.generic.x	  = 0;  
-	s_serverinfo.framel.generic.y	  = 78;
+	s_serverinfo.framel.Generic.type  = MTYPE_BITMAP;
+	s_serverinfo.framel.Generic.name  = SERVERINFO_FRAMEL;
+	s_serverinfo.framel.Generic.flags = QMF_INACTIVE;
+	s_serverinfo.framel.Generic.x	  = 0;  
+	s_serverinfo.framel.Generic.y	  = 78;
 	s_serverinfo.framel.width  	      = 256;
 	s_serverinfo.framel.height  	  = 329;
 
-	s_serverinfo.framer.generic.type  = MTYPE_BITMAP;
-	s_serverinfo.framer.generic.name  = SERVERINFO_FRAMER;
-	s_serverinfo.framer.generic.flags = QMF_INACTIVE;
-	s_serverinfo.framer.generic.x	  = 376;
-	s_serverinfo.framer.generic.y	  = 76;
+	s_serverinfo.framer.Generic.type  = MTYPE_BITMAP;
+	s_serverinfo.framer.Generic.name  = SERVERINFO_FRAMER;
+	s_serverinfo.framer.Generic.flags = QMF_INACTIVE;
+	s_serverinfo.framer.Generic.x	  = 376;
+	s_serverinfo.framer.Generic.y	  = 76;
 	s_serverinfo.framer.width  	      = 256;
 	s_serverinfo.framer.height  	  = 334;
 
-	s_serverinfo.add.generic.type	  = MTYPE_PTEXT;
-	s_serverinfo.add.generic.flags    = QMF_CENTER_JUSTIFY|QMF_PULSEIFFOCUS;
-	s_serverinfo.add.generic.callback = ServerInfo_Event;
-	s_serverinfo.add.generic.id	      = ID_ADD;
-	s_serverinfo.add.generic.x		  = 320;
-	s_serverinfo.add.generic.y		  = 371;
+	s_serverinfo.add.Generic.type	  = MTYPE_PTEXT;
+	s_serverinfo.add.Generic.flags    = QMF_CENTER_JUSTIFY|QMF_PULSEIFFOCUS;
+	s_serverinfo.add.Generic.callback = ServerInfo_Event;
+	s_serverinfo.add.Generic.id	      = ID_ADD;
+	s_serverinfo.add.Generic.x		  = 320;
+	s_serverinfo.add.Generic.y		  = 371;
 	s_serverinfo.add.string  		  = "ADD TO FAVORITES";
 	s_serverinfo.add.style  		  = UI_CENTER|UI_SMALLFONT;
 	s_serverinfo.add.color			  =	color_red;
 	if( trap_Cvar_VariableValue( "sv_running" ) ) {
-		s_serverinfo.add.generic.flags |= QMF_GRAYED;
+		s_serverinfo.add.Generic.flags |= QMF_GRAYED;
 	}
 
-	s_serverinfo.back.generic.type	   = MTYPE_BITMAP;
-	s_serverinfo.back.generic.name     = SERVERINFO_BACK0;
-	s_serverinfo.back.generic.flags    = QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
-	s_serverinfo.back.generic.callback = ServerInfo_Event;
-	s_serverinfo.back.generic.id	   = ID_BACK;
-	s_serverinfo.back.generic.x		   = 0;
-	s_serverinfo.back.generic.y		   = 480-64;
+	s_serverinfo.back.Generic.type	   = MTYPE_BITMAP;
+	s_serverinfo.back.Generic.name     = SERVERINFO_BACK0;
+	s_serverinfo.back.Generic.flags    = QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
+	s_serverinfo.back.Generic.callback = ServerInfo_Event;
+	s_serverinfo.back.Generic.id	   = ID_BACK;
+	s_serverinfo.back.Generic.x		   = 0;
+	s_serverinfo.back.Generic.y		   = 480-64;
 	s_serverinfo.back.width  		   = 128;
 	s_serverinfo.back.height  		   = 64;
 	s_serverinfo.back.focuspic         = SERVERINFO_BACK1;

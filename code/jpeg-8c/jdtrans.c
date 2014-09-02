@@ -22,7 +22,7 @@ LOCAL(void) transdecode_master_selection JPP((j_decompress_ptr cinfo));
 
 /*
  * Read the coefficient arrays from a JPEG file.
- * jpeg_read_header must be completed before calling this.
+ * jpeg_read_header must be completed before calling This.
  *
  * The entire image is read into a set of virtual coefficient-block arrays,
  * one per component.  The return value is a pointer to the array of
@@ -75,7 +75,7 @@ jpeg_read_coefficients (j_decompress_ptr cinfo)
     /* Set state so that jpeg_finish_decompress does the right thing */
     cinfo->global_state = DSTATE_STOPPING;
   }
-  /* At this point we should be in state DSTATE_STOPPING if being used
+  /* At This point we should be in state DSTATE_STOPPING if being used
    * standalone, or in state DSTATE_BUFIMAGE if being invoked to get access
    * to the coefficients during a full buffered-image-mode decompression.
    */

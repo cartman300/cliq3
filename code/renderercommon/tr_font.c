@@ -23,11 +23,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // 
 //
 // The font system uses FreeType 2.x to render TrueType fonts for use within the game.
-// As of this writing ( Nov, 2000 ) Team Arena uses these fonts for all of the ui and 
+// As of This writing ( Nov, 2000 ) Team Arena uses these fonts for all of the ui and 
 // about 90% of the cgame presentation. A few areas of the CGAME were left uses the old 
 // fonts since the code is shared with standard Q3A.
 //
-// If you include this font rendering code in a commercial product you MUST include the
+// If you include This font rendering code in a commercial product you MUST include the
 // following somewhere with your product, see www.freetype.org for specifics or changes.
 // The Freetype code also uses some hinting techniques that MIGHT infringe on patents 
 // held by apple so be aware of that also.
@@ -50,10 +50,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // use three or four scales, most of them exactly equaling the specific rendered size. We 
 // rendered three sizes in Team Arena, 12, 16, and 20. 
 //
-// To generate new font data you need to go through the following steps.
+// To generate New font data you need to go through the following steps.
 // 1. delete the fontImage_x_xx.tga files and fontImage_xx.dat files from the fonts path.
 // 2. in a ui script, specificy a font, smallFont, and bigFont keyword with font name and 
-//    point size. the original TrueType fonts must exist in fonts at this point.
+//    point size. the original TrueType fonts must exist in fonts at This point.
 // 3. run the game, you should see things normally.
 // 4. Exit the game and there will be three dat files and at least three tga files. The 
 //    tga's are in 256x256 pages so if it takes three images to render a 24 point font you 
@@ -64,7 +64,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 //    touch the font bitmaps.
 // 
 // Currently a define in the project turns on or off the FreeType code which is currently 
-// defined out. To pre-render new fonts you need enable the define ( BUILD_FREETYPE ) and 
+// defined out. To pre-render New fonts you need enable the define ( BUILD_FREETYPE ) and 
 // uncheck the exclude from build check box in the FreeType2 area of the Renderer project. 
 
 
@@ -334,7 +334,7 @@ void RE_RegisterFont(const char *fontName, int pointSize, fontInfo_t *font) {
 #ifdef BUILD_FREETYPE
 	FT_Face face;
 	int j, k, xOut, yOut, lastStart, imageNumber;
-	int scaledSize, newSize, maxHeight, left;
+	int scaledSize, NewSize, maxHeight, left;
 	unsigned char *out, *imageBuff;
 	glyphInfo_t *glyph;
 	image_t *image;
@@ -421,7 +421,7 @@ void RE_RegisterFont(const char *fontName, int pointSize, fontInfo_t *font) {
 
 	// allocate on the stack first in case we fail
 	if (FT_New_Memory_Face( ftLibrary, faceData, len, 0, &face )) {
-		ri.Printf(PRINT_WARNING, "RE_RegisterFont: FreeType, unable to allocate new face.\n");
+		ri.Printf(PRINT_WARNING, "RE_RegisterFont: FreeType, unable to allocate New face.\n");
 		return;
 	}
 
@@ -461,12 +461,12 @@ void RE_RegisterFont(const char *fontName, int pointSize, fontInfo_t *font) {
 
 		if (xOut == -1 || yOut == -1 || i == GLYPH_END)  {
 			// ran out of room
-			// we need to create an image from the bitmap, set all the handles in the glyphs to this point
+			// we need to create an image from the bitmap, set all the handles in the glyphs to This point
 			// 
 
 			scaledSize = 256*256;
-			newSize = scaledSize * 4;
-			imageBuff = ri.Malloc(newSize);
+			NewSize = scaledSize * 4;
+			imageBuff = ri.Malloc(NewSize);
 			left = 0;
 			max = 0;
 			for ( k = 0; k < (scaledSize) ; k++ ) {

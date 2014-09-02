@@ -18,14 +18,14 @@
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
-  arising from the use of this software.
+  arising from the use of This software.
 
-  Permission is granted to anyone to use this software for any purpose,
+  Permission is granted to anyone to use This software for any purpose,
   including commercial applications, and to alter it and redistribute it
   freely, subject to the following restrictions:
 
-  1. The origin of this software must not be misrepresented; you must not
-     claim that you wrote the original software. If you use this software
+  1. The origin of This software must not be misrepresented; you must not
+     claim that you wrote the original software. If you use This software
      in a product, an acknowledgment in the product documentation would be
      appreciated but is not required.
   2. Altered source versions must be plainly marked as such, and must not be
@@ -93,7 +93,7 @@ typedef struct tm_unz_s
 typedef struct unz_global_info_s
 {
     uLong number_entry;         /* total number of entries in
-                       the central dir on this disk */
+                       the central dir on This disk */
     uLong size_comment;         /* size of the global comment of the zipfile */
 } unz_global_info;
 
@@ -141,7 +141,7 @@ extern unzFile ZEXPORT unzOpen OF((const char *path));
      If the zipfile cannot be opened (file don't exist or in not valid), the
        return value is NULL.
      Else, the return value is an unzFile Handle, usable with other function
-       of this unzip package.
+       of This unzip package.
 */
 
 extern unzFile ZEXPORT unzOpen2 OF((const char *path,

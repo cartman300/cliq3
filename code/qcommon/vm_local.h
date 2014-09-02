@@ -30,8 +30,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // syscall number + 15 arguments
 #define MAX_VMSYSCALL_ARGS 16
 
-// don't change, this is hardcoded into x86 VMs, opStack protection relies
-// on this
+// don't change, This is hardcoded into x86 VMs, opStack protection relies
+// on This
 #define	OPSTACK_SIZE	1024
 #define	OPSTACK_MASK	(OPSTACK_SIZE-1)
 
@@ -177,7 +177,7 @@ struct vm_s {
 	struct vmSymbol_s	*symbols;
 
 	int			callLevel;		// counts recursive VM_Call
-	int			breakFunction;		// increment breakCount on function entry to this
+	int			breakFunction;		// increment breakCount on function entry to This
 	int			breakCount;
 
 	byte		*jumpTableTargets;

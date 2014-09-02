@@ -178,42 +178,42 @@ static void StartServer_Update( void ) {
 
 		Com_sprintf( picname[i], sizeof(picname[i]), "levelshots/%s", mapname );
 
-		s_startserver.mappics[i].generic.flags &= ~QMF_HIGHLIGHT;
-		s_startserver.mappics[i].generic.name   = picname[i];
+		s_startserver.mappics[i].Generic.flags &= ~QMF_HIGHLIGHT;
+		s_startserver.mappics[i].Generic.name   = picname[i];
 		s_startserver.mappics[i].shader         = 0;
 
 		// reset
-		s_startserver.mapbuttons[i].generic.flags |= QMF_PULSEIFFOCUS;
-		s_startserver.mapbuttons[i].generic.flags &= ~QMF_INACTIVE;
+		s_startserver.mapbuttons[i].Generic.flags |= QMF_PULSEIFFOCUS;
+		s_startserver.mapbuttons[i].Generic.flags &= ~QMF_INACTIVE;
 	}
 
 	for (; i<MAX_MAPSPERPAGE; i++)
 	{
-		s_startserver.mappics[i].generic.flags &= ~QMF_HIGHLIGHT;
-		s_startserver.mappics[i].generic.name   = NULL;
+		s_startserver.mappics[i].Generic.flags &= ~QMF_HIGHLIGHT;
+		s_startserver.mappics[i].Generic.name   = NULL;
 		s_startserver.mappics[i].shader         = 0;
 
 		// disable
-		s_startserver.mapbuttons[i].generic.flags &= ~QMF_PULSEIFFOCUS;
-		s_startserver.mapbuttons[i].generic.flags |= QMF_INACTIVE;
+		s_startserver.mapbuttons[i].Generic.flags &= ~QMF_PULSEIFFOCUS;
+		s_startserver.mapbuttons[i].Generic.flags |= QMF_INACTIVE;
 	}
 
 
 	// no servers to start
 	if( !s_startserver.nummaps ) {
-		s_startserver.next.generic.flags |= QMF_INACTIVE;
+		s_startserver.next.Generic.flags |= QMF_INACTIVE;
 
 		// set the map name
 		strcpy( s_startserver.mapname.string, "NO MAPS FOUND" );
 	}
 	else {
 		// set the highlight
-		s_startserver.next.generic.flags &= ~QMF_INACTIVE;
+		s_startserver.next.Generic.flags &= ~QMF_INACTIVE;
 		i = s_startserver.currentmap - top;
 		if ( i >=0 && i < MAX_MAPSPERPAGE ) 
 		{
-			s_startserver.mappics[i].generic.flags    |= QMF_HIGHLIGHT;
-			s_startserver.mapbuttons[i].generic.flags &= ~QMF_PULSEIFFOCUS;
+			s_startserver.mappics[i].Generic.flags    |= QMF_HIGHLIGHT;
+			s_startserver.mapbuttons[i].Generic.flags &= ~QMF_PULSEIFFOCUS;
 		}
 
 		// set the map name
@@ -334,12 +334,12 @@ static void StartServer_LevelshotDraw( void *self ) {
 
 	b = (menubitmap_s *)self;
 
-	if( !b->generic.name ) {
+	if( !b->Generic.name ) {
 		return;
 	}
 
-	if( b->generic.name && !b->shader ) {
-		b->shader = trap_R_RegisterShaderNoMip( b->generic.name );
+	if( b->Generic.name && !b->shader ) {
+		b->shader = trap_R_RegisterShaderNoMip( b->Generic.name );
 		if( !b->shader && b->errorpic ) {
 			b->shader = trap_R_RegisterShaderNoMip( b->errorpic );
 		}
@@ -349,30 +349,30 @@ static void StartServer_LevelshotDraw( void *self ) {
 		b->focusshader = trap_R_RegisterShaderNoMip( b->focuspic );
 	}
 
-	x = b->generic.x;
-	y = b->generic.y;
+	x = b->Generic.x;
+	y = b->Generic.y;
 	w = b->width;
 	h =	b->height;
 	if( b->shader ) {
 		UI_DrawHandlePic( x, y, w, h, b->shader );
 	}
 
-	x = b->generic.x;
-	y = b->generic.y + b->height;
+	x = b->Generic.x;
+	y = b->Generic.y + b->height;
 	UI_FillRect( x, y, b->width, 28, colorBlack );
 
 	x += b->width / 2;
 	y += 4;
-	n = s_startserver.page * MAX_MAPSPERPAGE + b->generic.id - ID_PICTURES;
+	n = s_startserver.page * MAX_MAPSPERPAGE + b->Generic.id - ID_PICTURES;
 
 	info = UI_GetArenaInfoByNumber( s_startserver.maplist[ n ]);
 	UI_DrawString( x, y, Info_ValueForKey( info, "map" ), UI_CENTER|UI_SMALLFONT, color_orange );
 
-	x = b->generic.x;
-	y = b->generic.y;
+	x = b->Generic.x;
+	y = b->Generic.y;
 	w = b->width;
 	h =	b->height + 28;
-	if( b->generic.flags & QMF_HIGHLIGHT ) {	
+	if( b->Generic.flags & QMF_HIGHLIGHT ) {	
 		UI_DrawHandlePic( x, y, w, h, b->focusshader );
 	}
 }
@@ -397,36 +397,36 @@ static void StartServer_MenuInit( void ) {
 	s_startserver.menu.wrapAround = qtrue;
 	s_startserver.menu.fullscreen = qtrue;
 
-	s_startserver.banner.generic.type  = MTYPE_BTEXT;
-	s_startserver.banner.generic.x	   = 320;
-	s_startserver.banner.generic.y	   = 16;
+	s_startserver.banner.Generic.type  = MTYPE_BTEXT;
+	s_startserver.banner.Generic.x	   = 320;
+	s_startserver.banner.Generic.y	   = 16;
 	s_startserver.banner.string        = "GAME SERVER";
 	s_startserver.banner.color         = color_white;
 	s_startserver.banner.style         = UI_CENTER;
 
-	s_startserver.framel.generic.type  = MTYPE_BITMAP;
-	s_startserver.framel.generic.name  = GAMESERVER_FRAMEL;
-	s_startserver.framel.generic.flags = QMF_INACTIVE;
-	s_startserver.framel.generic.x	   = 0;  
-	s_startserver.framel.generic.y	   = 78;
+	s_startserver.framel.Generic.type  = MTYPE_BITMAP;
+	s_startserver.framel.Generic.name  = GAMESERVER_FRAMEL;
+	s_startserver.framel.Generic.flags = QMF_INACTIVE;
+	s_startserver.framel.Generic.x	   = 0;  
+	s_startserver.framel.Generic.y	   = 78;
 	s_startserver.framel.width  	   = 256;
 	s_startserver.framel.height  	   = 329;
 
-	s_startserver.framer.generic.type  = MTYPE_BITMAP;
-	s_startserver.framer.generic.name  = GAMESERVER_FRAMER;
-	s_startserver.framer.generic.flags = QMF_INACTIVE;
-	s_startserver.framer.generic.x	   = 376;
-	s_startserver.framer.generic.y	   = 76;
+	s_startserver.framer.Generic.type  = MTYPE_BITMAP;
+	s_startserver.framer.Generic.name  = GAMESERVER_FRAMER;
+	s_startserver.framer.Generic.flags = QMF_INACTIVE;
+	s_startserver.framer.Generic.x	   = 376;
+	s_startserver.framer.Generic.y	   = 76;
 	s_startserver.framer.width  	   = 256;
 	s_startserver.framer.height  	   = 334;
 
-	s_startserver.gametype.generic.type		= MTYPE_SPINCONTROL;
-	s_startserver.gametype.generic.name		= "Game Type:";
-	s_startserver.gametype.generic.flags	= QMF_PULSEIFFOCUS|QMF_SMALLFONT;
-	s_startserver.gametype.generic.callback	= StartServer_GametypeEvent;
-	s_startserver.gametype.generic.id		= ID_GAMETYPE;
-	s_startserver.gametype.generic.x		= 320 - 24;
-	s_startserver.gametype.generic.y		= 368;
+	s_startserver.gametype.Generic.type		= MTYPE_SPINCONTROL;
+	s_startserver.gametype.Generic.name		= "Game Type:";
+	s_startserver.gametype.Generic.flags	= QMF_PULSEIFFOCUS|QMF_SMALLFONT;
+	s_startserver.gametype.Generic.callback	= StartServer_GametypeEvent;
+	s_startserver.gametype.Generic.id		= ID_GAMETYPE;
+	s_startserver.gametype.Generic.x		= 320 - 24;
+	s_startserver.gametype.Generic.y		= 368;
 	s_startserver.gametype.itemnames		= gametype_items;
 
 	for (i=0; i<MAX_MAPSPERPAGE; i++)
@@ -434,94 +434,94 @@ static void StartServer_MenuInit( void ) {
 		x =	(i % MAX_MAPCOLS) * (128+8) + 188;
 		y = (i / MAX_MAPROWS) * (128+8) + 96;
 
-		s_startserver.mappics[i].generic.type   = MTYPE_BITMAP;
-		s_startserver.mappics[i].generic.flags  = QMF_LEFT_JUSTIFY|QMF_INACTIVE;
-		s_startserver.mappics[i].generic.x	    = x;
-		s_startserver.mappics[i].generic.y	    = y;
-		s_startserver.mappics[i].generic.id		= ID_PICTURES+i;
+		s_startserver.mappics[i].Generic.type   = MTYPE_BITMAP;
+		s_startserver.mappics[i].Generic.flags  = QMF_LEFT_JUSTIFY|QMF_INACTIVE;
+		s_startserver.mappics[i].Generic.x	    = x;
+		s_startserver.mappics[i].Generic.y	    = y;
+		s_startserver.mappics[i].Generic.id		= ID_PICTURES+i;
 		s_startserver.mappics[i].width  		= 128;
 		s_startserver.mappics[i].height  	    = 96;
 		s_startserver.mappics[i].focuspic       = GAMESERVER_SELECTED;
 		s_startserver.mappics[i].errorpic       = GAMESERVER_UNKNOWNMAP;
-		s_startserver.mappics[i].generic.ownerdraw = StartServer_LevelshotDraw;
+		s_startserver.mappics[i].Generic.ownerdraw = StartServer_LevelshotDraw;
 
-		s_startserver.mapbuttons[i].generic.type     = MTYPE_BITMAP;
-		s_startserver.mapbuttons[i].generic.flags    = QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS|QMF_NODEFAULTINIT;
-		s_startserver.mapbuttons[i].generic.id       = ID_PICTURES+i;
-		s_startserver.mapbuttons[i].generic.callback = StartServer_MapEvent;
-		s_startserver.mapbuttons[i].generic.x	     = x - 30;
-		s_startserver.mapbuttons[i].generic.y	     = y - 32;
+		s_startserver.mapbuttons[i].Generic.type     = MTYPE_BITMAP;
+		s_startserver.mapbuttons[i].Generic.flags    = QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS|QMF_NODEFAULTINIT;
+		s_startserver.mapbuttons[i].Generic.id       = ID_PICTURES+i;
+		s_startserver.mapbuttons[i].Generic.callback = StartServer_MapEvent;
+		s_startserver.mapbuttons[i].Generic.x	     = x - 30;
+		s_startserver.mapbuttons[i].Generic.y	     = y - 32;
 		s_startserver.mapbuttons[i].width  		     = 256;
 		s_startserver.mapbuttons[i].height  	     = 248;
-		s_startserver.mapbuttons[i].generic.left     = x;
-		s_startserver.mapbuttons[i].generic.top  	 = y;
-		s_startserver.mapbuttons[i].generic.right    = x + 128;
-		s_startserver.mapbuttons[i].generic.bottom   = y + 128;
+		s_startserver.mapbuttons[i].Generic.left     = x;
+		s_startserver.mapbuttons[i].Generic.top  	 = y;
+		s_startserver.mapbuttons[i].Generic.right    = x + 128;
+		s_startserver.mapbuttons[i].Generic.bottom   = y + 128;
 		s_startserver.mapbuttons[i].focuspic         = GAMESERVER_SELECT;
 	}
 
-	s_startserver.arrows.generic.type  = MTYPE_BITMAP;
-	s_startserver.arrows.generic.name  = GAMESERVER_ARROWS;
-	s_startserver.arrows.generic.flags = QMF_INACTIVE;
-	s_startserver.arrows.generic.x	   = 260;
-	s_startserver.arrows.generic.y	   = 400;
+	s_startserver.arrows.Generic.type  = MTYPE_BITMAP;
+	s_startserver.arrows.Generic.name  = GAMESERVER_ARROWS;
+	s_startserver.arrows.Generic.flags = QMF_INACTIVE;
+	s_startserver.arrows.Generic.x	   = 260;
+	s_startserver.arrows.Generic.y	   = 400;
 	s_startserver.arrows.width  	   = 128;
 	s_startserver.arrows.height  	   = 32;
 
-	s_startserver.prevpage.generic.type	    = MTYPE_BITMAP;
-	s_startserver.prevpage.generic.flags    = QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
-	s_startserver.prevpage.generic.callback = StartServer_MenuEvent;
-	s_startserver.prevpage.generic.id	    = ID_PREVPAGE;
-	s_startserver.prevpage.generic.x		= 260;
-	s_startserver.prevpage.generic.y		= 400;
+	s_startserver.prevpage.Generic.type	    = MTYPE_BITMAP;
+	s_startserver.prevpage.Generic.flags    = QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
+	s_startserver.prevpage.Generic.callback = StartServer_MenuEvent;
+	s_startserver.prevpage.Generic.id	    = ID_PREVPAGE;
+	s_startserver.prevpage.Generic.x		= 260;
+	s_startserver.prevpage.Generic.y		= 400;
 	s_startserver.prevpage.width  		    = 64;
 	s_startserver.prevpage.height  		    = 32;
 	s_startserver.prevpage.focuspic         = GAMESERVER_ARROWSL;
 
-	s_startserver.nextpage.generic.type	    = MTYPE_BITMAP;
-	s_startserver.nextpage.generic.flags    = QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
-	s_startserver.nextpage.generic.callback = StartServer_MenuEvent;
-	s_startserver.nextpage.generic.id	    = ID_NEXTPAGE;
-	s_startserver.nextpage.generic.x		= 321;
-	s_startserver.nextpage.generic.y		= 400;
+	s_startserver.nextpage.Generic.type	    = MTYPE_BITMAP;
+	s_startserver.nextpage.Generic.flags    = QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
+	s_startserver.nextpage.Generic.callback = StartServer_MenuEvent;
+	s_startserver.nextpage.Generic.id	    = ID_NEXTPAGE;
+	s_startserver.nextpage.Generic.x		= 321;
+	s_startserver.nextpage.Generic.y		= 400;
 	s_startserver.nextpage.width  		    = 64;
 	s_startserver.nextpage.height  		    = 32;
 	s_startserver.nextpage.focuspic         = GAMESERVER_ARROWSR;
 
-	s_startserver.mapname.generic.type  = MTYPE_PTEXT;
-	s_startserver.mapname.generic.flags = QMF_CENTER_JUSTIFY|QMF_INACTIVE;
-	s_startserver.mapname.generic.x	    = 320;
-	s_startserver.mapname.generic.y	    = 440;
+	s_startserver.mapname.Generic.type  = MTYPE_PTEXT;
+	s_startserver.mapname.Generic.flags = QMF_CENTER_JUSTIFY|QMF_INACTIVE;
+	s_startserver.mapname.Generic.x	    = 320;
+	s_startserver.mapname.Generic.y	    = 440;
 	s_startserver.mapname.string        = mapnamebuffer;
 	s_startserver.mapname.style         = UI_CENTER|UI_BIGFONT;
 	s_startserver.mapname.color         = text_color_normal;
 
-	s_startserver.back.generic.type	    = MTYPE_BITMAP;
-	s_startserver.back.generic.name     = GAMESERVER_BACK0;
-	s_startserver.back.generic.flags    = QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
-	s_startserver.back.generic.callback = StartServer_MenuEvent;
-	s_startserver.back.generic.id	    = ID_STARTSERVERBACK;
-	s_startserver.back.generic.x		= 0;
-	s_startserver.back.generic.y		= 480-64;
+	s_startserver.back.Generic.type	    = MTYPE_BITMAP;
+	s_startserver.back.Generic.name     = GAMESERVER_BACK0;
+	s_startserver.back.Generic.flags    = QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
+	s_startserver.back.Generic.callback = StartServer_MenuEvent;
+	s_startserver.back.Generic.id	    = ID_STARTSERVERBACK;
+	s_startserver.back.Generic.x		= 0;
+	s_startserver.back.Generic.y		= 480-64;
 	s_startserver.back.width  		    = 128;
 	s_startserver.back.height  		    = 64;
 	s_startserver.back.focuspic         = GAMESERVER_BACK1;
 
-	s_startserver.next.generic.type	    = MTYPE_BITMAP;
-	s_startserver.next.generic.name     = GAMESERVER_NEXT0;
-	s_startserver.next.generic.flags    = QMF_RIGHT_JUSTIFY|QMF_PULSEIFFOCUS;
-	s_startserver.next.generic.callback = StartServer_MenuEvent;
-	s_startserver.next.generic.id	    = ID_STARTSERVERNEXT;
-	s_startserver.next.generic.x		= 640;
-	s_startserver.next.generic.y		= 480-64;
+	s_startserver.next.Generic.type	    = MTYPE_BITMAP;
+	s_startserver.next.Generic.name     = GAMESERVER_NEXT0;
+	s_startserver.next.Generic.flags    = QMF_RIGHT_JUSTIFY|QMF_PULSEIFFOCUS;
+	s_startserver.next.Generic.callback = StartServer_MenuEvent;
+	s_startserver.next.Generic.id	    = ID_STARTSERVERNEXT;
+	s_startserver.next.Generic.x		= 640;
+	s_startserver.next.Generic.y		= 480-64;
 	s_startserver.next.width  		    = 128;
 	s_startserver.next.height  		    = 64;
 	s_startserver.next.focuspic         = GAMESERVER_NEXT1;
 
-	s_startserver.item_null.generic.type	= MTYPE_BITMAP;
-	s_startserver.item_null.generic.flags	= QMF_LEFT_JUSTIFY|QMF_MOUSEONLY|QMF_SILENT;
-	s_startserver.item_null.generic.x		= 0;
-	s_startserver.item_null.generic.y		= 0;
+	s_startserver.item_null.Generic.type	= MTYPE_BITMAP;
+	s_startserver.item_null.Generic.flags	= QMF_LEFT_JUSTIFY|QMF_MOUSEONLY|QMF_SILENT;
+	s_startserver.item_null.Generic.x		= 0;
+	s_startserver.item_null.Generic.y		= 0;
 	s_startserver.item_null.width			= 640;
 	s_startserver.item_null.height			= 480;
 
@@ -850,7 +850,7 @@ static void ServerOptions_InitPlayerItems( void ) {
 	// if not a dedicated server, first slot is reserved for the human on the server
 	if( s_serveroptions.dedicated.curvalue == 0 ) {
 		// human
-		s_serveroptions.playerType[0].generic.flags |= QMF_INACTIVE;
+		s_serveroptions.playerType[0].Generic.flags |= QMF_INACTIVE;
 		s_serveroptions.playerType[0].curvalue = 0;
 		trap_Cvar_VariableStringBuffer( "name", s_serveroptions.playerNameBuffers[0], sizeof(s_serveroptions.playerNameBuffers[0]) );
 		Q_CleanStr( s_serveroptions.playerNameBuffers[0] );
@@ -867,7 +867,7 @@ static void ServerOptions_InitPlayerItems( void ) {
 	}
 	else {
 		for( n = 0; n < PLAYER_SLOTS; n++ ) {
-			s_serveroptions.playerTeam[n].generic.flags |= (QMF_INACTIVE|QMF_HIDDEN);
+			s_serveroptions.playerTeam[n].Generic.flags |= (QMF_INACTIVE|QMF_HIDDEN);
 		}
 	}
 }
@@ -892,7 +892,7 @@ static void ServerOptions_SetPlayerItems( void ) {
 	// names
 	if( s_serveroptions.dedicated.curvalue == 0 ) {
 		s_serveroptions.player0.string = "Human";
-		s_serveroptions.playerName[0].generic.flags &= ~QMF_HIDDEN;
+		s_serveroptions.playerName[0].Generic.flags &= ~QMF_HIDDEN;
 
 		start = 1;
 	}
@@ -902,10 +902,10 @@ static void ServerOptions_SetPlayerItems( void ) {
 	}
 	for( n = start; n < PLAYER_SLOTS; n++ ) {
 		if( s_serveroptions.playerType[n].curvalue == 1 ) {
-			s_serveroptions.playerName[n].generic.flags &= ~(QMF_INACTIVE|QMF_HIDDEN);
+			s_serveroptions.playerName[n].Generic.flags &= ~(QMF_INACTIVE|QMF_HIDDEN);
 		}
 		else {
-			s_serveroptions.playerName[n].generic.flags |= (QMF_INACTIVE|QMF_HIDDEN);
+			s_serveroptions.playerName[n].Generic.flags |= (QMF_INACTIVE|QMF_HIDDEN);
 		}
 	}
 
@@ -915,10 +915,10 @@ static void ServerOptions_SetPlayerItems( void ) {
 	}
 	for( n = start; n < PLAYER_SLOTS; n++ ) {
 		if( s_serveroptions.playerType[n].curvalue == 2 ) {
-			s_serveroptions.playerTeam[n].generic.flags |= (QMF_INACTIVE|QMF_HIDDEN);
+			s_serveroptions.playerTeam[n].Generic.flags |= (QMF_INACTIVE|QMF_HIDDEN);
 		}
 		else {
-			s_serveroptions.playerTeam[n].generic.flags &= ~(QMF_INACTIVE|QMF_HIDDEN);
+			s_serveroptions.playerTeam[n].Generic.flags &= ~(QMF_INACTIVE|QMF_HIDDEN);
 		}
 	}
 }
@@ -974,7 +974,7 @@ static void ServerOptions_PlayerNameEvent( void* ptr, int event ) {
 	if( event != QM_ACTIVATED ) {
 		return;
 	}
-	n = ((menutext_s*)ptr)->generic.id;
+	n = ((menutext_s*)ptr)->Generic.id;
 	s_serveroptions.newBotIndex = n;
 	UI_BotSelectMenu( s_serveroptions.playerNameBuffers[n] );
 }
@@ -1014,8 +1014,8 @@ static void ServerOptions_LevelshotDraw( void *self ) {
 
 	Bitmap_Draw( b );
 
-	x = b->generic.x;
-	y = b->generic.y + b->height;
+	x = b->Generic.x;
+	y = b->Generic.y + b->height;
 	UI_FillRect( x, y, b->width, 40, colorBlack );
 
 	x += b->width / 2;
@@ -1164,7 +1164,7 @@ static void ServerOptions_SetMenuItems( void ) {
 	Q_strncpyz( mapname, Info_ValueForKey( info, "map"), MAX_NAMELENGTH );
 	Q_strupr( mapname );
 	Com_sprintf( picname, 64, "levelshots/%s", mapname );
-	s_serveroptions.mappic.generic.name = picname;
+	s_serveroptions.mappic.Generic.name = picname;
 
 	// set the map name
 	strcpy( s_serveroptions.mapnamebuffer, s_startserver.mapname.string );
@@ -1193,20 +1193,20 @@ static void PlayerName_Draw( void *item ) {
 
 	s = (menutext_s *)item;
 
-	x = s->generic.x;
-	y =	s->generic.y;
+	x = s->Generic.x;
+	y =	s->Generic.y;
 
 	style = UI_SMALLFONT;
-	focus = (s->generic.parent->cursor == s->generic.menuPosition);
+	focus = (s->Generic.parent->cursor == s->Generic.menuPosition);
 
-	if ( s->generic.flags & QMF_GRAYED )
+	if ( s->Generic.flags & QMF_GRAYED )
 		color = text_color_disabled;
 	else if ( focus )
 	{
 		color = text_color_highlight;
 		style |= UI_PULSE;
 	}
-	else if ( s->generic.flags & QMF_BLINK )
+	else if ( s->Generic.flags & QMF_BLINK )
 	{
 		color = text_color_highlight;
 		style |= UI_BLINK;
@@ -1217,11 +1217,11 @@ static void PlayerName_Draw( void *item ) {
 	if ( focus )
 	{
 		// draw cursor
-		UI_FillRect( s->generic.left, s->generic.top, s->generic.right-s->generic.left+1, s->generic.bottom-s->generic.top+1, listbar_color ); 
+		UI_FillRect( s->Generic.left, s->Generic.top, s->Generic.right-s->Generic.left+1, s->Generic.bottom-s->Generic.top+1, listbar_color ); 
 		UI_DrawChar( x, y, 13, UI_CENTER|UI_BLINK|UI_SMALLFONT, color);
 	}
 
-	UI_DrawString( x - SMALLCHAR_WIDTH, y, s->generic.name, style|UI_RIGHT, color );
+	UI_DrawString( x - SMALLCHAR_WIDTH, y, s->Generic.name, style|UI_RIGHT, color );
 	UI_DrawString( x + SMALLCHAR_WIDTH, y, s->string, style|UI_LEFT, color );
 }
 
@@ -1248,190 +1248,190 @@ static void ServerOptions_MenuInit( qboolean multiplayer ) {
 	s_serveroptions.menu.wrapAround = qtrue;
 	s_serveroptions.menu.fullscreen = qtrue;
 
-	s_serveroptions.banner.generic.type			= MTYPE_BTEXT;
-	s_serveroptions.banner.generic.x			= 320;
-	s_serveroptions.banner.generic.y			= 16;
+	s_serveroptions.banner.Generic.type			= MTYPE_BTEXT;
+	s_serveroptions.banner.Generic.x			= 320;
+	s_serveroptions.banner.Generic.y			= 16;
 	s_serveroptions.banner.string  				= "GAME SERVER";
 	s_serveroptions.banner.color  				= color_white;
 	s_serveroptions.banner.style  				= UI_CENTER;
 
-	s_serveroptions.mappic.generic.type			= MTYPE_BITMAP;
-	s_serveroptions.mappic.generic.flags		= QMF_LEFT_JUSTIFY|QMF_INACTIVE;
-	s_serveroptions.mappic.generic.x			= 352;
-	s_serveroptions.mappic.generic.y			= 80;
+	s_serveroptions.mappic.Generic.type			= MTYPE_BITMAP;
+	s_serveroptions.mappic.Generic.flags		= QMF_LEFT_JUSTIFY|QMF_INACTIVE;
+	s_serveroptions.mappic.Generic.x			= 352;
+	s_serveroptions.mappic.Generic.y			= 80;
 	s_serveroptions.mappic.width				= 160;
 	s_serveroptions.mappic.height				= 120;
 	s_serveroptions.mappic.errorpic				= GAMESERVER_UNKNOWNMAP;
-	s_serveroptions.mappic.generic.ownerdraw	= ServerOptions_LevelshotDraw;
+	s_serveroptions.mappic.Generic.ownerdraw	= ServerOptions_LevelshotDraw;
 
-	s_serveroptions.picframe.generic.type		= MTYPE_BITMAP;
-	s_serveroptions.picframe.generic.flags		= QMF_LEFT_JUSTIFY|QMF_INACTIVE|QMF_HIGHLIGHT;
-	s_serveroptions.picframe.generic.x			= 352 - 38;
-	s_serveroptions.picframe.generic.y			= 80 - 40;
+	s_serveroptions.picframe.Generic.type		= MTYPE_BITMAP;
+	s_serveroptions.picframe.Generic.flags		= QMF_LEFT_JUSTIFY|QMF_INACTIVE|QMF_HIGHLIGHT;
+	s_serveroptions.picframe.Generic.x			= 352 - 38;
+	s_serveroptions.picframe.Generic.y			= 80 - 40;
 	s_serveroptions.picframe.width  			= 320;
 	s_serveroptions.picframe.height  			= 320;
 	s_serveroptions.picframe.focuspic			= GAMESERVER_SELECT;
 
 	y = 272;
 	if( s_serveroptions.gametype != GT_CTF ) {
-		s_serveroptions.fraglimit.generic.type       = MTYPE_FIELD;
-		s_serveroptions.fraglimit.generic.name       = "Frag Limit:";
-		s_serveroptions.fraglimit.generic.flags      = QMF_NUMBERSONLY|QMF_PULSEIFFOCUS|QMF_SMALLFONT;
-		s_serveroptions.fraglimit.generic.x	         = OPTIONS_X;
-		s_serveroptions.fraglimit.generic.y	         = y;
-		s_serveroptions.fraglimit.generic.statusbar  = ServerOptions_StatusBar;
+		s_serveroptions.fraglimit.Generic.type       = MTYPE_FIELD;
+		s_serveroptions.fraglimit.Generic.name       = "Frag Limit:";
+		s_serveroptions.fraglimit.Generic.flags      = QMF_NUMBERSONLY|QMF_PULSEIFFOCUS|QMF_SMALLFONT;
+		s_serveroptions.fraglimit.Generic.x	         = OPTIONS_X;
+		s_serveroptions.fraglimit.Generic.y	         = y;
+		s_serveroptions.fraglimit.Generic.statusbar  = ServerOptions_StatusBar;
 		s_serveroptions.fraglimit.field.widthInChars = 3;
 		s_serveroptions.fraglimit.field.maxchars     = 3;
 	}
 	else {
-		s_serveroptions.flaglimit.generic.type       = MTYPE_FIELD;
-		s_serveroptions.flaglimit.generic.name       = "Capture Limit:";
-		s_serveroptions.flaglimit.generic.flags      = QMF_NUMBERSONLY|QMF_PULSEIFFOCUS|QMF_SMALLFONT;
-		s_serveroptions.flaglimit.generic.x	         = OPTIONS_X;
-		s_serveroptions.flaglimit.generic.y	         = y;
-		s_serveroptions.flaglimit.generic.statusbar  = ServerOptions_StatusBar;
+		s_serveroptions.flaglimit.Generic.type       = MTYPE_FIELD;
+		s_serveroptions.flaglimit.Generic.name       = "Capture Limit:";
+		s_serveroptions.flaglimit.Generic.flags      = QMF_NUMBERSONLY|QMF_PULSEIFFOCUS|QMF_SMALLFONT;
+		s_serveroptions.flaglimit.Generic.x	         = OPTIONS_X;
+		s_serveroptions.flaglimit.Generic.y	         = y;
+		s_serveroptions.flaglimit.Generic.statusbar  = ServerOptions_StatusBar;
 		s_serveroptions.flaglimit.field.widthInChars = 3;
 		s_serveroptions.flaglimit.field.maxchars     = 3;
 	}
 
 	y += BIGCHAR_HEIGHT+2;
-	s_serveroptions.timelimit.generic.type       = MTYPE_FIELD;
-	s_serveroptions.timelimit.generic.name       = "Time Limit:";
-	s_serveroptions.timelimit.generic.flags      = QMF_NUMBERSONLY|QMF_PULSEIFFOCUS|QMF_SMALLFONT;
-	s_serveroptions.timelimit.generic.x	         = OPTIONS_X;
-	s_serveroptions.timelimit.generic.y	         = y;
-	s_serveroptions.timelimit.generic.statusbar  = ServerOptions_StatusBar;
+	s_serveroptions.timelimit.Generic.type       = MTYPE_FIELD;
+	s_serveroptions.timelimit.Generic.name       = "Time Limit:";
+	s_serveroptions.timelimit.Generic.flags      = QMF_NUMBERSONLY|QMF_PULSEIFFOCUS|QMF_SMALLFONT;
+	s_serveroptions.timelimit.Generic.x	         = OPTIONS_X;
+	s_serveroptions.timelimit.Generic.y	         = y;
+	s_serveroptions.timelimit.Generic.statusbar  = ServerOptions_StatusBar;
 	s_serveroptions.timelimit.field.widthInChars = 3;
 	s_serveroptions.timelimit.field.maxchars     = 3;
 
 	if( s_serveroptions.gametype >= GT_TEAM ) {
 		y += BIGCHAR_HEIGHT+2;
-		s_serveroptions.friendlyfire.generic.type     = MTYPE_RADIOBUTTON;
-		s_serveroptions.friendlyfire.generic.flags    = QMF_PULSEIFFOCUS|QMF_SMALLFONT;
-		s_serveroptions.friendlyfire.generic.x	      = OPTIONS_X;
-		s_serveroptions.friendlyfire.generic.y	      = y;
-		s_serveroptions.friendlyfire.generic.name	  = "Friendly Fire:";
+		s_serveroptions.friendlyfire.Generic.type     = MTYPE_RADIOBUTTON;
+		s_serveroptions.friendlyfire.Generic.flags    = QMF_PULSEIFFOCUS|QMF_SMALLFONT;
+		s_serveroptions.friendlyfire.Generic.x	      = OPTIONS_X;
+		s_serveroptions.friendlyfire.Generic.y	      = y;
+		s_serveroptions.friendlyfire.Generic.name	  = "Friendly Fire:";
 	}
 
 	y += BIGCHAR_HEIGHT+2;
-	s_serveroptions.pure.generic.type			= MTYPE_RADIOBUTTON;
-	s_serveroptions.pure.generic.flags			= QMF_PULSEIFFOCUS|QMF_SMALLFONT;
-	s_serveroptions.pure.generic.x				= OPTIONS_X;
-	s_serveroptions.pure.generic.y				= y;
-	s_serveroptions.pure.generic.name			= "Pure Server:";
+	s_serveroptions.pure.Generic.type			= MTYPE_RADIOBUTTON;
+	s_serveroptions.pure.Generic.flags			= QMF_PULSEIFFOCUS|QMF_SMALLFONT;
+	s_serveroptions.pure.Generic.x				= OPTIONS_X;
+	s_serveroptions.pure.Generic.y				= y;
+	s_serveroptions.pure.Generic.name			= "Pure Server:";
 
 	if( s_serveroptions.multiplayer ) {
 		y += BIGCHAR_HEIGHT+2;
-		s_serveroptions.dedicated.generic.type		= MTYPE_SPINCONTROL;
-		s_serveroptions.dedicated.generic.id		= ID_DEDICATED;
-		s_serveroptions.dedicated.generic.flags		= QMF_PULSEIFFOCUS|QMF_SMALLFONT;
-		s_serveroptions.dedicated.generic.callback	= ServerOptions_Event;
-		s_serveroptions.dedicated.generic.x			= OPTIONS_X;
-		s_serveroptions.dedicated.generic.y			= y;
-		s_serveroptions.dedicated.generic.name		= "Dedicated:";
+		s_serveroptions.dedicated.Generic.type		= MTYPE_SPINCONTROL;
+		s_serveroptions.dedicated.Generic.id		= ID_DEDICATED;
+		s_serveroptions.dedicated.Generic.flags		= QMF_PULSEIFFOCUS|QMF_SMALLFONT;
+		s_serveroptions.dedicated.Generic.callback	= ServerOptions_Event;
+		s_serveroptions.dedicated.Generic.x			= OPTIONS_X;
+		s_serveroptions.dedicated.Generic.y			= y;
+		s_serveroptions.dedicated.Generic.name		= "Dedicated:";
 		s_serveroptions.dedicated.itemnames			= dedicated_list;
 	}
 
 	if( s_serveroptions.multiplayer ) {
 		y += BIGCHAR_HEIGHT+2;
-		s_serveroptions.hostname.generic.type       = MTYPE_FIELD;
-		s_serveroptions.hostname.generic.name       = "Hostname:";
-		s_serveroptions.hostname.generic.flags      = QMF_SMALLFONT;
-		s_serveroptions.hostname.generic.x          = OPTIONS_X;
-		s_serveroptions.hostname.generic.y	        = y;
+		s_serveroptions.hostname.Generic.type       = MTYPE_FIELD;
+		s_serveroptions.hostname.Generic.name       = "Hostname:";
+		s_serveroptions.hostname.Generic.flags      = QMF_SMALLFONT;
+		s_serveroptions.hostname.Generic.x          = OPTIONS_X;
+		s_serveroptions.hostname.Generic.y	        = y;
 		s_serveroptions.hostname.field.widthInChars = 18;
 		s_serveroptions.hostname.field.maxchars     = 64;
 	}
 
 	y += BIGCHAR_HEIGHT+2;
-	s_serveroptions.punkbuster.generic.type			= MTYPE_SPINCONTROL;
-	s_serveroptions.punkbuster.generic.name			= "Punkbuster:";
-	s_serveroptions.punkbuster.generic.flags			= QMF_PULSEIFFOCUS|QMF_SMALLFONT;
-	s_serveroptions.punkbuster.generic.id			= 0;
-	s_serveroptions.punkbuster.generic.x				= OPTIONS_X;
-	s_serveroptions.punkbuster.generic.y				= y;
+	s_serveroptions.punkbuster.Generic.type			= MTYPE_SPINCONTROL;
+	s_serveroptions.punkbuster.Generic.name			= "Punkbuster:";
+	s_serveroptions.punkbuster.Generic.flags			= QMF_PULSEIFFOCUS|QMF_SMALLFONT;
+	s_serveroptions.punkbuster.Generic.id			= 0;
+	s_serveroptions.punkbuster.Generic.x				= OPTIONS_X;
+	s_serveroptions.punkbuster.Generic.y				= y;
 	s_serveroptions.punkbuster.itemnames				= punkbuster_items;
 	
 	y = 80;
-	s_serveroptions.botSkill.generic.type			= MTYPE_SPINCONTROL;
-	s_serveroptions.botSkill.generic.flags			= QMF_PULSEIFFOCUS|QMF_SMALLFONT;
-	s_serveroptions.botSkill.generic.name			= "Bot Skill:";
-	s_serveroptions.botSkill.generic.x				= 32 + (strlen(s_serveroptions.botSkill.generic.name) + 2 ) * SMALLCHAR_WIDTH;
-	s_serveroptions.botSkill.generic.y				= y;
+	s_serveroptions.botSkill.Generic.type			= MTYPE_SPINCONTROL;
+	s_serveroptions.botSkill.Generic.flags			= QMF_PULSEIFFOCUS|QMF_SMALLFONT;
+	s_serveroptions.botSkill.Generic.name			= "Bot Skill:";
+	s_serveroptions.botSkill.Generic.x				= 32 + (strlen(s_serveroptions.botSkill.Generic.name) + 2 ) * SMALLCHAR_WIDTH;
+	s_serveroptions.botSkill.Generic.y				= y;
 	s_serveroptions.botSkill.itemnames				= botSkill_list;
 	s_serveroptions.botSkill.curvalue				= 1;
 
 	y += ( 2 * SMALLCHAR_HEIGHT );
-	s_serveroptions.player0.generic.type			= MTYPE_TEXT;
-	s_serveroptions.player0.generic.flags			= QMF_SMALLFONT;
-	s_serveroptions.player0.generic.x				= 32 + SMALLCHAR_WIDTH;
-	s_serveroptions.player0.generic.y				= y;
+	s_serveroptions.player0.Generic.type			= MTYPE_TEXT;
+	s_serveroptions.player0.Generic.flags			= QMF_SMALLFONT;
+	s_serveroptions.player0.Generic.x				= 32 + SMALLCHAR_WIDTH;
+	s_serveroptions.player0.Generic.y				= y;
 	s_serveroptions.player0.color					= color_orange;
 	s_serveroptions.player0.style					= UI_LEFT|UI_SMALLFONT;
 
 	for( n = 0; n < PLAYER_SLOTS; n++ ) {
-		s_serveroptions.playerType[n].generic.type		= MTYPE_SPINCONTROL;
-		s_serveroptions.playerType[n].generic.flags		= QMF_SMALLFONT;
-		s_serveroptions.playerType[n].generic.id		= ID_PLAYER_TYPE;
-		s_serveroptions.playerType[n].generic.callback	= ServerOptions_Event;
-		s_serveroptions.playerType[n].generic.x			= 32;
-		s_serveroptions.playerType[n].generic.y			= y;
+		s_serveroptions.playerType[n].Generic.type		= MTYPE_SPINCONTROL;
+		s_serveroptions.playerType[n].Generic.flags		= QMF_SMALLFONT;
+		s_serveroptions.playerType[n].Generic.id		= ID_PLAYER_TYPE;
+		s_serveroptions.playerType[n].Generic.callback	= ServerOptions_Event;
+		s_serveroptions.playerType[n].Generic.x			= 32;
+		s_serveroptions.playerType[n].Generic.y			= y;
 		s_serveroptions.playerType[n].itemnames			= playerType_list;
 
-		s_serveroptions.playerName[n].generic.type		= MTYPE_TEXT;
-		s_serveroptions.playerName[n].generic.flags		= QMF_SMALLFONT;
-		s_serveroptions.playerName[n].generic.x			= 96;
-		s_serveroptions.playerName[n].generic.y			= y;
-		s_serveroptions.playerName[n].generic.callback	= ServerOptions_PlayerNameEvent;
-		s_serveroptions.playerName[n].generic.id		= n;
-		s_serveroptions.playerName[n].generic.ownerdraw	= PlayerName_Draw;
+		s_serveroptions.playerName[n].Generic.type		= MTYPE_TEXT;
+		s_serveroptions.playerName[n].Generic.flags		= QMF_SMALLFONT;
+		s_serveroptions.playerName[n].Generic.x			= 96;
+		s_serveroptions.playerName[n].Generic.y			= y;
+		s_serveroptions.playerName[n].Generic.callback	= ServerOptions_PlayerNameEvent;
+		s_serveroptions.playerName[n].Generic.id		= n;
+		s_serveroptions.playerName[n].Generic.ownerdraw	= PlayerName_Draw;
 		s_serveroptions.playerName[n].color				= color_orange;
 		s_serveroptions.playerName[n].style				= UI_SMALLFONT;
 		s_serveroptions.playerName[n].string			= s_serveroptions.playerNameBuffers[n];
-		s_serveroptions.playerName[n].generic.top		= s_serveroptions.playerName[n].generic.y;
-		s_serveroptions.playerName[n].generic.bottom	= s_serveroptions.playerName[n].generic.y + SMALLCHAR_HEIGHT;
-		s_serveroptions.playerName[n].generic.left		= s_serveroptions.playerName[n].generic.x - SMALLCHAR_HEIGHT/ 2;
-		s_serveroptions.playerName[n].generic.right		= s_serveroptions.playerName[n].generic.x + 16 * SMALLCHAR_WIDTH;
+		s_serveroptions.playerName[n].Generic.top		= s_serveroptions.playerName[n].Generic.y;
+		s_serveroptions.playerName[n].Generic.bottom	= s_serveroptions.playerName[n].Generic.y + SMALLCHAR_HEIGHT;
+		s_serveroptions.playerName[n].Generic.left		= s_serveroptions.playerName[n].Generic.x - SMALLCHAR_HEIGHT/ 2;
+		s_serveroptions.playerName[n].Generic.right		= s_serveroptions.playerName[n].Generic.x + 16 * SMALLCHAR_WIDTH;
 
-		s_serveroptions.playerTeam[n].generic.type		= MTYPE_SPINCONTROL;
-		s_serveroptions.playerTeam[n].generic.flags		= QMF_SMALLFONT;
-		s_serveroptions.playerTeam[n].generic.x			= 240;
-		s_serveroptions.playerTeam[n].generic.y			= y;
+		s_serveroptions.playerTeam[n].Generic.type		= MTYPE_SPINCONTROL;
+		s_serveroptions.playerTeam[n].Generic.flags		= QMF_SMALLFONT;
+		s_serveroptions.playerTeam[n].Generic.x			= 240;
+		s_serveroptions.playerTeam[n].Generic.y			= y;
 		s_serveroptions.playerTeam[n].itemnames			= playerTeam_list;
 
 		y += ( SMALLCHAR_HEIGHT + 4 );
 	}
 
-	s_serveroptions.back.generic.type	  = MTYPE_BITMAP;
-	s_serveroptions.back.generic.name     = GAMESERVER_BACK0;
-	s_serveroptions.back.generic.flags    = QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
-	s_serveroptions.back.generic.callback = ServerOptions_Event;
-	s_serveroptions.back.generic.id	      = ID_BACK;
-	s_serveroptions.back.generic.x		  = 0;
-	s_serveroptions.back.generic.y		  = 480-64;
+	s_serveroptions.back.Generic.type	  = MTYPE_BITMAP;
+	s_serveroptions.back.Generic.name     = GAMESERVER_BACK0;
+	s_serveroptions.back.Generic.flags    = QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
+	s_serveroptions.back.Generic.callback = ServerOptions_Event;
+	s_serveroptions.back.Generic.id	      = ID_BACK;
+	s_serveroptions.back.Generic.x		  = 0;
+	s_serveroptions.back.Generic.y		  = 480-64;
 	s_serveroptions.back.width  		  = 128;
 	s_serveroptions.back.height  		  = 64;
 	s_serveroptions.back.focuspic         = GAMESERVER_BACK1;
 
-	s_serveroptions.next.generic.type	  = MTYPE_BITMAP;
-	s_serveroptions.next.generic.name     = GAMESERVER_NEXT0;
-	s_serveroptions.next.generic.flags    = QMF_RIGHT_JUSTIFY|QMF_PULSEIFFOCUS|QMF_INACTIVE|QMF_GRAYED|QMF_HIDDEN;
-	s_serveroptions.next.generic.callback = ServerOptions_Event;
-	s_serveroptions.next.generic.id	      = ID_STARTSERVERNEXT;
-	s_serveroptions.next.generic.x		  = 640;
-	s_serveroptions.next.generic.y		  = 480-64-72;
-	s_serveroptions.next.generic.statusbar  = ServerOptions_StatusBar;
+	s_serveroptions.next.Generic.type	  = MTYPE_BITMAP;
+	s_serveroptions.next.Generic.name     = GAMESERVER_NEXT0;
+	s_serveroptions.next.Generic.flags    = QMF_RIGHT_JUSTIFY|QMF_PULSEIFFOCUS|QMF_INACTIVE|QMF_GRAYED|QMF_HIDDEN;
+	s_serveroptions.next.Generic.callback = ServerOptions_Event;
+	s_serveroptions.next.Generic.id	      = ID_STARTSERVERNEXT;
+	s_serveroptions.next.Generic.x		  = 640;
+	s_serveroptions.next.Generic.y		  = 480-64-72;
+	s_serveroptions.next.Generic.statusbar  = ServerOptions_StatusBar;
 	s_serveroptions.next.width  		  = 128;
 	s_serveroptions.next.height  		  = 64;
 	s_serveroptions.next.focuspic         = GAMESERVER_NEXT1;
 
-	s_serveroptions.go.generic.type	    = MTYPE_BITMAP;
-	s_serveroptions.go.generic.name     = GAMESERVER_FIGHT0;
-	s_serveroptions.go.generic.flags    = QMF_RIGHT_JUSTIFY|QMF_PULSEIFFOCUS;
-	s_serveroptions.go.generic.callback = ServerOptions_Event;
-	s_serveroptions.go.generic.id	    = ID_GO;
-	s_serveroptions.go.generic.x		= 640;
-	s_serveroptions.go.generic.y		= 480-64;
+	s_serveroptions.go.Generic.type	    = MTYPE_BITMAP;
+	s_serveroptions.go.Generic.name     = GAMESERVER_FIGHT0;
+	s_serveroptions.go.Generic.flags    = QMF_RIGHT_JUSTIFY|QMF_PULSEIFFOCUS;
+	s_serveroptions.go.Generic.callback = ServerOptions_Event;
+	s_serveroptions.go.Generic.id	    = ID_GO;
+	s_serveroptions.go.Generic.x		= 640;
+	s_serveroptions.go.Generic.y		= 480-64;
 	s_serveroptions.go.width  		    = 128;
 	s_serveroptions.go.height  		    = 64;
 	s_serveroptions.go.focuspic         = GAMESERVER_FIGHT1;
@@ -1650,51 +1650,51 @@ static void UI_BotSelectMenu_UpdateGrid( void ) {
 			ServerPlayerIcon( Info_ValueForKey( info, "model" ), botSelectInfo.boticons[i], MAX_QPATH );
 			Q_strncpyz( botSelectInfo.botnames[i], Info_ValueForKey( info, "name" ), 16 );
 			Q_CleanStr( botSelectInfo.botnames[i] );
- 			botSelectInfo.pics[i].generic.name = botSelectInfo.boticons[i];
+ 			botSelectInfo.pics[i].Generic.name = botSelectInfo.boticons[i];
 			if( BotAlreadySelected( botSelectInfo.botnames[i] ) ) {
 				botSelectInfo.picnames[i].color = color_red;
 			}
 			else {
 				botSelectInfo.picnames[i].color = color_orange;
 			}
-			botSelectInfo.picbuttons[i].generic.flags &= ~QMF_INACTIVE;
+			botSelectInfo.picbuttons[i].Generic.flags &= ~QMF_INACTIVE;
 		}
 		else {
 			// dead slot
- 			botSelectInfo.pics[i].generic.name         = NULL;
-			botSelectInfo.picbuttons[i].generic.flags |= QMF_INACTIVE;
+ 			botSelectInfo.pics[i].Generic.name         = NULL;
+			botSelectInfo.picbuttons[i].Generic.flags |= QMF_INACTIVE;
 			botSelectInfo.botnames[i][0] = 0;
 		}
 
- 		botSelectInfo.pics[i].generic.flags       &= ~QMF_HIGHLIGHT;
+ 		botSelectInfo.pics[i].Generic.flags       &= ~QMF_HIGHLIGHT;
  		botSelectInfo.pics[i].shader               = 0;
- 		botSelectInfo.picbuttons[i].generic.flags |= QMF_PULSEIFFOCUS;
+ 		botSelectInfo.picbuttons[i].Generic.flags |= QMF_PULSEIFFOCUS;
 	}
 
 	// set selected model
 	i = botSelectInfo.selectedmodel % MAX_MODELSPERPAGE;
-	botSelectInfo.pics[i].generic.flags |= QMF_HIGHLIGHT;
-	botSelectInfo.picbuttons[i].generic.flags &= ~QMF_PULSEIFFOCUS;
+	botSelectInfo.pics[i].Generic.flags |= QMF_HIGHLIGHT;
+	botSelectInfo.picbuttons[i].Generic.flags &= ~QMF_PULSEIFFOCUS;
 
 	if( botSelectInfo.numpages > 1 ) {
 		if( botSelectInfo.modelpage > 0 ) {
-			botSelectInfo.left.generic.flags &= ~QMF_INACTIVE;
+			botSelectInfo.left.Generic.flags &= ~QMF_INACTIVE;
 		}
 		else {
-			botSelectInfo.left.generic.flags |= QMF_INACTIVE;
+			botSelectInfo.left.Generic.flags |= QMF_INACTIVE;
 		}
 
 		if( botSelectInfo.modelpage < (botSelectInfo.numpages - 1) ) {
-			botSelectInfo.right.generic.flags &= ~QMF_INACTIVE;
+			botSelectInfo.right.Generic.flags &= ~QMF_INACTIVE;
 		}
 		else {
-			botSelectInfo.right.generic.flags |= QMF_INACTIVE;
+			botSelectInfo.right.Generic.flags |= QMF_INACTIVE;
 		}
 	}
 	else {
 		// hide left/right markers
-		botSelectInfo.left.generic.flags |= QMF_INACTIVE;
-		botSelectInfo.right.generic.flags |= QMF_INACTIVE;
+		botSelectInfo.left.Generic.flags |= QMF_INACTIVE;
+		botSelectInfo.right.Generic.flags |= QMF_INACTIVE;
 	}
 }
 
@@ -1783,14 +1783,14 @@ static void UI_BotSelectMenu_BotEvent( void* ptr, int event ) {
 	}
 
 	for( i = 0; i < (PLAYERGRID_ROWS * PLAYERGRID_COLS); i++ ) {
- 		botSelectInfo.pics[i].generic.flags &= ~QMF_HIGHLIGHT;
- 		botSelectInfo.picbuttons[i].generic.flags |= QMF_PULSEIFFOCUS;
+ 		botSelectInfo.pics[i].Generic.flags &= ~QMF_HIGHLIGHT;
+ 		botSelectInfo.picbuttons[i].Generic.flags |= QMF_PULSEIFFOCUS;
 	}
 
 	// set selected
 	i = ((menucommon_s*)ptr)->id;
-	botSelectInfo.pics[i].generic.flags |= QMF_HIGHLIGHT;
-	botSelectInfo.picbuttons[i].generic.flags &= ~QMF_PULSEIFFOCUS;
+	botSelectInfo.pics[i].Generic.flags |= QMF_HIGHLIGHT;
+	botSelectInfo.picbuttons[i].Generic.flags &= ~QMF_PULSEIFFOCUS;
 	botSelectInfo.selectedmodel = botSelectInfo.modelpage * MAX_MODELSPERPAGE + i;
 }
 
@@ -1852,9 +1852,9 @@ static void UI_BotSelectMenu_Init( char *bot ) {
 
 	UI_BotSelectMenu_Cache();
 
-	botSelectInfo.banner.generic.type	= MTYPE_BTEXT;
-	botSelectInfo.banner.generic.x		= 320;
-	botSelectInfo.banner.generic.y		= 16;
+	botSelectInfo.banner.Generic.type	= MTYPE_BTEXT;
+	botSelectInfo.banner.Generic.x		= 320;
+	botSelectInfo.banner.Generic.y		= 16;
 	botSelectInfo.banner.string			= "SELECT BOT";
 	botSelectInfo.banner.color			= color_white;
 	botSelectInfo.banner.style			= UI_CENTER;
@@ -1863,35 +1863,35 @@ static void UI_BotSelectMenu_Init( char *bot ) {
 	for( i = 0, k = 0; i < PLAYERGRID_ROWS; i++) {
 		x =	180;
 		for( j = 0; j < PLAYERGRID_COLS; j++, k++ ) {
-			botSelectInfo.pics[k].generic.type				= MTYPE_BITMAP;
-			botSelectInfo.pics[k].generic.flags				= QMF_LEFT_JUSTIFY|QMF_INACTIVE;
-			botSelectInfo.pics[k].generic.x					= x;
-			botSelectInfo.pics[k].generic.y					= y;
- 			botSelectInfo.pics[k].generic.name				= botSelectInfo.boticons[k];
+			botSelectInfo.pics[k].Generic.type				= MTYPE_BITMAP;
+			botSelectInfo.pics[k].Generic.flags				= QMF_LEFT_JUSTIFY|QMF_INACTIVE;
+			botSelectInfo.pics[k].Generic.x					= x;
+			botSelectInfo.pics[k].Generic.y					= y;
+ 			botSelectInfo.pics[k].Generic.name				= botSelectInfo.boticons[k];
 			botSelectInfo.pics[k].width						= 64;
 			botSelectInfo.pics[k].height					= 64;
 			botSelectInfo.pics[k].focuspic					= BOTSELECT_SELECTED;
 			botSelectInfo.pics[k].focuscolor				= colorRed;
 
-			botSelectInfo.picbuttons[k].generic.type		= MTYPE_BITMAP;
-			botSelectInfo.picbuttons[k].generic.flags		= QMF_LEFT_JUSTIFY|QMF_NODEFAULTINIT|QMF_PULSEIFFOCUS;
-			botSelectInfo.picbuttons[k].generic.callback	= UI_BotSelectMenu_BotEvent;
-			botSelectInfo.picbuttons[k].generic.id			= k;
-			botSelectInfo.picbuttons[k].generic.x			= x - 16;
-			botSelectInfo.picbuttons[k].generic.y			= y - 16;
-			botSelectInfo.picbuttons[k].generic.left		= x;
-			botSelectInfo.picbuttons[k].generic.top			= y;
-			botSelectInfo.picbuttons[k].generic.right		= x + 64;
-			botSelectInfo.picbuttons[k].generic.bottom		= y + 64;
+			botSelectInfo.picbuttons[k].Generic.type		= MTYPE_BITMAP;
+			botSelectInfo.picbuttons[k].Generic.flags		= QMF_LEFT_JUSTIFY|QMF_NODEFAULTINIT|QMF_PULSEIFFOCUS;
+			botSelectInfo.picbuttons[k].Generic.callback	= UI_BotSelectMenu_BotEvent;
+			botSelectInfo.picbuttons[k].Generic.id			= k;
+			botSelectInfo.picbuttons[k].Generic.x			= x - 16;
+			botSelectInfo.picbuttons[k].Generic.y			= y - 16;
+			botSelectInfo.picbuttons[k].Generic.left		= x;
+			botSelectInfo.picbuttons[k].Generic.top			= y;
+			botSelectInfo.picbuttons[k].Generic.right		= x + 64;
+			botSelectInfo.picbuttons[k].Generic.bottom		= y + 64;
 			botSelectInfo.picbuttons[k].width				= 128;
 			botSelectInfo.picbuttons[k].height				= 128;
 			botSelectInfo.picbuttons[k].focuspic			= BOTSELECT_SELECT;
 			botSelectInfo.picbuttons[k].focuscolor			= colorRed;
 
-			botSelectInfo.picnames[k].generic.type			= MTYPE_TEXT;
-			botSelectInfo.picnames[k].generic.flags			= QMF_SMALLFONT;
-			botSelectInfo.picnames[k].generic.x				= x + 32;
-			botSelectInfo.picnames[k].generic.y				= y + 64;
+			botSelectInfo.picnames[k].Generic.type			= MTYPE_TEXT;
+			botSelectInfo.picnames[k].Generic.flags			= QMF_SMALLFONT;
+			botSelectInfo.picnames[k].Generic.x				= x + 32;
+			botSelectInfo.picnames[k].Generic.y				= y + 64;
 			botSelectInfo.picnames[k].string				= botSelectInfo.botnames[k];
 			botSelectInfo.picnames[k].color					= color_orange;
 			botSelectInfo.picnames[k].style					= UI_CENTER|UI_SMALLFONT;
@@ -1901,48 +1901,48 @@ static void UI_BotSelectMenu_Init( char *bot ) {
 		y += (64 + SMALLCHAR_HEIGHT + 6);
 	}
 
-	botSelectInfo.arrows.generic.type		= MTYPE_BITMAP;
-	botSelectInfo.arrows.generic.name		= BOTSELECT_ARROWS;
-	botSelectInfo.arrows.generic.flags		= QMF_INACTIVE;
-	botSelectInfo.arrows.generic.x			= 260;
-	botSelectInfo.arrows.generic.y			= 440;
+	botSelectInfo.arrows.Generic.type		= MTYPE_BITMAP;
+	botSelectInfo.arrows.Generic.name		= BOTSELECT_ARROWS;
+	botSelectInfo.arrows.Generic.flags		= QMF_INACTIVE;
+	botSelectInfo.arrows.Generic.x			= 260;
+	botSelectInfo.arrows.Generic.y			= 440;
 	botSelectInfo.arrows.width				= 128;
 	botSelectInfo.arrows.height				= 32;
 
-	botSelectInfo.left.generic.type			= MTYPE_BITMAP;
-	botSelectInfo.left.generic.flags		= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
-	botSelectInfo.left.generic.callback		= UI_BotSelectMenu_LeftEvent;
-	botSelectInfo.left.generic.x			= 260;
-	botSelectInfo.left.generic.y			= 440;
+	botSelectInfo.left.Generic.type			= MTYPE_BITMAP;
+	botSelectInfo.left.Generic.flags		= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
+	botSelectInfo.left.Generic.callback		= UI_BotSelectMenu_LeftEvent;
+	botSelectInfo.left.Generic.x			= 260;
+	botSelectInfo.left.Generic.y			= 440;
 	botSelectInfo.left.width  				= 64;
 	botSelectInfo.left.height  				= 32;
 	botSelectInfo.left.focuspic				= BOTSELECT_ARROWSL;
 
-	botSelectInfo.right.generic.type	    = MTYPE_BITMAP;
-	botSelectInfo.right.generic.flags		= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
-	botSelectInfo.right.generic.callback	= UI_BotSelectMenu_RightEvent;
-	botSelectInfo.right.generic.x			= 321;
-	botSelectInfo.right.generic.y			= 440;
+	botSelectInfo.right.Generic.type	    = MTYPE_BITMAP;
+	botSelectInfo.right.Generic.flags		= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
+	botSelectInfo.right.Generic.callback	= UI_BotSelectMenu_RightEvent;
+	botSelectInfo.right.Generic.x			= 321;
+	botSelectInfo.right.Generic.y			= 440;
 	botSelectInfo.right.width  				= 64;
 	botSelectInfo.right.height  		    = 32;
 	botSelectInfo.right.focuspic			= BOTSELECT_ARROWSR;
 
-	botSelectInfo.back.generic.type		= MTYPE_BITMAP;
-	botSelectInfo.back.generic.name		= BOTSELECT_BACK0;
-	botSelectInfo.back.generic.flags	= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
-	botSelectInfo.back.generic.callback	= UI_BotSelectMenu_BackEvent;
-	botSelectInfo.back.generic.x		= 0;
-	botSelectInfo.back.generic.y		= 480-64;
+	botSelectInfo.back.Generic.type		= MTYPE_BITMAP;
+	botSelectInfo.back.Generic.name		= BOTSELECT_BACK0;
+	botSelectInfo.back.Generic.flags	= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
+	botSelectInfo.back.Generic.callback	= UI_BotSelectMenu_BackEvent;
+	botSelectInfo.back.Generic.x		= 0;
+	botSelectInfo.back.Generic.y		= 480-64;
 	botSelectInfo.back.width			= 128;
 	botSelectInfo.back.height			= 64;
 	botSelectInfo.back.focuspic			= BOTSELECT_BACK1;
 
-	botSelectInfo.go.generic.type		= MTYPE_BITMAP;
-	botSelectInfo.go.generic.name		= BOTSELECT_ACCEPT0;
-	botSelectInfo.go.generic.flags		= QMF_RIGHT_JUSTIFY|QMF_PULSEIFFOCUS;
-	botSelectInfo.go.generic.callback	= UI_BotSelectMenu_SelectEvent;
-	botSelectInfo.go.generic.x			= 640;
-	botSelectInfo.go.generic.y			= 480-64;
+	botSelectInfo.go.Generic.type		= MTYPE_BITMAP;
+	botSelectInfo.go.Generic.name		= BOTSELECT_ACCEPT0;
+	botSelectInfo.go.Generic.flags		= QMF_RIGHT_JUSTIFY|QMF_PULSEIFFOCUS;
+	botSelectInfo.go.Generic.callback	= UI_BotSelectMenu_SelectEvent;
+	botSelectInfo.go.Generic.x			= 640;
+	botSelectInfo.go.Generic.y			= 480-64;
 	botSelectInfo.go.width				= 128;
 	botSelectInfo.go.height				= 64;
 	botSelectInfo.go.focuspic			= BOTSELECT_ACCEPT1;

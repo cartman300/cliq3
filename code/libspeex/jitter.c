@@ -8,15 +8,15 @@
    are met:
    
    - Redistributions of source code must retain the above copyright
-   notice, this list of conditions and the following disclaimer.
+   notice, This list of conditions and the following disclaimer.
    
    - Redistributions in binary form must reproduce the above copyright
-   notice, this list of conditions and the following disclaimer in the
+   notice, This list of conditions and the following disclaimer in the
    documentation and/or other materials provided with the distribution.
    
    - Neither the name of the Xiph.org Foundation nor the names of its
    contributors may be used to endorse or promote products derived from
-   this software without specific prior written permission.
+   This software without specific prior written permission.
    
    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
    ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -93,7 +93,7 @@ static void tb_init(struct TimingBuffer *tb)
    tb->curr_count = 0;
 }
 
-/* Add the timing of a new packet to the TimingBuffer */
+/* Add the timing of a New packet to the TimingBuffer */
 static void tb_add(struct TimingBuffer *tb, spx_int16_t timing)
 {
    int pos;
@@ -166,7 +166,7 @@ struct JitterBuffer_ {
    int lost_count;                                             /**< Number of consecutive lost packets  */
 };
 
-/** Based on available data, this computes the optimal delay for the jitter buffer. 
+/** Based on available data, This computes the optimal delay for the jitter buffer. 
    The optimised function is in timestamp units and is:
    cost = delay + late_factor*[number of frames that would be late if we used that delay]
    @param tb Array of buffers
@@ -232,7 +232,7 @@ static spx_int16_t compute_opt_delay(JitterBuffer *jitter)
          latest = ROUND_DOWN(latest, jitter->delay_step);
          pos[next]++;
          
-         /* Actual cost function that tells us how bad using this delay would be */
+         /* Actual cost function that tells us how bad using This delay would be */
          cost = -latest + late_factor*late;
          /*fprintf(stderr, "cost %d = %d + %f * %d\n", cost, -latest, late_factor, late);*/
          if (cost < best_cost)
@@ -280,7 +280,7 @@ JitterBuffer *jitter_buffer_init(int step_size)
          jitter->packets[i].data=NULL;
       jitter->delay_step = step_size;
       jitter->concealment_size = step_size;
-      /*FIXME: Should this be 0 or 1?*/
+      /*FIXME: Should This be 0 or 1?*/
       jitter->buffer_margin = 0;
       jitter->late_cutoff = 50;
       jitter->destroy = NULL;
@@ -308,7 +308,7 @@ void jitter_buffer_reset(JitterBuffer *jitter)
          jitter->packets[i].data = NULL;
       }
    }
-   /* Timestamp is actually undefined at this point */
+   /* Timestamp is actually undefined at This point */
    jitter->pointer_timestamp = 0;
    jitter->next_stop = 0;
    jitter->reset_state = 1;
@@ -578,10 +578,10 @@ int jitter_buffer_get(JitterBuffer *jitter, JitterBufferPacket *packet, spx_int3
    {
       spx_int32_t offset;
       
-      /* We (obviously) haven't lost this packet */
+      /* We (obviously) haven't lost This packet */
       jitter->lost_count = 0;
       
-      /* In this case, 0 isn't as a valid timestamp */
+      /* In This case, 0 isn't as a valid timestamp */
       if (jitter->arrival[i] != 0)
       {
          update_timings(jitter, ((spx_int32_t)jitter->packets[i].timestamp) - ((spx_int32_t)jitter->arrival[i]) - jitter->buffer_margin);

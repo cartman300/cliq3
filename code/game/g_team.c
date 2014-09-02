@@ -47,9 +47,9 @@ void Team_InitGame( void ) {
 
 	switch( g_gametype.integer ) {
 	case GT_CTF:
-		teamgame.redStatus = -1; // Invalid to force update
+		teamgame.redStatus = (flagStatus_t)-1; // Invalid to force update
 		Team_SetFlagStatus( TEAM_RED, FLAG_ATBASE );
-		 teamgame.blueStatus = -1; // Invalid to force update
+		 teamgame.blueStatus = (flagStatus_t)-1; // Invalid to force update
 		Team_SetFlagStatus( TEAM_BLUE, FLAG_ATBASE );
 		break;
 #ifdef MISSIONPACK
@@ -509,7 +509,7 @@ void Team_CheckHurtCarrier(gentity_t *targ, gentity_t *attacker)
 		attacker->client->pers.teamState.lasthurtcarrier = level.time;
 
 	// skulls
-	if (targ->client->ps.generic1 &&
+	if (targ->client->ps.Generic1 &&
 		targ->client->sess.sessionTeam != attacker->client->sess.sessionTeam)
 		attacker->client->pers.teamState.lasthurtcarrier = level.time;
 }

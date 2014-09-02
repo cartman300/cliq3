@@ -102,7 +102,7 @@ void CM_StoreBrushes( leafList_t *ll, int nodenum ) {
 		brushnum = cm.leafbrushes[leaf->firstLeafBrush+k];
 		b = &cm.brushes[brushnum];
 		if ( b->checkcount == cm.checkcount ) {
-			continue;	// already checked this brush in another leaf
+			continue;	// already checked This brush in another leaf
 		}
 		b->checkcount = cm.checkcount;
 		for ( i = 0 ; i < 3 ; i++ ) {

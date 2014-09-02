@@ -656,8 +656,8 @@ void CG_AddParticleToScene (cparticle_t *p, vec3_t org, float alpha)
 		if (height > p->endheight)
 			height = p->endheight;
 
-		sinR = height * sin(DEG2RAD(p->roll)) * sqrt(2);
-		cosR = width * cos(DEG2RAD(p->roll)) * sqrt(2);
+		sinR = height * sin(DEG2RAD(p->roll)) * sqrt(2.0f);
+		cosR = width * cos(DEG2RAD(p->roll)) * sqrt(2.0f);
 
 		VectorCopy (org, verts[0].xyz);	
 		verts[0].xyz[0] -= sinR;
@@ -1577,7 +1577,7 @@ void CG_Particle_OilSlick (qhandle_t pshader, centity_t *cent)
 {
 	cparticle_t	*p;
 	
-  	if (!pshader)
+	if (!pshader)
 		CG_Printf ("CG_Particle_OilSlick == ZERO!\n");
 
 	if (!free_particles)

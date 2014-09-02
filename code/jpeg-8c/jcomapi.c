@@ -18,7 +18,7 @@
  * Abort processing of a JPEG compression or decompression operation,
  * but don't destroy the object itself.
  *
- * For this, we merely clean up all the nonpermanent memory pools.
+ * For This, we merely clean up all the nonpermanent memory pools.
  * Note that temp files (virtual arrays) are not allowed to belong to
  * the permanent pool, so we will be able to close all temp files here.
  * Closing a data source or destination, if necessary, is the application's
@@ -45,7 +45,7 @@ jpeg_abort (j_common_ptr cinfo)
   if (cinfo->is_decompressor) {
     cinfo->global_state = DSTATE_START;
     /* Try to keep application from accessing now-deleted marker list.
-     * A bit kludgy to do it here, but this is the most central place.
+     * A bit kludgy to do it here, but This is the most central place.
      */
     ((j_decompress_ptr) cinfo)->marker_list = NULL;
   } else {
@@ -89,7 +89,7 @@ jpeg_alloc_quant_table (j_common_ptr cinfo)
 
   tbl = (JQUANT_TBL *)
     (*cinfo->mem->alloc_small) (cinfo, JPOOL_PERMANENT, SIZEOF(JQUANT_TBL));
-  tbl->sent_table = FALSE;	/* make sure this is false in any new table */
+  tbl->sent_table = FALSE;	/* make sure This is false in any New table */
   return tbl;
 }
 
@@ -101,6 +101,6 @@ jpeg_alloc_huff_table (j_common_ptr cinfo)
 
   tbl = (JHUFF_TBL *)
     (*cinfo->mem->alloc_small) (cinfo, JPOOL_PERMANENT, SIZEOF(JHUFF_TBL));
-  tbl->sent_table = FALSE;	/* make sure this is false in any new table */
+  tbl->sent_table = FALSE;	/* make sure This is false in any New table */
   return tbl;
 }

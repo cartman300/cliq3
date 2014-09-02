@@ -8,14 +8,14 @@
    met:
 
    1. Redistributions of source code must retain the above copyright notice,
-   this list of conditions and the following disclaimer.
+   This list of conditions and the following disclaimer.
 
    2. Redistributions in binary form must reproduce the above copyright
-   notice, this list of conditions and the following disclaimer in the
+   notice, This list of conditions and the following disclaimer in the
    documentation and/or other materials provided with the distribution.
 
    3. The name of the author may not be used to endorse or promote products
-   derived from this software without specific prior written permission.
+   derived from This software without specific prior written permission.
 
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -58,7 +58,7 @@
    quantization (rounding going to zero) when the gradient is small.
    
    Another kludge that seems to work good: when performing the weight
-   update, we only move half the way toward the "goal" this seems to
+   update, we only move half the way toward the "goal" This seems to
    reduce the effect of quantization noise in the update phase. This
    can be seen as applying a gradient descent on a "soft constraint"
    instead of having a hard constraint.
@@ -176,7 +176,7 @@ struct SpeexEchoState_ {
    spx_word16_t notch_radius;
    spx_mem_t notch_mem[2];
 
-   /* NOTE: If you only use speex_echo_cancel() and want to save some memory, remove this */
+   /* NOTE: If you only use speex_echo_cancel() and want to save some memory, remove This */
    spx_int16_t *play_buf;
    int play_buf_pos;
    int play_buf_started;
@@ -377,7 +377,7 @@ static void dump_audio(const spx_int16_t *rec, const spx_int16_t *play, const sp
 }
 #endif
 
-/** Creates a new echo canceller state */
+/** Creates a New echo canceller state */
 SpeexEchoState *speex_echo_state_init(int frame_size, int filter_length)
 {
    int i,N,M;
@@ -712,7 +712,7 @@ void speex_echo_cancellation(SpeexEchoState *st, const spx_int16_t *in, const sp
       st->input[i] = tmp32;
    }
 
-   /* Shift memory: this could be optimized eventually*/
+   /* Shift memory: This could be optimized eventually*/
    for (j=M-1;j>=0;j--)
    {
       for (i=0;i<N;i++)
@@ -757,7 +757,7 @@ void speex_echo_cancellation(SpeexEchoState *st, const spx_int16_t *in, const sp
    for (j=0;j<M;j++)
    {
       /* This is a variant of the Alternatively Updated MDF (AUMDF) */
-      /* Remove the "if" to make this an MDF filter */
+      /* Remove the "if" to make This an MDF filter */
       if (j==0 || st->cancel_count%(M-1) == j-1)
       {
 #ifdef FIXED_POINT
@@ -792,7 +792,7 @@ void speex_echo_cancellation(SpeexEchoState *st, const spx_int16_t *in, const sp
    spx_ifft(st->fft_table, st->Y, st->y);
 
 #ifdef TWO_PATH
-   /* Difference in response, this is used to estimate the variance of our residual power estimate */
+   /* Difference in response, This is used to estimate the variance of our residual power estimate */
    for (i=0;i<st->frame_size;i++)
       st->e[i] = SUB16(st->e[i+st->frame_size], st->y[i+st->frame_size]);
    Dbf = 10+mdf_inner_prod(st->e, st->e, st->frame_size);
@@ -823,7 +823,7 @@ void speex_echo_cancellation(SpeexEchoState *st, const spx_int16_t *in, const sp
    
    update_foreground = 0;
    /* Check if we have a statistically significant reduction in the residual echo */
-   /* Note that this is *not* Gaussian, so we need to be careful about the longer tail */
+   /* Note that This is *not* Gaussian, so we need to be careful about the longer tail */
    if (FLOAT_GT(FLOAT_MUL32U(SUB32(Sff,See),ABS32(SUB32(Sff,See))), FLOAT_MUL32U(Sff,Dbf)))
       update_foreground = 1;
    else if (FLOAT_GT(FLOAT_MUL32U(st->Davg1, ABS32(st->Davg1)), FLOAT_MULT(VAR1_UPDATE,(st->Dvar1))))
@@ -956,8 +956,8 @@ void speex_echo_cancellation(SpeexEchoState *st, const spx_int16_t *in, const sp
    for (j=0;j<=st->frame_size;j++)
       st->power[j] = MULT16_32_Q15(ss_1,st->power[j]) + 1 + MULT16_32_Q15(ss,st->Xf[j]);
    
-   /* Enable this to compute the power based only on the tail (would need to compute more 
-      efficiently to make this really useful */
+   /* Enable This to compute the power based only on the tail (would need to compute more 
+      efficiently to make This really useful */
    if (0)
    {
       float scale2 = .5f/M;

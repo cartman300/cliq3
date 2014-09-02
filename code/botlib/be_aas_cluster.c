@@ -254,21 +254,21 @@ int AAS_FloodClusterAreasUsingReachabilities(int clusternum)
 
 	for (i = 1; i < aasworld.numareas; i++)
 	{
-		//if this area already has a cluster set
+		//if This area already has a cluster set
 		if (aasworld.areasettings[i].cluster)
 			continue;
-		//if this area is a cluster portal
+		//if This area is a cluster portal
 		if (aasworld.areasettings[i].contents & AREACONTENTS_CLUSTERPORTAL)
 			continue;
-		//loop over the reachable areas from this area
+		//loop over the reachable areas from This area
 		for (j = 0; j < aasworld.areasettings[i].numreachableareas; j++)
 		{
 			//the reachable area
 			areanum = aasworld.reachability[aasworld.areasettings[i].firstreachablearea + j].areanum;
-			//if this area is a cluster portal
+			//if This area is a cluster portal
 			if (aasworld.areasettings[areanum].contents & AREACONTENTS_CLUSTERPORTAL)
 				continue;
-			//if this area has a cluster set
+			//if This area has a cluster set
 			if (aasworld.areasettings[areanum].cluster)
 			{
 				if (!AAS_FloodClusterAreas_r(i, clusternum))
@@ -321,7 +321,7 @@ void AAS_NumberClusterAreas(int clusternum)
 
 	aasworld.clusters[clusternum].numareas = 0;
 	aasworld.clusters[clusternum].numreachabilityareas = 0;
-	//number all areas in this cluster WITH reachabilities
+	//number all areas in This cluster WITH reachabilities
 	for (i = 1; i < aasworld.numareas; i++)
 	{
 		//
@@ -334,7 +334,7 @@ void AAS_NumberClusterAreas(int clusternum)
 		aasworld.clusters[clusternum].numareas++;
 		aasworld.clusters[clusternum].numreachabilityareas++;
 	} //end for
-	//number all portals in this cluster WITH reachabilities
+	//number all portals in This cluster WITH reachabilities
 	cluster = &aasworld.clusters[clusternum];
 	for (i = 0; i < cluster->numportals; i++)
 	{
@@ -352,7 +352,7 @@ void AAS_NumberClusterAreas(int clusternum)
 			aasworld.clusters[clusternum].numreachabilityareas++;
 		} //end else
 	} //end for
-	//number all areas in this cluster WITHOUT reachabilities
+	//number all areas in This cluster WITHOUT reachabilities
 	for (i = 1; i < aasworld.numareas; i++)
 	{
 		//
@@ -364,7 +364,7 @@ void AAS_NumberClusterAreas(int clusternum)
 		//the cluster has an extra area
 		aasworld.clusters[clusternum].numareas++;
 	} //end for
-	//number all portals in this cluster WITHOUT reachabilities
+	//number all portals in This cluster WITHOUT reachabilities
 	cluster = &aasworld.clusters[clusternum];
 	for (i = 0; i < cluster->numportals; i++)
 	{
@@ -418,7 +418,7 @@ int AAS_FindClusters(void)
 		cluster->numreachabilityareas = 0;
 		cluster->firstportal = aasworld.portalindexsize;
 		cluster->numportals = 0;
-		//flood the areas in this cluster
+		//flood the areas in This cluster
 		if (!AAS_FloodClusterAreas_r(i, aasworld.numclusters))
 			return qfalse;
 		if (!AAS_FloodClusterAreasUsingReachabilities(aasworld.numclusters))
@@ -905,7 +905,7 @@ int AAS_CheckAreaForPossiblePortals(int areanum)
 	for (i = 0; i < numareas; i++)
 	{
 		aasworld.areasettings[areanums[i]].contents |= AREACONTENTS_CLUSTERPORTAL;
-		//this area can be used as a route portal
+		//This area can be used as a route portal
 		aasworld.areasettings[areanums[i]].contents |= AREACONTENTS_ROUTEPORTAL;
 		Log_Write("possible portal: %d\r\n", areanums[i]);
 	} //end for
@@ -1034,18 +1034,18 @@ void AAS_FloodClusterReachabilities(int clusternum)
 
 	for (i = 1; i < aasworld.numareas; i++)
 	{
-		//if this area already has a cluster set
+		//if This area already has a cluster set
 		if (aasworld.areasettings[i].cluster) continue;
-		//if this area is a cluster portal
+		//if This area is a cluster portal
 		if (aasworld.areasettings[i].contents & AREACONTENTS_CLUSTERPORTAL) continue;
-		//loop over the reachable areas from this area
+		//loop over the reachable areas from This area
 		for (j = 0; j < aasworld.areasettings[i].numreachableareas; j++)
 		{
 			//the reachable area
 			areanum = aasworld.reachability[aasworld.areasettings[i].firstreachablearea + j].areanum;
-			//if this area is a cluster portal
+			//if This area is a cluster portal
 			if (aasworld.areasettings[areanum].contents & AREACONTENTS_CLUSTERPORTAL) continue;
-			//if this area has a cluster set
+			//if This area has a cluster set
 			if (aasworld.areasettings[areanum].cluster == clusternum)
 			{
 				AAS_FloodCluster_r(i, clusternum);
@@ -1168,7 +1168,7 @@ void AAS_RemoveNotClusterClosingPortals(void)
 			if (aasworld.areasettings[otherareanum].contents & AREACONTENTS_CLUSTERPORTAL) continue;
 			//if the area already has a cluster set
 			if (aasworld.areasettings[otherareanum].cluster) continue;
-			//another cluster is seperated by this portal
+			//another cluster is seperated by This portal
 			numseperatedclusters++;
 			//flood the cluster
 			AAS_FloodCluster_r(otherareanum, numseperatedclusters);
@@ -1179,13 +1179,13 @@ void AAS_RemoveNotClusterClosingPortals(void)
 		{
 			otherareanum = aasworld.reachability[
 						aasworld.areasettings[i].firstreachablearea + j].areanum;
-			//this should never be qtrue but we check anyway
+			//This should never be qtrue but we check anyway
 			if (!otherareanum) continue;
 			//don't flood into other portals
 			if (aasworld.areasettings[otherareanum].contents & AREACONTENTS_CLUSTERPORTAL) continue;
 			//if the area already has a cluster set
 			if (aasworld.areasettings[otherareanum].cluster) continue;
-			//another cluster is seperated by this portal
+			//another cluster is seperated by This portal
 			numseperatedclusters++;
 			//flood the cluster
 			AAS_FloodCluster_r(otherareanum, numseperatedclusters);

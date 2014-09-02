@@ -8,15 +8,15 @@
    are met:
    
    - Redistributions of source code must retain the above copyright
-   notice, this list of conditions and the following disclaimer.
+   notice, This list of conditions and the following disclaimer.
    
    - Redistributions in binary form must reproduce the above copyright
-   notice, this list of conditions and the following disclaimer in the
+   notice, This list of conditions and the following disclaimer in the
    documentation and/or other materials provided with the distribution.
    
    - Neither the name of the Xiph.org Foundation nor the names of its
    contributors may be used to endorse or promote products derived from
-   this software without specific prior written permission.
+   This software without specific prior written permission.
    
    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
    ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -88,14 +88,14 @@ static void renorm_range(spx_word16_t *in, spx_word16_t *out, int shift, int len
 void *spx_fft_init(int size)
 {
    struct drft_lookup *table;
-   table = speex_alloc(sizeof(struct drft_lookup));
+   table = (drft_lookup*)speex_alloc(sizeof(struct drft_lookup));
    spx_drft_init((struct drft_lookup *)table, size);
    return (void*)table;
 }
 
 void spx_fft_destroy(void *table)
 {
-   spx_drft_clear(table);
+   spx_drft_clear((drft_lookup*)table);
    speex_free(table);
 }
 

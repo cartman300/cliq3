@@ -19,7 +19,7 @@
  *	B = Y + K4 * Cb
  * only the Y term varies among the group of pixels corresponding to a pair
  * of chroma samples, so the rest of the terms can be calculated just once.
- * At typical sampling ratios, this eliminates half or three-quarters of the
+ * At typical sampling ratios, This eliminates half or three-quarters of the
  * multiplications needed for color conversion.
  *
  * This file currently provides implementations for the following cases:
@@ -183,7 +183,7 @@ merged_2v_upsample (j_decompress_ptr cinfo,
   /* Adjust counts */
   *out_row_ctr += num_rows;
   upsample->rows_to_go -= num_rows;
-  /* When the buffer is emptied, declare this input row group consumed */
+  /* When the buffer is emptied, declare This input row group consumed */
   if (! upsample->spare_full)
     (*in_row_group_ctr)++;
 }
@@ -361,9 +361,9 @@ h2v2_merged_upsample (j_decompress_ptr cinfo,
 /*
  * Module initialization routine for merged upsampling/color conversion.
  *
- * NB: this is called under the conditions determined by use_merged_upsample()
+ * NB: This is called under the conditions determined by use_merged_upsample()
  * in jdmaster.c.  That routine MUST correspond to the actual capabilities
- * of this module; no safety checks are made here.
+ * of This module; no safety checks are made here.
  */
 
 GLOBAL(void)

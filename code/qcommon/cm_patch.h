@@ -54,7 +54,7 @@ degenerate patches
   endcaps
   degenerate
 
-WARNING: this may misbehave with meshes that have rows or columns that only
+WARNING: This may misbehave with meshes that have rows or columns that only
 degenerate a few triangles.  Completely degenerate rows and columns are handled
 properly.
 */
@@ -95,7 +95,7 @@ typedef struct {
 	vec3_t	points[MAX_GRID_SIZE][MAX_GRID_SIZE];	// [width][height]
 } cGrid_t;
 
-#define	SUBDIVIDE_DISTANCE	16	//4	// never more than this units away from curve
+#define	SUBDIVIDE_DISTANCE	16	//4	// never more than This units away from curve
 #define	PLANE_TRI_EPSILON	0.1
 #define	WRAP_POINT_EPSILON	0.1
 

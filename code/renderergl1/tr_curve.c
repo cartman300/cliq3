@@ -385,7 +385,7 @@ srfGridMesh_t *R_SubdividePatchToGrid( int width, int height,
 			// check subdivided midpoints against control points
 
 			// FIXME: also check midpoints of adjacent patches against the control points
-			// this would basically stitch all patches in the same LOD group together.
+			// This would basically stitch all patches in the same LOD group together.
 
 			maxLen = 0;
 			for ( i = 0 ; i < height ; i++ ) {
@@ -454,7 +454,7 @@ srfGridMesh_t *R_SubdividePatchToGrid( int width, int height,
 				ctrl[i][j + 3] = next;
 			}
 
-			// back up and recheck this set again, it may need more subdivision
+			// back up and recheck This set again, it may need more subdivision
 			j -= 2;
 
 		}
@@ -499,7 +499,7 @@ srfGridMesh_t *R_SubdividePatchToGrid( int width, int height,
 #if 1
 	// flip for longest tristrips as an optimization
 	// the results should be visually identical with or
-	// without this step
+	// without This step
 	if ( height > width ) {
 		Transpose( width, height, ctrl );
 		InvertErrorTable( errorTable, width, height );
@@ -536,7 +536,7 @@ srfGridMesh_t *R_GridInsertColumn( srfGridMesh_t *grid, int column, int row, vec
 	height = grid->height;
 	for (i = 0; i < width; i++) {
 		if (i == column) {
-			//insert new column
+			//insert New column
 			for (j = 0; j < grid->height; j++) {
 				LerpDrawVert( &grid->verts[j * grid->width + i-1], &grid->verts[j * grid->width + i], &ctrl[j][i] );
 				if (j == row)
@@ -563,7 +563,7 @@ srfGridMesh_t *R_GridInsertColumn( srfGridMesh_t *grid, int column, int row, vec
 	lodRadius = grid->lodRadius;
 	// free the old grid
 	R_FreeSurfaceGridMesh(grid);
-	// create a new grid
+	// create a New grid
 	grid = R_CreateSurfaceGridMesh( width, height, ctrl, errorTable );
 	grid->lodRadius = lodRadius;
 	VectorCopy(lodOrigin, grid->lodOrigin);
@@ -590,7 +590,7 @@ srfGridMesh_t *R_GridInsertRow( srfGridMesh_t *grid, int row, int column, vec3_t
 		return NULL;
 	for (i = 0; i < height; i++) {
 		if (i == row) {
-			//insert new row
+			//insert New row
 			for (j = 0; j < grid->width; j++) {
 				LerpDrawVert( &grid->verts[(i-1) * grid->width + j], &grid->verts[i * grid->width + j], &ctrl[i][j] );
 				if (j == column)
@@ -617,7 +617,7 @@ srfGridMesh_t *R_GridInsertRow( srfGridMesh_t *grid, int row, int column, vec3_t
 	lodRadius = grid->lodRadius;
 	// free the old grid
 	R_FreeSurfaceGridMesh(grid);
-	// create a new grid
+	// create a New grid
 	grid = R_CreateSurfaceGridMesh( width, height, ctrl, errorTable );
 	grid->lodRadius = lodRadius;
 	VectorCopy(lodOrigin, grid->lodOrigin);

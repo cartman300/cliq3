@@ -127,7 +127,7 @@ void RB_AddQuadStampExt( vec3_t origin, vec3_t left, vec3_t up, byte *color, flo
 	tess.texCoords[ndx+3][0][1] = tess.texCoords[ndx+3][1][1] = t2;
 
 	// constant color all the way around
-	// should this be identity and let the shader specify from entity?
+	// should This be identity and let the shader specify from entity?
 	* ( unsigned int * ) &tess.vertexColors[ndx] = 
 	* ( unsigned int * ) &tess.vertexColors[ndx+1] = 
 	* ( unsigned int * ) &tess.vertexColors[ndx+2] = 
@@ -554,7 +554,7 @@ static void RB_SurfaceLightningBolt( void ) {
 /*
 ** VectorArrayNormalize
 *
-* The inputs to this routing seem to always be close to length = 1.0 (about 0.6 to 2.0)
+* The inputs to This routing seem to always be close to length = 1.0 (about 0.6 to 2.0)
 * This means that we don't have to worry about zero length or enormously long vectors.
 */
 static void VectorArrayNormalize(vec4_t *normals, unsigned int count)
@@ -597,7 +597,7 @@ static void VectorArrayNormalize(vec4_t *normals, unsigned int count)
             components[-2] = z;
         } while(count--);
     }
-#else // No assembly version for this architecture, or C_ONLY defined
+#else // No assembly version for This architecture, or C_ONLY defined
 	// given the input, it's safe to call VectorNormalizeFast
     while (count--) {
         VectorNormalizeFast(normals[0]);
@@ -615,12 +615,12 @@ static void VectorArrayNormalize(vec4_t *normals, unsigned int count)
 #if idppc_altivec
 static void LerpMeshVertexes_altivec(md3Surface_t *surf, float backlerp)
 {
-	short	*oldXyz, *newXyz, *oldNormals, *newNormals;
+	short	*oldXyz, *NewXyz, *oldNormals, *NewNormals;
 	float	*outXyz, *outNormal;
 	float	oldXyzScale QALIGN(16);
-	float   newXyzScale QALIGN(16);
+	float   NewXyzScale QALIGN(16);
 	float	oldNormalScale QALIGN(16);
-	float newNormalScale QALIGN(16);
+	float NewNormalScale QALIGN(16);
 	int		vertNum;
 	unsigned lat, lng;
 	int		numVerts;
@@ -628,54 +628,54 @@ static void LerpMeshVertexes_altivec(md3Surface_t *surf, float backlerp)
 	outXyz = tess.xyz[tess.numVertexes];
 	outNormal = tess.normal[tess.numVertexes];
 
-	newXyz = (short *)((byte *)surf + surf->ofsXyzNormals)
+	NewXyz = (short *)((byte *)surf + surf->ofsXyzNormals)
 		+ (backEnd.currentEntity->e.frame * surf->numVerts * 4);
-	newNormals = newXyz + 3;
+	NewNormals = NewXyz + 3;
 
-	newXyzScale = MD3_XYZ_SCALE * (1.0 - backlerp);
-	newNormalScale = 1.0 - backlerp;
+	NewXyzScale = MD3_XYZ_SCALE * (1.0 - backlerp);
+	NewNormalScale = 1.0 - backlerp;
 
 	numVerts = surf->numVerts;
 
 	if ( backlerp == 0 ) {
-		vector signed short newNormalsVec0;
-		vector signed short newNormalsVec1;
-		vector signed int newNormalsIntVec;
-		vector float newNormalsFloatVec;
-		vector float newXyzScaleVec;
-		vector unsigned char newNormalsLoadPermute;
-		vector unsigned char newNormalsStorePermute;
+		vector signed short NewNormalsVec0;
+		vector signed short NewNormalsVec1;
+		vector signed int NewNormalsIntVec;
+		vector float NewNormalsFloatVec;
+		vector float NewXyzScaleVec;
+		vector unsigned char NewNormalsLoadPermute;
+		vector unsigned char NewNormalsStorePermute;
 		vector float zero;
 		
-		newNormalsStorePermute = vec_lvsl(0,(float *)&newXyzScaleVec);
-		newXyzScaleVec = *(vector float *)&newXyzScale;
-		newXyzScaleVec = vec_perm(newXyzScaleVec,newXyzScaleVec,newNormalsStorePermute);
-		newXyzScaleVec = vec_splat(newXyzScaleVec,0);		
-		newNormalsLoadPermute = vec_lvsl(0,newXyz);
-		newNormalsStorePermute = vec_lvsr(0,outXyz);
+		NewNormalsStorePermute = vec_lvsl(0,(float *)&NewXyzScaleVec);
+		NewXyzScaleVec = *(vector float *)&NewXyzScale;
+		NewXyzScaleVec = vec_perm(NewXyzScaleVec,NewXyzScaleVec,NewNormalsStorePermute);
+		NewXyzScaleVec = vec_splat(NewXyzScaleVec,0);		
+		NewNormalsLoadPermute = vec_lvsl(0,NewXyz);
+		NewNormalsStorePermute = vec_lvsr(0,outXyz);
 		zero = (vector float)vec_splat_s8(0);
 		//
 		// just copy the vertexes
 		//
 		for (vertNum=0 ; vertNum < numVerts ; vertNum++,
-			newXyz += 4, newNormals += 4,
+			NewXyz += 4, NewNormals += 4,
 			outXyz += 4, outNormal += 4) 
 		{
-			newNormalsLoadPermute = vec_lvsl(0,newXyz);
-			newNormalsStorePermute = vec_lvsr(0,outXyz);
-			newNormalsVec0 = vec_ld(0,newXyz);
-			newNormalsVec1 = vec_ld(16,newXyz);
-			newNormalsVec0 = vec_perm(newNormalsVec0,newNormalsVec1,newNormalsLoadPermute);
-			newNormalsIntVec = vec_unpackh(newNormalsVec0);
-			newNormalsFloatVec = vec_ctf(newNormalsIntVec,0);
-			newNormalsFloatVec = vec_madd(newNormalsFloatVec,newXyzScaleVec,zero);
-			newNormalsFloatVec = vec_perm(newNormalsFloatVec,newNormalsFloatVec,newNormalsStorePermute);
-			//outXyz[0] = newXyz[0] * newXyzScale;
-			//outXyz[1] = newXyz[1] * newXyzScale;
-			//outXyz[2] = newXyz[2] * newXyzScale;
+			NewNormalsLoadPermute = vec_lvsl(0,NewXyz);
+			NewNormalsStorePermute = vec_lvsr(0,outXyz);
+			NewNormalsVec0 = vec_ld(0,NewXyz);
+			NewNormalsVec1 = vec_ld(16,NewXyz);
+			NewNormalsVec0 = vec_perm(NewNormalsVec0,NewNormalsVec1,NewNormalsLoadPermute);
+			NewNormalsIntVec = vec_unpackh(NewNormalsVec0);
+			NewNormalsFloatVec = vec_ctf(NewNormalsIntVec,0);
+			NewNormalsFloatVec = vec_madd(NewNormalsFloatVec,NewXyzScaleVec,zero);
+			NewNormalsFloatVec = vec_perm(NewNormalsFloatVec,NewNormalsFloatVec,NewNormalsStorePermute);
+			//outXyz[0] = NewXyz[0] * NewXyzScale;
+			//outXyz[1] = NewXyz[1] * NewXyzScale;
+			//outXyz[2] = NewXyz[2] * NewXyzScale;
 
-			lat = ( newNormals[0] >> 8 ) & 0xff;
-			lng = ( newNormals[0] & 0xff );
+			lat = ( NewNormals[0] >> 8 ) & 0xff;
+			lng = ( NewNormals[0] & 0xff );
 			lat *= (FUNCTABLE_SIZE/256);
 			lng *= (FUNCTABLE_SIZE/256);
 
@@ -687,9 +687,9 @@ static void LerpMeshVertexes_altivec(md3Surface_t *surf, float backlerp)
 			outNormal[1] = tr.sinTable[lat] * tr.sinTable[lng];
 			outNormal[2] = tr.sinTable[(lng+(FUNCTABLE_SIZE/4))&FUNCTABLE_MASK];
 
-			vec_ste(newNormalsFloatVec,0,outXyz);
-			vec_ste(newNormalsFloatVec,4,outXyz);
-			vec_ste(newNormalsFloatVec,8,outXyz);
+			vec_ste(NewNormalsFloatVec,0,outXyz);
+			vec_ste(NewNormalsFloatVec,4,outXyz);
+			vec_ste(NewNormalsFloatVec,8,outXyz);
 		}
 	} else {
 		//
@@ -703,19 +703,19 @@ static void LerpMeshVertexes_altivec(md3Surface_t *surf, float backlerp)
 		oldNormalScale = backlerp;
 
 		for (vertNum=0 ; vertNum < numVerts ; vertNum++,
-			oldXyz += 4, newXyz += 4, oldNormals += 4, newNormals += 4,
+			oldXyz += 4, NewXyz += 4, oldNormals += 4, NewNormals += 4,
 			outXyz += 4, outNormal += 4) 
 		{
 			vec3_t uncompressedOldNormal, uncompressedNewNormal;
 
 			// interpolate the xyz
-			outXyz[0] = oldXyz[0] * oldXyzScale + newXyz[0] * newXyzScale;
-			outXyz[1] = oldXyz[1] * oldXyzScale + newXyz[1] * newXyzScale;
-			outXyz[2] = oldXyz[2] * oldXyzScale + newXyz[2] * newXyzScale;
+			outXyz[0] = oldXyz[0] * oldXyzScale + NewXyz[0] * NewXyzScale;
+			outXyz[1] = oldXyz[1] * oldXyzScale + NewXyz[1] * NewXyzScale;
+			outXyz[2] = oldXyz[2] * oldXyzScale + NewXyz[2] * NewXyzScale;
 
 			// FIXME: interpolate lat/long instead?
-			lat = ( newNormals[0] >> 8 ) & 0xff;
-			lng = ( newNormals[0] & 0xff );
+			lat = ( NewNormals[0] >> 8 ) & 0xff;
+			lng = ( NewNormals[0] & 0xff );
 			lat *= 4;
 			lng *= 4;
 			uncompressedNewNormal[0] = tr.sinTable[(lat+(FUNCTABLE_SIZE/4))&FUNCTABLE_MASK] * tr.sinTable[lng];
@@ -731,9 +731,9 @@ static void LerpMeshVertexes_altivec(md3Surface_t *surf, float backlerp)
 			uncompressedOldNormal[1] = tr.sinTable[lat] * tr.sinTable[lng];
 			uncompressedOldNormal[2] = tr.sinTable[(lng+(FUNCTABLE_SIZE/4))&FUNCTABLE_MASK];
 
-			outNormal[0] = uncompressedOldNormal[0] * oldNormalScale + uncompressedNewNormal[0] * newNormalScale;
-			outNormal[1] = uncompressedOldNormal[1] * oldNormalScale + uncompressedNewNormal[1] * newNormalScale;
-			outNormal[2] = uncompressedOldNormal[2] * oldNormalScale + uncompressedNewNormal[2] * newNormalScale;
+			outNormal[0] = uncompressedOldNormal[0] * oldNormalScale + uncompressedNewNormal[0] * NewNormalScale;
+			outNormal[1] = uncompressedOldNormal[1] * oldNormalScale + uncompressedNewNormal[1] * NewNormalScale;
+			outNormal[2] = uncompressedOldNormal[2] * oldNormalScale + uncompressedNewNormal[2] * NewNormalScale;
 
 //			VectorNormalize (outNormal);
 		}
@@ -744,10 +744,10 @@ static void LerpMeshVertexes_altivec(md3Surface_t *surf, float backlerp)
 
 static void LerpMeshVertexes_scalar(md3Surface_t *surf, float backlerp)
 {
-	short	*oldXyz, *newXyz, *oldNormals, *newNormals;
+	short	*oldXyz, *NewXyz, *oldNormals, *NewNormals;
 	float	*outXyz, *outNormal;
-	float	oldXyzScale, newXyzScale;
-	float	oldNormalScale, newNormalScale;
+	float	oldXyzScale, NewXyzScale;
+	float	oldNormalScale, NewNormalScale;
 	int		vertNum;
 	unsigned lat, lng;
 	int		numVerts;
@@ -755,12 +755,12 @@ static void LerpMeshVertexes_scalar(md3Surface_t *surf, float backlerp)
 	outXyz = tess.xyz[tess.numVertexes];
 	outNormal = tess.normal[tess.numVertexes];
 
-	newXyz = (short *)((byte *)surf + surf->ofsXyzNormals)
+	NewXyz = (short *)((byte *)surf + surf->ofsXyzNormals)
 		+ (backEnd.currentEntity->e.frame * surf->numVerts * 4);
-	newNormals = newXyz + 3;
+	NewNormals = NewXyz + 3;
 
-	newXyzScale = MD3_XYZ_SCALE * (1.0 - backlerp);
-	newNormalScale = 1.0 - backlerp;
+	NewXyzScale = MD3_XYZ_SCALE * (1.0 - backlerp);
+	NewNormalScale = 1.0 - backlerp;
 
 	numVerts = surf->numVerts;
 
@@ -769,16 +769,16 @@ static void LerpMeshVertexes_scalar(md3Surface_t *surf, float backlerp)
 		// just copy the vertexes
 		//
 		for (vertNum=0 ; vertNum < numVerts ; vertNum++,
-			newXyz += 4, newNormals += 4,
+			NewXyz += 4, NewNormals += 4,
 			outXyz += 4, outNormal += 4) 
 		{
 
-			outXyz[0] = newXyz[0] * newXyzScale;
-			outXyz[1] = newXyz[1] * newXyzScale;
-			outXyz[2] = newXyz[2] * newXyzScale;
+			outXyz[0] = NewXyz[0] * NewXyzScale;
+			outXyz[1] = NewXyz[1] * NewXyzScale;
+			outXyz[2] = NewXyz[2] * NewXyzScale;
 
-			lat = ( newNormals[0] >> 8 ) & 0xff;
-			lng = ( newNormals[0] & 0xff );
+			lat = ( NewNormals[0] >> 8 ) & 0xff;
+			lng = ( NewNormals[0] & 0xff );
 			lat *= (FUNCTABLE_SIZE/256);
 			lng *= (FUNCTABLE_SIZE/256);
 
@@ -802,19 +802,19 @@ static void LerpMeshVertexes_scalar(md3Surface_t *surf, float backlerp)
 		oldNormalScale = backlerp;
 
 		for (vertNum=0 ; vertNum < numVerts ; vertNum++,
-			oldXyz += 4, newXyz += 4, oldNormals += 4, newNormals += 4,
+			oldXyz += 4, NewXyz += 4, oldNormals += 4, NewNormals += 4,
 			outXyz += 4, outNormal += 4) 
 		{
 			vec3_t uncompressedOldNormal, uncompressedNewNormal;
 
 			// interpolate the xyz
-			outXyz[0] = oldXyz[0] * oldXyzScale + newXyz[0] * newXyzScale;
-			outXyz[1] = oldXyz[1] * oldXyzScale + newXyz[1] * newXyzScale;
-			outXyz[2] = oldXyz[2] * oldXyzScale + newXyz[2] * newXyzScale;
+			outXyz[0] = oldXyz[0] * oldXyzScale + NewXyz[0] * NewXyzScale;
+			outXyz[1] = oldXyz[1] * oldXyzScale + NewXyz[1] * NewXyzScale;
+			outXyz[2] = oldXyz[2] * oldXyzScale + NewXyz[2] * NewXyzScale;
 
 			// FIXME: interpolate lat/long instead?
-			lat = ( newNormals[0] >> 8 ) & 0xff;
-			lng = ( newNormals[0] & 0xff );
+			lat = ( NewNormals[0] >> 8 ) & 0xff;
+			lng = ( NewNormals[0] & 0xff );
 			lat *= 4;
 			lng *= 4;
 			uncompressedNewNormal[0] = tr.sinTable[(lat+(FUNCTABLE_SIZE/4))&FUNCTABLE_MASK] * tr.sinTable[lng];
@@ -830,9 +830,9 @@ static void LerpMeshVertexes_scalar(md3Surface_t *surf, float backlerp)
 			uncompressedOldNormal[1] = tr.sinTable[lat] * tr.sinTable[lng];
 			uncompressedOldNormal[2] = tr.sinTable[(lng+(FUNCTABLE_SIZE/4))&FUNCTABLE_MASK];
 
-			outNormal[0] = uncompressedOldNormal[0] * oldNormalScale + uncompressedNewNormal[0] * newNormalScale;
-			outNormal[1] = uncompressedOldNormal[1] * oldNormalScale + uncompressedNewNormal[1] * newNormalScale;
-			outNormal[2] = uncompressedOldNormal[2] * oldNormalScale + uncompressedNewNormal[2] * newNormalScale;
+			outNormal[0] = uncompressedOldNormal[0] * oldNormalScale + uncompressedNewNormal[0] * NewNormalScale;
+			outNormal[1] = uncompressedOldNormal[1] * oldNormalScale + uncompressedNewNormal[1] * NewNormalScale;
+			outNormal[2] = uncompressedOldNormal[2] * oldNormalScale + uncompressedNewNormal[2] * NewNormalScale;
 
 //			VectorNormalize (outNormal);
 		}
@@ -1219,7 +1219,7 @@ static void RB_SurfaceFlare(srfFlare_t *surf)
 
 static void RB_SurfaceDisplayList( srfDisplayList_t *surf ) {
 	// all apropriate state must be set in RB_BeginSurface
-	// this isn't implemented yet...
+	// This isn't implemented yet...
 	qglCallList( surf->listNum );
 }
 

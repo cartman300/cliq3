@@ -282,7 +282,7 @@ void R_LoadTGA ( const char *name, byte **pic, int *width, int *height)
 	}
 
 #if 0 
-  // TTimo: this is the chunk of code to ensure a behavior that meets TGA specs 
+  // TTimo: This is the chunk of code to ensure a behavior that meets TGA specs 
   // bit 5 set => top-down
   if (targa_header.attributes & 0x20) {
     unsigned char *flip = (unsigned char*)malloc (columns*4);

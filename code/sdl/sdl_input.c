@@ -146,7 +146,7 @@ static qboolean IN_IsConsoleKey( keyNum_t key, int character )
 			else
 			{
 				c->type = QUAKE_KEY;
-				c->u.key = Key_StringToKeynum( token );
+				c->u.key = (keyNum_t)Key_StringToKeynum( token );
 
 				// 0 isn't a key
 				if( c->u.key <= 0 )
@@ -159,7 +159,7 @@ static qboolean IN_IsConsoleKey( keyNum_t key, int character )
 
 	// If the character is the same as the key, prefer the character
 	if( key == character )
-		key = 0;
+		key = (keyNum_t)0;
 
 	for( i = 0; i < numConsoleKeys; i++ )
 	{
@@ -321,7 +321,7 @@ static void IN_ActivateMouse( void )
 	if( !mouseActive )
 	{
 		SDL_SetRelativeMouseMode( SDL_TRUE );
-		SDL_SetWindowGrab( SDL_window, 1 );
+		SDL_SetWindowGrab( SDL_window, SDL_TRUE );
 
 		IN_GobbleMotionEvents( );
 	}
@@ -332,9 +332,9 @@ static void IN_ActivateMouse( void )
 		if( in_nograb->modified || !mouseActive )
 		{
 			if( in_nograb->integer )
-				SDL_SetWindowGrab( SDL_window, 0 );
+				SDL_SetWindowGrab( SDL_window, SDL_FALSE );
 			else
-				SDL_SetWindowGrab( SDL_window, 1 );
+				SDL_SetWindowGrab( SDL_window, SDL_TRUE );
 
 			in_nograb->modified = qfalse;
 		}
@@ -365,7 +365,7 @@ static void IN_DeactivateMouse( void )
 	{
 		IN_GobbleMotionEvents( );
 
-		SDL_SetWindowGrab( SDL_window, 0 );
+		SDL_SetWindowGrab( SDL_window, SDL_FALSE );
 		SDL_SetRelativeMouseMode( SDL_FALSE );
 
 		// Don't warp the mouse unless the cursor is within the window
@@ -533,7 +533,7 @@ static void IN_JoyMove( void )
 		}
 		if (balldx || balldy)
 		{
-			// !!! FIXME: is this good for stick balls, or just mice?
+			// !!! FIXME: is This good for stick balls, or just mice?
 			// Scale like the mouse input...
 			if (abs(balldx) > 1)
 				balldx *= 2;
@@ -686,7 +686,7 @@ static void IN_JoyMove( void )
 		}
 	}
 
-	/* Time to update axes state based on old vs. new. */
+	/* Time to update axes state based on old vs. New. */
 	if (axes != stick_state.oldaxes)
 	{
 		for( i = 0; i < 16; i++ ) {
@@ -712,8 +712,8 @@ IN_ProcessEvents
 static void IN_ProcessEvents( void )
 {
 	SDL_Event e;
-	keyNum_t key = 0;
-	static keyNum_t lastKeyDown = 0;
+	keyNum_t key = (keyNum_t)0;
+	static keyNum_t lastKeyDown = (keyNum_t)0;
 
 	if( !SDL_WasInit( SDL_INIT_VIDEO ) )
 			return;
@@ -741,7 +741,7 @@ static void IN_ProcessEvents( void )
 				if( ( key = IN_TranslateSDLToQ3Key( &e.key.keysym, qfalse ) ) )
 					Com_QueueEvent( 0, SE_KEY, key, qfalse, 0, NULL );
 
-				lastKeyDown = 0;
+				lastKeyDown = (keyNum_t)0;
 				break;
 
 			case SDL_TEXTINPUT:
@@ -782,7 +782,7 @@ static void IN_ProcessEvents( void )
 
 						if( utf32 != 0 )
 						{
-							if( IN_IsConsoleKey( 0, utf32 ) )
+							if( IN_IsConsoleKey( (keyNum_t)0, utf32 ) )
 							{
 								Com_QueueEvent( 0, SE_KEY, K_CONSOLE, qtrue, 0, NULL );
 								Com_QueueEvent( 0, SE_KEY, K_CONSOLE, qfalse, 0, NULL );

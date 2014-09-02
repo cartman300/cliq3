@@ -130,8 +130,7 @@ void z_error (m)
 /* exported to allow conversion of error code to string for compress() and
  * uncompress()
  */
-const char * ZEXPORT zError(err)
-    int err;
+const char * ZEXPORT zError(int err)
 {
     return ERR_MSG(err);
 }
@@ -202,13 +201,13 @@ local int next_ptr = 0;
 
 typedef struct ptr_table_s {
     voidpf org_ptr;
-    voidpf new_ptr;
+    voidpf New_ptr;
 } ptr_table;
 
 local ptr_table table[MAX_PTR];
 /* This table is used to remember the original form of pointers
  * to large buffers (64K). Such pointers are normalized with a zero offset.
- * Since MSDOS is not a preemptive multitasking OS, this table is not
+ * Since MSDOS is not a preemptive multitasking OS, This table is not
  * protected from concurrent access. This hack doesn't work anyway on
  * a protected system like OS/2. Use Microsoft C instead.
  */
@@ -233,7 +232,7 @@ voidpf zcalloc (voidpf opaque, unsigned items, unsigned size)
     /* Normalize the pointer to seg:0 */
     *((ush*)&buf+1) += ((ush)((uch*)buf-0) + 15) >> 4;
     *(ush*)&buf = 0;
-    table[next_ptr++].new_ptr = buf;
+    table[next_ptr++].New_ptr = buf;
     return buf;
 }
 
@@ -246,7 +245,7 @@ void  zcfree (voidpf opaque, voidpf ptr)
     }
     /* Find the original pointer */
     for (n = 0; n < next_ptr; n++) {
-        if (ptr != table[n].new_ptr) continue;
+        if (ptr != table[n].New_ptr) continue;
 
         farfree(table[n].org_ptr);
         while (++n < next_ptr) {
@@ -297,19 +296,14 @@ extern voidp  calloc OF((uInt items, uInt size));
 extern void   free   OF((voidpf ptr));
 #endif
 
-voidpf zcalloc (opaque, items, size)
-    voidpf opaque;
-    unsigned items;
-    unsigned size;
+voidpf zcalloc (voidpf opaque, unsigned items, unsigned size)
 {
     if (opaque) items += size - size; /* make compiler happy */
     return sizeof(uInt) > 2 ? (voidpf)malloc(items * size) :
                               (voidpf)calloc(items, size);
 }
 
-void  zcfree (opaque, ptr)
-    voidpf opaque;
-    voidpf ptr;
+void  zcfree (voidpf opaque, voidpf ptr)
 {
     free(ptr);
     if (opaque) return; /* make compiler happy */

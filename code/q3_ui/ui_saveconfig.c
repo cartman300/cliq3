@@ -113,8 +113,8 @@ static void UI_SaveConfigMenu_SavenameDraw( void *self ) {
 	}
 
 	UI_DrawProportionalString( 320, 192, "Enter filename:", UI_CENTER|UI_SMALLFONT, color_orange );
-	UI_FillRect( f->generic.x, f->generic.y, f->field.widthInChars*SMALLCHAR_WIDTH, SMALLCHAR_HEIGHT, colorBlack );
-	MField_Draw( &f->field, f->generic.x, f->generic.y, style, color );
+	UI_FillRect( f->Generic.x, f->Generic.y, f->field.widthInChars*SMALLCHAR_WIDTH, SMALLCHAR_HEIGHT, colorBlack );
+	MField_Draw( &f->field, f->Generic.x, f->Generic.y, style, color );
 }
 
 
@@ -130,51 +130,51 @@ static void UI_SaveConfigMenu_Init( void ) {
 	saveConfig.menu.wrapAround = qtrue;
 	saveConfig.menu.fullscreen = qtrue;
 
-	saveConfig.banner.generic.type		= MTYPE_BTEXT;
-	saveConfig.banner.generic.x			= 320;
-	saveConfig.banner.generic.y			= 16;
+	saveConfig.banner.Generic.type		= MTYPE_BTEXT;
+	saveConfig.banner.Generic.x			= 320;
+	saveConfig.banner.Generic.y			= 16;
 	saveConfig.banner.string			= "SAVE CONFIG";
 	saveConfig.banner.color				= color_white;
 	saveConfig.banner.style				= UI_CENTER;
 
-	saveConfig.background.generic.type		= MTYPE_BITMAP;
-	saveConfig.background.generic.name		= ART_BACKGROUND;
-	saveConfig.background.generic.flags		= QMF_INACTIVE;
-	saveConfig.background.generic.x			= 142;
-	saveConfig.background.generic.y			= 118;
+	saveConfig.background.Generic.type		= MTYPE_BITMAP;
+	saveConfig.background.Generic.name		= ART_BACKGROUND;
+	saveConfig.background.Generic.flags		= QMF_INACTIVE;
+	saveConfig.background.Generic.x			= 142;
+	saveConfig.background.Generic.y			= 118;
 	saveConfig.background.width				= 359;
 	saveConfig.background.height			= 256;
 
-	saveConfig.savename.generic.type		= MTYPE_FIELD;
-	saveConfig.savename.generic.flags		= QMF_NODEFAULTINIT|QMF_UPPERCASE;
-	saveConfig.savename.generic.ownerdraw	= UI_SaveConfigMenu_SavenameDraw;
+	saveConfig.savename.Generic.type		= MTYPE_FIELD;
+	saveConfig.savename.Generic.flags		= QMF_NODEFAULTINIT|QMF_UPPERCASE;
+	saveConfig.savename.Generic.ownerdraw	= UI_SaveConfigMenu_SavenameDraw;
 	saveConfig.savename.field.widthInChars	= 20;
 	saveConfig.savename.field.maxchars		= 20;
-	saveConfig.savename.generic.x			= 240;
-	saveConfig.savename.generic.y			= 155+72;
-	saveConfig.savename.generic.left		= 240;
-	saveConfig.savename.generic.top			= 155+72;
-	saveConfig.savename.generic.right		= 233 + 20*SMALLCHAR_WIDTH;
-	saveConfig.savename.generic.bottom		= 155+72 + SMALLCHAR_HEIGHT+2;
+	saveConfig.savename.Generic.x			= 240;
+	saveConfig.savename.Generic.y			= 155+72;
+	saveConfig.savename.Generic.left		= 240;
+	saveConfig.savename.Generic.top			= 155+72;
+	saveConfig.savename.Generic.right		= 233 + 20*SMALLCHAR_WIDTH;
+	saveConfig.savename.Generic.bottom		= 155+72 + SMALLCHAR_HEIGHT+2;
 
-	saveConfig.back.generic.type		= MTYPE_BITMAP;
-	saveConfig.back.generic.name		= ART_BACK0;
-	saveConfig.back.generic.flags		= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
-	saveConfig.back.generic.id			= ID_BACK;
-	saveConfig.back.generic.callback	= UI_SaveConfigMenu_BackEvent;
-	saveConfig.back.generic.x			= 0;
-	saveConfig.back.generic.y			= 480-64;
+	saveConfig.back.Generic.type		= MTYPE_BITMAP;
+	saveConfig.back.Generic.name		= ART_BACK0;
+	saveConfig.back.Generic.flags		= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
+	saveConfig.back.Generic.id			= ID_BACK;
+	saveConfig.back.Generic.callback	= UI_SaveConfigMenu_BackEvent;
+	saveConfig.back.Generic.x			= 0;
+	saveConfig.back.Generic.y			= 480-64;
 	saveConfig.back.width				= 128;
 	saveConfig.back.height				= 64;
 	saveConfig.back.focuspic			= ART_BACK1;
 
-	saveConfig.save.generic.type		= MTYPE_BITMAP;
-	saveConfig.save.generic.name		= ART_SAVE0;
-	saveConfig.save.generic.flags		= QMF_RIGHT_JUSTIFY|QMF_PULSEIFFOCUS;
-	saveConfig.save.generic.id			= ID_SAVE;
-	saveConfig.save.generic.callback	= UI_SaveConfigMenu_SaveEvent;
-	saveConfig.save.generic.x			= 640;
-	saveConfig.save.generic.y			= 480-64;
+	saveConfig.save.Generic.type		= MTYPE_BITMAP;
+	saveConfig.save.Generic.name		= ART_SAVE0;
+	saveConfig.save.Generic.flags		= QMF_RIGHT_JUSTIFY|QMF_PULSEIFFOCUS;
+	saveConfig.save.Generic.id			= ID_SAVE;
+	saveConfig.save.Generic.callback	= UI_SaveConfigMenu_SaveEvent;
+	saveConfig.save.Generic.x			= 640;
+	saveConfig.save.Generic.y			= 480-64;
 	saveConfig.save.width  				= 128;
 	saveConfig.save.height  		    = 64;
 	saveConfig.save.focuspic			= ART_SAVE1;

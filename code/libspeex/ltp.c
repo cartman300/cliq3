@@ -7,15 +7,15 @@
    are met:
    
    - Redistributions of source code must retain the above copyright
-   notice, this list of conditions and the following disclaimer.
+   notice, This list of conditions and the following disclaimer.
    
    - Redistributions in binary form must reproduce the above copyright
-   notice, this list of conditions and the following disclaimer in the
+   notice, This list of conditions and the following disclaimer in the
    documentation and/or other materials provided with the distribution.
    
    - Neither the name of the Xiph.org Foundation nor the names of its
    contributors may be used to endorse or promote products derived from
-   this software without specific prior written permission.
+   This software without specific prior written permission.
    
    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
    ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -75,7 +75,7 @@ spx_word32_t inner_prod(const spx_word16_t *x, const spx_word16_t *y, int len)
 #endif
 
 #ifndef OVERRIDE_PITCH_XCORR
-#if 0 /* HINT: Enable this for machines with enough registers (i.e. not x86) */
+#if 0 /* HINT: Enable This for machines with enough registers (i.e. not x86) */
 void pitch_xcorr(const spx_word16_t *_x, const spx_word16_t *_y, spx_word32_t *corr, int len, int nb_pitch, char *stack)
 {
    int i,j;
@@ -241,7 +241,7 @@ void open_loop_nbest_pitch(spx_word16_t *sw, int start, int end, int len, int *p
    eshift = normalize16(energy, ener16, 32766, end-start+1);
 #endif
    
-   /* In fixed-point, this actually overrites the energy array (aliased to corr) */
+   /* In fixed-point, This actually overrites the energy array (aliased to corr) */
    pitch_xcorr(sw, sw-end, corr, len, end-start+1, stack);
    
 #ifdef FIXED_POINT
@@ -347,9 +347,9 @@ static int pitch_gain_search_3tap_vq(
 /** Finds the best quantized 3-tap pitch predictor by analysis by synthesis */
 static spx_word32_t pitch_gain_search_3tap(
 const spx_word16_t target[],       /* Target vector */
-const spx_coef_t ak[],          /* LPCs for this subframe */
-const spx_coef_t awk1[],        /* Weighted LPCs #1 for this subframe */
-const spx_coef_t awk2[],        /* Weighted LPCs #2 for this subframe */
+const spx_coef_t ak[],          /* LPCs for This subframe */
+const spx_coef_t awk1[],        /* Weighted LPCs #1 for This subframe */
+const spx_coef_t awk2[],        /* Weighted LPCs #2 for This subframe */
 spx_sig_t exc[],                /* Excitation */
 const signed char *gain_cdbk,
 int gain_cdbk_size,
@@ -360,7 +360,7 @@ SpeexBits *bits,
 char *stack,
 const spx_word16_t *exc2,
 const spx_word16_t *r,
-spx_word16_t *new_target,
+spx_word16_t *New_target,
 int  *cdbk_index,
 int plc_tuning,
 spx_word32_t cumul_gain,
@@ -389,7 +389,7 @@ int scaledown
    x[2]=tmp1+2*nsf;
    
    for (j=0;j<nsf;j++)
-      new_target[j] = target[j];
+      New_target[j] = target[j];
 
    {
       VARDECL(spx_mem_t *mm);
@@ -411,7 +411,7 @@ int scaledown
          for (j=0;j<nsf;j++)
             e[j] = SHR16(e[j],1);
          for (j=0;j<nsf;j++)
-            new_target[j] = SHR16(new_target[j],1);
+            New_target[j] = SHR16(New_target[j],1);
       }
 #endif
       for (j=0;j<p;j++)
@@ -437,7 +437,7 @@ int scaledown
    }
 
    for (i=0;i<3;i++)
-      corr[i]=inner_prod(x[i],new_target,nsf);
+      corr[i]=inner_prod(x[i],New_target,nsf);
    for (i=0;i<3;i++)
       for (j=0;j<=i;j++)
          A[i][j]=A[j][i]=inner_prod(x[i],x[j],nsf);
@@ -517,9 +517,9 @@ int scaledown
    {
       spx_word32_t tmp = ADD32(ADD32(MULT16_16(gain[0],x[2][i]),MULT16_16(gain[1],x[1][i])),
                             MULT16_16(gain[2],x[0][i]));
-      new_target[i] = SUB16(new_target[i], EXTRACT16(PSHR32(tmp,6)));
+      New_target[i] = SUB16(New_target[i], EXTRACT16(PSHR32(tmp,6)));
    }
-   err = inner_prod(new_target, new_target, nsf);
+   err = inner_prod(New_target, New_target, nsf);
 
    return err;
 }
@@ -528,9 +528,9 @@ int scaledown
 int pitch_search_3tap(
 spx_word16_t target[],                 /* Target vector */
 spx_word16_t *sw,
-spx_coef_t ak[],                     /* LPCs for this subframe */
-spx_coef_t awk1[],                   /* Weighted LPCs #1 for this subframe */
-spx_coef_t awk2[],                   /* Weighted LPCs #2 for this subframe */
+spx_coef_t ak[],                     /* LPCs for This subframe */
+spx_coef_t awk1[],                   /* Weighted LPCs #1 for This subframe */
+spx_coef_t awk2[],                   /* Weighted LPCs #2 for This subframe */
 spx_sig_t exc[],                    /* Excitation */
 const void *par,
 int   start,                    /* Smallest pitch value allowed */
@@ -551,7 +551,7 @@ spx_word32_t *cumul_gain
    int i;
    int cdbk_index, pitch=0, best_gain_index=0;
    VARDECL(spx_sig_t *best_exc);
-   VARDECL(spx_word16_t *new_target);
+   VARDECL(spx_word16_t *New_target);
    VARDECL(spx_word16_t *best_target);
    int best_pitch=0;
    spx_word32_t err, best_err=-1;
@@ -611,7 +611,7 @@ spx_word32_t *cumul_gain
       nbest[0] = start;
    
    ALLOC(best_exc, nsf, spx_sig_t);
-   ALLOC(new_target, nsf, spx_word16_t);
+   ALLOC(New_target, nsf, spx_word16_t);
    ALLOC(best_target, nsf, spx_word16_t);
    
    for (i=0;i<N;i++)
@@ -619,11 +619,11 @@ spx_word32_t *cumul_gain
       pitch=nbest[i];
       SPEEX_MEMSET(exc, 0, nsf);
       err=pitch_gain_search_3tap(target, ak, awk1, awk2, exc, gain_cdbk, gain_cdbk_size, pitch, p, nsf,
-                                 bits, stack, exc2, r, new_target, &cdbk_index, plc_tuning, *cumul_gain, scaledown);
+                                 bits, stack, exc2, r, New_target, &cdbk_index, plc_tuning, *cumul_gain, scaledown);
       if (err<best_err || best_err<0)
       {
          SPEEX_COPY(best_exc, exc, nsf);
-         SPEEX_COPY(best_target, new_target, nsf);
+         SPEEX_COPY(best_target, New_target, nsf);
          best_err=err;
          best_pitch=pitch;
          best_gain_index=cdbk_index;
@@ -755,9 +755,9 @@ int cdbk_offset
 int forced_pitch_quant(
 spx_word16_t target[],                 /* Target vector */
 spx_word16_t *sw,
-spx_coef_t ak[],                     /* LPCs for this subframe */
-spx_coef_t awk1[],                   /* Weighted LPCs #1 for this subframe */
-spx_coef_t awk2[],                   /* Weighted LPCs #2 for this subframe */
+spx_coef_t ak[],                     /* LPCs for This subframe */
+spx_coef_t awk1[],                   /* Weighted LPCs #1 for This subframe */
+spx_coef_t awk2[],                   /* Weighted LPCs #2 for This subframe */
 spx_sig_t exc[],                    /* Excitation */
 const void *par,
 int   start,                    /* Smallest pitch value allowed */

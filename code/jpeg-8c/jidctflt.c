@@ -7,7 +7,7 @@
  * For conditions of distribution and use, see the accompanying README file.
  *
  * This file contains a floating-point implementation of the
- * inverse DCT (Discrete Cosine Transform).  In the IJG code, this routine
+ * inverse DCT (Discrete Cosine Transform).  In the IJG code, This routine
  * must also perform dequantization of the input coefficients.
  *
  * This implementation should be more accurate than either of the integer
@@ -31,7 +31,7 @@
  * folded into the multiplications or divisions by the JPEG quantization
  * table entries.  The AA&N method leaves only 5 multiplies and 29 adds
  * to be done in the DCT itself.
- * The primary disadvantage of this method is that with a fixed-point
+ * The primary disadvantage of This method is that with a fixed-point
  * implementation, accuracy is lost due to imprecise representation of the
  * scaled quantization values.  However, that problem does not arise if
  * we use floating point arithmetic.
@@ -50,7 +50,7 @@
  */
 
 #if DCTSIZE != 8
-  Sorry, this code only copes with 8x8 DCTs. /* deliberate syntax err */
+  Sorry, This code only copes with 8x8 DCTs. /* deliberate syntax err */
 #endif
 
 
@@ -88,12 +88,12 @@ jpeg_idct_float (j_decompress_ptr cinfo, jpeg_component_info * compptr,
   wsptr = workspace;
   for (ctr = DCTSIZE; ctr > 0; ctr--) {
     /* Due to quantization, we will usually find that many of the input
-     * coefficients are zero, especially the AC terms.  We can exploit this
+     * coefficients are zero, especially the AC terms.  We can exploit This
      * by short-circuiting the IDCT calculation for any column in which all
      * the AC terms are zero.  In that case each output is equal to the
      * DC coefficient (with scale factor as needed).
      * With typical images and quantization tables, half or more of the
-     * column DCT calculations can be simplified this way.
+     * column DCT calculations can be simplified This way.
      */
     
     if (inptr[DCTSIZE*1] == 0 && inptr[DCTSIZE*2] == 0 &&

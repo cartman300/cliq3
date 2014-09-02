@@ -156,58 +156,58 @@ static void UI_Mods_MenuInit( void ) {
 	s_mods.menu.wrapAround = qtrue;
 	s_mods.menu.fullscreen = qtrue;
 
-	s_mods.banner.generic.type		= MTYPE_BTEXT;
-	s_mods.banner.generic.x			= 320;
-	s_mods.banner.generic.y			= 16;
+	s_mods.banner.Generic.type		= MTYPE_BTEXT;
+	s_mods.banner.Generic.x			= 320;
+	s_mods.banner.Generic.y			= 16;
 	s_mods.banner.string			= "MODS";
 	s_mods.banner.color				= color_white;
 	s_mods.banner.style				= UI_CENTER;
 
-	s_mods.framel.generic.type		= MTYPE_BITMAP;
-	s_mods.framel.generic.name		= ART_FRAMEL;
-	s_mods.framel.generic.flags		= QMF_INACTIVE;
-	s_mods.framel.generic.x			= 0;  
-	s_mods.framel.generic.y			= 78;
+	s_mods.framel.Generic.type		= MTYPE_BITMAP;
+	s_mods.framel.Generic.name		= ART_FRAMEL;
+	s_mods.framel.Generic.flags		= QMF_INACTIVE;
+	s_mods.framel.Generic.x			= 0;  
+	s_mods.framel.Generic.y			= 78;
 	s_mods.framel.width				= 256;
 	s_mods.framel.height			= 329;
 
-	s_mods.framer.generic.type		= MTYPE_BITMAP;
-	s_mods.framer.generic.name		= ART_FRAMER;
-	s_mods.framer.generic.flags		= QMF_INACTIVE;
-	s_mods.framer.generic.x			= 376;
-	s_mods.framer.generic.y			= 76;
+	s_mods.framer.Generic.type		= MTYPE_BITMAP;
+	s_mods.framer.Generic.name		= ART_FRAMER;
+	s_mods.framer.Generic.flags		= QMF_INACTIVE;
+	s_mods.framer.Generic.x			= 376;
+	s_mods.framer.Generic.y			= 76;
 	s_mods.framer.width				= 256;
 	s_mods.framer.height			= 334;
 
-	s_mods.back.generic.type		= MTYPE_BITMAP;
-	s_mods.back.generic.name		= ART_BACK0;
-	s_mods.back.generic.flags		= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
-	s_mods.back.generic.id			= ID_BACK;
-	s_mods.back.generic.callback	= UI_Mods_MenuEvent;
-	s_mods.back.generic.x			= 0;
-	s_mods.back.generic.y			= 480-64;
+	s_mods.back.Generic.type		= MTYPE_BITMAP;
+	s_mods.back.Generic.name		= ART_BACK0;
+	s_mods.back.Generic.flags		= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
+	s_mods.back.Generic.id			= ID_BACK;
+	s_mods.back.Generic.callback	= UI_Mods_MenuEvent;
+	s_mods.back.Generic.x			= 0;
+	s_mods.back.Generic.y			= 480-64;
 	s_mods.back.width				= 128;
 	s_mods.back.height				= 64;
 	s_mods.back.focuspic			= ART_BACK1;
 
-	s_mods.go.generic.type			= MTYPE_BITMAP;
-	s_mods.go.generic.name			= ART_FIGHT0;
-	s_mods.go.generic.flags			= QMF_RIGHT_JUSTIFY|QMF_PULSEIFFOCUS;
-	s_mods.go.generic.id			= ID_GO;
-	s_mods.go.generic.callback		= UI_Mods_MenuEvent;
-	s_mods.go.generic.x				= 640;
-	s_mods.go.generic.y				= 480-64;
+	s_mods.go.Generic.type			= MTYPE_BITMAP;
+	s_mods.go.Generic.name			= ART_FIGHT0;
+	s_mods.go.Generic.flags			= QMF_RIGHT_JUSTIFY|QMF_PULSEIFFOCUS;
+	s_mods.go.Generic.id			= ID_GO;
+	s_mods.go.Generic.callback		= UI_Mods_MenuEvent;
+	s_mods.go.Generic.x				= 640;
+	s_mods.go.Generic.y				= 480-64;
 	s_mods.go.width					= 128;
 	s_mods.go.height				= 64;
 	s_mods.go.focuspic				= ART_FIGHT1;
 
 	// scan for mods
-	s_mods.list.generic.type		= MTYPE_SCROLLLIST;
-	s_mods.list.generic.flags		= QMF_PULSEIFFOCUS|QMF_CENTER_JUSTIFY;
-	s_mods.list.generic.callback	= UI_Mods_MenuEvent;
-	s_mods.list.generic.id			= ID_LIST;
-	s_mods.list.generic.x			= 320;
-	s_mods.list.generic.y			= 130;
+	s_mods.list.Generic.type		= MTYPE_SCROLLLIST;
+	s_mods.list.Generic.flags		= QMF_PULSEIFFOCUS|QMF_CENTER_JUSTIFY;
+	s_mods.list.Generic.callback	= UI_Mods_MenuEvent;
+	s_mods.list.Generic.id			= ID_LIST;
+	s_mods.list.Generic.x			= 320;
+	s_mods.list.Generic.y			= 130;
 	s_mods.list.width				= 48;
 	s_mods.list.height				= 14;
 

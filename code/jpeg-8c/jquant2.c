@@ -52,7 +52,7 @@
  * used here have proved out well in experimental comparisons, but better ones
  * may yet be found.
  *
- * In earlier versions of the IJG code, this module quantized in YCbCr color
+ * In earlier versions of the IJG code, This module quantized in YCbCr color
  * space, processing the raw upsampled data without a color conversion step.
  * This allowed the color conversion math to be done only once per colormap
  * entry, not once per pixel.  However, that optimization precluded other
@@ -66,18 +66,18 @@
  * B.  To do everything in integer math, we must use integer scale factors.
  * The 2/3/1 scale factors used here correspond loosely to the relative
  * weights of the colors in the NTSC grayscale equation.
- * If you want to use this code to quantize a non-RGB color space, you'll
+ * If you want to use This code to quantize a non-RGB color space, you'll
  * probably need to change these scale factors.
  */
 
-#define R_SCALE 2		/* scale R distances by this much */
-#define G_SCALE 3		/* scale G distances by this much */
-#define B_SCALE 1		/* and B by this much */
+#define R_SCALE 2		/* scale R distances by This much */
+#define G_SCALE 3		/* scale G distances by This much */
+#define B_SCALE 1		/* and B by This much */
 
 /* Relabel R/G/B as components 0/1/2, respecting the RGB ordering defined
  * in jmorecfg.h.  As the code stands, it will do the right thing for R,G,B
  * and B,G,R orders.  If you define some other weird order in jmorecfg.h,
- * you'll get compile errors until you extend this logic.  In that case
+ * you'll get compile errors until you extend This logic.  In that case
  * you'll probably want to tweak the histogram sizes too.
  */
 
@@ -107,7 +107,7 @@
  * better results; if you are short of memory, 5 bits all around will save
  * some space but degrade the results.
  * To maintain a fully accurate histogram, we'd need to allocate a "long"
- * (preferably unsigned long) for each cell.  In practice this is overkill;
+ * (preferably unsigned long) for each cell.  In practice This is overkill;
  * we can get by with 16 bits per cell.  Few of the cell counts will overflow,
  * and clamping those that do overflow to the maximum value will give close-
  * enough results.  This reduces the recommended histogram size from 256Kb
@@ -213,7 +213,7 @@ typedef my_cquantizer * my_cquantize_ptr;
 
 /*
  * Prescan some rows of pixels.
- * In this module the prescan simply updates the histogram, which has been
+ * In This module the prescan simply updates the histogram, which has been
  * initialized to zeroes by start_pass.
  * An output_buf parameter is required by the method signature, but no data
  * is actually output (in fact the buffer controller is probably passing a
@@ -262,7 +262,7 @@ typedef struct {
   int c2min, c2max;
   /* The volume (actually 2-norm) of the box */
   INT32 volume;
-  /* The number of nonzero histogram cells within this box */
+  /* The number of nonzero histogram cells within This box */
   long colorcount;
 } box;
 
@@ -394,7 +394,7 @@ update_box (j_decompress_ptr cinfo, boxptr boxp)
  have_c2max:
 
   /* Update box volume.
-   * We use 2-norm rather than real volume here; this biases the method
+   * We use 2-norm rather than real volume here; This biases the method
    * against making long narrow boxes, and it has the side benefit that
    * a box is splittable iff norm > 0.
    * Since the differences are expressed in histogram-cell units,
@@ -440,8 +440,8 @@ median_cut (j_decompress_ptr cinfo, boxptr boxlist, int numboxes,
     }
     if (b1 == NULL)		/* no splittable boxes left! */
       break;
-    b2 = &boxlist[numboxes];	/* where new box will go */
-    /* Copy the color bounds to the new box. */
+    b2 = &boxlist[numboxes];	/* where New box will go */
+    /* Copy the color bounds to the New box. */
     b2->c0max = b1->c0max; b2->c1max = b1->c1max; b2->c2max = b1->c2max;
     b2->c0min = b1->c0min; b2->c1min = b1->c1min; b2->c2min = b1->c2min;
     /* Choose which axis to split the box on.
@@ -600,12 +600,12 @@ select_colors (j_decompress_ptr cinfo, int desired_colors)
  * The work array need be only as big as the subbox, so the memory usage
  * problem is solved.  Furthermore, we need not fill subboxes that are never
  * referenced in pass2; many images use only part of the color gamut, so a
- * fair amount of work is saved.  An additional advantage of this
+ * fair amount of work is saved.  An additional advantage of This
  * approach is that we can apply Heckbert's locality criterion to quickly
  * eliminate colormap entries that are far away from the subbox; typically
  * three-fourths of the colormap entries are rejected by Heckbert's criterion,
  * and we need not compute their distances to individual cells in the subbox.
- * The speed of this approach is heavily influenced by the subbox size: too
+ * The speed of This approach is heavily influenced by the subbox size: too
  * small means too much overhead, too big loses because Heckbert's criterion
  * can't eliminate as many colormap entries.  Empirically the best subbox
  * size seems to be about 1/512th of the histogram (1/8th in each direction).
@@ -620,7 +620,7 @@ select_colors (j_decompress_ptr cinfo, int desired_colors)
  */
 
 
-/* log2(histogram cells in update box) for each axis; this can be adjusted */
+/* log2(histogram cells in update box) for each axis; This can be adjusted */
 #define BOX_C0_LOG  (HIST_C0_BITS-3)
 #define BOX_C1_LOG  (HIST_C1_BITS-3)
 #define BOX_C2_LOG  (HIST_C2_BITS-3)
@@ -636,7 +636,7 @@ select_colors (j_decompress_ptr cinfo, int desired_colors)
 
 /*
  * The next three routines implement inverse colormap filling.  They could
- * all be folded into one big routine, but splitting them up this way saves
+ * all be folded into one big routine, but splitting them up This way saves
  * some stack space (the mindist[] and bestdist[] arrays need not coexist)
  * and may allow some compilers to produce better code by registerizing more
  * inner-loop variables.
@@ -810,7 +810,7 @@ find_best_colors (j_decompress_ptr cinfo, int minc0, int minc1, int minc2,
   
   for (i = 0; i < numcolors; i++) {
     icolor = GETJSAMPLE(colorlist[i]);
-    /* Compute (square of) distance from minc0/c1/c2 to this color */
+    /* Compute (square of) distance from minc0/c1/c2 to This color */
     inc0 = (minc0 - GETJSAMPLE(cinfo->colormap[0][icolor])) * C0_SCALE;
     dist0 = inc0*inc0;
     inc1 = (minc1 - GETJSAMPLE(cinfo->colormap[1][icolor])) * C1_SCALE;
@@ -934,11 +934,11 @@ pass2_no_dither (j_decompress_ptr cinfo,
       c1 = GETJSAMPLE(*inptr++) >> C1_SHIFT;
       c2 = GETJSAMPLE(*inptr++) >> C2_SHIFT;
       cachep = & histogram[c0][c1][c2];
-      /* If we have not seen this color before, find nearest colormap entry */
+      /* If we have not seen This color before, find nearest colormap entry */
       /* and update the cache */
       if (*cachep == 0)
 	fill_inverse_cmap(cinfo, c0,c1,c2);
-      /* Now emit the colormap index for this cell */
+      /* Now emit the colormap index for This cell */
       *outptr++ = (JSAMPLE) (*cachep - 1);
     }
   }
@@ -975,7 +975,7 @@ pass2_fs_dither (j_decompress_ptr cinfo,
     inptr = input_buf[row];
     outptr = output_buf[row];
     if (cquantize->on_odd_row) {
-      /* work right to left in this row */
+      /* work right to left in This row */
       inptr += (width-1) * 3;	/* so point to rightmost pixel */
       outptr += width-1;
       dir = -1;
@@ -983,7 +983,7 @@ pass2_fs_dither (j_decompress_ptr cinfo,
       errorptr = cquantize->fserrors + (width+1)*3; /* => entry after last column */
       cquantize->on_odd_row = FALSE; /* flip for next time */
     } else {
-      /* work left to right in this row */
+      /* work left to right in This row */
       dir = 1;
       dir3 = 3;
       errorptr = cquantize->fserrors; /* => entry before first real column */
@@ -998,7 +998,7 @@ pass2_fs_dither (j_decompress_ptr cinfo,
     for (col = width; col > 0; col--) {
       /* curN holds the error propagated from the previous pixel on the
        * current line.  Add the error propagated from the previous line
-       * to form the complete error correction term for this pixel, and
+       * to form the complete error correction term for This pixel, and
        * round the error term (which is expressed * 16) to an integer.
        * RIGHT_SHIFT rounds towards minus infinity, so adding 8 is correct
        * for either sign of the error value.
@@ -1015,7 +1015,7 @@ pass2_fs_dither (j_decompress_ptr cinfo,
       cur2 = error_limit[cur2];
       /* Form pixel value + error, and range-limit to 0..MAXJSAMPLE.
        * The maximum error is +- MAXJSAMPLE (or less with error limiting);
-       * this sets the required size of the range_limit array.
+       * This sets the required size of the range_limit array.
        */
       cur0 += GETJSAMPLE(inptr[0]);
       cur1 += GETJSAMPLE(inptr[1]);
@@ -1025,14 +1025,14 @@ pass2_fs_dither (j_decompress_ptr cinfo,
       cur2 = GETJSAMPLE(range_limit[cur2]);
       /* Index into the cache with adjusted pixel value */
       cachep = & histogram[cur0>>C0_SHIFT][cur1>>C1_SHIFT][cur2>>C2_SHIFT];
-      /* If we have not seen this color before, find nearest colormap */
+      /* If we have not seen This color before, find nearest colormap */
       /* entry and update the cache */
       if (*cachep == 0)
 	fill_inverse_cmap(cinfo, cur0>>C0_SHIFT,cur1>>C1_SHIFT,cur2>>C2_SHIFT);
-      /* Now emit the colormap index for this cell */
+      /* Now emit the colormap index for This cell */
       { register int pixcode = *cachep - 1;
 	*outptr = (JSAMPLE) pixcode;
-	/* Compute representation error for this pixel */
+	/* Compute representation error for This pixel */
 	cur0 -= GETJSAMPLE(colormap0[pixcode]);
 	cur1 -= GETJSAMPLE(colormap1[pixcode]);
 	cur2 -= GETJSAMPLE(colormap2[pixcode]);
@@ -1068,7 +1068,7 @@ pass2_fs_dither (j_decompress_ptr cinfo,
 	belowerr2 = bnexterr;
 	cur2 += delta;		/* form error * 7 */
       }
-      /* At this point curN contains the 7/16 error value to be propagated
+      /* At This point curN contains the 7/16 error value to be propagated
        * to the next pixel on the current line, and all the errors for the
        * next line have been shifted over.  We are therefore ready to move on.
        */
@@ -1093,7 +1093,7 @@ pass2_fs_dither (j_decompress_ptr cinfo,
  * +- MAXJSAMPLE.  But we want the maximum correction applied to a pixel to be
  * much less, otherwise obviously wrong pixels will be created.  (Typical
  * effects include weird fringes at color-area boundaries, isolated bright
- * pixels in a dark area, etc.)  The standard advice for avoiding this problem
+ * pixels in a dark area, etc.)  The standard advice for avoiding This problem
  * is to ensure that the "corners" of the color cube are allocated as output
  * colors; then repeated errors in the same direction cannot cause cascading
  * error buildup.  However, that only prevents the error from getting
@@ -1101,7 +1101,7 @@ pass2_fs_dither (j_decompress_ptr cinfo,
  * the results even with corner colors allocated.
  * A simple clamping of the error values to about +- MAXJSAMPLE/8 works pretty
  * well, but the smoother transfer function used below is even better.  Thanks
- * to Aaron Giles for this idea.
+ * to Aaron Giles for This idea.
  */
 
 LOCAL(void)
@@ -1223,7 +1223,7 @@ start_pass_2_quant (j_decompress_ptr cinfo, boolean is_pre_scan)
 
 
 /*
- * Switch to a new external colormap between output passes.
+ * Switch to a New external colormap between output passes.
  */
 
 METHODDEF(void)
@@ -1270,7 +1270,7 @@ jinit_2pass_quantizer (j_decompress_ptr cinfo)
   cquantize->needs_zeroed = TRUE; /* histogram is garbage now */
 
   /* Allocate storage for the completed colormap, if required.
-   * We do this now since it is FAR storage and may affect
+   * We do This now since it is FAR storage and may affect
    * the memory manager's space calculations.
    */
   if (cinfo->enable_2pass_quant) {

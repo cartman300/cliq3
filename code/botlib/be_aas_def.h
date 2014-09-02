@@ -160,7 +160,7 @@ typedef struct aas_routingupdate_s
 typedef struct aas_reversedlink_s
 {
 	int linknum;								//the aas_areareachability_t
-	int areanum;								//reachable from this area
+	int areanum;								//reachable from This area
 	struct aas_reversedlink_s *next;			//next link
 } aas_reversedlink_t;
 
@@ -261,7 +261,7 @@ typedef struct aas_s
 	aas_routingcache_t **portalcache;
 	//cache list sorted on time
 	aas_routingcache_t *oldestcache;		// start of cache list sorted on time
-	aas_routingcache_t *newestcache;		// end of cache list sorted on time
+	aas_routingcache_t *Newestcache;		// end of cache list sorted on time
 	//maximum travel time through portal areas
 	int *portalmaxtraveltimes;
 	//areas the reachabilities go through

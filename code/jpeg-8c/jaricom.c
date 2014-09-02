@@ -19,9 +19,9 @@
 
 /* The following #define specifies the packing of the four components
  * into the compact INT32 representation.
- * Note that this formula must match the actual arithmetic encoder
+ * Note that This formula must match the actual arithmetic encoder
  * and decoder implementation.  The implementation has to be changed
- * if this formula is changed.
+ * if This formula is changed.
  * The current organization is leaned on Markus Kuhn's JBIG
  * implementation (jbig_tab.c).
  */

@@ -4,10 +4,10 @@ Netherlands.
 
                         All Rights Reserved
 
-Permission to use, copy, modify, and distribute this software and its 
+Permission to use, copy, modify, and distribute This software and its 
 documentation for any purpose and without fee is hereby granted, 
 provided that the above copyright notice appear in all copies and that
-both that copyright notice and this permission notice appear in 
+both that copyright notice and This permission notice appear in 
 supporting documentation, and that the names of Stichting Mathematisch
 Centrum or CWI not be used in advertising or publicity pertaining to
 distribution of the software without specific, written prior permission.
@@ -25,7 +25,7 @@ OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 /*
 ** Intel/DVI ADPCM coder/decoder.
 **
-** The algorithm for this coder was taken from the IMA Compatability Project
+** The algorithm for This coder was taken from the IMA Compatability Project
 ** proceedings, Vol 2, Number 2; May 1992.
 **
 ** Version 1.2, 18-Dec-92.
@@ -90,7 +90,7 @@ void S_AdpcmEncode( short indata[], char outdata[], int len, struct adpcm_state 
 		** This code *approximately* computes:
 		**    delta = diff*4/step;
 		**    vpdiff = (delta+0.5)*step/4;
-		** but in shift step bits are dropped. The net result of this is
+		** but in shift step bits are dropped. The net result of This is
 		** that even if you have fast mul/div hardware you cannot put it to
 		** good use since the fixup would be too expensive.
 		*/
@@ -184,7 +184,7 @@ void S_AdpcmEncode( short indata[], char outdata[], int len, struct adpcm_state 
 		}
 		bufferstep = !bufferstep;
 
-		/* Step 2 - Find new index value (for later) */
+		/* Step 2 - Find New index value (for later) */
 		index += indexTable[delta];
 		if ( index < 0 ) index = 0;
 		if ( index > 88 ) index = 88;
@@ -193,7 +193,7 @@ void S_AdpcmEncode( short indata[], char outdata[], int len, struct adpcm_state 
 		sign = delta & 8;
 		delta = delta & 7;
 
-		/* Step 4 - Compute difference and new predicted value */
+		/* Step 4 - Compute difference and New predicted value */
 		/*
 		** Computes 'vpdiff = (delta+0.5)*step/4', but see comment
 		** in adpcm_coder.
@@ -292,7 +292,7 @@ void S_AdpcmEncodeSound( sfx_t *sfx, short *samples ) {
 	int				inOffset;
 	int				count;
 	int				n;
-	sndBuffer		*newchunk, *chunk;
+	sndBuffer		*Newchunk, *chunk;
 	byte			*out;
 
 	inOffset = 0;
@@ -307,13 +307,13 @@ void S_AdpcmEncodeSound( sfx_t *sfx, short *samples ) {
 			n = SND_CHUNK_SIZE_BYTE*2;
 		}
 
-		newchunk = SND_malloc();
+		Newchunk = SND_malloc();
 		if (sfx->soundData == NULL) {
-			sfx->soundData = newchunk;
+			sfx->soundData = Newchunk;
 		} else if (chunk != NULL) {
-			chunk->next = newchunk;
+			chunk->next = Newchunk;
 		}
-		chunk = newchunk;
+		chunk = Newchunk;
 
 		// output the header
 		chunk->adpcm.index  = state.index;

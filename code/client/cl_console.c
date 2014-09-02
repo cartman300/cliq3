@@ -36,9 +36,9 @@ typedef struct {
 	short	text[CON_TEXTSIZE];
 	int		current;		// line where next message will be printed
 	int		x;				// offset in current line for next print
-	int		display;		// bottom of console displays this line
+	int		display;		// bottom of console displays This line
 
-	int 	linewidth;		// characters across screen
+	int 	liNewidth;		// characters across screen
 	int		totallines;		// total lines in console scrollback
 
 	float	xadjust;		// for wide aspect screens
@@ -203,30 +203,30 @@ void Con_Dump_f (void)
 	// skip empty lines
 	for (l = con.current - con.totallines + 1 ; l <= con.current ; l++)
 	{
-		line = con.text + (l%con.totallines)*con.linewidth;
-		for (x=0 ; x<con.linewidth ; x++)
+		line = con.text + (l%con.totallines)*con.liNewidth;
+		for (x=0 ; x<con.liNewidth ; x++)
 			if ((line[x] & 0xff) != ' ')
 				break;
-		if (x != con.linewidth)
+		if (x != con.liNewidth)
 			break;
 	}
 
 #ifdef _WIN32
-	bufferlen = con.linewidth + 3 * sizeof ( char );
+	bufferlen = con.liNewidth + 3 * sizeof ( char );
 #else
-	bufferlen = con.linewidth + 2 * sizeof ( char );
+	bufferlen = con.liNewidth + 2 * sizeof ( char );
 #endif
 
-	buffer = Hunk_AllocateTempMemory( bufferlen );
+	buffer = (char*)Hunk_AllocateTempMemory( bufferlen );
 
 	// write the remaining lines
 	buffer[bufferlen-1] = 0;
 	for ( ; l <= con.current ; l++)
 	{
-		line = con.text + (l%con.totallines)*con.linewidth;
-		for(i=0; i<con.linewidth; i++)
+		line = con.text + (l%con.totallines)*con.liNewidth;
+		for(i=0; i<con.liNewidth; i++)
 			buffer[i] = line[i] & 0xff;
-		for (x=con.linewidth-1 ; x>=0 ; x--)
+		for (x=con.liNewidth-1 ; x>=0 ; x--)
 		{
 			if (buffer[x] == ' ')
 				buffer[x] = 0;
@@ -275,24 +275,24 @@ void Con_CheckResize (void)
 
 	width = (SCREEN_WIDTH / SMALLCHAR_WIDTH) - 2;
 
-	if (width == con.linewidth)
+	if (width == con.liNewidth)
 		return;
 
 	if (width < 1)			// video hasn't been initialized yet
 	{
 		width = DEFAULT_CONSOLE_WIDTH;
-		con.linewidth = width;
-		con.totallines = CON_TEXTSIZE / con.linewidth;
+		con.liNewidth = width;
+		con.totallines = CON_TEXTSIZE / con.liNewidth;
 		for(i=0; i<CON_TEXTSIZE; i++)
 
 			con.text[i] = (ColorIndex(COLOR_WHITE)<<8) | ' ';
 	}
 	else
 	{
-		oldwidth = con.linewidth;
-		con.linewidth = width;
+		oldwidth = con.liNewidth;
+		con.liNewidth = width;
 		oldtotallines = con.totallines;
-		con.totallines = CON_TEXTSIZE / con.linewidth;
+		con.totallines = CON_TEXTSIZE / con.liNewidth;
 		numlines = oldtotallines;
 
 		if (con.totallines < numlines)
@@ -300,8 +300,8 @@ void Con_CheckResize (void)
 
 		numchars = oldwidth;
 	
-		if (con.linewidth < numchars)
-			numchars = con.linewidth;
+		if (con.liNewidth < numchars)
+			numchars = con.liNewidth;
 
 		Com_Memcpy (tbuf, con.text, CON_TEXTSIZE * sizeof(short));
 		for(i=0; i<CON_TEXTSIZE; i++)
@@ -313,7 +313,7 @@ void Con_CheckResize (void)
 		{
 			for (j=0 ; j<numchars ; j++)
 			{
-				con.text[(con.totallines - 1 - i) * con.linewidth + j] =
+				con.text[(con.totallines - 1 - i) * con.liNewidth + j] =
 						tbuf[((con.current - i + oldtotallines) %
 							  oldtotallines) * oldwidth + j];
 			}
@@ -397,9 +397,9 @@ void Con_Linefeed (qboolean skipnotify)
 	// mark time for transparent overlay
 	if (con.current >= 0)
 	{
-    if (skipnotify)
+	if (skipnotify)
 		  con.times[con.current % NUM_CON_TIMES] = 0;
-    else
+	else
 		  con.times[con.current % NUM_CON_TIMES] = cls.realtime;
 	}
 
@@ -407,8 +407,8 @@ void Con_Linefeed (qboolean skipnotify)
 	if (con.display == con.current)
 		con.display++;
 	con.current++;
-	for(i=0; i<con.linewidth; i++)
-		con.text[(con.current%con.totallines)*con.linewidth+i] = (ColorIndex(COLOR_WHITE)<<8) | ' ';
+	for(i=0; i<con.liNewidth; i++)
+		con.text[(con.current%con.totallines)*con.liNewidth+i] = (ColorIndex(COLOR_WHITE)<<8) | ' ';
 }
 
 /*
@@ -416,7 +416,7 @@ void Con_Linefeed (qboolean skipnotify)
 CL_ConsolePrint
 
 Handles cursor positioning, line wrapping, etc
-All console printing must go through this in order to be logged to disk
+All console printing must go through This in order to be logged to disk
 If no console is visible, the text will appear at the top of the game window
 ================
 */
@@ -444,7 +444,7 @@ void CL_ConsolePrint( char *txt ) {
 		con.color[1] = 
 		con.color[2] =
 		con.color[3] = 1.0f;
-		con.linewidth = -1;
+		con.liNewidth = -1;
 		Con_CheckResize ();
 		con.initialized = qtrue;
 	}
@@ -459,7 +459,7 @@ void CL_ConsolePrint( char *txt ) {
 		}
 
 		// count word length
-		for (l=0 ; l< con.linewidth ; l++) {
+		for (l=0 ; l< con.liNewidth ; l++) {
 			if ( txt[l] <= ' ') {
 				break;
 			}
@@ -467,7 +467,7 @@ void CL_ConsolePrint( char *txt ) {
 		}
 
 		// word wrap
-		if (l != con.linewidth && (con.x + l >= con.linewidth) ) {
+		if (l != con.liNewidth && (con.x + l >= con.liNewidth) ) {
 			Con_Linefeed(skipnotify);
 
 		}
@@ -484,9 +484,9 @@ void CL_ConsolePrint( char *txt ) {
 			break;
 		default:	// display character and advance
 			y = con.current % con.totallines;
-			con.text[y*con.linewidth+con.x] = (color << 8) | c;
+			con.text[y*con.liNewidth+con.x] = (color << 8) | c;
 			con.x++;
-			if(con.x >= con.linewidth)
+			if(con.x >= con.liNewidth)
 				Con_Linefeed(skipnotify);
 			break;
 		}
@@ -573,13 +573,13 @@ void Con_DrawNotify (void)
 		time = cls.realtime - time;
 		if (time > con_notifytime->value*1000)
 			continue;
-		text = con.text + (i % con.totallines)*con.linewidth;
+		text = con.text + (i % con.totallines)*con.liNewidth;
 
 		if (cl.snap.ps.pm_type != PM_INTERMISSION && Key_GetCatcher( ) & (KEYCATCH_UI | KEYCATCH_CGAME) ) {
 			continue;
 		}
 
-		for (x = 0 ; x < con.linewidth ; x++) {
+		for (x = 0 ; x < con.liNewidth ; x++) {
 			if ( ( text[x] & 0xff ) == ' ' ) {
 				continue;
 			}
@@ -686,7 +686,7 @@ void Con_DrawSolidConsole( float frac ) {
 	{
 	// draw arrows to show the buffer is backscrolled
 		re.SetColor( g_color_table[ColorIndex(COLOR_RED)] );
-		for (x=0 ; x<con.linewidth ; x+=4)
+		for (x=0 ; x<con.liNewidth ; x+=4)
 			SCR_DrawSmallChar( con.xadjust + (x+1)*SMALLCHAR_WIDTH, y, '^' );
 		y -= SMALLCHAR_HEIGHT;
 		rows--;
@@ -710,9 +710,9 @@ void Con_DrawSolidConsole( float frac ) {
 			continue;	
 		}
 
-		text = con.text + (row % con.totallines)*con.linewidth;
+		text = con.text + (row % con.totallines)*con.liNewidth;
 
-		for (x=0 ; x<con.linewidth ; x++) {
+		for (x=0 ; x<con.liNewidth ; x++) {
 			if ( ( text[x] & 0xff ) == ' ' ) {
 				continue;
 			}

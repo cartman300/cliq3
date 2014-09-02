@@ -83,7 +83,7 @@ void R_IssueRenderCommands( qboolean runPerformanceCounters ) {
 	// add an end-of-list command
 	*(int *)(cmdList->cmds + cmdList->used) = RC_END_OF_LIST;
 
-	// clear it out, in case this is a sync and not a buffer flip
+	// clear it out, in case This is a sync and not a buffer flip
 	cmdList->used = 0;
 
 	if ( runPerformanceCounters ) {
@@ -92,7 +92,7 @@ void R_IssueRenderCommands( qboolean runPerformanceCounters ) {
 
 	// actually start the commands going
 	if ( !r_skipBackEnd->integer ) {
-		// let it start on the new batch
+		// let it start on the New batch
 		RB_ExecuteRenderCommands( cmdList->cmds );
 	}
 }
@@ -316,7 +316,7 @@ void RE_BeginFrame( stereoFrame_t stereoFrame ) {
 	}
 	else
 	{
-		// this is only reached if it was on and is now off
+		// This is only reached if it was on and is now off
 		if ( r_measureOverdraw->modified ) {
 			R_IssuePendingRenderCommands();
 			qglDisable( GL_STENCIL_TEST );

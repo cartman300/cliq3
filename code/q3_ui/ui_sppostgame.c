@@ -367,9 +367,9 @@ static void UI_SPPostgameMenu_MenuDraw( void ) {
 			return;
 		}
 
-		postgameMenuInfo.item_again.generic.flags &= ~QMF_INACTIVE;
-		postgameMenuInfo.item_next.generic.flags &= ~QMF_INACTIVE;
-		postgameMenuInfo.item_menu.generic.flags &= ~QMF_INACTIVE;
+		postgameMenuInfo.item_again.Generic.flags &= ~QMF_INACTIVE;
+		postgameMenuInfo.item_next.Generic.flags &= ~QMF_INACTIVE;
+		postgameMenuInfo.item_menu.Generic.flags &= ~QMF_INACTIVE;
 
 		UI_SPPostgameMenu_DrawAwardsMedals( postgameMenuInfo.numAwards );
 
@@ -437,35 +437,35 @@ static void UI_SPPostgameMenu_Init( void ) {
 
 	UI_SPPostgameMenu_Cache();
 
-	postgameMenuInfo.item_menu.generic.type			= MTYPE_BITMAP;
-	postgameMenuInfo.item_menu.generic.name			= ART_MENU0;
-	postgameMenuInfo.item_menu.generic.flags		= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS|QMF_INACTIVE;
-	postgameMenuInfo.item_menu.generic.x			= 0;
-	postgameMenuInfo.item_menu.generic.y			= 480-64;
-	postgameMenuInfo.item_menu.generic.callback		= UI_SPPostgameMenu_MenuEvent;
-	postgameMenuInfo.item_menu.generic.id			= ID_MENU;
+	postgameMenuInfo.item_menu.Generic.type			= MTYPE_BITMAP;
+	postgameMenuInfo.item_menu.Generic.name			= ART_MENU0;
+	postgameMenuInfo.item_menu.Generic.flags		= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS|QMF_INACTIVE;
+	postgameMenuInfo.item_menu.Generic.x			= 0;
+	postgameMenuInfo.item_menu.Generic.y			= 480-64;
+	postgameMenuInfo.item_menu.Generic.callback		= UI_SPPostgameMenu_MenuEvent;
+	postgameMenuInfo.item_menu.Generic.id			= ID_MENU;
 	postgameMenuInfo.item_menu.width				= 128;
 	postgameMenuInfo.item_menu.height				= 64;
 	postgameMenuInfo.item_menu.focuspic				= ART_MENU1;
 
-	postgameMenuInfo.item_again.generic.type		= MTYPE_BITMAP;
-	postgameMenuInfo.item_again.generic.name		= ART_REPLAY0;
-	postgameMenuInfo.item_again.generic.flags		= QMF_CENTER_JUSTIFY|QMF_PULSEIFFOCUS|QMF_INACTIVE;
-	postgameMenuInfo.item_again.generic.x			= 320;
-	postgameMenuInfo.item_again.generic.y			= 480-64;
-	postgameMenuInfo.item_again.generic.callback	= UI_SPPostgameMenu_AgainEvent;
-	postgameMenuInfo.item_again.generic.id			= ID_AGAIN;
+	postgameMenuInfo.item_again.Generic.type		= MTYPE_BITMAP;
+	postgameMenuInfo.item_again.Generic.name		= ART_REPLAY0;
+	postgameMenuInfo.item_again.Generic.flags		= QMF_CENTER_JUSTIFY|QMF_PULSEIFFOCUS|QMF_INACTIVE;
+	postgameMenuInfo.item_again.Generic.x			= 320;
+	postgameMenuInfo.item_again.Generic.y			= 480-64;
+	postgameMenuInfo.item_again.Generic.callback	= UI_SPPostgameMenu_AgainEvent;
+	postgameMenuInfo.item_again.Generic.id			= ID_AGAIN;
 	postgameMenuInfo.item_again.width				= 128;
 	postgameMenuInfo.item_again.height				= 64;
 	postgameMenuInfo.item_again.focuspic			= ART_REPLAY1;
 
-	postgameMenuInfo.item_next.generic.type			= MTYPE_BITMAP;
-	postgameMenuInfo.item_next.generic.name			= ART_NEXT0;
-	postgameMenuInfo.item_next.generic.flags		= QMF_RIGHT_JUSTIFY|QMF_PULSEIFFOCUS|QMF_INACTIVE;
-	postgameMenuInfo.item_next.generic.x			= 640;
-	postgameMenuInfo.item_next.generic.y			= 480-64;
-	postgameMenuInfo.item_next.generic.callback		= UI_SPPostgameMenu_NextEvent;
-	postgameMenuInfo.item_next.generic.id			= ID_NEXT;
+	postgameMenuInfo.item_next.Generic.type			= MTYPE_BITMAP;
+	postgameMenuInfo.item_next.Generic.name			= ART_NEXT0;
+	postgameMenuInfo.item_next.Generic.flags		= QMF_RIGHT_JUSTIFY|QMF_PULSEIFFOCUS|QMF_INACTIVE;
+	postgameMenuInfo.item_next.Generic.x			= 640;
+	postgameMenuInfo.item_next.Generic.y			= 480-64;
+	postgameMenuInfo.item_next.Generic.callback		= UI_SPPostgameMenu_NextEvent;
+	postgameMenuInfo.item_next.Generic.id			= ID_NEXT;
 	postgameMenuInfo.item_next.width				= 128;
 	postgameMenuInfo.item_next.height				= 64;
 	postgameMenuInfo.item_next.focuspic				= ART_NEXT1;

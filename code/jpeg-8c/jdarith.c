@@ -8,9 +8,9 @@
  * This file contains portable arithmetic entropy decoding routines for JPEG
  * (implementing the ISO/IEC IS 10918-1 and CCITT Recommendation ITU-T T.81).
  *
- * Both sequential and progressive modes are supported in this single module.
+ * Both sequential and progressive modes are supported in This single module.
  *
- * Suspension is not currently supported in this module.
+ * Suspension is not currently supported in This module.
  */
 
 #define JPEG_INTERNALS
@@ -32,7 +32,7 @@ typedef struct {
   int last_dc_val[MAX_COMPS_IN_SCAN]; /* last DC coef for each component */
   int dc_context[MAX_COMPS_IN_SCAN]; /* context index for DC conditioning */
 
-  unsigned int restarts_to_go;	/* MCUs left in this restart interval */
+  unsigned int restarts_to_go;	/* MCUs left in This restart interval */
 
   /* Pointers to statistics areas (these workspaces have image lifespan) */
   unsigned char * dc_stats[NUM_ARITH_TBLS];
@@ -63,7 +63,7 @@ typedef arith_entropy_decoder * arith_entropy_ptr;
 
 LOCAL(int)
 get_byte (j_decompress_ptr cinfo)
-/* Read next input byte; we do not support suspension in this module. */
+/* Read next input byte; we do not support suspension in This module. */
 {
   struct jpeg_source_mgr * src = cinfo->src;
 
@@ -79,8 +79,8 @@ get_byte (j_decompress_ptr cinfo)
  * The core arithmetic decoding routine (common in JPEG and JBIG).
  * This needs to go as fast as possible.
  * Machine-dependent optimization facilities
- * are not utilized in this portable implementation.
- * However, this code should be fairly efficient and
+ * are not utilized in This portable implementation.
+ * However, This code should be fairly efficient and
  * may be a good base for further optimizations anyway.
  *
  * Return value is 0 or 1 (binary decision).
@@ -95,9 +95,9 @@ get_byte (j_decompress_ptr cinfo)
  * Thus, we also need only one (variable instead of
  * fixed size) shift for the LPS/MPS decision, and
  * we can get away with any renormalization update
- * of C (except for new data insertion, of course).
+ * of C (except for New data insertion, of course).
  *
- * I've also introduced a new scheme for accessing
+ * I've also introduced a New scheme for accessing
  * the probability estimation state machine table,
  * derived from Markus Kuhn's JBIG implementation.
  */
@@ -432,7 +432,7 @@ decode_mcu_AC_refine (j_decompress_ptr cinfo, JBLOCKROW *MCU_data)
 {
   arith_entropy_ptr entropy = (arith_entropy_ptr) cinfo->entropy;
   JBLOCKROW block;
-  JCOEFPTR thiscoef;
+  JCOEFPTR Thiscoef;
   unsigned char *st;
   int tbl, k, kex;
   int p1, m1;
@@ -465,21 +465,21 @@ decode_mcu_AC_refine (j_decompress_ptr cinfo, JBLOCKROW *MCU_data)
     if (k > kex)
       if (arith_decode(cinfo, st)) break;	/* EOB flag */
     for (;;) {
-      thiscoef = *block + natural_order[k];
-      if (*thiscoef) {				/* previously nonzero coef */
+      Thiscoef = *block + natural_order[k];
+      if (*Thiscoef) {				/* previously nonzero coef */
 	if (arith_decode(cinfo, st + 2)) {
-	  if (*thiscoef < 0)
-	    *thiscoef += m1;
+	  if (*Thiscoef < 0)
+	    *Thiscoef += m1;
 	  else
-	    *thiscoef += p1;
+	    *Thiscoef += p1;
 	}
 	break;
       }
-      if (arith_decode(cinfo, st + 1)) {	/* newly nonzero coef */
+      if (arith_decode(cinfo, st + 1)) {	/* Newly nonzero coef */
 	if (arith_decode(cinfo, entropy->fixed_bin))
-	  *thiscoef = m1;
+	  *Thiscoef = m1;
 	else
-	  *thiscoef = p1;
+	  *Thiscoef = p1;
 	break;
       }
       st += 3; k++;
@@ -659,7 +659,7 @@ start_pass (j_decompress_ptr cinfo)
     }
     /* Update progression status, and verify that scan order is legal.
      * Note that inter-scan inconsistencies are treated as warnings
-     * not fatal errors ... not clear if this is right way to behave.
+     * not fatal errors ... not clear if This is right way to behave.
      */
     for (ci = 0; ci < cinfo->comps_in_scan; ci++) {
       int coefi, cindex = cinfo->cur_comp_info[ci]->component_index;

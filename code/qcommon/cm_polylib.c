@@ -20,7 +20,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 ===========================================================================
 */
 
-// this is only used for visualization tools in cm_ debug functions
+// This is only used for visualization tools in cm_ debug functions
 
 
 #include "cm_local.h"
@@ -654,7 +654,7 @@ void	AddWindingToConvexHull( winding_t *w, winding_t **hull, vec3_t normal ) {
 	float		d;
 	int			numHullPoints, numNew;
 	vec3_t		hullPoints[MAX_HULL_POINTS];
-	vec3_t		newHullPoints[MAX_HULL_POINTS];
+	vec3_t		NewHullPoints[MAX_HULL_POINTS];
 	vec3_t		hullDirs[MAX_HULL_POINTS];
 	qboolean	hullSide[MAX_HULL_POINTS];
 	qboolean	outside;
@@ -709,7 +709,7 @@ void	AddWindingToConvexHull( winding_t *w, winding_t **hull, vec3_t normal ) {
 		}
 
 		// insert the point here
-		VectorCopy( p, newHullPoints[0] );
+		VectorCopy( p, NewHullPoints[0] );
 		numNew = 1;
 
 		// copy over all points that aren't double fronts
@@ -719,12 +719,12 @@ void	AddWindingToConvexHull( winding_t *w, winding_t **hull, vec3_t normal ) {
 				continue;
 			}
 			copy = hullPoints[ (j+k+1) % numHullPoints ];
-			VectorCopy( copy, newHullPoints[numNew] );
+			VectorCopy( copy, NewHullPoints[numNew] );
 			numNew++;
 		}
 
 		numHullPoints = numNew;
-		Com_Memcpy( hullPoints, newHullPoints, numHullPoints * sizeof(vec3_t) );
+		Com_Memcpy( hullPoints, NewHullPoints, numHullPoints * sizeof(vec3_t) );
 	}
 
 	FreeWinding( *hull );

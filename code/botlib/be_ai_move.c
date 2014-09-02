@@ -782,7 +782,7 @@ int BotGetReachabilityToGoal(vec3_t origin, int areanum,
 		//get the reachability from the number
 		AAS_ReachabilityFromNum(reachnum, &reach);
 		//NOTE: do not go back to the previous area if the goal didn't change
-		//NOTE: is this actually avoidance of local routing minima between two areas???
+		//NOTE: is This actually avoidance of local routing minima between two areas???
 		if (lastgoalareanum == goal->areanum && reach.areanum == lastareanum) continue;
 		//if (AAS_AreaContentsTravelFlags(reach.areanum) & ~travelflags) continue;
 		//if the travel isn't valid
@@ -791,7 +791,7 @@ int BotGetReachabilityToGoal(vec3_t origin, int areanum,
 		t = AAS_AreaTravelTimeToGoalArea(reach.areanum, reach.end, goal->areanum, travelflags);
 		//if the goal area isn't reachable from the reachable area
 		if (!t) continue;
-		//if the bot should not use this reachability to avoid bad spots
+		//if the bot should not use This reachability to avoid bad spots
 		if (BotAvoidSpots(origin, &reach, avoidspots, numavoidspots)) {
 			if (flags) {
 				*flags |= MOVERESULT_BLOCKEDBYAVOIDSPOT;
@@ -1002,7 +1002,7 @@ float BotGapDistance(vec3_t origin, vec3_t hordir, int entnum)
 
 	//do gap checking
 	//startz = origin[2];
-	//this enables walking down stairs more fluidly
+	//This enables walking down stairs more fluidly
 	{
 		VectorCopy(origin, start);
 		VectorCopy(origin, end);
@@ -1052,7 +1052,7 @@ int BotCheckBarrierJump(bot_movestate_t *ms, vec3_t dir, float speed)
 	end[2] += sv_maxbarrier->value;
 	//trace right up
 	trace = AAS_TraceClientBBox(ms->origin, end, PRESENCE_NORMAL, ms->entitynum);
-	//this shouldn't happen... but we check anyway
+	//This shouldn't happen... but we check anyway
 	if (trace.startsolid) return qfalse;
 	//if very low ceiling it isn't possible to jump up to a barrier
 	if (trace.endpos[2] - ms->origin[2] < sv_maxstep->value) return qfalse;
@@ -1066,7 +1066,7 @@ int BotCheckBarrierJump(bot_movestate_t *ms, vec3_t dir, float speed)
 	end[2] = trace.endpos[2];
 	//trace from previous trace end pos horizontally in the move direction
 	trace = AAS_TraceClientBBox(start, end, PRESENCE_NORMAL, ms->entitynum);
-	//again this shouldn't happen
+	//again This shouldn't happen
 	if (trace.startsolid) return qfalse;
 	//
 	VectorCopy(trace.endpos, start);
@@ -2111,7 +2111,7 @@ bot_moveresult_t BotTravel_Elevator(bot_movestate_t *ms, aas_reachability_t *rea
 			VectorCopy(dir, result.movedir);
 			//
 			if (ms->moveflags & MFL_SWIMMING) result.flags |= MOVERESULT_SWIMVIEW;
-			//stop using this reachability
+			//stop using This reachability
 			ms->reachability_time = 0;
 			return result;
 		} //end if
@@ -2140,7 +2140,7 @@ bot_moveresult_t BotTravel_Elevator(bot_movestate_t *ms, aas_reachability_t *rea
 			VectorCopy(dir, result.movedir);
 			//
 			if (ms->moveflags & MFL_SWIMMING) result.flags |= MOVERESULT_SWIMVIEW;
-			//this isn't a failure... just wait till the elevator comes down
+			//This isn't a failure... just wait till the elevator comes down
 			result.type = RESULTTYPE_ELEVATORUP;
 			result.flags |= MOVERESULT_WAITING;
 			return result;
@@ -2354,7 +2354,7 @@ bot_moveresult_t BotTravel_FuncBobbing(bot_movestate_t *ms, aas_reachability_t *
 			VectorCopy(dir, result.movedir);
 			//
 			if (ms->moveflags & MFL_SWIMMING) result.flags |= MOVERESULT_SWIMVIEW;
-			//stop using this reachability
+			//stop using This reachability
 			ms->reachability_time = 0;
 			return result;
 		} //end if
@@ -2384,7 +2384,7 @@ bot_moveresult_t BotTravel_FuncBobbing(bot_movestate_t *ms, aas_reachability_t *
 			VectorCopy(dir, result.movedir);
 			//
 			if (ms->moveflags & MFL_SWIMMING) result.flags |= MOVERESULT_SWIMVIEW;
-			//this isn't a failure... just wait till the func_bobbing arrives
+			//This isn't a failure... just wait till the func_bobbing arrives
 			result.type = RESULTTYPE_WAITFORFUNCBOBBING;
 			result.flags |= MOVERESULT_WAITING;
 			return result;
@@ -3228,7 +3228,7 @@ void BotMoveToGoal(bot_moveresult_t *result, int movestate, bot_goal_t *goal, in
 			} //end else
 		} //end if
 		resultflags = 0;
-		//if the bot needs a new reachability
+		//if the bot needs a New reachability
 		if (!reachnum)
 		{
 			//if the area has no reachability links
@@ -3241,7 +3241,7 @@ void BotMoveToGoal(bot_moveresult_t *result, int movestate, bot_goal_t *goal, in
 				} //end if
 #endif //DEBUG
 			} //end if
-			//get a new reachability leading towards the goal
+			//get a New reachability leading towards the goal
 			reachnum = BotGetReachabilityToGoal(ms->origin, ms->areanum,
 								ms->lastgoalareanum, ms->lastareanum,
 											ms->avoidreach, ms->avoidreachtimes, ms->avoidreachtries,
@@ -3256,7 +3256,7 @@ void BotMoveToGoal(bot_moveresult_t *result, int movestate, bot_goal_t *goal, in
 			if (reachnum)
 			{
 				AAS_ReachabilityFromNum(reachnum, &reach);
-				//set a timeout for this reachability
+				//set a timeout for This reachability
 				ms->reachability_time = AAS_Time() + BotReachabilityTime(&reach);
 				//
 #ifdef AVOIDREACH
@@ -3451,7 +3451,7 @@ void BotMoveToGoal(bot_moveresult_t *result, int movestate, bot_goal_t *goal, in
 #endif //DEBUG
 		} //end if
 	} //end else
-	//FIXME: is it right to do this here?
+	//FIXME: is it right to do This here?
 	if (result->blocked) ms->reachability_time -= 10 * ms->thinktime;
 	//copy the last origin
 	VectorCopy(ms->origin, ms->lastorigin);

@@ -77,7 +77,7 @@ EVENT MESSAGES
 ===============
 SV_ExpandNewlines
 
-Converts newlines to "\n" so a line prints nicer
+Converts Newlines to "\n" so a line prints nicer
 ===============
 */
 static char	*SV_ExpandNewlines( char *in ) {
@@ -142,7 +142,7 @@ not have future snapshot_t executed before it is executed
 void SV_AddServerCommand( client_t *client, const char *cmd ) {
 	int		index, i;
 
-	// this is very ugly but it's also a waste to for instance send multiple config string updates
+	// This is very ugly but it's also a waste to for instance send multiple config string updates
 	// for the same config string index in one snapshot
 //	if ( SV_ReplacePendingServerCommands( client, cmd ) ) {
 //		return;
@@ -192,7 +192,7 @@ void QDECL SV_SendServerCommand(client_t *cl, const char *fmt, ...) {
 
 	// Fix to http://aluigi.altervista.org/adv/q3msgboom-adv.txt
 	// The actual cause of the bug is probably further downstream
-	// and should maybe be addressed later, but this certainly
+	// and should maybe be addressed later, but This certainly
 	// fixes the problem for now
 	if ( strlen ((char *)message) > 1022 ) {
 		return;
@@ -318,7 +318,7 @@ void SV_MasterHeartbeat(const char *message)
 
 		Com_Printf ("Sending heartbeat to %s\n", sv_master[i]->string );
 
-		// this command should be changed if the server info / status format
+		// This command should be changed if the server info / status format
 		// ever incompatably changes
 
 		if(adr[i][0].type != NA_BAD)
@@ -332,7 +332,7 @@ void SV_MasterHeartbeat(const char *message)
 =================
 SV_MasterShutdown
 
-Informs all masters that this server is going down
+Informs all masters that This server is going down
 =================
 */
 void SV_MasterShutdown( void ) {
@@ -471,7 +471,7 @@ static leakyBucket_t *SVC_BucketForAddress( netadr_t address, int burst, int per
 		}
 	}
 
-	// Couldn't allocate a bucket for this address
+	// Couldn't allocate a bucket for This address
 	return NULL;
 }
 
@@ -812,7 +812,7 @@ static void SV_ConnectionlessPacket( netadr_t from, msg_t *msg ) {
 		SVC_RemoteCommand( from, msg );
 	} else if (!Q_stricmp(c, "disconnect")) {
 		// if a client starts up a local server, we may see some spurious
-		// server disconnect messages when their new server sees our final
+		// server disconnect messages when their New server sees our final
 		// sequenced messages to the old client
 	} else {
 		Com_DPrintf ("bad connectionless packet from %s:\n%s\n",
@@ -965,7 +965,7 @@ static void SV_CheckTimeouts( void ) {
 
 		if (cl->state == CS_ZOMBIE
 		&& cl->lastPacketTime < zombiepoint) {
-			// using the client id cause the cl->name is empty at this point
+			// using the client id cause the cl->name is empty at This point
 			Com_DPrintf( "Going from CS_ZOMBIE to CS_FREE for client %d\n", i );
 			cl->state = CS_FREE;	// can now be reused
 			continue;
@@ -1053,7 +1053,7 @@ void SV_Frame( int msec ) {
 	int		frameMsec;
 	int		startTime;
 
-	// the menu kills the server with this cvar
+	// the menu kills the server with This cvar
 	if ( sv_killserver->integer ) {
 		SV_Shutdown ("Server was killed");
 		Cvar_Set( "sv_killserver", "0" );
@@ -1102,7 +1102,7 @@ void SV_Frame( int msec ) {
 		Cbuf_AddText( va( "map %s\n", Cvar_VariableString( "mapname" ) ) );
 		return;
 	}
-	// this can happen considerably earlier when lots of clients play and the map doesn't change
+	// This can happen considerably earlier when lots of clients play and the map doesn't change
 	if ( svs.nextSnapshotEntities >= 0x7FFFFFFE - svs.numSnapshotEntities ) {
 		SV_Shutdown( "Restarting server due to numSnapshotEntities wrapping" );
 		Cbuf_AddText( va( "map %s\n", Cvar_VariableString( "mapname" ) ) );
@@ -1264,7 +1264,7 @@ int SV_SendQueuedPackets()
 					// between DL message rounds so we don't hog
 					// all of the bandwidth. This will result in an
 					// effective maximum rate of 1MB/s per user, but the
-					// low download window size limits this anyways.
+					// low download window size limits This anyways.
 					if(timeVal > 2)
 						timeVal = 2;
 

@@ -7,11 +7,11 @@
  * For conditions of distribution and use, see the accompanying README file.
  *
  * This file contains Huffman entropy encoding routines.
- * Both sequential and progressive modes are supported in this single module.
+ * Both sequential and progressive modes are supported in This single module.
  *
  * Much of the complexity here has to do with supporting output suspension.
  * If the data destination module demands suspension, we want to be able to
- * back up to the start of the current MCU.  To do this, we copy state
+ * back up to the start of the current MCU.  To do This, we copy state
  * variables into local working storage, and update them back to the
  * permanent JPEG objects only upon successful completion of an MCU.
  *
@@ -59,7 +59,7 @@ typedef struct {
 } savable_state;
 
 /* This macro is to work around compilers with missing or broken
- * structure assignment.  You'll need to fix this code if you have
+ * structure assignment.  You'll need to fix This code if you have
  * such a compiler and you change MAX_COMPS_IN_SCAN.
  */
 
@@ -84,7 +84,7 @@ typedef struct {
   savable_state saved;		/* Bit buffer & DC state at start of MCU */
 
   /* These fields are NOT loaded into local working state. */
-  unsigned int restarts_to_go;	/* MCUs left in this restart interval */
+  unsigned int restarts_to_go;	/* MCUs left in This restart interval */
   int next_restart_num;		/* next restart number to write (0-7) */
 
   /* Pointers to derived tables (these workspaces have image lifespan) */
@@ -124,7 +124,7 @@ typedef struct {
   JOCTET * next_output_byte;	/* => next byte to write in buffer */
   size_t free_in_buffer;	/* # of byte spaces remaining in buffer */
   savable_state cur;		/* Current bit buffer & DC state */
-  j_compress_ptr cinfo;		/* dump_buffer needs access to this */
+  j_compress_ptr cinfo;		/* dump_buffer needs access to This */
 } working_state;
 
 /* MAX_CORR_BITS is the number of bits the AC refinement correction-bit
@@ -224,7 +224,7 @@ jpeg_make_c_derived_tbl (j_compress_ptr cinfo, boolean isDC, int tblno,
   /* These are code and size indexed by symbol value */
 
   /* Set all codeless symbols to have code length 0;
-   * this lets us detect duplicate VAL entries here, and later
+   * This lets us detect duplicate VAL entries here, and later
    * allows emit_bits to detect any attempt to emit such symbols.
    */
   MEMZERO(dtbl->ehufsi, SIZEOF(dtbl->ehufsi));
@@ -232,7 +232,7 @@ jpeg_make_c_derived_tbl (j_compress_ptr cinfo, boolean isDC, int tblno,
   /* This is also a convenient place to check for out-of-range
    * and duplicated VAL entries.  We allow 0..255 for AC symbols
    * but only 0..15 for DC.  (We could constrain them further
-   * based on data depth and mode, but this seems enough.)
+   * based on data depth and mode, but This seems enough.)
    */
   maxsymbol = isDC ? 15 : 255;
 
@@ -282,7 +282,7 @@ dump_buffer_s (working_state * state)
 
 LOCAL(void)
 dump_buffer_e (huff_entropy_ptr entropy)
-/* Empty the output buffer; we do not support suspension in this case. */
+/* Empty the output buffer; we do not support suspension in This case. */
 {
   struct jpeg_destination_mgr * dest = entropy->cinfo->dest;
 
@@ -297,7 +297,7 @@ dump_buffer_e (huff_entropy_ptr entropy)
 /* Outputting bits to the file */
 
 /* Only the right 24 bits of put_buffer are used; the valid bits are
- * left-justified in this part.  At most 16 bits can be passed to emit_bits
+ * left-justified in This part.  At most 16 bits can be passed to emit_bits
  * in one call, and we never retain more than 7 bits in put_buffer
  * between calls, so 24 bits are sufficient.
  */
@@ -317,7 +317,7 @@ emit_bits_s (working_state * state, unsigned int code, int size)
 
   put_buffer &= (((INT32) 1)<<size) - 1; /* mask off any extra bits in code */
   
-  put_bits += size;		/* new number of bits in buffer */
+  put_bits += size;		/* New number of bits in buffer */
   
   put_buffer <<= 24 - put_bits; /* align incoming bits */
 
@@ -359,7 +359,7 @@ emit_bits_e (huff_entropy_ptr entropy, unsigned int code, int size)
 
   put_buffer &= (((INT32) 1)<<size) - 1; /* mask off any extra bits in code */
   
-  put_bits += size;		/* new number of bits in buffer */
+  put_bits += size;		/* New number of bits in buffer */
 
   put_buffer <<= 24 - put_bits; /* align incoming bits */
 
@@ -659,8 +659,8 @@ encode_mcu_AC_first (j_compress_ptr cinfo, JBLOCKROW *MCU_data)
       r++;
       continue;
     }
-    /* We must apply the point transform by Al.  For AC coefficients this
-     * is an integer division with rounding towards 0.  To do this portably
+    /* We must apply the point transform by Al.  For AC coefficients This
+     * is an integer division with rounding towards 0.  To do This portably
      * in C, we shift after obtaining the absolute value; so the code is
      * interwoven with finding the abs value (temp) and output bits (temp2).
      */
@@ -817,8 +817,8 @@ encode_mcu_AC_refine (j_compress_ptr cinfo, JBLOCKROW *MCU_data)
   EOB = 0;
   for (k = cinfo->Ss; k <= Se; k++) {
     temp = (*block)[natural_order[k]];
-    /* We must apply the point transform by Al.  For AC coefficients this
-     * is an integer division with rounding towards 0.  To do this portably
+    /* We must apply the point transform by Al.  For AC coefficients This
+     * is an integer division with rounding towards 0.  To do This portably
      * in C, we shift after obtaining the absolute value.
      */
     if (temp < 0)
@@ -826,7 +826,7 @@ encode_mcu_AC_refine (j_compress_ptr cinfo, JBLOCKROW *MCU_data)
     temp >>= Al;		/* apply the point transform */
     absvalues[k] = temp;	/* save abs value for main pass */
     if (temp == 1)
-      EOB = k;			/* EOB = index of last newly-nonzero coef */
+      EOB = k;			/* EOB = index of last Newly-nonzero coef */
   }
 
   /* Encode the AC coefficients per section G.1.2.3, fig. G.7 */
@@ -857,7 +857,7 @@ encode_mcu_AC_refine (j_compress_ptr cinfo, JBLOCKROW *MCU_data)
     /* If the coef was previously nonzero, it only needs a correction bit.
      * NOTE: a straight translation of the spec's figure G.7 would suggest
      * that we also need to test r > 15.  But if r > 15, we can only get here
-     * if k > EOB, which implies that this coefficient is not 1.
+     * if k > EOB, which implies that This coefficient is not 1.
      */
     if (temp > 1) {
       /* The correction bit is the next bit of the absolute value. */
@@ -871,11 +871,11 @@ encode_mcu_AC_refine (j_compress_ptr cinfo, JBLOCKROW *MCU_data)
     /* Count/emit Huffman symbol for run length / number of bits */
     emit_ac_symbol(entropy, entropy->ac_tbl_no, (r << 4) + 1);
 
-    /* Emit output bit for newly-nonzero coef */
+    /* Emit output bit for Newly-nonzero coef */
     temp = ((*block)[natural_order[k]] < 0) ? 0 : 1;
     emit_bits_e(entropy, (unsigned int) temp, 1);
 
-    /* Emit buffered correction bits that must be associated with this code */
+    /* Emit buffered correction bits that must be associated with This code */
     emit_buffered_bits(entropy, BR_buffer, BR);
     BR_buffer = entropy->bit_buffer; /* BE bits are gone now */
     BR = 0;
@@ -1231,7 +1231,7 @@ encode_mcu_gather (j_compress_ptr cinfo, JBLOCKROW *MCU_data)
  * The JPEG standard requires that no symbol be assigned a codeword of all
  * one bits (so that padding bits added at the end of a compressed segment
  * can't look like a valid code).  Because of the canonical ordering of
- * codewords, this just means that there must be an unused slot in the
+ * codewords, This just means that there must be an unused slot in the
  * longest codeword length category.  Section K.2 of the JPEG spec suggests
  * reserving such a slot by pretending that symbol 256 is a valid symbol
  * with count 1.  In theory that's not optimal; giving it count zero but
@@ -1329,7 +1329,7 @@ jpeg_gen_optimal_table (j_compress_ptr cinfo, JHUFF_TBL * htbl, long freq[])
   /* Now count the number of symbols of each code length */
   for (i = 0; i <= 256; i++) {
     if (codesize[i]) {
-      /* The JPEG standard seems to think that this can't happen, */
+      /* The JPEG standard seems to think that This can't happen, */
       /* but I'm paranoid... */
       if (codesize[i] > MAX_CLEN)
 	ERREXIT(cinfo, JERR_HUFF_CLEN_OVERFLOW);
@@ -1340,9 +1340,9 @@ jpeg_gen_optimal_table (j_compress_ptr cinfo, JHUFF_TBL * htbl, long freq[])
 
   /* JPEG doesn't allow symbols with code lengths over 16 bits, so if the pure
    * Huffman procedure assigned any such lengths, we must adjust the coding.
-   * Here is what the JPEG spec says about how this next bit works:
+   * Here is what the JPEG spec says about how This next bit works:
    * Since symbols are paired for the longest Huffman code, the symbols are
-   * removed from this length category two at a time.  The prefix for the pair
+   * removed from This length category two at a time.  The prefix for the pair
    * (which is one bit shorter) is allocated to one of the pair; then,
    * skipping the BITS entry for that prefix length, a code word from the next
    * shortest nonzero BITS entry is converted into a prefix for two code words
@@ -1351,14 +1351,14 @@ jpeg_gen_optimal_table (j_compress_ptr cinfo, JHUFF_TBL * htbl, long freq[])
   
   for (i = MAX_CLEN; i > 16; i--) {
     while (bits[i] > 0) {
-      j = i - 2;		/* find length of new prefix to be used */
+      j = i - 2;		/* find length of New prefix to be used */
       while (bits[j] == 0)
 	j--;
       
       bits[i] -= 2;		/* remove two symbols */
-      bits[i-1]++;		/* one goes in this length */
-      bits[j+1] += 2;		/* two new symbols in this length */
-      bits[j]--;		/* symbol of this length is now a prefix */
+      bits[i-1]++;		/* one goes in This length */
+      bits[j+1] += 2;		/* two New symbols in This length */
+      bits[j]--;		/* symbol of This length is now a prefix */
     }
   }
 
@@ -1372,7 +1372,7 @@ jpeg_gen_optimal_table (j_compress_ptr cinfo, JHUFF_TBL * htbl, long freq[])
   
   /* Return a list of the symbols sorted by code length */
   /* It's not real clear to me why we don't need to consider the codelength
-   * changes made above, but the JPEG spec seems to think this works.
+   * changes made above, but the JPEG spec seems to think This works.
    */
   p = 0;
   for (i = 1; i <= MAX_CLEN; i++) {
@@ -1390,7 +1390,7 @@ jpeg_gen_optimal_table (j_compress_ptr cinfo, JHUFF_TBL * htbl, long freq[])
 
 
 /*
- * Finish up a statistics-gathering pass and create the new Huffman tables.
+ * Finish up a statistics-gathering pass and create the New Huffman tables.
  */
 
 METHODDEF(void)
@@ -1502,7 +1502,7 @@ start_pass_huff (j_compress_ptr cinfo, boolean gather_statistics)
       tbl = compptr->dc_tbl_no;
       if (gather_statistics) {
 	/* Check for invalid table index */
-	/* (make_c_derived_tbl does this in the other path) */
+	/* (make_c_derived_tbl does This in the other path) */
 	if (tbl < 0 || tbl >= NUM_HUFF_TBLS)
 	  ERREXIT1(cinfo, JERR_NO_HUFF_TABLE, tbl);
 	/* Allocate and zero the statistics tables */
@@ -1514,7 +1514,7 @@ start_pass_huff (j_compress_ptr cinfo, boolean gather_statistics)
 	MEMZERO(entropy->dc_count_ptrs[tbl], 257 * SIZEOF(long));
       } else {
 	/* Compute derived values for Huffman tables */
-	/* We may do this more than once for a table, but it's not expensive */
+	/* We may do This more than once for a table, but it's not expensive */
 	jpeg_make_c_derived_tbl(cinfo, TRUE, tbl,
 				& entropy->dc_derived_tbls[tbl]);
       }

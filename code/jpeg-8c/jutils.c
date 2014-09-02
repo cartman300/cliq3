@@ -42,7 +42,7 @@ const int jpeg_zigzag_order[DCTSIZE2] = {
  * of zigzag order.
  *
  * When reading corrupted data, the Huffman decoders could attempt
- * to reference an entry beyond the end of this array (if the decoded
+ * to reference an entry beyond the end of This array (if the decoded
  * zero run length reaches past the end of the block).  To prevent
  * wild stores without adding an inner-loop test, we put some extra
  * "63"s after the real entries.  This will cause the extra coefficient

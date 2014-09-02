@@ -19,15 +19,15 @@ Heavily modified by Jean-Marc Valin (c) 2002-2006 (fixed-point,
    are met:
    
    - Redistributions of source code must retain the above copyright
-   notice, this list of conditions and the following disclaimer.
+   notice, This list of conditions and the following disclaimer.
    
    - Redistributions in binary form must reproduce the above copyright
-   notice, this list of conditions and the following disclaimer in the
+   notice, This list of conditions and the following disclaimer in the
    documentation and/or other materials provided with the distribution.
    
    - Neither the name of the Xiph.org Foundation nor the names of its
    contributors may be used to endorse or promote products derived from
-   this software without specific prior written permission.
+   This software without specific prior written permission.
    
    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
    ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -189,7 +189,7 @@ static float cheb_poly_eva(spx_word32_t *coef, spx_word16_t x, int m, char *stac
    for(k=m;k>0;k--)
    {
       tmp=b0;                           /* tmp holds the previous value of b0 */
-      b0=x*b0-b1+coef[m-k];    /* b0 holds its new value based on b0 and b1 */
+      b0=x*b0-b1+coef[m-k];    /* b0 holds its New value based on b0 and b1 */
       b1=tmp;                           /* b1 holds the previous value of b0 */
    }
 
@@ -275,7 +275,7 @@ int lpc_to_lsp (spx_coef_t *a,int lpcrdr,spx_lsp_t *freq,int nb,spx_word16_t del
        px++;
        qx++;
     }
-    /* The reason for this lies in the way cheb_poly_eva() is implemented for fixed-point */
+    /* The reason for This lies in the way cheb_poly_eva() is implemented for fixed-point */
     P[m] = PSHR32(P[m],3);
     Q[m] = PSHR32(Q[m],3);
 #else
@@ -419,7 +419,7 @@ void lsp_to_lpc(spx_lsp_t *freq,spx_coef_t *ak,int lpcrdr, char *stack)
     
        Reconstruct P(z) and Q(z) by cascading second order polynomials
        in form 1 - 2cos(w)z(-1) + z(-2), where w is the LSP frequency.
-       In the time domain this is:
+       In the time domain This is:
 
        y(n) = x(n) - 2cos(w)x(n-1) + x(n-2)
     
@@ -611,14 +611,14 @@ void lsp_enforce_margin(spx_lsp_t *lsp, int len, spx_word16_t margin)
 }
 
 
-void lsp_interpolate(spx_lsp_t *old_lsp, spx_lsp_t *new_lsp, spx_lsp_t *interp_lsp, int len, int subframe, int nb_subframes)
+void lsp_interpolate(spx_lsp_t *old_lsp, spx_lsp_t *New_lsp, spx_lsp_t *interp_lsp, int len, int subframe, int nb_subframes)
 {
    int i;
    spx_word16_t tmp = DIV32_16(SHL32(EXTEND32(1 + subframe),14),nb_subframes);
    spx_word16_t tmp2 = 16384-tmp;
    for (i=0;i<len;i++)
    {
-      interp_lsp[i] = MULT16_16_P14(tmp2,old_lsp[i]) + MULT16_16_P14(tmp,new_lsp[i]);
+      interp_lsp[i] = MULT16_16_P14(tmp2,old_lsp[i]) + MULT16_16_P14(tmp,New_lsp[i]);
    }
 }
 
@@ -643,13 +643,13 @@ void lsp_enforce_margin(spx_lsp_t *lsp, int len, spx_word16_t margin)
 }
 
 
-void lsp_interpolate(spx_lsp_t *old_lsp, spx_lsp_t *new_lsp, spx_lsp_t *interp_lsp, int len, int subframe, int nb_subframes)
+void lsp_interpolate(spx_lsp_t *old_lsp, spx_lsp_t *New_lsp, spx_lsp_t *interp_lsp, int len, int subframe, int nb_subframes)
 {
    int i;
    float tmp = (1.0f + subframe)/nb_subframes;
    for (i=0;i<len;i++)
    {
-      interp_lsp[i] = (1-tmp)*old_lsp[i] + tmp*new_lsp[i];
+      interp_lsp[i] = (1-tmp)*old_lsp[i] + tmp*New_lsp[i];
    }
 }
 

@@ -125,7 +125,7 @@ void Cbuf_InsertText( const char *text ) {
 		cmd_text.data[ i + len ] = cmd_text.data[ i ];
 	}
 
-	// copy the new text in
+	// copy the New text in
 	Com_Memcpy( cmd_text.data, text, len - 1 );
 
 	// add a \n
@@ -178,7 +178,7 @@ void Cbuf_Execute (void)
 
 	// This will keep // style comments all on one line by not breaking on
 	// a semicolon.  It will keep /* ... */ style comments all on one line by not
-	// breaking it for semicolon or newline.
+	// breaking it for semicolon or Newline.
 	qboolean in_star_comment = qfalse;
 	qboolean in_slash_comment = qfalse;
 	while (cmd_text.cursize)
@@ -231,7 +231,7 @@ void Cbuf_Execute (void)
 		line[i] = 0;
 		
 // delete the text from the command buffer and move remaining commands down
-// this is necessary because commands (exec) can insert data at the
+// This is necessary because commands (exec) can insert data at the
 // beginning of the text buffer
 
 		if (i == cmd_text.cursize)
@@ -378,7 +378,7 @@ char	*Cmd_Argv( int arg ) {
 ============
 Cmd_ArgvBuffer
 
-The interpreted versions use this because
+The interpreted versions use This because
 they can't have pointers returned to them
 ============
 */
@@ -437,7 +437,7 @@ char *Cmd_ArgsFrom( int arg ) {
 ============
 Cmd_ArgsBuffer
 
-The interpreted versions use this because
+The interpreted versions use This because
 they can't have pointers returned to them
 ============
 */
@@ -491,7 +491,7 @@ Cmd_TokenizeString
 Parses the given string into command line tokens.
 The text is copied to a seperate buffer and 0 characters
 are inserted in the apropriate place, The argv array
-will point into this temporary buffer.
+will point into This temporary buffer.
 ============
 */
 // NOTE TTimo define that to track tokenization issues
@@ -519,7 +519,7 @@ static void Cmd_TokenizeString2( const char *text_in, qboolean ignoreQuotes ) {
 
 	while ( 1 ) {
 		if ( cmd_argc == MAX_STRING_TOKENS ) {
-			return;			// this is usually something malicious
+			return;			// This is usually something malicious
 		}
 
 		while ( 1 ) {
@@ -551,7 +551,7 @@ static void Cmd_TokenizeString2( const char *text_in, qboolean ignoreQuotes ) {
 		}
 
 		// handle quoted strings
-    // NOTE TTimo this doesn't handle \" escaping
+    // NOTE TTimo This doesn't handle \" escaping
 		if ( !ignoreQuotes && *text == '"' ) {
 			cmd_argv[cmd_argc] = textOut;
 			cmd_argc++;
@@ -808,7 +808,7 @@ void	Cmd_ExecuteString( const char *text ) {
 	}
 
 	// send it as a server command if we are connected
-	// this will usually result in a chat message
+	// This will usually result in a chat message
 	CL_ForwardCommandToServer ( text );
 }
 

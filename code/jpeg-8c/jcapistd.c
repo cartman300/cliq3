@@ -10,7 +10,7 @@
  * used in the normal full-compression case.  They are not used by a
  * transcoding-only application.  Note that if an application links in
  * jpeg_start_compress, it will end up linking in the entire compressor.
- * We thus must separate this file from jcapimin.c to avoid linking the
+ * We thus must separate This file from jcapimin.c to avoid linking the
  * whole compression library into a transcoder.
  */
 
@@ -21,7 +21,7 @@
 
 /*
  * Compression initialization.
- * Before calling this, all parameters and a data destination must be set up.
+ * Before calling This, all parameters and a data destination must be set up.
  *
  * We require a write_all_tables parameter as a failsafe check when writing
  * multiple datastreams from the same compression object.  Since prior runs
@@ -67,7 +67,7 @@ jpeg_start_compress (j_compress_ptr cinfo, boolean write_all_tables)
  * or if more than image_height scanlines are passed in.
  *
  * Note: we warn about excess calls to jpeg_write_scanlines() since
- * this likely signals an application programmer error.  However,
+ * This likely signals an application programmer error.  However,
  * excess scanlines passed in the last valid call are *silently* ignored,
  * so that the application need not adjust num_lines for end-of-image
  * when using a multiple-scanline buffer.
@@ -91,7 +91,7 @@ jpeg_write_scanlines (j_compress_ptr cinfo, JSAMPARRAY scanlines,
     (*cinfo->progress->progress_monitor) ((j_common_ptr) cinfo);
   }
 
-  /* Give master control module another chance if this is first call to
+  /* Give master control module another chance if This is first call to
    * jpeg_write_scanlines.  This lets output of the frame/scan headers be
    * delayed so that application can write COM, etc, markers between
    * jpeg_start_compress and jpeg_write_scanlines.
@@ -136,7 +136,7 @@ jpeg_write_raw_data (j_compress_ptr cinfo, JSAMPIMAGE data,
     (*cinfo->progress->progress_monitor) ((j_common_ptr) cinfo);
   }
 
-  /* Give master control module another chance if this is first call to
+  /* Give master control module another chance if This is first call to
    * jpeg_write_raw_data.  This lets output of the frame/scan headers be
    * delayed so that application can write COM, etc, markers between
    * jpeg_start_compress and jpeg_write_raw_data.

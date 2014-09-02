@@ -62,7 +62,7 @@ extern char * getenv JPP((const char * name));
  * workstations (where doubles really do need 8-byte alignment) and will work
  * fine on nearly everything.  If your machine has lesser alignment needs,
  * you can save a few bytes by making ALIGN_TYPE smaller.
- * The only place I know of where this will NOT work is certain Macintosh
+ * The only place I know of where This will NOT work is certain Macintosh
  * 680x0 compilers that define double as a 10-byte IEEE extended float.
  * Doing 10-byte alignment is counterproductive because longwords won't be
  * aligned well.  Put "#define ALIGN_TYPE long" in jconfig.h if you have
@@ -92,7 +92,7 @@ typedef union small_pool_struct {
   struct {
     small_pool_ptr next;	/* next in list of pools */
     size_t bytes_used;		/* how many bytes already used within pool */
-    size_t bytes_left;		/* bytes still available in this pool */
+    size_t bytes_left;		/* bytes still available in This pool */
   } hdr;
   ALIGN_TYPE dummy;		/* included in union to ensure alignment */
 } small_pool_hdr;
@@ -103,7 +103,7 @@ typedef union large_pool_struct {
   struct {
     large_pool_ptr next;	/* next in list of pools */
     size_t bytes_used;		/* how many bytes already used within pool */
-    size_t bytes_left;		/* bytes still available in this pool */
+    size_t bytes_left;		/* bytes still available in This pool */
   } hdr;
   ALIGN_TYPE dummy;		/* included in union to ensure alignment */
 } large_pool_hdr;
@@ -131,7 +131,7 @@ typedef struct {
   /* This counts total space obtained from jpeg_get_small/large */
   long total_space_allocated;
 
-  /* alloc_sarray and alloc_barray set this value for use by virtual
+  /* alloc_sarray and alloc_barray set This value for use by virtual
    * array routines.
    */
   JDIMENSION last_rowsperchunk;	/* from most recent alloc_sarray/barray */
@@ -189,7 +189,7 @@ print_mem_stats (j_common_ptr cinfo, int pool_id)
   small_pool_ptr shdr_ptr;
   large_pool_ptr lhdr_ptr;
 
-  /* Since this is only a debugging stub, we can cheat a little by using
+  /* Since This is only a debugging stub, we can cheat a little by using
    * fprintf directly rather than going through the trace message code.
    * This is helpful because message parm array can't handle longs.
    */
@@ -228,9 +228,9 @@ out_of_memory (j_common_ptr cinfo, int which)
 /*
  * Allocation of "small" objects.
  *
- * For these, we use pooled storage.  When a new pool must be created,
+ * For these, we use pooled storage.  When a New pool must be created,
  * we try to get enough space for the current request plus a "slop" factor,
- * where the slop will be the amount of leftover space in the new pool.
+ * where the slop will be the amount of leftover space in the New pool.
  * The speed vs. space tradeoff is largely determined by the slop values.
  * A different slop value is provided for each pool class (lifetime),
  * and we also distinguish the first pool of a class from later ones.
@@ -283,7 +283,7 @@ alloc_small (j_common_ptr cinfo, int pool_id, size_t sizeofobject)
     hdr_ptr = hdr_ptr->hdr.next;
   }
 
-  /* Time to make a new pool? */
+  /* Time to make a New pool? */
   if (hdr_ptr == NULL) {
     /* min_request is what we need now, slop is what will be leftover */
     min_request = sizeofobject + SIZEOF(small_pool_hdr);
@@ -304,7 +304,7 @@ alloc_small (j_common_ptr cinfo, int pool_id, size_t sizeofobject)
 	out_of_memory(cinfo, 2); /* jpeg_get_small failed */
     }
     mem->total_space_allocated += min_request + slop;
-    /* Success, initialize the new pool header and add to end of list */
+    /* Success, initialize the New pool header and add to end of list */
     hdr_ptr->hdr.next = NULL;
     hdr_ptr->hdr.bytes_used = 0;
     hdr_ptr->hdr.bytes_left = sizeofobject + slop;
@@ -355,7 +355,7 @@ alloc_large (j_common_ptr cinfo, int pool_id, size_t sizeofobject)
   if (odd_bytes > 0)
     sizeofobject += SIZEOF(ALIGN_TYPE) - odd_bytes;
 
-  /* Always make a new pool */
+  /* Always make a New pool */
   if (pool_id < 0 || pool_id >= JPOOL_NUMPOOLS)
     ERREXIT1(cinfo, JERR_BAD_POOL_ID, pool_id);	/* safety check */
 
@@ -365,7 +365,7 @@ alloc_large (j_common_ptr cinfo, int pool_id, size_t sizeofobject)
     out_of_memory(cinfo, 4);	/* jpeg_get_large failed */
   mem->total_space_allocated += sizeofobject + SIZEOF(large_pool_hdr);
 
-  /* Success, initialize the new pool header and add to list */
+  /* Success, initialize the New pool header and add to list */
   hdr_ptr->hdr.next = mem->large_list[pool_id];
   /* We maintain space counts in each pool header for statistical purposes,
    * even though they are not needed for allocation.
@@ -385,9 +385,9 @@ alloc_large (j_common_ptr cinfo, int pool_id, size_t sizeofobject)
  * To minimize allocation overhead and to allow I/O of large contiguous
  * blocks, we allocate the sample rows in groups of as many rows as possible
  * without exceeding MAX_ALLOC_CHUNK total bytes per allocation request.
- * NB: the virtual array control routines, later in this file, know about
- * this chunking of rows.  The rowsperchunk value is left in the mem manager
- * object so that it can be saved away if this sarray is the workspace for
+ * NB: the virtual array control routines, later in This file, know about
+ * This chunking of rows.  The rowsperchunk value is left in the mem manager
+ * object so that it can be saved away if This sarray is the workspace for
  * a virtual array.
  */
 
@@ -505,9 +505,9 @@ alloc_barray (j_common_ptr cinfo, int pool_id,
  * The access_virt_array routines are responsible for making a specific strip
  * area accessible (after reading or writing the backing file, if necessary).
  * Note that the access routines are told whether the caller intends to modify
- * the accessed strip; during a read-only pass this saves having to rewrite
+ * the accessed strip; during a read-only pass This saves having to rewrite
  * data to disk.  The access routines are also responsible for pre-zeroing
- * any newly accessed rows, if pre-zeroing was requested.
+ * any Newly accessed rows, if pre-zeroing was requested.
  *
  * In current usage, the access requests are usually for nonoverlapping
  * strips; that is, successive access start_row numbers differ by exactly
@@ -615,7 +615,7 @@ realize_virt_arrays (j_common_ptr cinfo)
   if (space_per_minheight <= 0)
     return;			/* no unrealized arrays, no work */
 
-  /* Determine amount of memory to actually use; this is system-dependent. */
+  /* Determine amount of memory to actually use; This is system-dependent. */
   avail_mem = jpeg_mem_available(cinfo, space_per_minheight, maximum_space,
 				 mem->total_space_allocated);
 
@@ -690,7 +690,7 @@ LOCAL(void)
 do_sarray_io (j_common_ptr cinfo, jvirt_sarray_ptr ptr, boolean writing)
 /* Do backing store read or write of a virtual sample array */
 {
-  long bytesperrow, file_offset, byte_count, rows, thisrow, i;
+  long bytesperrow, file_offset, byte_count, rows, Thisrow, i;
 
   bytesperrow = (long) ptr->samplesperrow * SIZEOF(JSAMPLE);
   file_offset = ptr->cur_start_row * bytesperrow;
@@ -699,11 +699,11 @@ do_sarray_io (j_common_ptr cinfo, jvirt_sarray_ptr ptr, boolean writing)
     /* One chunk, but check for short chunk at end of buffer */
     rows = MIN((long) ptr->rowsperchunk, (long) ptr->rows_in_mem - i);
     /* Transfer no more than is currently defined */
-    thisrow = (long) ptr->cur_start_row + i;
-    rows = MIN(rows, (long) ptr->first_undef_row - thisrow);
+    Thisrow = (long) ptr->cur_start_row + i;
+    rows = MIN(rows, (long) ptr->first_undef_row - Thisrow);
     /* Transfer no more than fits in file */
-    rows = MIN(rows, (long) ptr->rows_in_array - thisrow);
-    if (rows <= 0)		/* this chunk might be past end of file! */
+    rows = MIN(rows, (long) ptr->rows_in_array - Thisrow);
+    if (rows <= 0)		/* This chunk might be past end of file! */
       break;
     byte_count = rows * bytesperrow;
     if (writing)
@@ -723,7 +723,7 @@ LOCAL(void)
 do_barray_io (j_common_ptr cinfo, jvirt_barray_ptr ptr, boolean writing)
 /* Do backing store read or write of a virtual coefficient-block array */
 {
-  long bytesperrow, file_offset, byte_count, rows, thisrow, i;
+  long bytesperrow, file_offset, byte_count, rows, Thisrow, i;
 
   bytesperrow = (long) ptr->blocksperrow * SIZEOF(JBLOCK);
   file_offset = ptr->cur_start_row * bytesperrow;
@@ -732,11 +732,11 @@ do_barray_io (j_common_ptr cinfo, jvirt_barray_ptr ptr, boolean writing)
     /* One chunk, but check for short chunk at end of buffer */
     rows = MIN((long) ptr->rowsperchunk, (long) ptr->rows_in_mem - i);
     /* Transfer no more than is currently defined */
-    thisrow = (long) ptr->cur_start_row + i;
-    rows = MIN(rows, (long) ptr->first_undef_row - thisrow);
+    Thisrow = (long) ptr->cur_start_row + i;
+    rows = MIN(rows, (long) ptr->first_undef_row - Thisrow);
     /* Transfer no more than fits in file */
-    rows = MIN(rows, (long) ptr->rows_in_array - thisrow);
-    if (rows <= 0)		/* this chunk might be past end of file! */
+    rows = MIN(rows, (long) ptr->rows_in_array - Thisrow);
+    if (rows <= 0)		/* This chunk might be past end of file! */
       break;
     byte_count = rows * bytesperrow;
     if (writing)
@@ -995,7 +995,7 @@ free_pool (j_common_ptr cinfo, int pool_id)
 
 /*
  * Close up shop entirely.
- * Note that this cannot be called unless cinfo->mem is non-NULL.
+ * Note that This cannot be called unless cinfo->mem is non-NULL.
  */
 
 METHODDEF(void)
@@ -1021,7 +1021,7 @@ self_destruct (j_common_ptr cinfo)
 
 /*
  * Memory manager initialization.
- * When this is called, only the error manager pointer is valid in cinfo!
+ * When This is called, only the error manager pointer is valid in cinfo!
  */
 
 GLOBAL(void)
@@ -1096,9 +1096,9 @@ jinit_memory_mgr (j_common_ptr cinfo)
 
   /* Check for an environment variable JPEGMEM; if found, override the
    * default max_memory setting from jpeg_mem_init.  Note that the
-   * surrounding application may again override this value.
+   * surrounding application may again override This value.
    * If your system doesn't support getenv(), define NO_GETENV to disable
-   * this feature.
+   * This feature.
    */
 #ifndef NO_GETENV
   { char * memenv;

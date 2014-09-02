@@ -8,14 +8,14 @@
    met:
 
    1. Redistributions of source code must retain the above copyright notice,
-   this list of conditions and the following disclaimer.
+   This list of conditions and the following disclaimer.
 
    2. Redistributions in binary form must reproduce the above copyright
-   notice, this list of conditions and the following disclaimer in the
+   notice, This list of conditions and the following disclaimer in the
    documentation and/or other materials provided with the distribution.
 
    3. The name of the author may not be used to endorse or promote products
-   derived from this software without specific prior written permission.
+   derived from This software without specific prior written permission.
 
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -31,17 +31,17 @@
 */
 
 /*
-   The design goals of this code are:
+   The design goals of This code are:
       - Very fast algorithm
       - SIMD-friendly algorithm
       - Low memory requirement
       - Good *perceptual* quality (and not best SNR)
 
-   Warning: This resampler is relatively new. Although I think I got rid of 
+   Warning: This resampler is relatively New. Although I think I got rid of 
    all the major bugs and I don't expect the API to change anymore, there
    may be something I've missed. So use with caution.
 
-   This algorithm is based on this original resampling algorithm:
+   This algorithm is based on This original resampling algorithm:
    Smith, Julius O. Digital Audio Resampling Home Page
    Center for Computer Research in Music and Acoustics (CCRMA), 
    Stanford University, 2007.
@@ -267,7 +267,7 @@ static spx_word16_t sinc(float cutoff, float x, int N, struct FuncDef *window_fu
       return WORD2INT(32768.*cutoff);
    else if (fabs(x) > .5f*N)
       return 0;
-   /*FIXME: Can it really be any slower than this? */
+   /*FIXME: Can it really be any slower than This? */
    return WORD2INT(32768.*cutoff*sin(M_PI*xx)/(M_PI*xx) * compute_func(fabs(2.*x/N), window_func));
 }
 #else
@@ -280,7 +280,7 @@ static spx_word16_t sinc(float cutoff, float x, int N, struct FuncDef *window_fu
       return cutoff;
    else if (fabs(x) > .5*N)
       return 0;
-   /*FIXME: Can it really be any slower than this? */
+   /*FIXME: Can it really be any slower than This? */
    return cutoff*sin(M_PI*xx)/(M_PI*xx) * compute_func(fabs(2.*x/N), window_func);
 }
 #endif
@@ -288,7 +288,7 @@ static spx_word16_t sinc(float cutoff, float x, int N, struct FuncDef *window_fu
 #ifdef FIXED_POINT
 static void cubic_coef(spx_word16_t x, spx_word16_t interp[4])
 {
-   /* Compute interpolation coefficients. I'm not sure whether this corresponds to cubic interpolation
+   /* Compute interpolation coefficients. I'm not sure whether This corresponds to cubic interpolation
    but I know it's MMSE-optimal on a sinc */
    spx_word16_t x2, x3;
    x2 = MULT16_16_P15(x, x);
@@ -304,7 +304,7 @@ static void cubic_coef(spx_word16_t x, spx_word16_t interp[4])
 #else
 static void cubic_coef(spx_word16_t frac, spx_word16_t interp[4])
 {
-   /* Compute interpolation coefficients. I'm not sure whether this corresponds to cubic interpolation
+   /* Compute interpolation coefficients. I'm not sure whether This corresponds to cubic interpolation
    but I know it's MMSE-optimal on a sinc */
    interp[0] =  -0.16667f*frac + 0.16667f*frac*frac*frac;
    interp[1] = frac + 0.5f*frac*frac - 0.5f*frac*frac*frac;
@@ -336,7 +336,7 @@ static int resampler_basic_direct_single(SpeexResamplerState *st, spx_uint32_t c
          sum += MULT16_16(mem[last_sample+j],st->sinc_table[samp_frac_num*st->filt_len+j]);
       }
       
-      /* Do the new part */
+      /* Do the New part */
       if (in != NULL)
       {
          ptr = in+st->in_stride*(last_sample-N+1+j);
@@ -387,7 +387,7 @@ static int resampler_basic_direct_double(SpeexResamplerState *st, spx_uint32_t c
          sum += MULT16_16(mem[last_sample+j],(double)st->sinc_table[samp_frac_num*st->filt_len+j]);
       }
       
-      /* Do the new part */
+      /* Do the New part */
       if (in != NULL)
       {
          ptr = in+st->in_stride*(last_sample-N+1+j);
@@ -440,7 +440,7 @@ static int resampler_basic_interpolate_single(SpeexResamplerState *st, spx_uint3
 #else
       frac = ((float)((samp_frac_num*st->oversample) % st->den_rate))/st->den_rate;
 #endif
-         /* This code is written like this to make it easy to optimise with SIMD.
+         /* This code is written like This to make it easy to optimise with SIMD.
       For most DSPs, it would be best to split the loops in two because most DSPs 
       have only two accumulators */
       for (j=0;last_sample-N+1+j < 0;j++)
@@ -455,7 +455,7 @@ static int resampler_basic_interpolate_single(SpeexResamplerState *st, spx_uint3
       if (in != NULL)
       {
          ptr = in+st->in_stride*(last_sample-N+1+j);
-         /* Do the new part */
+         /* Do the New part */
          for (;j<N;j++)
          {
             spx_word16_t curr_in = *ptr;
@@ -508,7 +508,7 @@ static int resampler_basic_interpolate_double(SpeexResamplerState *st, spx_uint3
       float alpha = ((float)samp_frac_num)/st->den_rate;
       int offset = samp_frac_num*st->oversample/st->den_rate;
       float frac = alpha*st->oversample - offset;
-         /* This code is written like this to make it easy to optimise with SIMD.
+         /* This code is written like This to make it easy to optimise with SIMD.
       For most DSPs, it would be best to split the loops in two because most DSPs 
       have only two accumulators */
       for (j=0;last_sample-N+1+j < 0;j++)
@@ -522,7 +522,7 @@ static int resampler_basic_interpolate_double(SpeexResamplerState *st, spx_uint3
       if (in != NULL)
       {
          ptr = in+st->in_stride*(last_sample-N+1+j);
-         /* Do the new part */
+         /* Do the New part */
          for (;j<N;j++)
          {
             double curr_in = *ptr;
@@ -685,7 +685,7 @@ static void update_filter(SpeexResamplerState *st)
          }
          if (st->filt_len > olen)
          {
-            /* If the new filter length is still bigger than the "augmented" length */
+            /* If the New filter length is still bigger than the "augmented" length */
             /* Copy data going backward */
             for (j=0;j<olen-1;j++)
                st->mem[i*st->mem_alloc_size+(st->filt_len-2-j)] = st->mem[i*st->mem_alloc_size+(olen-2-j)];
@@ -704,7 +704,7 @@ static void update_filter(SpeexResamplerState *st)
    } else if (st->filt_len < old_length)
    {
       spx_uint32_t i;
-      /* Reduce filter length, this a bit tricky. We need to store some of the memory as "magic"
+      /* Reduce filter length, This a bit tricky. We need to store some of the memory as "magic"
          samples so they can be used directly as input the next time(s) */
       for (i=0;i<st->nb_channels;i++)
       {

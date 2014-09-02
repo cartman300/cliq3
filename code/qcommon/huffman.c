@@ -195,7 +195,7 @@ static void increment(huff_t* huff, node_t *node) {
 
 void Huff_addRef(huff_t* huff, byte ch) {
 	node_t *tnode, *tnode2;
-	if (huff->loc[ch] == NULL) { /* if this is the first transmission of this node */
+	if (huff->loc[ch] == NULL) { /* if This is the first transmission of This node */
 		tnode = &(huff->nodeList[huff->blocNode++]);
 		tnode2 = &(huff->nodeList[huff->blocNode++]);
 
@@ -225,12 +225,12 @@ void Huff_addRef(huff_t* huff, byte ch) {
 			if (huff->lhead->next->weight == 1) {
 				tnode->head = huff->lhead->next->head;
 			} else {
-				/* this should never happen */
+				/* This should never happen */
 				tnode->head = get_ppnode(huff);
 				*tnode->head = tnode2;
 		    }
 		} else {
-			/* this should never happen */
+			/* This should never happen */
 			tnode->head = get_ppnode(huff);
 			*tnode->head = tnode;
 		}
@@ -297,7 +297,7 @@ void Huff_offsetReceive (node_t *node, int *ch, byte *fin, int *offset) {
 	*offset = bloc;
 }
 
-/* Send the prefix code for this node */
+/* Send the prefix code for This node */
 static void send(node_t *node, node_t *child, byte *fout) {
 	if (node->parent) {
 		send(node->parent, node, fout);

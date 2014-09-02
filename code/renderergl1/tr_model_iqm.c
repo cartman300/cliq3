@@ -746,7 +746,7 @@ R_CullIQM
 */
 static int R_CullIQM( iqmData_t *data, trRefEntity_t *ent ) {
 	vec3_t		bounds[2];
-	vec_t		*oldBounds, *newBounds;
+	vec_t		*oldBounds, *NewBounds;
 	int		i;
 
 	if (!data->bounds) {
@@ -756,12 +756,12 @@ static int R_CullIQM( iqmData_t *data, trRefEntity_t *ent ) {
 
 	// compute bounds pointers
 	oldBounds = data->bounds + 6*ent->e.oldframe;
-	newBounds = data->bounds + 6*ent->e.frame;
+	NewBounds = data->bounds + 6*ent->e.frame;
 
 	// calculate a bounding box in the current coordinate system
 	for (i = 0 ; i < 3 ; i++) {
-		bounds[0][i] = oldBounds[i] < newBounds[i] ? oldBounds[i] : newBounds[i];
-		bounds[1][i] = oldBounds[i+3] > newBounds[i+3] ? oldBounds[i+3] : newBounds[i+3];
+		bounds[0][i] = oldBounds[i] < NewBounds[i] ? oldBounds[i] : NewBounds[i];
+		bounds[1][i] = oldBounds[i+3] > NewBounds[i+3] ? oldBounds[i+3] : NewBounds[i+3];
 	}
 
 	switch ( R_CullLocalBox( bounds ) )
@@ -831,7 +831,7 @@ int R_ComputeIQMFogNum( iqmData_t *data, trRefEntity_t *ent ) {
 =================
 R_AddIQMSurfaces
 
-Add all surfaces of this model
+Add all surfaces of This model
 =================
 */
 void R_AddIQMSurfaces( trRefEntity_t *ent ) {
@@ -1011,7 +1011,7 @@ static void ComputeJointMats( iqmData_t *data, int frame, int oldframe,
 =================
 RB_AddIQMSurfaces
 
-Compute vertices for this model surface
+Compute vertices for This model surface
 =================
 */
 void RB_IQMSurfaceAnim( surfaceType_t *surface ) {

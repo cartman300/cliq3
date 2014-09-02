@@ -12,7 +12,7 @@
  * transcoding-only case.
  *
  * Most of the routines intended to be called directly by an application
- * are in this file or in jdapistd.c.  But also see jcomapi.c for routines
+ * are in This file or in jdapistd.c.  But also see jcomapi.c for routines
  * shared by compression and decompression, and jdtrans.c for the transcoding
  * case.
  */
@@ -55,7 +55,7 @@ jpeg_CreateDecompress (j_decompress_ptr cinfo, int version, size_t structsize)
   }
   cinfo->is_decompressor = TRUE;
 
-  /* Initialize a memory manager instance for this object */
+  /* Initialize a memory manager instance for This object */
   jinit_memory_mgr((j_common_ptr) cinfo);
 
   /* Zero out pointers to permanent structures. */
@@ -115,7 +115,7 @@ LOCAL(void)
 default_decompress_parms (j_decompress_ptr cinfo)
 {
   /* Guess the input colorspace, and set output colorspace accordingly. */
-  /* (Wish JPEG committee had provided a real way to specify this...) */
+  /* (Wish JPEG committee had provided a real way to specify This...) */
   /* Note application may override our guesses. */
   switch (cinfo->num_components) {
   case 1:
@@ -226,9 +226,9 @@ default_decompress_parms (j_decompress_ptr cinfo)
  * If an abbreviated (tables only) datastream is presented, the routine will
  * return JPEG_HEADER_TABLES_ONLY upon reaching EOI.  The application may then
  * re-use the JPEG object to read the abbreviated image datastream(s).
- * It is unnecessary (but OK) to call jpeg_abort in this case.
+ * It is unnecessary (but OK) to call jpeg_abort in This case.
  * The JPEG_SUSPENDED return code only occurs if the data source module
- * requests suspension of the decompressor.  In this case the application
+ * requests suspension of the decompressor.  In This case the application
  * should load more source data and then re-call jpeg_read_header to resume
  * processing.
  * If a non-suspending data source is used and require_image is TRUE, then the
@@ -289,7 +289,7 @@ jpeg_consume_input (j_decompress_ptr cinfo)
 {
   int retcode = JPEG_SUSPENDED;
 
-  /* NB: every possible DSTATE value should be listed in this switch */
+  /* NB: every possible DSTATE value should be listed in This switch */
   switch (cinfo->global_state) {
   case DSTATE_START:
     /* Start-of-datastream actions: reset appropriate modules */

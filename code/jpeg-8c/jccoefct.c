@@ -40,12 +40,12 @@ typedef struct {
   int MCU_rows_per_iMCU_row;	/* number of such rows needed */
 
   /* For single-pass compression, it's sufficient to buffer just one MCU
-   * (although this may prove a bit slow in practice).  We allocate a
+   * (although This may prove a bit slow in practice).  We allocate a
    * workspace of C_MAX_BLOCKS_IN_MCU coefficient blocks, and reuse it for each
    * MCU constructed and sent.  (On 80x86, the workspace is FAR even though
-   * it's not really very big; this is to keep the module interfaces unchanged
+   * it's not really very big; This is to keep the module interfaces unchanged
    * when a large coefficient buffer is necessary.)
-   * In multi-pass modes, this array points to the current MCU's blocks
+   * In multi-pass modes, This array points to the current MCU's blocks
    * within the virtual arrays.
    */
   JBLOCKROW MCU_buffer[C_MAX_BLOCKS_IN_MCU];
@@ -70,7 +70,7 @@ METHODDEF(boolean) compress_output
 
 LOCAL(void)
 start_iMCU_row (j_compress_ptr cinfo)
-/* Reset within-iMCU-row counters for a new row */
+/* Reset within-iMCU-row counters for a New row */
 {
   my_coef_ptr coef = (my_coef_ptr) cinfo->coef;
 
@@ -163,7 +163,7 @@ compress_data (j_compress_ptr cinfo, JSAMPIMAGE input_buf)
        * specially.  The data in them does not matter for image reconstruction,
        * so we fill them with values that will encode to the smallest amount of
        * data, viz: all zeroes in the AC entries, DC entries equal to previous
-       * block's DC value.  (Thanks to Thomas Kinsman for this idea.)
+       * block's DC value.  (Thanks to Thomas Kinsman for This idea.)
        */
       blkn = 0;
       for (ci = 0; ci < cinfo->comps_in_scan; ci++) {
@@ -238,9 +238,9 @@ compress_data (j_compress_ptr cinfo, JSAMPIMAGE input_buf)
  * of the virtual arrays.
  *
  * NB: input_buf contains a plane for each component in image.  All
- * components are DCT'd and loaded into the virtual arrays in this pass.
+ * components are DCT'd and loaded into the virtual arrays in This pass.
  * However, it may be that only a subset of the components are emitted to
- * the entropy encoder during this first pass; be careful about looking
+ * the entropy encoder during This first pass; be careful about looking
  * at the scan-dependent variables (MCU dimensions, etc).
  */
 
@@ -254,17 +254,17 @@ compress_first_pass (j_compress_ptr cinfo, JSAMPIMAGE input_buf)
   JCOEF lastDC;
   jpeg_component_info *compptr;
   JBLOCKARRAY buffer;
-  JBLOCKROW thisblockrow, lastblockrow;
+  JBLOCKROW Thisblockrow, lastblockrow;
   forward_DCT_ptr forward_DCT;
 
   for (ci = 0, compptr = cinfo->comp_info; ci < cinfo->num_components;
        ci++, compptr++) {
-    /* Align the virtual buffer for this component. */
+    /* Align the virtual buffer for This component. */
     buffer = (*cinfo->mem->access_virt_barray)
       ((j_common_ptr) cinfo, coef->whole_image[ci],
        coef->iMCU_row_num * compptr->v_samp_factor,
        (JDIMENSION) compptr->v_samp_factor, TRUE);
-    /* Count non-dummy DCT block rows in this iMCU row. */
+    /* Count non-dummy DCT block rows in This iMCU row. */
     if (coef->iMCU_row_num < last_iMCU_row)
       block_rows = compptr->v_samp_factor;
     else {
@@ -279,21 +279,21 @@ compress_first_pass (j_compress_ptr cinfo, JSAMPIMAGE input_buf)
     if (ndummy > 0)
       ndummy = h_samp_factor - ndummy;
     forward_DCT = cinfo->fdct->forward_DCT[ci];
-    /* Perform DCT for all non-dummy blocks in this iMCU row.  Each call
+    /* Perform DCT for all non-dummy blocks in This iMCU row.  Each call
      * on forward_DCT processes a complete horizontal row of DCT blocks.
      */
     for (block_row = 0; block_row < block_rows; block_row++) {
-      thisblockrow = buffer[block_row];
-      (*forward_DCT) (cinfo, compptr, input_buf[ci], thisblockrow,
+      Thisblockrow = buffer[block_row];
+      (*forward_DCT) (cinfo, compptr, input_buf[ci], Thisblockrow,
 		      (JDIMENSION) (block_row * compptr->DCT_v_scaled_size),
 		      (JDIMENSION) 0, blocks_across);
       if (ndummy > 0) {
 	/* Create dummy blocks at the right edge of the image. */
-	thisblockrow += blocks_across; /* => first dummy block */
-	jzero_far((void FAR *) thisblockrow, ndummy * SIZEOF(JBLOCK));
-	lastDC = thisblockrow[-1][0];
+	Thisblockrow += blocks_across; /* => first dummy block */
+	jzero_far((void FAR *) Thisblockrow, ndummy * SIZEOF(JBLOCK));
+	lastDC = Thisblockrow[-1][0];
 	for (bi = 0; bi < ndummy; bi++) {
-	  thisblockrow[bi][0] = lastDC;
+	  Thisblockrow[bi][0] = lastDC;
 	}
       }
     }
@@ -307,16 +307,16 @@ compress_first_pass (j_compress_ptr cinfo, JSAMPIMAGE input_buf)
       MCUs_across = blocks_across / h_samp_factor;
       for (block_row = block_rows; block_row < compptr->v_samp_factor;
 	   block_row++) {
-	thisblockrow = buffer[block_row];
+	Thisblockrow = buffer[block_row];
 	lastblockrow = buffer[block_row-1];
-	jzero_far((void FAR *) thisblockrow,
+	jzero_far((void FAR *) Thisblockrow,
 		  (size_t) (blocks_across * SIZEOF(JBLOCK)));
 	for (MCUindex = 0; MCUindex < MCUs_across; MCUindex++) {
 	  lastDC = lastblockrow[h_samp_factor-1][0];
 	  for (bi = 0; bi < h_samp_factor; bi++) {
-	    thisblockrow[bi][0] = lastDC;
+	    Thisblockrow[bi][0] = lastDC;
 	  }
-	  thisblockrow += h_samp_factor; /* advance to next MCU in row */
+	  Thisblockrow += h_samp_factor; /* advance to next MCU in row */
 	  lastblockrow += h_samp_factor;
 	}
       }
@@ -352,8 +352,8 @@ compress_output (j_compress_ptr cinfo, JSAMPIMAGE input_buf)
   JBLOCKROW buffer_ptr;
   jpeg_component_info *compptr;
 
-  /* Align the virtual buffers for the components used in this scan.
-   * NB: during first pass, this is safe only because the buffers will
+  /* Align the virtual buffers for the components used in This scan.
+   * NB: during first pass, This is safe only because the buffers will
    * already be aligned properly, so jmemmgr.c won't need to do any I/O.
    */
   for (ci = 0; ci < cinfo->comps_in_scan; ci++) {
@@ -369,7 +369,7 @@ compress_output (j_compress_ptr cinfo, JSAMPIMAGE input_buf)
        yoffset++) {
     for (MCU_col_num = coef->mcu_ctr; MCU_col_num < cinfo->MCUs_per_row;
 	 MCU_col_num++) {
-      /* Construct list of pointers to DCT blocks belonging to this MCU */
+      /* Construct list of pointers to DCT blocks belonging to This MCU */
       blkn = 0;			/* index of current DCT block within MCU */
       for (ci = 0; ci < cinfo->comps_in_scan; ci++) {
 	compptr = cinfo->cur_comp_info[ci];

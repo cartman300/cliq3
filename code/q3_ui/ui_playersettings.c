@@ -116,9 +116,9 @@ static void PlayerSettings_DrawName( void *self ) {
 	char			name[32];
 
 	f = (menufield_s*)self;
-	basex = f->generic.x;
-	y = f->generic.y;
-	focus = (f->generic.parent->cursor == f->generic.menuPosition);
+	basex = f->Generic.x;
+	y = f->Generic.y;
+	focus = (f->Generic.parent->cursor == f->Generic.menuPosition);
 
 	style = UI_LEFT|UI_SMALLFONT;
 	color = text_color_normal;
@@ -183,7 +183,7 @@ static void PlayerSettings_DrawHandicap( void *self ) {
 	float			*color;
 
 	item = (menulist_s *)self;
-	focus = (item->generic.parent->cursor == item->generic.menuPosition);
+	focus = (item->Generic.parent->cursor == item->Generic.menuPosition);
 
 	style = UI_LEFT|UI_SMALLFONT;
 	color = text_color_normal;
@@ -192,8 +192,8 @@ static void PlayerSettings_DrawHandicap( void *self ) {
 		color = text_color_highlight;
 	}
 
-	UI_DrawProportionalString( item->generic.x, item->generic.y, "Handicap", style, color );
-	UI_DrawProportionalString( item->generic.x + 64, item->generic.y + PROP_HEIGHT, handicap_items[item->curvalue], style, color );
+	UI_DrawProportionalString( item->Generic.x, item->Generic.y, "Handicap", style, color );
+	UI_DrawProportionalString( item->Generic.x + 64, item->Generic.y + PROP_HEIGHT, handicap_items[item->curvalue], style, color );
 }
 
 
@@ -209,7 +209,7 @@ static void PlayerSettings_DrawEffects( void *self ) {
 	float			*color;
 
 	item = (menulist_s *)self;
-	focus = (item->generic.parent->cursor == item->generic.menuPosition);
+	focus = (item->Generic.parent->cursor == item->Generic.menuPosition);
 
 	style = UI_LEFT|UI_SMALLFONT;
 	color = text_color_normal;
@@ -218,10 +218,10 @@ static void PlayerSettings_DrawEffects( void *self ) {
 		color = text_color_highlight;
 	}
 
-	UI_DrawProportionalString( item->generic.x, item->generic.y, "Effects", style, color );
+	UI_DrawProportionalString( item->Generic.x, item->Generic.y, "Effects", style, color );
 
-	UI_DrawHandlePic( item->generic.x + 64, item->generic.y + PROP_HEIGHT + 8, 128, 8, s_playersettings.fxBasePic );
-	UI_DrawHandlePic( item->generic.x + 64 + item->curvalue * 16 + 8, item->generic.y + PROP_HEIGHT + 6, 16, 12, s_playersettings.fxPic[item->curvalue] );
+	UI_DrawHandlePic( item->Generic.x + 64, item->Generic.y + PROP_HEIGHT + 8, 128, 8, s_playersettings.fxBasePic );
+	UI_DrawHandlePic( item->Generic.x + 64 + item->curvalue * 16 + 8, item->Generic.y + PROP_HEIGHT + 6, 16, 12, s_playersettings.fxPic[item->curvalue] );
 }
 
 
@@ -247,7 +247,7 @@ static void PlayerSettings_DrawPlayer( void *self ) {
 	}
 
 	b = (menubitmap_s*) self;
-	UI_DrawPlayer( b->generic.x, b->generic.y, b->width, b->height, &s_playersettings.playerinfo, uis.realtime/2 );
+	UI_DrawPlayer( b->Generic.x, b->Generic.y, b->width, b->height, &s_playersettings.playerinfo, uis.realtime/2 );
 }
 
 
@@ -361,102 +361,102 @@ static void PlayerSettings_MenuInit( void ) {
 	s_playersettings.menu.wrapAround = qtrue;
 	s_playersettings.menu.fullscreen = qtrue;
 
-	s_playersettings.banner.generic.type  = MTYPE_BTEXT;
-	s_playersettings.banner.generic.x     = 320;
-	s_playersettings.banner.generic.y     = 16;
+	s_playersettings.banner.Generic.type  = MTYPE_BTEXT;
+	s_playersettings.banner.Generic.x     = 320;
+	s_playersettings.banner.Generic.y     = 16;
 	s_playersettings.banner.string        = "PLAYER SETTINGS";
 	s_playersettings.banner.color         = color_white;
 	s_playersettings.banner.style         = UI_CENTER;
 
-	s_playersettings.framel.generic.type  = MTYPE_BITMAP;
-	s_playersettings.framel.generic.name  = ART_FRAMEL;
-	s_playersettings.framel.generic.flags = QMF_LEFT_JUSTIFY|QMF_INACTIVE;
-	s_playersettings.framel.generic.x     = 0;
-	s_playersettings.framel.generic.y     = 78;
+	s_playersettings.framel.Generic.type  = MTYPE_BITMAP;
+	s_playersettings.framel.Generic.name  = ART_FRAMEL;
+	s_playersettings.framel.Generic.flags = QMF_LEFT_JUSTIFY|QMF_INACTIVE;
+	s_playersettings.framel.Generic.x     = 0;
+	s_playersettings.framel.Generic.y     = 78;
 	s_playersettings.framel.width         = 256;
 	s_playersettings.framel.height        = 329;
 
-	s_playersettings.framer.generic.type  = MTYPE_BITMAP;
-	s_playersettings.framer.generic.name  = ART_FRAMER;
-	s_playersettings.framer.generic.flags = QMF_LEFT_JUSTIFY|QMF_INACTIVE;
-	s_playersettings.framer.generic.x     = 376;
-	s_playersettings.framer.generic.y     = 76;
+	s_playersettings.framer.Generic.type  = MTYPE_BITMAP;
+	s_playersettings.framer.Generic.name  = ART_FRAMER;
+	s_playersettings.framer.Generic.flags = QMF_LEFT_JUSTIFY|QMF_INACTIVE;
+	s_playersettings.framer.Generic.x     = 376;
+	s_playersettings.framer.Generic.y     = 76;
 	s_playersettings.framer.width         = 256;
 	s_playersettings.framer.height        = 334;
 
 	y = 144;
-	s_playersettings.name.generic.type			= MTYPE_FIELD;
-	s_playersettings.name.generic.flags			= QMF_NODEFAULTINIT;
-	s_playersettings.name.generic.ownerdraw		= PlayerSettings_DrawName;
+	s_playersettings.name.Generic.type			= MTYPE_FIELD;
+	s_playersettings.name.Generic.flags			= QMF_NODEFAULTINIT;
+	s_playersettings.name.Generic.ownerdraw		= PlayerSettings_DrawName;
 	s_playersettings.name.field.widthInChars	= MAX_NAMELENGTH;
 	s_playersettings.name.field.maxchars		= MAX_NAMELENGTH;
-	s_playersettings.name.generic.x				= 192;
-	s_playersettings.name.generic.y				= y;
-	s_playersettings.name.generic.left			= 192 - 8;
-	s_playersettings.name.generic.top			= y - 8;
-	s_playersettings.name.generic.right			= 192 + 200;
-	s_playersettings.name.generic.bottom		= y + 2 * PROP_HEIGHT;
+	s_playersettings.name.Generic.x				= 192;
+	s_playersettings.name.Generic.y				= y;
+	s_playersettings.name.Generic.left			= 192 - 8;
+	s_playersettings.name.Generic.top			= y - 8;
+	s_playersettings.name.Generic.right			= 192 + 200;
+	s_playersettings.name.Generic.bottom		= y + 2 * PROP_HEIGHT;
 
 	y += 3 * PROP_HEIGHT;
-	s_playersettings.handicap.generic.type		= MTYPE_SPINCONTROL;
-	s_playersettings.handicap.generic.flags		= QMF_NODEFAULTINIT;
-	s_playersettings.handicap.generic.id		= ID_HANDICAP;
-	s_playersettings.handicap.generic.ownerdraw	= PlayerSettings_DrawHandicap;
-	s_playersettings.handicap.generic.x			= 192;
-	s_playersettings.handicap.generic.y			= y;
-	s_playersettings.handicap.generic.left		= 192 - 8;
-	s_playersettings.handicap.generic.top		= y - 8;
-	s_playersettings.handicap.generic.right		= 192 + 200;
-	s_playersettings.handicap.generic.bottom	= y + 2 * PROP_HEIGHT;
+	s_playersettings.handicap.Generic.type		= MTYPE_SPINCONTROL;
+	s_playersettings.handicap.Generic.flags		= QMF_NODEFAULTINIT;
+	s_playersettings.handicap.Generic.id		= ID_HANDICAP;
+	s_playersettings.handicap.Generic.ownerdraw	= PlayerSettings_DrawHandicap;
+	s_playersettings.handicap.Generic.x			= 192;
+	s_playersettings.handicap.Generic.y			= y;
+	s_playersettings.handicap.Generic.left		= 192 - 8;
+	s_playersettings.handicap.Generic.top		= y - 8;
+	s_playersettings.handicap.Generic.right		= 192 + 200;
+	s_playersettings.handicap.Generic.bottom	= y + 2 * PROP_HEIGHT;
 	s_playersettings.handicap.numitems			= 20;
 
 	y += 3 * PROP_HEIGHT;
-	s_playersettings.effects.generic.type		= MTYPE_SPINCONTROL;
-	s_playersettings.effects.generic.flags		= QMF_NODEFAULTINIT;
-	s_playersettings.effects.generic.id			= ID_EFFECTS;
-	s_playersettings.effects.generic.ownerdraw	= PlayerSettings_DrawEffects;
-	s_playersettings.effects.generic.x			= 192;
-	s_playersettings.effects.generic.y			= y;
-	s_playersettings.effects.generic.left		= 192 - 8;
-	s_playersettings.effects.generic.top		= y - 8;
-	s_playersettings.effects.generic.right		= 192 + 200;
-	s_playersettings.effects.generic.bottom		= y + 2* PROP_HEIGHT;
+	s_playersettings.effects.Generic.type		= MTYPE_SPINCONTROL;
+	s_playersettings.effects.Generic.flags		= QMF_NODEFAULTINIT;
+	s_playersettings.effects.Generic.id			= ID_EFFECTS;
+	s_playersettings.effects.Generic.ownerdraw	= PlayerSettings_DrawEffects;
+	s_playersettings.effects.Generic.x			= 192;
+	s_playersettings.effects.Generic.y			= y;
+	s_playersettings.effects.Generic.left		= 192 - 8;
+	s_playersettings.effects.Generic.top		= y - 8;
+	s_playersettings.effects.Generic.right		= 192 + 200;
+	s_playersettings.effects.Generic.bottom		= y + 2* PROP_HEIGHT;
 	s_playersettings.effects.numitems			= 7;
 
-	s_playersettings.model.generic.type			= MTYPE_BITMAP;
-	s_playersettings.model.generic.name			= ART_MODEL0;
-	s_playersettings.model.generic.flags		= QMF_RIGHT_JUSTIFY|QMF_PULSEIFFOCUS;
-	s_playersettings.model.generic.id			= ID_MODEL;
-	s_playersettings.model.generic.callback		= PlayerSettings_MenuEvent;
-	s_playersettings.model.generic.x			= 640;
-	s_playersettings.model.generic.y			= 480-64;
+	s_playersettings.model.Generic.type			= MTYPE_BITMAP;
+	s_playersettings.model.Generic.name			= ART_MODEL0;
+	s_playersettings.model.Generic.flags		= QMF_RIGHT_JUSTIFY|QMF_PULSEIFFOCUS;
+	s_playersettings.model.Generic.id			= ID_MODEL;
+	s_playersettings.model.Generic.callback		= PlayerSettings_MenuEvent;
+	s_playersettings.model.Generic.x			= 640;
+	s_playersettings.model.Generic.y			= 480-64;
 	s_playersettings.model.width				= 128;
 	s_playersettings.model.height				= 64;
 	s_playersettings.model.focuspic				= ART_MODEL1;
 
-	s_playersettings.player.generic.type		= MTYPE_BITMAP;
-	s_playersettings.player.generic.flags		= QMF_INACTIVE;
-	s_playersettings.player.generic.ownerdraw	= PlayerSettings_DrawPlayer;
-	s_playersettings.player.generic.x			= 400;
-	s_playersettings.player.generic.y			= -40;
+	s_playersettings.player.Generic.type		= MTYPE_BITMAP;
+	s_playersettings.player.Generic.flags		= QMF_INACTIVE;
+	s_playersettings.player.Generic.ownerdraw	= PlayerSettings_DrawPlayer;
+	s_playersettings.player.Generic.x			= 400;
+	s_playersettings.player.Generic.y			= -40;
 	s_playersettings.player.width				= 32*10;
 	s_playersettings.player.height				= 56*10;
 
-	s_playersettings.back.generic.type			= MTYPE_BITMAP;
-	s_playersettings.back.generic.name			= ART_BACK0;
-	s_playersettings.back.generic.flags			= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
-	s_playersettings.back.generic.id			= ID_BACK;
-	s_playersettings.back.generic.callback		= PlayerSettings_MenuEvent;
-	s_playersettings.back.generic.x				= 0;
-	s_playersettings.back.generic.y				= 480-64;
+	s_playersettings.back.Generic.type			= MTYPE_BITMAP;
+	s_playersettings.back.Generic.name			= ART_BACK0;
+	s_playersettings.back.Generic.flags			= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
+	s_playersettings.back.Generic.id			= ID_BACK;
+	s_playersettings.back.Generic.callback		= PlayerSettings_MenuEvent;
+	s_playersettings.back.Generic.x				= 0;
+	s_playersettings.back.Generic.y				= 480-64;
 	s_playersettings.back.width					= 128;
 	s_playersettings.back.height				= 64;
 	s_playersettings.back.focuspic				= ART_BACK1;
 
-	s_playersettings.item_null.generic.type		= MTYPE_BITMAP;
-	s_playersettings.item_null.generic.flags	= QMF_LEFT_JUSTIFY|QMF_MOUSEONLY|QMF_SILENT;
-	s_playersettings.item_null.generic.x		= 0;
-	s_playersettings.item_null.generic.y		= 0;
+	s_playersettings.item_null.Generic.type		= MTYPE_BITMAP;
+	s_playersettings.item_null.Generic.flags	= QMF_LEFT_JUSTIFY|QMF_MOUSEONLY|QMF_SILENT;
+	s_playersettings.item_null.Generic.x		= 0;
+	s_playersettings.item_null.Generic.y		= 0;
 	s_playersettings.item_null.width			= 640;
 	s_playersettings.item_null.height			= 480;
 

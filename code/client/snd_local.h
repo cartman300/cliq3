@@ -26,7 +26,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "../qcommon/qcommon.h"
 #include "snd_public.h"
 
-#define	PAINTBUFFER_SIZE		4096					// this is in samples
+#define	PAINTBUFFER_SIZE		4096					// This is in samples
 
 #define SND_CHUNK_SIZE			1024					// samples
 #define SND_CHUNK_SIZE_FLOAT	(SND_CHUNK_SIZE/2)		// floats
@@ -65,7 +65,7 @@ typedef struct sfx_s {
 typedef struct {
 	int			channels;
 	int			samples;				// mono samples in buffer
-	int			submission_chunk;		// don't mix less than this #
+	int			submission_chunk;		// don't mix less than This #
 	int			samplebits;
 	int			speed;
 	byte		*buffer;
@@ -118,7 +118,7 @@ typedef struct {
 	int			width;
 	int			channels;
 	int			samples;
-	int			dataofs;		// chunk starts this many bytes from file start
+	int			dataofs;		// chunk starts This many bytes from file start
 } wavinfo_t;
 
 // Interface between Q3 sound "api" and the sound backend

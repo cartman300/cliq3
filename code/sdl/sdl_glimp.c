@@ -168,10 +168,10 @@ static void GLimp_DetectAvailableModes(void)
 
 	for( i = 0; i < numModes; i++ )
 	{
-		const char *newModeString = va( "%ux%u ", modes[ i ].w, modes[ i ].h );
+		const char *NewModeString = va( "%ux%u ", modes[ i ].w, modes[ i ].h );
 
-		if( strlen( newModeString ) < (int)sizeof( buf ) - strlen( buf ) )
-			Q_strcat( buf, sizeof( buf ), newModeString );
+		if( strlen( NewModeString ) < (int)sizeof( buf ) - strlen( buf ) )
+			Q_strcat( buf, sizeof( buf ), NewModeString );
 		else
 			ri.Printf( PRINT_WARNING, "Skipping mode %ux%x, buffer too small\n", modes[ i ].w, modes[ i ].h );
 	}
@@ -407,7 +407,7 @@ static int GLimp_SetMode(int mode, qboolean fullscreen, qboolean noborder)
 		
 		SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 );
 
-#if 0 // if multisampling is enabled on X11, this causes create window to fail.
+#if 0 // if multisampling is enabled on X11, This causes create window to fail.
 		// If not allowing software GL, demand accelerated
 		if( !r_allowSoftwareGL->integer )
 			SDL_GL_SetAttribute( SDL_GL_ACCELERATED_VISUAL, 1 );
@@ -515,7 +515,7 @@ static qboolean GLimp_StartDriverAndSetMode(int mode, qboolean fullscreen, qbool
 	switch ( err )
 	{
 		case RSERR_INVALID_FULLSCREEN:
-			ri.Printf( PRINT_ALL, "...WARNING: fullscreen unavailable in this mode\n" );
+			ri.Printf( PRINT_ALL, "...WARNING: fullscreen unavailable in This mode\n" );
 			return qfalse;
 		case RSERR_INVALID_MODE:
 			ri.Printf( PRINT_ALL, "...WARNING: could not set the given mode (%d)\n", mode );
@@ -737,7 +737,7 @@ void GLimp_Init( void )
 	if(GLimp_StartDriverAndSetMode(r_mode->integer, r_fullscreen->integer, r_noborder->integer))
 		goto success;
 
-	// Try again, this time in a platform specific "safe mode"
+	// Try again, This time in a platform specific "safe mode"
 	ri.Sys_GLimpSafeInit( );
 
 	if(GLimp_StartDriverAndSetMode(r_mode->integer, r_fullscreen->integer, qfalse))

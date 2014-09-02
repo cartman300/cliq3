@@ -12,7 +12,7 @@
  * This is very portable in the sense that it'll compile on almost anything,
  * but you'd better have lots of main memory (or virtual memory) if you want
  * to process big images.
- * Note that the max_memory_to_use option is ignored by this implementation.
+ * Note that the max_memory_to_use option is ignored by This implementation.
  */
 
 #define JPEG_INTERNALS
@@ -47,7 +47,7 @@ jpeg_free_small (j_common_ptr cinfo, void * object, size_t sizeofobject)
 /*
  * "Large" objects are treated the same as "small" ones.
  * NB: although we include FAR keywords in the routine declarations,
- * this file won't actually work in 80x86 small/medium model; at least,
+ * This file won't actually work in 80x86 small/medium model; at least,
  * you probably won't be able to process useful-size images in only 64KB.
  */
 
@@ -80,7 +80,7 @@ jpeg_mem_available (j_common_ptr cinfo, long min_bytes_needed,
 /*
  * Backing store (temporary file) management.
  * Since jpeg_mem_available always promised the moon,
- * this should never be called and we can just error out.
+ * This should never be called and we can just error out.
  */
 
 GLOBAL(void)

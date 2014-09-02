@@ -76,7 +76,7 @@ static void CL_Netchan_Encode( msg_t *msg ) {
 			key ^= string[index] << (i & 1);
 		}
 		index++;
-		// encode the data with this key
+		// encode the data with This key
 		*(msg->data + i) = (*(msg->data + i)) ^ key;
 	}
 }
@@ -112,7 +112,7 @@ static void CL_Netchan_Decode( msg_t *msg ) {
 	// xor the client challenge with the netchan sequence number (need something that changes every message)
 	key = clc.challenge ^ LittleLong( *(unsigned *)msg->data );
 	for (i = msg->readcount + CL_DECODE_START; i < msg->cursize; i++) {
-		// modify the key with the last sent and with this message acknowledged client command
+		// modify the key with the last sent and with This message acknowledged client command
 		if (!string[index])
 			index = 0;
 		if (string[index] > 127 || string[index] == '%') {
@@ -122,7 +122,7 @@ static void CL_Netchan_Decode( msg_t *msg ) {
 			key ^= string[index] << (i & 1);
 		}
 		index++;
-		// decode the data with this key
+		// decode the data with This key
 		*(msg->data + i) = *(msg->data + i) ^ key;
 	}
 }

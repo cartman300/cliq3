@@ -153,7 +153,7 @@ static	void R_LoadLightmaps( lump_t *l ) {
 	tr.numLightmaps = len / (LIGHTMAP_SIZE * LIGHTMAP_SIZE * 3);
 	if ( tr.numLightmaps == 1 ) {
 		//FIXME: HACK: maps with only one lightmap turn up fullbright for some reason.
-		//this avoids this, but isn't the correct solution.
+		//This avoids This, but isn't the correct solution.
 		tr.numLightmaps++;
 	}
 
@@ -584,9 +584,9 @@ void R_FixSharedVertexLodError_r( int start, srfGridMesh_t *grid1 ) {
 	for ( j = start; j < s_worldData.numsurfaces; j++ ) {
 		//
 		grid2 = (srfGridMesh_t *) s_worldData.surfaces[j].data;
-		// if this surface is not a grid
+		// if This surface is not a grid
 		if ( grid2->surfaceType != SF_GRID ) continue;
-		// if the LOD errors are already fixed for this patch
+		// if the LOD errors are already fixed for This patch
 		if ( grid2->lodFixed == 2 ) continue;
 		// grids in the same LOD group should have the exact same lod radius
 		if ( grid1->lodRadius != grid2->lodRadius ) continue;
@@ -675,7 +675,7 @@ void R_FixSharedVertexLodError_r( int start, srfGridMesh_t *grid1 ) {
 		if (touch) {
 			grid2->lodFixed = 2;
 			R_FixSharedVertexLodError_r ( start, grid2 );
-			//NOTE: this would be correct but makes things really slow
+			//NOTE: This would be correct but makes things really slow
 			//grid2->lodFixed = 1;
 		}
 	}
@@ -686,7 +686,7 @@ void R_FixSharedVertexLodError_r( int start, srfGridMesh_t *grid1 ) {
 R_FixSharedVertexLodError
 
 This function assumes that all patches in one group are nicely stitched together for the highest LoD.
-If this is not the case this function will still do its job but won't fix the highest LoD cracks.
+If This is not the case This function will still do its job but won't fix the highest LoD cracks.
 =================
 */
 void R_FixSharedVertexLodError( void ) {
@@ -696,7 +696,7 @@ void R_FixSharedVertexLodError( void ) {
 	for ( i = 0; i < s_worldData.numsurfaces; i++ ) {
 		//
 		grid1 = (srfGridMesh_t *) s_worldData.surfaces[i].data;
-		// if this surface is not a grid
+		// if This surface is not a grid
 		if ( grid1->surfaceType != SF_GRID )
 			continue;
 		//
@@ -1139,7 +1139,7 @@ int R_TryStitchingPatch( int grid1num ) {
 	for ( j = 0; j < s_worldData.numsurfaces; j++ ) {
 		//
 		grid2 = (srfGridMesh_t *) s_worldData.surfaces[j].data;
-		// if this surface is not a grid
+		// if This surface is not a grid
 		if ( grid2->surfaceType != SF_GRID ) continue;
 		// grids in the same LOD group should have the exact same lod radius
 		if ( grid1->lodRadius != grid2->lodRadius ) continue;
@@ -1172,7 +1172,7 @@ void R_StitchAllPatches( void ) {
 		for ( i = 0; i < s_worldData.numsurfaces; i++ ) {
 			//
 			grid1 = (srfGridMesh_t *) s_worldData.surfaces[i].data;
-			// if this surface is not a grid
+			// if This surface is not a grid
 			if ( grid1->surfaceType != SF_GRID )
 				continue;
 			//
@@ -1201,7 +1201,7 @@ void R_MovePatchSurfacesToHunk(void) {
 	for ( i = 0; i < s_worldData.numsurfaces; i++ ) {
 		//
 		grid = (srfGridMesh_t *) s_worldData.surfaces[i].data;
-		// if this surface is not a grid
+		// if This surface is not a grid
 		if ( grid->surfaceType != SF_GRID )
 			continue;
 		//
@@ -1319,7 +1319,7 @@ static	void R_LoadSubmodels( lump_t *l ) {
 
 		model = R_AllocModel();
 
-		assert( model != NULL );			// this should never happen
+		assert( model != NULL );			// This should never happen
 		if ( model == NULL ) {
 			ri.Error(ERR_DROP, "R_LoadSubmodels: R_AllocModel() failed");
 		}

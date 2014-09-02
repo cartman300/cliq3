@@ -63,7 +63,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define IFL_NOTFREE				1		//not in free for all
 #define IFL_NOTTEAM				2		//not in team play
 #define IFL_NOTSINGLE			4		//not in single player
-#define IFL_NOTBOT				8		//bot should never go for this
+#define IFL_NOTBOT				8		//bot should never go for This
 #define IFL_ROAM				16		//bot roam goal
 
 //location in the map "target_location"
@@ -94,7 +94,7 @@ typedef enum {
 	GT_TOURNAMENT,		// one on one tournament
 	GT_SINGLE_PLAYER,	// single player tournament
 
-	//-- team games go after this --
+	//-- team games go after This --
 
 	GT_TEAM,			// team deathmatch
 	GT_CTF,				// capture the flag
@@ -116,7 +116,7 @@ typedef struct levelitem_s
 	int goalareanum;					//area the item is in
 	vec3_t goalorigin;					//goal origin within the area
 	int entitynum;						//entity number
-	float timeout;						//item is removed after this time
+	float timeout;						//item is removed after This time
 	struct levelitem_s *prev, *next;
 } levelitem_t;
 
@@ -166,7 +166,7 @@ typedef struct bot_goalstate_s
 	struct weightconfig_s *itemweightconfig;	//weight config
 	int *itemweightindex;						//index from item to weight
 	//
-	int client;									//client using this goal state
+	int client;									//client using This goal state
 	int lastreachabilityarea;					//last area with reachabilities the bot was in
 	//
 	bot_goal_t goalstack[MAX_GOALSTACK];		//goal stack
@@ -754,7 +754,7 @@ void BotAddToAvoidGoals(bot_goalstate_t *gs, int number, float avoidtime)
 
 	for (i = 0; i < MAX_AVOIDGOALS; i++)
 	{
-		//if this avoid goal has expired
+		//if This avoid goal has expired
 		if (gs->avoidgoaltimes[i] < AAS_Time())
 		{
 			gs->avoidgoals[i] = number;
@@ -988,7 +988,7 @@ void BotFindEntityForLevelItem(levelitem_t *li)
 			VectorSubtract(li->origin, entinfo.origin, dir);
 			if (VectorLength(dir) < 30)
 			{
-				//found an entity for this level item
+				//found an entity for This level item
 				li->entitynum = ent;
 			} //end if
 		} //end if
@@ -1027,7 +1027,7 @@ void BotUpdateEntityItems(void)
 			} //end if
 		} //end if
 	} //end for
-	//find new entity items
+	//find New entity items
 	ic = itemconfig;
 	if (!itemconfig) return;
 	//
@@ -1040,7 +1040,7 @@ void BotUpdateEntityItems(void)
 		if (!modelindex) continue;
 		//get info about the entity
 		AAS_EntityInfo(ent, &entinfo);
-		//FIXME: don't do this
+		//FIXME: don't do This
 		//skip all floating items for now
 		//if (entinfo.groundent != ENTITYNUM_WORLD) continue;
 		//if the entity is still moving
@@ -1056,7 +1056,7 @@ void BotUpdateEntityItems(void)
 				//the entity is re-used if the models are different
 				if (ic->iteminfo[li->iteminfo].modelindex != modelindex)
 				{
-					//remove this level item
+					//remove This level item
 					RemoveLevelItemFromList(li);
 					FreeLevelItem(li);
 					li = NULL;
@@ -1082,7 +1082,7 @@ void BotUpdateEntityItems(void)
 		//try to link the entity to a level item
 		for (li = levelitems; li; li = li->next)
 		{
-			//if this level item is already linked
+			//if This level item is already linked
 			if (li->entitynum) continue;
 			//
 			if (g_gametype == GT_SINGLE_PLAYER) {
@@ -1101,7 +1101,7 @@ void BotUpdateEntityItems(void)
 				VectorSubtract(li->origin, entinfo.origin, dir);
 				if (VectorLength(dir) < 30)
 				{
-					//found an entity for this level item
+					//found an entity for This level item
 					li->entitynum = ent;
 					//if the origin is different
 					if (entinfo.origin[0] != li->origin[0] ||
@@ -1133,7 +1133,7 @@ void BotUpdateEntityItems(void)
 		} //end for
 		//if the model is not from a known item
 		if (i >= ic->numiteminfo) continue;
-		//allocate a new level item
+		//allocate a New level item
 		li = AllocLevelItem();
 		//
 		if (!li) continue;
@@ -1155,12 +1155,12 @@ void BotUpdateEntityItems(void)
 			FreeLevelItem(li);
 			continue;
 		} //end if
-		//time this item out after 30 seconds
+		//time This item out after 30 seconds
 		//dropped items disappear after 30 seconds
 		li->timeout = AAS_Time() + 30;
 		//add the level item to the list
 		AddLevelItemToList(li);
-		//botimport.Print(PRT_MESSAGE, "found new level item %s\n", ic->iteminfo[i].classname);
+		//botimport.Print(PRT_MESSAGE, "found New level item %s\n", ic->iteminfo[i].classname);
 	} //end for
 	/*
 	for (li = levelitems; li; li = li->next)
@@ -1273,7 +1273,7 @@ int BotGetSecondGoal(int goalstate, bot_goal_t *goal)
 	return qtrue;
 } //end of the function BotGetSecondGoal
 //===========================================================================
-// pops a new long term goal on the goal stack in the goalstate
+// pops a New long term goal on the goal stack in the goalstate
 //
 // Parameter:				-
 // Returns:					-
@@ -1335,10 +1335,10 @@ int BotChooseLTGItem(int goalstate, vec3_t origin, int *inventory, int travelfla
 		//if the item is not in a possible goal area
 		if (!li->goalareanum)
 			continue;
-		//FIXME: is this a good thing? added this for items that never spawned into the game (f.i. CTF flags in obelisk)
+		//FIXME: is This a good thing? added This for items that never spawned into the game (f.i. CTF flags in obelisk)
 		if (!li->entitynum && !(li->flags & IFL_ROAM))
 			continue;
-		//get the fuzzy weight function for this item
+		//get the fuzzy weight function for This item
 		iteminfo = &ic->iteminfo[li->iteminfo];
 		weightnum = gs->itemweightindex[iteminfo->number];
 		if (weightnum < 0)
@@ -1364,7 +1364,7 @@ int BotChooseLTGItem(int goalstate, vec3_t origin, int *inventory, int travelfla
 			//if the goal is reachable
 			if (t > 0)
 			{
-				//if this item won't respawn before we get there
+				//if This item won't respawn before we get there
 				avoidtime = BotAvoidGoalTime(goalstate, li->number);
 				if (avoidtime - t * 0.009 > 0)
 					continue;
@@ -1406,7 +1406,7 @@ int BotChooseLTGItem(int goalstate, vec3_t origin, int *inventory, int travelfla
 		*/
 		return qfalse;
 	} //end if
-	//create a bot goal for this item
+	//create a bot goal for This item
 	iteminfo = &ic->iteminfo[bestitem->iteminfo];
 	VectorCopy(bestitem->goalorigin, goal.origin);
 	VectorCopy(iteminfo->mins, goal.mins);
@@ -1506,10 +1506,10 @@ int BotChooseNBGItem(int goalstate, vec3_t origin, int *inventory, int travelfla
 		//if the item is in a possible goal area
 		if (!li->goalareanum)
 			continue;
-		//FIXME: is this a good thing? added this for items that never spawned into the game (f.i. CTF flags in obelisk)
+		//FIXME: is This a good thing? added This for items that never spawned into the game (f.i. CTF flags in obelisk)
 		if (!li->entitynum && !(li->flags & IFL_ROAM))
 			continue;
-		//get the fuzzy weight function for this item
+		//get the fuzzy weight function for This item
 		iteminfo = &ic->iteminfo[li->iteminfo];
 		weightnum = gs->itemweightindex[iteminfo->number];
 		if (weightnum < 0)
@@ -1535,7 +1535,7 @@ int BotChooseNBGItem(int goalstate, vec3_t origin, int *inventory, int travelfla
 			//if the goal is reachable
 			if (t > 0 && t < maxtime)
 			{
-				//if this item won't respawn before we get there
+				//if This item won't respawn before we get there
 				avoidtime = BotAvoidGoalTime(goalstate, li->number);
 				if (avoidtime - t * 0.009 > 0)
 					continue;
@@ -1563,7 +1563,7 @@ int BotChooseNBGItem(int goalstate, vec3_t origin, int *inventory, int travelfla
 	//if no goal item found
 	if (!bestitem)
 		return qfalse;
-	//create a bot goal for this item
+	//create a bot goal for This item
 	iteminfo = &ic->iteminfo[bestitem->iteminfo];
 	VectorCopy(bestitem->goalorigin, goal.origin);
 	VectorCopy(iteminfo->mins, goal.mins);

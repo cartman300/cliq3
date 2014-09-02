@@ -24,10 +24,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "tr_local.h"
 
 #define	DLIGHT_AT_RADIUS		16
-// at the edge of a dlight's influence, this amount of light will be added
+// at the edge of a dlight's influence, This amount of light will be added
 
 #define	DLIGHT_MINIMUM_RADIUS	16		
-// never calculate a range less than this to prevent huge light numbers
+// never calculate a range less than This to prevent huge light numbers
 
 
 /*
@@ -55,7 +55,7 @@ void R_TransformDlights( int count, dlight_t *dl, orientationr_t *or) {
 =============
 R_DlightBmodel
 
-Determine which dynamic lights may effect this bmodel
+Determine which dynamic lights may effect This bmodel
 =============
 */
 void R_DlightBmodel( bmodel_t *bmodel ) {
@@ -84,7 +84,7 @@ void R_DlightBmodel( bmodel_t *bmodel ) {
 			continue;
 		}
 
-		// we need to check this light
+		// we need to check This light
 		mask |= 1 << i;
 	}
 

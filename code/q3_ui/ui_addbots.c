@@ -276,89 +276,89 @@ static void UI_AddBotsMenu_Init( void ) {
 	addBotsMenuInfo.numBots = UI_GetNumBots();
 	count = addBotsMenuInfo.numBots < 7 ? addBotsMenuInfo.numBots : 7;
 
-	addBotsMenuInfo.arrows.generic.type  = MTYPE_BITMAP;
-	addBotsMenuInfo.arrows.generic.name  = ART_ARROWS;
-	addBotsMenuInfo.arrows.generic.flags = QMF_INACTIVE;
-	addBotsMenuInfo.arrows.generic.x	 = 200;
-	addBotsMenuInfo.arrows.generic.y	 = 128;
+	addBotsMenuInfo.arrows.Generic.type  = MTYPE_BITMAP;
+	addBotsMenuInfo.arrows.Generic.name  = ART_ARROWS;
+	addBotsMenuInfo.arrows.Generic.flags = QMF_INACTIVE;
+	addBotsMenuInfo.arrows.Generic.x	 = 200;
+	addBotsMenuInfo.arrows.Generic.y	 = 128;
 	addBotsMenuInfo.arrows.width  	     = 64;
 	addBotsMenuInfo.arrows.height  	     = 128;
 
-	addBotsMenuInfo.up.generic.type	    = MTYPE_BITMAP;
-	addBotsMenuInfo.up.generic.flags    = QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
-	addBotsMenuInfo.up.generic.x		= 200;
-	addBotsMenuInfo.up.generic.y		= 128;
-	addBotsMenuInfo.up.generic.id	    = ID_UP;
-	addBotsMenuInfo.up.generic.callback = UI_AddBotsMenu_UpEvent;
+	addBotsMenuInfo.up.Generic.type	    = MTYPE_BITMAP;
+	addBotsMenuInfo.up.Generic.flags    = QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
+	addBotsMenuInfo.up.Generic.x		= 200;
+	addBotsMenuInfo.up.Generic.y		= 128;
+	addBotsMenuInfo.up.Generic.id	    = ID_UP;
+	addBotsMenuInfo.up.Generic.callback = UI_AddBotsMenu_UpEvent;
 	addBotsMenuInfo.up.width  		    = 64;
 	addBotsMenuInfo.up.height  		    = 64;
 	addBotsMenuInfo.up.focuspic         = ART_ARROWUP;
 
-	addBotsMenuInfo.down.generic.type	  = MTYPE_BITMAP;
-	addBotsMenuInfo.down.generic.flags    = QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
-	addBotsMenuInfo.down.generic.x		  = 200;
-	addBotsMenuInfo.down.generic.y		  = 128+64;
-	addBotsMenuInfo.down.generic.id	      = ID_DOWN;
-	addBotsMenuInfo.down.generic.callback = UI_AddBotsMenu_DownEvent;
+	addBotsMenuInfo.down.Generic.type	  = MTYPE_BITMAP;
+	addBotsMenuInfo.down.Generic.flags    = QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
+	addBotsMenuInfo.down.Generic.x		  = 200;
+	addBotsMenuInfo.down.Generic.y		  = 128+64;
+	addBotsMenuInfo.down.Generic.id	      = ID_DOWN;
+	addBotsMenuInfo.down.Generic.callback = UI_AddBotsMenu_DownEvent;
 	addBotsMenuInfo.down.width  		  = 64;
 	addBotsMenuInfo.down.height  		  = 64;
 	addBotsMenuInfo.down.focuspic         = ART_ARROWDOWN;
 
 	for( n = 0, y = 120; n < count; n++, y += 20 ) {
-		addBotsMenuInfo.bots[n].generic.type		= MTYPE_PTEXT;
-		addBotsMenuInfo.bots[n].generic.flags		= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
-		addBotsMenuInfo.bots[n].generic.id			= ID_BOTNAME0 + n;
-		addBotsMenuInfo.bots[n].generic.x			= 320 - 56;
-		addBotsMenuInfo.bots[n].generic.y			= y;
-		addBotsMenuInfo.bots[n].generic.callback	= UI_AddBotsMenu_BotEvent;
+		addBotsMenuInfo.bots[n].Generic.type		= MTYPE_PTEXT;
+		addBotsMenuInfo.bots[n].Generic.flags		= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
+		addBotsMenuInfo.bots[n].Generic.id			= ID_BOTNAME0 + n;
+		addBotsMenuInfo.bots[n].Generic.x			= 320 - 56;
+		addBotsMenuInfo.bots[n].Generic.y			= y;
+		addBotsMenuInfo.bots[n].Generic.callback	= UI_AddBotsMenu_BotEvent;
 		addBotsMenuInfo.bots[n].string				= addBotsMenuInfo.botnames[n];
 		addBotsMenuInfo.bots[n].color				= color_orange;
 		addBotsMenuInfo.bots[n].style				= UI_LEFT|UI_SMALLFONT;
 	}
 
 	y += 12;
-	addBotsMenuInfo.skill.generic.type		= MTYPE_SPINCONTROL;
-	addBotsMenuInfo.skill.generic.flags		= QMF_PULSEIFFOCUS|QMF_SMALLFONT;
-	addBotsMenuInfo.skill.generic.x			= 320;
-	addBotsMenuInfo.skill.generic.y			= y;
-	addBotsMenuInfo.skill.generic.name		= "Skill:";
-	addBotsMenuInfo.skill.generic.id		= ID_SKILL;
+	addBotsMenuInfo.skill.Generic.type		= MTYPE_SPINCONTROL;
+	addBotsMenuInfo.skill.Generic.flags		= QMF_PULSEIFFOCUS|QMF_SMALLFONT;
+	addBotsMenuInfo.skill.Generic.x			= 320;
+	addBotsMenuInfo.skill.Generic.y			= y;
+	addBotsMenuInfo.skill.Generic.name		= "Skill:";
+	addBotsMenuInfo.skill.Generic.id		= ID_SKILL;
 	addBotsMenuInfo.skill.itemnames			= skillNames;
 	addBotsMenuInfo.skill.curvalue			= Com_Clamp( 0, 4, (int)trap_Cvar_VariableValue( "g_spSkill" ) - 1 );
 
 	y += SMALLCHAR_HEIGHT;
-	addBotsMenuInfo.team.generic.type		= MTYPE_SPINCONTROL;
-	addBotsMenuInfo.team.generic.flags		= QMF_PULSEIFFOCUS|QMF_SMALLFONT;
-	addBotsMenuInfo.team.generic.x			= 320;
-	addBotsMenuInfo.team.generic.y			= y;
-	addBotsMenuInfo.team.generic.name		= "Team: ";
-	addBotsMenuInfo.team.generic.id			= ID_TEAM;
+	addBotsMenuInfo.team.Generic.type		= MTYPE_SPINCONTROL;
+	addBotsMenuInfo.team.Generic.flags		= QMF_PULSEIFFOCUS|QMF_SMALLFONT;
+	addBotsMenuInfo.team.Generic.x			= 320;
+	addBotsMenuInfo.team.Generic.y			= y;
+	addBotsMenuInfo.team.Generic.name		= "Team: ";
+	addBotsMenuInfo.team.Generic.id			= ID_TEAM;
 	if( gametype >= GT_TEAM ) {
 		addBotsMenuInfo.team.itemnames		= teamNames2;
 	}
 	else {
 		addBotsMenuInfo.team.itemnames		= teamNames1;
-		addBotsMenuInfo.team.generic.flags	= QMF_GRAYED;
+		addBotsMenuInfo.team.Generic.flags	= QMF_GRAYED;
 	}
 
-	addBotsMenuInfo.go.generic.type			= MTYPE_BITMAP;
-	addBotsMenuInfo.go.generic.name			= ART_FIGHT0;
-	addBotsMenuInfo.go.generic.flags		= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
-	addBotsMenuInfo.go.generic.id			= ID_GO;
-	addBotsMenuInfo.go.generic.callback		= UI_AddBotsMenu_FightEvent;
-	addBotsMenuInfo.go.generic.x			= 320+128-128;
-	addBotsMenuInfo.go.generic.y			= 256+128-64;
+	addBotsMenuInfo.go.Generic.type			= MTYPE_BITMAP;
+	addBotsMenuInfo.go.Generic.name			= ART_FIGHT0;
+	addBotsMenuInfo.go.Generic.flags		= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
+	addBotsMenuInfo.go.Generic.id			= ID_GO;
+	addBotsMenuInfo.go.Generic.callback		= UI_AddBotsMenu_FightEvent;
+	addBotsMenuInfo.go.Generic.x			= 320+128-128;
+	addBotsMenuInfo.go.Generic.y			= 256+128-64;
 	addBotsMenuInfo.go.width  				= 128;
 	addBotsMenuInfo.go.height  				= 64;
 	addBotsMenuInfo.go.focuspic				= ART_FIGHT1;
 
-	addBotsMenuInfo.back.generic.type		= MTYPE_BITMAP;
-	addBotsMenuInfo.back.generic.name		= ART_BACK0;
-	addBotsMenuInfo.back.generic.flags		= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
-	addBotsMenuInfo.back.generic.id			= ID_BACK;
-	addBotsMenuInfo.back.generic.callback	= UI_AddBotsMenu_BackEvent;
-	addBotsMenuInfo.back.generic.x			= 320-128;
-	addBotsMenuInfo.back.generic.y			= 256+128-64;
+	addBotsMenuInfo.back.Generic.type		= MTYPE_BITMAP;
+	addBotsMenuInfo.back.Generic.name		= ART_BACK0;
+	addBotsMenuInfo.back.Generic.flags		= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
+	addBotsMenuInfo.back.Generic.id			= ID_BACK;
+	addBotsMenuInfo.back.Generic.callback	= UI_AddBotsMenu_BackEvent;
+	addBotsMenuInfo.back.Generic.x			= 320-128;
+	addBotsMenuInfo.back.Generic.y			= 256+128-64;
 	addBotsMenuInfo.back.width				= 128;
 	addBotsMenuInfo.back.height				= 64;
 	addBotsMenuInfo.back.focuspic			= ART_BACK1;

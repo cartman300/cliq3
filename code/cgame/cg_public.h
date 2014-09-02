@@ -25,7 +25,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define	CMD_BACKUP			64	
 #define	CMD_MASK			(CMD_BACKUP - 1)
 // allow a lot of command backups for very fast systems
-// multiple commands may be combined into a single packet, so this
+// multiple commands may be combined into a single packet, so This
 // needs to be larger than PACKET_BACKUP
 
 
@@ -44,12 +44,12 @@ typedef struct {
 
 	byte			areamask[MAX_MAP_AREA_BYTES];		// portalarea visibility bits
 
-	playerState_t	ps;						// complete information about the current player at this time
+	playerState_t	ps;						// complete information about the current player at This time
 
 	int				numEntities;			// all of the entities that need to be presented
-	entityState_t	entities[MAX_ENTITIES_IN_SNAPSHOT];	// at the time of this snapshot
+	entityState_t	entities[MAX_ENTITIES_IN_SNAPSHOT];	// at the time of This snapshot
 
-	int				numServerCommands;		// text based server commands to execute when this
+	int				numServerCommands;		// text based server commands to execute when This
 	int				serverCommandSequence;	// snapshot becomes current
 } snapshot_t;
 
@@ -198,7 +198,7 @@ typedef enum {
 	CG_INIT,
 //	void CG_Init( int serverMessageNum, int serverCommandSequence, int clientNum )
 	// called when the level loads or when the renderer is restarted
-	// all media should be registered at this time
+	// all media should be registered at This time
 	// cgame will display loading status by calling SCR_Update, which
 	// will call CG_DrawInformation during the loading process
 	// reliableCommandSequence will be 0 on fresh loads, but higher for

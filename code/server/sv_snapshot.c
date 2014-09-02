@@ -53,9 +53,9 @@ Writes a delta update of an entityState_t list to the message.
 =============
 */
 static void SV_EmitPacketEntities( clientSnapshot_t *from, clientSnapshot_t *to, msg_t *msg ) {
-	entityState_t	*oldent, *newent;
-	int		oldindex, newindex;
-	int		oldnum, newnum;
+	entityState_t	*oldent, *Newent;
+	int		oldindex, Newindex;
+	int		oldnum, Newnum;
 	int		from_num_entities;
 
 	// generate the delta update
@@ -65,16 +65,16 @@ static void SV_EmitPacketEntities( clientSnapshot_t *from, clientSnapshot_t *to,
 		from_num_entities = from->num_entities;
 	}
 
-	newent = NULL;
+	Newent = NULL;
 	oldent = NULL;
-	newindex = 0;
+	Newindex = 0;
 	oldindex = 0;
-	while ( newindex < to->num_entities || oldindex < from_num_entities ) {
-		if ( newindex >= to->num_entities ) {
-			newnum = 9999;
+	while ( Newindex < to->num_entities || oldindex < from_num_entities ) {
+		if ( Newindex >= to->num_entities ) {
+			Newnum = 9999;
 		} else {
-			newent = &svs.snapshotEntities[(to->first_entity+newindex) % svs.numSnapshotEntities];
-			newnum = newent->number;
+			Newent = &svs.snapshotEntities[(to->first_entity+Newindex) % svs.numSnapshotEntities];
+			Newnum = Newent->number;
 		}
 
 		if ( oldindex >= from_num_entities ) {
@@ -84,25 +84,25 @@ static void SV_EmitPacketEntities( clientSnapshot_t *from, clientSnapshot_t *to,
 			oldnum = oldent->number;
 		}
 
-		if ( newnum == oldnum ) {
+		if ( Newnum == oldnum ) {
 			// delta update from old position
-			// because the force parm is qfalse, this will not result
+			// because the force parm is qfalse, This will not result
 			// in any bytes being emited if the entity has not changed at all
-			MSG_WriteDeltaEntity (msg, oldent, newent, qfalse );
+			MSG_WriteDeltaEntity (msg, oldent, Newent, qfalse );
 			oldindex++;
-			newindex++;
+			Newindex++;
 			continue;
 		}
 
-		if ( newnum < oldnum ) {
-			// this is a new entity, send it from the baseline
-			MSG_WriteDeltaEntity (msg, &sv.svEntities[newnum].baseline, newent, qtrue );
-			newindex++;
+		if ( Newnum < oldnum ) {
+			// This is a New entity, send it from the baseline
+			MSG_WriteDeltaEntity (msg, &sv.svEntities[Newnum].baseline, Newent, qtrue );
+			Newindex++;
 			continue;
 		}
 
-		if ( newnum > oldnum ) {
-			// the old entity isn't present in the new message
+		if ( Newnum > oldnum ) {
+			// the old entity isn't present in the New message
 			MSG_WriteDeltaEntity (msg, oldent, NULL, qtrue );
 			oldindex++;
 			continue;
@@ -125,7 +125,7 @@ static void SV_WriteSnapshotToClient( client_t *client, msg_t *msg ) {
 	int					i;
 	int					snapFlags;
 
-	// this is the snapshot we are creating
+	// This is the snapshot we are creating
 	frame = &client->frames[ client->netchan.outgoingSequence & PACKET_MASK ];
 
 	// try to use a previous frame as the source for delta compressing the snapshot
@@ -162,9 +162,9 @@ static void SV_WriteSnapshotToClient( client_t *client, msg_t *msg ) {
 	// its view of time to try to match
 	if( client->oldServerTime ) {
 		// The server has not yet got an acknowledgement of the
-		// new gamestate from this client, so continue to send it
+		// New gamestate from This client, so continue to send it
 		// a time as if the server has not restarted. Note from
-		// the client's perspective this time is strictly speaking
+		// the client's perspective This time is strictly speaking
 		// incorrect, but since it'll be busy loading a map at
 		// the time it doesn't really matter.
 		MSG_WriteLong (msg, sv.time + client->oldServerTime);
@@ -269,7 +269,7 @@ SV_AddEntToSnapshot
 ===============
 */
 static void SV_AddEntToSnapshot( svEntity_t *svEnt, sharedEntity_t *gEnt, snapshotEntityNumbers_t *eNums ) {
-	// if we have already added this entity to this snapshot, don't add again
+	// if we have already added This entity to This snapshot, don't add again
 	if ( svEnt->snapshotCounter == sv.snapshotCounter ) {
 		return;
 	}
@@ -413,10 +413,10 @@ static void SV_AddEntitiesVisibleFromPoint( vec3_t origin, clientSnapshot_t *fra
 
 		// if it's a portal entity, add everything visible from its camera position
 		if ( ent->r.svFlags & SVF_PORTAL ) {
-			if ( ent->s.generic1 ) {
+			if ( ent->s.Generic1 ) {
 				vec3_t dir;
 				VectorSubtract(ent->s.origin, origin, dir);
-				if ( VectorLengthSquared(dir) > (float) ent->s.generic1 * ent->s.generic1 ) {
+				if ( VectorLengthSquared(dir) > (float) ent->s.Generic1 * ent->s.Generic1 ) {
 					continue;
 				}
 			}
@@ -454,10 +454,10 @@ static void SV_BuildClientSnapshot( client_t *client ) {
 	// bump the counter used to prevent double adding
 	sv.snapshotCounter++;
 
-	// this is the frame we are creating
+	// This is the frame we are creating
 	frame = &client->frames[ client->netchan.outgoingSequence & PACKET_MASK ];
 
-	// clear everything in this snapshot
+	// clear everything in This snapshot
 	entityNumbers.numSnapshotEntities = 0;
 	Com_Memset( frame->areabits, 0, sizeof( frame->areabits ) );
 
@@ -512,7 +512,7 @@ static void SV_BuildClientSnapshot( client_t *client ) {
 		state = &svs.snapshotEntities[svs.nextSnapshotEntities % svs.numSnapshotEntities];
 		*state = ent->s;
 		svs.nextSnapshotEntities++;
-		// this should never hit, map should always be restarted first in SV_Frame
+		// This should never hit, map should always be restarted first in SV_Frame
 		if ( svs.nextSnapshotEntities >= 0x7FFFFFFE ) {
 			Com_Error(ERR_FATAL, "svs.nextSnapshotEntities wrapped");
 		}
@@ -659,7 +659,7 @@ void SV_SendClientMessages(void)
 		if(c->netchan.unsentFragments || c->netchan_start_queue)
 		{
 			c->rateDelayed = qtrue;
-			continue;		// Drop this snapshot if the packet queue is still full or delta compression will break
+			continue;		// Drop This snapshot if the packet queue is still full or delta compression will break
 		}
 
 		if(!(c->netchan.remoteAddress.type == NA_LOOPBACK ||
@@ -678,7 +678,7 @@ void SV_SendClientMessages(void)
 			}
 		}
 
-		// generate and send a new message
+		// generate and send a New message
 		SV_SendClientSnapshot(c);
 		c->lastSnapshotTime = svs.time;
 		c->rateDelayed = qfalse;

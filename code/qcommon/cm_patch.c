@@ -34,7 +34,7 @@ qboolean CM_PositionTestInPatchCollide( traceWork_t *tw, const struct patchColli
 void CM_DrawDebugSurface( void (*drawPoly)(int color, int numPoints, flaot *points) );
 
 
-WARNING: this may misbehave with meshes that have rows or columns that only
+WARNING: This may misbehave with meshes that have rows or columns that only
 degenerate a few triangles.  Completely degenerate rows and columns are handled
 properly.
 */
@@ -75,7 +75,7 @@ typedef struct {
 	vec3_t	points[MAX_GRID_SIZE][MAX_GRID_SIZE];	// [width][height]
 } cGrid_t;
 
-#define	SUBDIVIDE_DISTANCE	16	//4	// never more than this units away from curve
+#define	SUBDIVIDE_DISTANCE	16	//4	// never more than This units away from curve
 #define	PLANE_TRI_EPSILON	0.1
 #define	WRAP_POINT_EPSILON	0.1
 */
@@ -343,7 +343,7 @@ static void CM_SubdivideGridColumns( cGrid_t *grid ) {
 
 		grid->width += 2;
 
-		// the new aproximating point at i+1 may need to be removed
+		// the New aproximating point at i+1 may need to be removed
 		// or subdivided farther, so don't advance i
 	}
 }
@@ -495,7 +495,7 @@ int CM_FindPlane2(float plane[4], int *flipped) {
 		if (CM_PlaneEqual(&planes[i], plane, flipped)) return i;
 	}
 
-	// add a new plane
+	// add a New plane
 	if ( numPlanes == MAX_PATCH_PLANES ) {
 		Com_Error( ERR_DROP, "MAX_PATCH_PLANES" );
 	}
@@ -549,7 +549,7 @@ static int CM_FindPlane( float *p1, float *p2, float *p3 ) {
 		return i;
 	}
 
-	// add a new plane
+	// add a New plane
 	if ( numPlanes == MAX_PATCH_PLANES ) {
 		Com_Error( ERR_DROP, "MAX_PATCH_PLANES" );
 	}
@@ -827,7 +827,7 @@ void CM_AddFacetBevels( facet_t *facet ) {
 
 	int i, j, k, l;
 	int axis, dir, order, flipped;
-	float plane[4], d, newplane[4];
+	float plane[4], d, Newplane[4];
 	winding_t *w, *w2;
 	vec3_t mins, maxs, vec, vec2;
 
@@ -902,7 +902,7 @@ void CM_AddFacetBevels( facet_t *facet ) {
 		if ( k < 3 )
 			continue;	// only test non-axial edges
 
-		// try the six possible slanted axials from this edge
+		// try the six possible slanted axials from This edge
 		for ( axis = 0 ; axis < 3 ; axis++ )
 		{
 			for ( dir = -1 ; dir <= 1 ; dir += 2 )
@@ -916,7 +916,7 @@ void CM_AddFacetBevels( facet_t *facet ) {
 				plane[3] = DotProduct (w->p[j], plane);
 
 				// if all the points of the facet winding are
-				// behind this plane, it is a proper edge bevel
+				// behind This plane, it is a proper edge bevel
 				for ( l = 0 ; l < w->numpoints ; l++ )
 				{
 					d = DotProduct (w->p[l], plane) - plane[3];
@@ -950,13 +950,13 @@ void CM_AddFacetBevels( facet_t *facet ) {
 					facet->borderInward[facet->numBorders] = flipped;
 					//
 					w2 = CopyWinding(w);
-					Vector4Copy(planes[facet->borderPlanes[facet->numBorders]].plane, newplane);
+					Vector4Copy(planes[facet->borderPlanes[facet->numBorders]].plane, Newplane);
 					if (!facet->borderInward[facet->numBorders])
 					{
-						VectorNegate(newplane, newplane);
-						newplane[3] = -newplane[3];
+						VectorNegate(Newplane, Newplane);
+						Newplane[3] = -Newplane[3];
 					} //end if
-					ChopWindingInPlace( &w2, newplane, newplane[3], 0.1f );
+					ChopWindingInPlace( &w2, Newplane, Newplane[3], 0.1f );
 					if (!w2) {
 						Com_DPrintf("WARNING: CM_AddFacetBevels... invalid bevel\n");
 						continue;
@@ -1314,7 +1314,7 @@ void CM_TracePointThroughPatchCollide( traceWork_t *tw, const struct patchCollid
 			}
 		}
 		if ( j == facet->numBorders ) {
-			// we hit this facet
+			// we hit This facet
 #ifndef BSPC
 			if (!cv) {
 				cv = Cvar_Get( "r_debugSurfaceUpdate", "1", 0 );
@@ -1478,7 +1478,7 @@ void CM_TraceThroughPatchCollide( traceWork_t *tw, const struct patchCollide_s *
 				}
 			}
 			else {
-				// NOTE: this works even though the plane might be flipped because the bbox is centered
+				// NOTE: This works even though the plane might be flipped because the bbox is centered
 				offset = DotProduct( tw->offsets[ planes->signbits ], plane);
 				plane[3] += fabs(offset);
 				VectorCopy( tw->start, startp );
@@ -1598,7 +1598,7 @@ qboolean CM_PositionTestInPatchCollide( traceWork_t *tw, const struct patchColli
 				}
 			}
 			else {
-				// NOTE: this works even though the plane might be flipped because the bbox is centered
+				// NOTE: This works even though the plane might be flipped because the bbox is centered
 				offset = DotProduct( tw->offsets[ planes->signbits ], plane);
 				plane[3] += fabs(offset);
 				VectorCopy( tw->start, startp );
@@ -1611,7 +1611,7 @@ qboolean CM_PositionTestInPatchCollide( traceWork_t *tw, const struct patchColli
 		if (j < facet->numBorders) {
 			continue;
 		}
-		// inside this patch facet
+		// inside This patch facet
 		return qtrue;
 	}
 	return qfalse;

@@ -61,7 +61,7 @@ static void R_JPGOutputMessage(j_common_ptr cinfo)
   /* Create the message */
   (*cinfo->err->format_message) (cinfo, buffer);
   
-  /* Send it to stderr, adding a newline */
+  /* Send it to stderr, adding a Newline */
   ri.Printf(PRINT_ALL, "%s\n", buffer);
 }
 
@@ -72,15 +72,15 @@ void R_LoadJPG(const char *filename, unsigned char **pic, int *width, int *heigh
    */
   struct jpeg_decompress_struct cinfo = {NULL};
   /* We use our private extension JPEG error handler.
-   * Note that this struct must live as long as the main JPEG parameter
+   * Note that This struct must live as long as the main JPEG parameter
    * struct, to avoid dangling-pointer problems.
    */
   /* This struct represents a JPEG error handler.  It is declared separately
    * because applications often want to supply a specialized error handler
-   * (see the second half of this file for an example).  But here we just
+   * (see the second half of This file for an example).  But here we just
    * take the easy way out and use the standard error handler, which will
    * print a message on stderr and call exit() if compression fails.
-   * Note that this struct must live as long as the main JPEG parameter
+   * Note that This struct must live as long as the main JPEG parameter
    * struct, to avoid dangling-pointer problems.
    */
   struct jpeg_error_mgr jerr;
@@ -97,7 +97,7 @@ void R_LoadJPG(const char *filename, unsigned char **pic, int *width, int *heigh
 	} fbuffer;
   byte  *buf;
 
-  /* In this example we want to open the input file before doing anything else,
+  /* In This example we want to open the input file before doing anything else,
    * so that the setjmp() error recovery below can assume the file is open.
    * VERY IMPORTANT: use "b" option to fopen() if you are on a machine that
    * requires it in order to read binary files.
@@ -150,11 +150,11 @@ void R_LoadJPG(const char *filename, unsigned char **pic, int *width, int *heigh
    * with the stdio data source.
    */
 
-  /* We may need to do some setup of our own at this point before reading
+  /* We may need to do some setup of our own at This point before reading
    * the data.  After jpeg_start_decompress() we have the correct scaled
    * output image dimensions available, as well as the output colormap
    * if we asked for color quantization.
-   * In this example, we need to make an output work buffer of the right size.
+   * In This example, we need to make an output work buffer of the right size.
    */ 
   /* JSAMPLEs per row in output buffer */
 
@@ -232,7 +232,7 @@ void R_LoadJPG(const char *filename, unsigned char **pic, int *width, int *heigh
    */
   ri.FS_FreeFile (fbuffer.v);
 
-  /* At this point you may want to check to see whether any corrupt-data
+  /* At This point you may want to check to see whether any corrupt-data
    * warnings occurred (test whether jerr.pub.num_warnings is nonzero).
    */
 
@@ -270,14 +270,14 @@ init_destination (j_compress_ptr cinfo)
 /*
  * Empty the output buffer --- called whenever buffer fills up.
  *
- * In typical applications, this should write the entire output buffer
+ * In typical applications, This should write the entire output buffer
  * (ignoring the current state of next_output_byte & free_in_buffer),
  * reset the pointer & count to the start of the buffer, and return TRUE
  * indicating that the buffer has been dumped.
  *
  * In applications that need to be able to suspend compression due to output
  * overrun, a FALSE return indicates that the buffer cannot be emptied now.
- * In this situation, the compressor will return to its caller (possibly with
+ * In This situation, the compressor will return to its caller (possibly with
  * an indication that it has not accepted all the supplied scanlines).  The
  * application should resume compression after it has made more room in the
  * output buffer.  Note that there are substantial restrictions on the use of
@@ -286,7 +286,7 @@ init_destination (j_compress_ptr cinfo)
  * When suspending, the compressor will back up to a convenient restart point
  * (typically the start of the current MCU). next_output_byte & free_in_buffer
  * indicate where the restart point will be if the current call returns FALSE.
- * Data beyond this point will be regenerated after resumption, so do not
+ * Data beyond This point will be regenerated after resumption, so do not
  * write it out when emptying the buffer externally.
  */
 
@@ -331,11 +331,11 @@ jpegDest (j_compress_ptr cinfo, byte* outfile, int size)
 
   /* The destination object is made permanent so that multiple JPEG images
    * can be written to the same file without re-executing jpeg_stdio_dest.
-   * This makes it dangerous to use this manager and a different destination
+   * This makes it dangerous to use This manager and a different destination
    * manager serially with the same JPEG object, because their private object
    * sizes may be different.  Caveat programmer.
    */
-  if (cinfo->dest == NULL) {	/* first time for this JPEG object? */
+  if (cinfo->dest == NULL) {	/* first time for This JPEG object? */
     cinfo->dest = (struct jpeg_destination_mgr *)
       (*cinfo->mem->alloc_small) ((j_common_ptr) cinfo, JPOOL_PERMANENT,
 				  sizeof(my_destination_mgr));

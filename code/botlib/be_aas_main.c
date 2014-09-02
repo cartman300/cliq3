@@ -115,7 +115,7 @@ void AAS_ContinueInit(float time)
 	if (aasworld.initialized) return;
 	//calculate reachability, if not finished return
 	if (AAS_ContinueInitReachability(time)) return;
-	//initialize clustering for the new map
+	//initialize clustering for the New map
 	AAS_InitClustering();
 	//if reachability has been calculated and an AAS file should be written
 	//or there is a forced data optimization
@@ -135,7 +135,7 @@ void AAS_ContinueInit(float time)
 	} //end if
 	//initialize the routing
 	AAS_InitRouting();
-	//at this point AAS is initialized
+	//at This point AAS is initialized
 	AAS_SetInitialized();
 } //end of the function AAS_ContinueInit
 //===========================================================================
@@ -208,7 +208,7 @@ void AAS_ProjectPointOntoVector( vec3_t point, vec3_t vStart, vec3_t vEnd, vec3_
 	VectorSubtract( point, vStart, pVec );
 	VectorSubtract( vEnd, vStart, vec );
 	VectorNormalize( vec );
-	// project onto the directional vector for this segment
+	// project onto the directional vector for This segment
 	VectorMA( vStart, DotProduct( pVec, vec ), vec, vProj );
 } //end of the function AAS_ProjectPointOntoVector
 //===========================================================================
@@ -259,7 +259,7 @@ int AAS_LoadMap(const char *mapname)
 	} //end if
 	//
 	aasworld.initialized = qfalse;
-	//NOTE: free the routing caches before loading a new map because
+	//NOTE: free the routing caches before loading a New map because
 	// to free the caches the old number of areas, number of clusters
 	// and number of areas in a clusters must be available
 	AAS_FreeRoutingCaches();
@@ -272,11 +272,11 @@ int AAS_LoadMap(const char *mapname)
 	} //end if
 	//
 	AAS_InitSettings();
-	//initialize the AAS link heap for the new map
+	//initialize the AAS link heap for the New map
 	AAS_InitAASLinkHeap();
-	//initialize the AAS linked entities for the new map
+	//initialize the AAS linked entities for the New map
 	AAS_InitAASLinkedEntities();
-	//initialize reachability for the new map
+	//initialize reachability for the New map
 	AAS_InitReachability();
 	//initialize the alternative routing
 	AAS_InitAlternativeRouting();
@@ -332,7 +332,7 @@ void AAS_Shutdown(void)
 	Com_Memset(&aasworld, 0, sizeof(aas_t));
 	//aas has not been initialized
 	aasworld.initialized = qfalse;
-	//NOTE: as soon as a new .bsp file is loaded the .bsp file memory is
+	//NOTE: as soon as a New .bsp file is loaded the .bsp file memory is
 	// freed and reallocated, so there's no need to free that memory here
 	//print shutdown
 	botimport.Print(PRT_MESSAGE, "AAS shutdown.\n");

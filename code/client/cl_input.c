@@ -619,7 +619,7 @@ usercmd_t CL_CreateCmd( void ) {
 =================
 CL_CreateNewCommands
 
-Create a new usercmd_t structure for this frame
+Create a New usercmd_t structure for This frame
 =================
 */
 void CL_CreateNewCommands( void ) {
@@ -640,7 +640,7 @@ void CL_CreateNewCommands( void ) {
 	old_com_frameTime = com_frameTime;
 
 
-	// generate a command for this frame
+	// generate a command for This frame
 	cl.cmdNumber++;
 	cmdNum = cl.cmdNumber & CMD_MASK;
 	cl.cmds[cmdNum] = CL_CreateCmd ();
@@ -652,7 +652,7 @@ CL_ReadyToSendPacket
 
 Returns qfalse if we are over the maxpackets limit
 and should choke back the bandwidth a bit by not sending
-a packet this frame.  All the commands will still get
+a packet This frame.  All the commands will still get
 delivered in the next packet, but saving a header and
 getting more delta compression will reduce total bandwidth.
 =================
@@ -750,7 +750,7 @@ void CL_WritePacket( void ) {
 
 	MSG_Bitstream( &buf );
 	// write the current serverId so the server
-	// can tell if this is from the current gameState
+	// can tell if This is from the current gameState
 	MSG_WriteLong( &buf, cl.serverId );
 
 	// write the last message we received, which can
@@ -798,7 +798,7 @@ void CL_WritePacket( void ) {
 			MSG_WriteData (&buf, clc.voipOutgoingData, clc.voipOutgoingDataSize);
 
 			// If we're recording a demo, we have to fake a server packet with
-			//  this VoIP data so it gets to disk; the server doesn't send it
+			//  This VoIP data so it gets to disk; the server doesn't send it
 			//  back to us, and we might as well eliminate concerns about dropped
 			//  and misordered packets here.
 			if(clc.demorecording && !clc.demowaiting)

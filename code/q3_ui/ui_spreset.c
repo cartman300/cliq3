@@ -165,22 +165,22 @@ void UI_ResetMenu(void) {
 		s_reset.menu.fullscreen = qtrue;
 	}
 
-	s_reset.yes.generic.type		= MTYPE_PTEXT;      
-	s_reset.yes.generic.flags		= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS; 
-	s_reset.yes.generic.callback	= Reset_MenuEvent;
-	s_reset.yes.generic.id			= ID_YES;
-	s_reset.yes.generic.x			= l1;
-	s_reset.yes.generic.y			= 264;
+	s_reset.yes.Generic.type		= MTYPE_PTEXT;      
+	s_reset.yes.Generic.flags		= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS; 
+	s_reset.yes.Generic.callback	= Reset_MenuEvent;
+	s_reset.yes.Generic.id			= ID_YES;
+	s_reset.yes.Generic.x			= l1;
+	s_reset.yes.Generic.y			= 264;
 	s_reset.yes.string				= "YES";
 	s_reset.yes.color				= color_red;
 	s_reset.yes.style				= UI_LEFT;
 
-	s_reset.no.generic.type			= MTYPE_PTEXT;      
-	s_reset.no.generic.flags		= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS; 
-	s_reset.no.generic.callback		= Reset_MenuEvent;
-	s_reset.no.generic.id			= ID_NO;
-	s_reset.no.generic.x		    = l3;
-	s_reset.no.generic.y		    = 264;
+	s_reset.no.Generic.type			= MTYPE_PTEXT;      
+	s_reset.no.Generic.flags		= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS; 
+	s_reset.no.Generic.callback		= Reset_MenuEvent;
+	s_reset.no.Generic.id			= ID_NO;
+	s_reset.no.Generic.x		    = l3;
+	s_reset.no.Generic.y		    = 264;
 	s_reset.no.string				= "NO";
 	s_reset.no.color			    = color_red;
 	s_reset.no.style			    = UI_LEFT;

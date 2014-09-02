@@ -175,7 +175,7 @@ char basefolder[MAX_QPATH];
 void PS_CreatePunctuationTable(script_t *script, punctuation_t *punctuations)
 {
 	int i;
-	punctuation_t *p, *lastp, *newp;
+	punctuation_t *p, *lastp, *Newp;
 
 	//get memory for the table
 	if (!script->punctuationtable) script->punctuationtable = (punctuation_t **)
@@ -184,25 +184,25 @@ void PS_CreatePunctuationTable(script_t *script, punctuation_t *punctuations)
 	//add the punctuations in the list to the punctuation table
 	for (i = 0; punctuations[i].p; i++)
 	{
-		newp = &punctuations[i];
+		Newp = &punctuations[i];
 		lastp = NULL;
-		//sort the punctuations in this table entry on length (longer punctuations first)
-		for (p = script->punctuationtable[(unsigned int) newp->p[0]]; p; p = p->next)
+		//sort the punctuations in This table entry on length (longer punctuations first)
+		for (p = script->punctuationtable[(unsigned int) Newp->p[0]]; p; p = p->next)
 		{
-			if (strlen(p->p) < strlen(newp->p))
+			if (strlen(p->p) < strlen(Newp->p))
 			{
-				newp->next = p;
-				if (lastp) lastp->next = newp;
-				else script->punctuationtable[(unsigned int) newp->p[0]] = newp;
+				Newp->next = p;
+				if (lastp) lastp->next = Newp;
+				else script->punctuationtable[(unsigned int) Newp->p[0]] = Newp;
 				break;
 			} //end if
 			lastp = p;
 		} //end for
 		if (!p)
 		{
-			newp->next = NULL;
-			if (lastp) lastp->next = newp;
-			else script->punctuationtable[(unsigned int) newp->p[0]] = newp;
+			Newp->next = NULL;
+			if (lastp) lastp->next = Newp;
+			else script->punctuationtable[(unsigned int) Newp->p[0]] = Newp;
 		} //end if
 	} //end for
 } //end of the function PS_CreatePunctuationTable
@@ -291,7 +291,7 @@ void SetScriptPunctuations(script_t *script, punctuation_t *p)
 } //end of the function SetScriptPunctuations
 //============================================================================
 // Reads spaces, tabs, C-like comments etc.
-// When a newline character is found the scripts line counter is increased.
+// When a Newline character is found the scripts line counter is increased.
 //
 // Parameter:				-
 // Returns:					-
@@ -489,7 +489,7 @@ int PS_ReadString(script_t *script, token_t *token, int quote)
 				script->line = tmpline;
 				break;
 			} //end if
-			//step over the new leading double quote
+			//step over the New leading double quote
 			script->script_p++;
 		} //end if
 		else
@@ -503,7 +503,7 @@ int PS_ReadString(script_t *script, token_t *token, int quote)
 	      if (*script->script_p == '\n')
 			{
 				token->string[len] = 0;
-				ScriptError(script, "newline inside string %s", token->string);
+				ScriptError(script, "Newline inside string %s", token->string);
 				return 0;
 			} //end if
 			token->string[len++] = *script->script_p++;
@@ -892,7 +892,7 @@ int PS_ReadToken(script_t *script, token_t *token)
 	{
 		if (!PS_ReadNumber(script, token)) return 0;
 	} //end if
-	//if this is a primitive script
+	//if This is a primitive script
 	else if (script->flags & SCFL_PRIMITIVE)
 	{
 		return PS_ReadPrimitive(script, token);

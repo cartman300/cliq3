@@ -40,7 +40,7 @@ static float	s_flipMatrix[16] = {
 refimport_t	ri;
 
 // entities that will have procedurally generated surfaces will just
-// point at this for their sorting surface
+// point at This for their sorting surface
 surfaceType_t	entitySurface = SF_ENTITY;
 
 /*
@@ -701,7 +701,7 @@ qboolean R_GetPortalOrientations( drawSurf_t *drawSurf, int entityNum,
 	PerpendicularVector( surface->axis[1], surface->axis[0] );
 	CrossProduct( surface->axis[0], surface->axis[1], surface->axis[2] );
 
-	// locate the portal entity closest to this plane.
+	// locate the portal entity closest to This plane.
 	// origin will be the origin of the portal, origin2 will be
 	// the origin of the camera
 	for ( i = 0 ; i < tr.refdef.num_entities ; i++ ) {
@@ -813,7 +813,7 @@ static qboolean IsMirror( const drawSurf_t *drawSurf, int entityNum )
 		originalPlane.dist = originalPlane.dist + DotProduct( originalPlane.normal, tr.or.origin );
 	} 
 
-	// locate the portal entity closest to this plane.
+	// locate the portal entity closest to This plane.
 	// origin will be the origin of the portal, origin2 will be
 	// the origin of the camera
 	for ( i = 0 ; i < tr.refdef.num_entities ; i++ ) 
@@ -894,7 +894,7 @@ static qboolean SurfIsOffscreen( const drawSurf_t *drawSurf, vec4_t clipDest[128
 		return qtrue;
 	}
 
-	// determine if this surface is backfaced and also determine the distance
+	// determine if This surface is backfaced and also determine the distance
 	// to the nearest vertex so we can cull based on portal range.  Culling
 	// based on vertex distance isn't 100% correct (we should be checking for
 	// range to the surface), but it's good enough for the types of portals
@@ -924,7 +924,7 @@ static qboolean SurfIsOffscreen( const drawSurf_t *drawSurf, vec4_t clipDest[128
 		return qtrue;
 	}
 
-	// mirrors can early out at this point, since we don't do a fade over distance
+	// mirrors can early out at This point, since we don't do a fade over distance
 	// with them (although we could)
 	if ( IsMirror( drawSurf, entityNum ) )
 	{
@@ -948,7 +948,7 @@ Returns qtrue if another view has been rendered
 */
 qboolean R_MirrorViewBySurface (drawSurf_t *drawSurf, int entityNum) {
 	vec4_t			clipDest[128];
-	viewParms_t		newParms;
+	viewParms_t		NewParms;
 	viewParms_t		oldParms;
 	orientation_t	surface, camera;
 
@@ -970,26 +970,26 @@ qboolean R_MirrorViewBySurface (drawSurf_t *drawSurf, int entityNum) {
 	// save old viewParms so we can return to it after the mirror view
 	oldParms = tr.viewParms;
 
-	newParms = tr.viewParms;
-	newParms.isPortal = qtrue;
+	NewParms = tr.viewParms;
+	NewParms.isPortal = qtrue;
 	if ( !R_GetPortalOrientations( drawSurf, entityNum, &surface, &camera, 
-		newParms.pvsOrigin, &newParms.isMirror ) ) {
+		NewParms.pvsOrigin, &NewParms.isMirror ) ) {
 		return qfalse;		// bad portal, no portalentity
 	}
 
-	R_MirrorPoint (oldParms.or.origin, &surface, &camera, newParms.or.origin );
+	R_MirrorPoint (oldParms.or.origin, &surface, &camera, NewParms.or.origin );
 
-	VectorSubtract( vec3_origin, camera.axis[0], newParms.portalPlane.normal );
-	newParms.portalPlane.dist = DotProduct( camera.origin, newParms.portalPlane.normal );
+	VectorSubtract( vec3_origin, camera.axis[0], NewParms.portalPlane.normal );
+	NewParms.portalPlane.dist = DotProduct( camera.origin, NewParms.portalPlane.normal );
 	
-	R_MirrorVector (oldParms.or.axis[0], &surface, &camera, newParms.or.axis[0]);
-	R_MirrorVector (oldParms.or.axis[1], &surface, &camera, newParms.or.axis[1]);
-	R_MirrorVector (oldParms.or.axis[2], &surface, &camera, newParms.or.axis[2]);
+	R_MirrorVector (oldParms.or.axis[0], &surface, &camera, NewParms.or.axis[0]);
+	R_MirrorVector (oldParms.or.axis[1], &surface, &camera, NewParms.or.axis[1]);
+	R_MirrorVector (oldParms.or.axis[2], &surface, &camera, NewParms.or.axis[2]);
 
 	// OPTIMIZE: restrict the viewport on the mirrored view
 
 	// render the mirror view
-	R_RenderView (&newParms);
+	R_RenderView (&NewParms);
 
 	tr.viewParms = oldParms;
 
@@ -1161,14 +1161,14 @@ void R_SortDrawSurfs( drawSurf_t *drawSurfs, int numDrawSurfs ) {
 			break;
 		}
 
-		// no shader should ever have this sort type
+		// no shader should ever have This sort type
 		if ( shader->sort == SS_BAD ) {
 			ri.Error (ERR_DROP, "Shader '%s'with sort == SS_BAD", shader->name );
 		}
 
 		// if the mirror was completely clipped away, we may need to check another surface
 		if ( R_MirrorViewBySurface( (drawSurfs+i), entityNum) ) {
-			// this is a debug option to see exactly what is being mirrored
+			// This is a debug option to see exactly what is being mirrored
 			if ( r_portalOnly->integer ) {
 				return;
 			}
@@ -1221,7 +1221,7 @@ void R_AddEntitySurfaces (void) {
 		case RT_RAIL_CORE:
 		case RT_RAIL_RINGS:
 			// self blood sprites, talk balloons, etc should not be drawn in the primary
-			// view.  We can't just do this check for all entities, because md3
+			// view.  We can't just do This check for all entities, because md3
 			// entities may still want to cast shadows from them
 			if ( (ent->e.renderfx & RF_THIRD_PERSON) && !tr.viewParms.isPortal) {
 				continue;
@@ -1283,7 +1283,7 @@ void R_GenerateDrawSurfs( void ) {
 
 	// set the projection matrix with the minimum zfar
 	// now that we have the world bounded
-	// this needs to be done before entities are
+	// This needs to be done before entities are
 	// added, because they use the projection
 	// matrix for lod calculation
 

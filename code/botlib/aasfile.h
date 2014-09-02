@@ -63,11 +63,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 //face flags
 #define FACE_SOLID					1		//just solid at the other side
 #define FACE_LADDER					2		//ladder
-#define FACE_GROUND					4		//standing on ground when in this face
+#define FACE_GROUND					4		//standing on ground when in This face
 #define FACE_GAP					8		//gap in the ground
 #define FACE_LIQUID					16		//face seperating two areas with liquid
 #define FACE_LIQUIDSURFACE			32		//face seperating liquid and air
-#define FACE_BRIDGE					64		//can walk over this face if bridge is closed
+#define FACE_BRIDGE					64		//can walk over This face if bridge is closed
 
 //area contents
 #define AREACONTENTS_WATER				1
@@ -83,7 +83,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define AREACONTENTS_MOVER				1024
 #define AREACONTENTS_NOTTEAM1			2048
 #define AREACONTENTS_NOTTEAM2			4096
-//number of model of the mover inside this area
+//number of model of the mover inside This area
 #define AREACONTENTS_MODELNUMSHIFT		24
 #define AREACONTENTS_MAXMODELNUM		0xFF
 #define AREACONTENTS_MODELNUM			(AREACONTENTS_MAXMODELNUM << AREACONTENTS_MODELNUMSHIFT)
@@ -142,10 +142,10 @@ typedef struct aas_areasettings_s
 	//could also add all kind of statistic fields
 	int contents;						//contents of the area
 	int areaflags;						//several area flags
-	int presencetype;					//how a bot can be present in this area
+	int presencetype;					//how a bot can be present in This area
 	int cluster;						//cluster the area belongs to, if negative it's a portal
 	int clusterareanum;				//number of the area in the cluster
-	int numreachableareas;			//number of reachable areas from this one
+	int numreachableareas;			//number of reachable areas from This one
 	int firstreachablearea;			//first reachable area in the reachable area index
 } aas_areasettings_t;
 
@@ -185,7 +185,7 @@ typedef struct aas_plane_s
 //edge
 typedef struct aas_edge_s
 {
-	int v[2];							//numbers of the vertexes of this edge
+	int v[2];							//numbers of the vertexes of This edge
 } aas_edge_t;
 
 //edge index, negative if vertexes are reversed
@@ -194,12 +194,12 @@ typedef int aas_edgeindex_t;
 //a face bounds an area, often it will also seperate two areas
 typedef struct aas_face_s
 {
-	int planenum;						//number of the plane this face is in
-	int faceflags;						//face flags (no use to create face settings for just this field)
+	int planenum;						//number of the plane This face is in
+	int faceflags;						//face flags (no use to create face settings for just This field)
 	int numedges;						//number of edges in the boundary of the face
 	int firstedge;						//first edge in the edge index
-	int frontarea;						//area at the front of this face
-	int backarea;						//area at the back of this face
+	int frontarea;						//area at the front of This face
+	int backarea;						//area at the back of This face
 } aas_face_t;
 
 //face index, stores a negative index if backside of face
@@ -208,7 +208,7 @@ typedef int aas_faceindex_t;
 //area with a boundary of faces
 typedef struct aas_area_s
 {
-	int areanum;						//number of this area
+	int areanum;						//number of This area
 	//3d definition
 	int numfaces;						//number of faces used for the boundary of the area
 	int firstface;						//first face in the face index used for the boundary of the area
@@ -221,7 +221,7 @@ typedef struct aas_area_s
 typedef struct aas_node_s
 {
 	int planenum;
-	int children[2];					//child nodes of this node, or areas as leaves when negative
+	int children[2];					//child nodes of This node, or areas as leaves when negative
 										//when a child is zero it's a solid leaf
 } aas_node_t;
 
@@ -250,12 +250,12 @@ typedef struct aas_header_s
 
 -	when a node child is a solid leaf the node child number is zero
 -	two adjacent areas (sharing a plane at opposite sides) share a face
-	this face is a portal between the areas
+	This face is a portal between the areas
 -	when an area uses a face from the faceindex with a positive index
 	then the face plane normal points into the area
 -	the face edges are stored counter clockwise using the edgeindex
 -	two adjacent convex areas (sharing a face) only share One face
-	this is a simple result of the areas being convex
+	This is a simple result of the areas being convex
 -	the areas can't have a mixture of ground and gap faces
 	other mixtures of faces in one area are allowed
 -	areas with the AREACONTENTS_CLUSTERPORTAL in the settings have

@@ -125,25 +125,25 @@ static void UI_TeamOrdersMenu_SetList( int id ) {
 	switch( id ) {
 	default:
 	case ID_LIST_BOTS:
-		teamOrdersMenuInfo.list.generic.id = id;
+		teamOrdersMenuInfo.list.Generic.id = id;
 		teamOrdersMenuInfo.list.numitems = teamOrdersMenuInfo.numBots;
 		teamOrdersMenuInfo.list.itemnames = (const char **)teamOrdersMenuInfo.bots;
 		 break;
 
 	case ID_LIST_CTF_ORDERS:
-		teamOrdersMenuInfo.list.generic.id = id;
+		teamOrdersMenuInfo.list.Generic.id = id;
 		teamOrdersMenuInfo.list.numitems = NUM_CTF_ORDERS;
 		teamOrdersMenuInfo.list.itemnames = ctfOrders;
 		break;
 
 	case ID_LIST_TEAM_ORDERS:
-		teamOrdersMenuInfo.list.generic.id = id;
+		teamOrdersMenuInfo.list.Generic.id = id;
 		teamOrdersMenuInfo.list.numitems = NUM_TEAM_ORDERS;
 		teamOrdersMenuInfo.list.itemnames = teamOrders;
 		break;
 	}
 
-	teamOrdersMenuInfo.list.generic.bottom = teamOrdersMenuInfo.list.generic.top + teamOrdersMenuInfo.list.numitems * PROP_HEIGHT;
+	teamOrdersMenuInfo.list.Generic.bottom = teamOrdersMenuInfo.list.Generic.top + teamOrdersMenuInfo.list.numitems * PROP_HEIGHT;
 }
 
 
@@ -165,15 +165,15 @@ sfxHandle_t UI_TeamOrdersMenu_Key( int key ) {
 
 	switch( key ) {
 		case K_MOUSE1:
-			x = l->generic.left;
-			y = l->generic.top;
-			if( UI_CursorInRect( x, y, l->generic.right - x, l->generic.bottom - y ) ) {
+			x = l->Generic.left;
+			y = l->Generic.top;
+			if( UI_CursorInRect( x, y, l->Generic.right - x, l->Generic.bottom - y ) ) {
 				index = (uis.cursory - y) / PROP_HEIGHT;
 				l->oldvalue = l->curvalue;
 				l->curvalue = index;
 
-				if( l->generic.callback ) {
-					l->generic.callback( l, QM_ACTIVATED );
+				if( l->Generic.callback ) {
+					l->Generic.callback( l, QM_ACTIVATED );
 					return menu_move_sound;
 				}
 			}
@@ -224,10 +224,10 @@ static void UI_TeamOrdersMenu_ListDraw( void *self ) {
 
 	l = (menulist_s *)self;
 
-	hasfocus = (l->generic.parent->cursor == l->generic.menuPosition);
+	hasfocus = (l->Generic.parent->cursor == l->Generic.menuPosition);
 
-	x =	320;//l->generic.x;
-	y =	l->generic.y;
+	x =	320;//l->Generic.x;
+	y =	l->Generic.y;
 	for( i = 0; i < l->numitems; i++ ) {
 		style = UI_LEFT|UI_SMALLFONT|UI_CENTER;
 		if( i == l->curvalue ) {
@@ -259,7 +259,7 @@ static void UI_TeamOrdersMenu_ListEvent( void *ptr, int event ) {
 	if (event != QM_ACTIVATED)
 		return;
 
-	id = ((menulist_s *)ptr)->generic.id;
+	id = ((menulist_s *)ptr)->Generic.id;
 	selection = ((menulist_s *)ptr)->curvalue;
 
 	if( id == ID_LIST_BOTS ) {
@@ -351,34 +351,34 @@ static void UI_TeamOrdersMenu_Init( void ) {
 
 	UI_TeamOrdersMenu_BuildBotList();
 
-	teamOrdersMenuInfo.banner.generic.type		= MTYPE_BTEXT;
-	teamOrdersMenuInfo.banner.generic.x			= 320;
-	teamOrdersMenuInfo.banner.generic.y			= 16;
+	teamOrdersMenuInfo.banner.Generic.type		= MTYPE_BTEXT;
+	teamOrdersMenuInfo.banner.Generic.x			= 320;
+	teamOrdersMenuInfo.banner.Generic.y			= 16;
 	teamOrdersMenuInfo.banner.string			= "TEAM ORDERS";
 	teamOrdersMenuInfo.banner.color				= color_white;
 	teamOrdersMenuInfo.banner.style				= UI_CENTER;
 
-	teamOrdersMenuInfo.frame.generic.type		= MTYPE_BITMAP;
-	teamOrdersMenuInfo.frame.generic.flags		= QMF_INACTIVE;
-	teamOrdersMenuInfo.frame.generic.name		= ART_FRAME;
-	teamOrdersMenuInfo.frame.generic.x			= 320-233;
-	teamOrdersMenuInfo.frame.generic.y			= 240-166;
+	teamOrdersMenuInfo.frame.Generic.type		= MTYPE_BITMAP;
+	teamOrdersMenuInfo.frame.Generic.flags		= QMF_INACTIVE;
+	teamOrdersMenuInfo.frame.Generic.name		= ART_FRAME;
+	teamOrdersMenuInfo.frame.Generic.x			= 320-233;
+	teamOrdersMenuInfo.frame.Generic.y			= 240-166;
 	teamOrdersMenuInfo.frame.width				= 466;
 	teamOrdersMenuInfo.frame.height				= 332;
 
-	teamOrdersMenuInfo.list.generic.type		= MTYPE_SCROLLLIST;
-	teamOrdersMenuInfo.list.generic.flags		= QMF_PULSEIFFOCUS;
-	teamOrdersMenuInfo.list.generic.ownerdraw	= UI_TeamOrdersMenu_ListDraw;
-	teamOrdersMenuInfo.list.generic.callback	= UI_TeamOrdersMenu_ListEvent;
-	teamOrdersMenuInfo.list.generic.x			= 320-64;
-	teamOrdersMenuInfo.list.generic.y			= 120;
+	teamOrdersMenuInfo.list.Generic.type		= MTYPE_SCROLLLIST;
+	teamOrdersMenuInfo.list.Generic.flags		= QMF_PULSEIFFOCUS;
+	teamOrdersMenuInfo.list.Generic.ownerdraw	= UI_TeamOrdersMenu_ListDraw;
+	teamOrdersMenuInfo.list.Generic.callback	= UI_TeamOrdersMenu_ListEvent;
+	teamOrdersMenuInfo.list.Generic.x			= 320-64;
+	teamOrdersMenuInfo.list.Generic.y			= 120;
 
-	teamOrdersMenuInfo.back.generic.type		= MTYPE_BITMAP;
-	teamOrdersMenuInfo.back.generic.name		= ART_BACK0;
-	teamOrdersMenuInfo.back.generic.flags		= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
-	teamOrdersMenuInfo.back.generic.callback	= UI_TeamOrdersMenu_BackEvent;
-	teamOrdersMenuInfo.back.generic.x			= 0;
-	teamOrdersMenuInfo.back.generic.y			= 480-64;
+	teamOrdersMenuInfo.back.Generic.type		= MTYPE_BITMAP;
+	teamOrdersMenuInfo.back.Generic.name		= ART_BACK0;
+	teamOrdersMenuInfo.back.Generic.flags		= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
+	teamOrdersMenuInfo.back.Generic.callback	= UI_TeamOrdersMenu_BackEvent;
+	teamOrdersMenuInfo.back.Generic.x			= 0;
+	teamOrdersMenuInfo.back.Generic.y			= 480-64;
 	teamOrdersMenuInfo.back.width				= 128;
 	teamOrdersMenuInfo.back.height				= 64;
 	teamOrdersMenuInfo.back.focuspic			= ART_BACK1;
@@ -388,9 +388,9 @@ static void UI_TeamOrdersMenu_Init( void ) {
 	Menu_AddItem( &teamOrdersMenuInfo.menu, &teamOrdersMenuInfo.list );
 	Menu_AddItem( &teamOrdersMenuInfo.menu, &teamOrdersMenuInfo.back );
 
-	teamOrdersMenuInfo.list.generic.left = 220;
-	teamOrdersMenuInfo.list.generic.top = teamOrdersMenuInfo.list.generic.y;
-	teamOrdersMenuInfo.list.generic.right = 420;
+	teamOrdersMenuInfo.list.Generic.left = 220;
+	teamOrdersMenuInfo.list.Generic.top = teamOrdersMenuInfo.list.Generic.y;
+	teamOrdersMenuInfo.list.Generic.right = 420;
 	UI_TeamOrdersMenu_SetList( ID_LIST_BOTS );
 }
 

@@ -382,7 +382,7 @@ int BotNextConsoleMessage(int chatstate, bot_consolemessage_t *cm)
 		/* We omit setting the two pointers in cm because pointer
 		 * size in the VM differs between the size in the engine on
 		 * 64 bit machines, which would lead to a buffer overflow if
-		 * this functions is called from the VM. The pointers are
+		 * This functions is called from the VM. The pointers are
 		 * of no interest to functions calling
 		 * BotNextConsoleMessage anyways.
 		 */
@@ -590,7 +590,7 @@ void BotDumpSynonymList(bot_synonymlist_t *synlist)
 	if (!fp) return;
 	for (syn = synlist; syn; syn = syn->next)
 	{
-	        fprintf(fp, "%ld : [", syn->context);
+			fprintf(fp, "%ld : [", syn->context);
 		for (synonym = syn->firstsynonym; synonym; synonym = synonym->next)
 		{
 			fprintf(fp, "(\"%s\", %1.2f)", synonym->string, synonym->weight);
@@ -863,7 +863,7 @@ void BotReplaceReplySynonyms(char *string, unsigned long int context)
 			//if a synonym has been replaced
 			if (synonym) break;
 		} //end for
-		//skip over this word
+		//skip over This word
 		while(*str1 && *str1 > ' ') str1++;
 		if (!*str1) break;
 	} //end while
@@ -1105,7 +1105,7 @@ void BotDumpMatchTemplates(bot_matchtemplate_t *matches)
 	if (!fp) return;
 	for (mt = matches; mt; mt = mt->next)
 	{
-	        fprintf(fp, "{ " );
+			fprintf(fp, "{ " );
 		for (mp = mt->first; mp; mp = mp->next)
 		{
 			if (mp->type == MT_STRING)
@@ -1377,7 +1377,7 @@ bot_matchtemplate_t *BotLoadMatchTemplates(char *matchfile)
 int StringsMatch(bot_matchpiece_t *pieces, bot_match_t *match)
 {
 	int lastvariable, index;
-	char *strptr, *newstrptr;
+	char *strptr, *Newstrptr;
 	bot_matchpiece_t *mp;
 	bot_matchstring_t *ms;
 
@@ -1392,24 +1392,24 @@ int StringsMatch(bot_matchpiece_t *pieces, bot_match_t *match)
 		//if it is a piece of string
 		if (mp->type == MT_STRING)
 		{
-			newstrptr = NULL;
+			Newstrptr = NULL;
 			for (ms = mp->firststring; ms; ms = ms->next)
 			{
 				if (!strlen(ms->string))
 				{
-					newstrptr = strptr;
+					Newstrptr = strptr;
 					break;
 				} //end if
 				//Log_Write("MT_STRING: %s", mp->string);
 				index = StringContains(strptr, ms->string, qfalse);
 				if (index >= 0)
 				{
-					newstrptr = strptr + index;
+					Newstrptr = strptr + index;
 					if (lastvariable >= 0)
 					{
 						match->variables[lastvariable].length =
-								(newstrptr - match->string) - match->variables[lastvariable].offset;
-								//newstrptr - match->variables[lastvariable].ptr;
+								(Newstrptr - match->string) - match->variables[lastvariable].offset;
+								//Newstrptr - match->variables[lastvariable].ptr;
 						lastvariable = -1;
 						break;
 					} //end if
@@ -1417,11 +1417,11 @@ int StringsMatch(bot_matchpiece_t *pieces, bot_match_t *match)
 					{
 						break;
 					} //end else
-					newstrptr = NULL;
+					Newstrptr = NULL;
 				} //end if
 			} //end for
-			if (!newstrptr) return qfalse;
-			strptr = newstrptr + strlen(ms->string);
+			if (!Newstrptr) return qfalse;
+			strptr = Newstrptr + strlen(ms->string);
 		} //end if
 		//if it is a variable piece of string
 		else if (mp->type == MT_VARIABLE)
@@ -1437,7 +1437,7 @@ int StringsMatch(bot_matchpiece_t *pieces, bot_match_t *match)
 		//if the last piece was a variable string
 		if (lastvariable >= 0)
 		{
-        		assert( match->variables[lastvariable].offset >= 0 );
+				assert( match->variables[lastvariable].offset >= 0 );
 			match->variables[lastvariable].length =
 				strlen(&match->string[ (int) match->variables[lastvariable].offset]);
 		} //end if
@@ -1874,7 +1874,7 @@ bot_replychat_t *BotLoadReplyChat(char *filename)
 			return NULL;
 		} //end if
 		//
-		replychat = GetClearedHunkMemory(sizeof(bot_replychat_t));
+		replychat = (bot_replychat_t*)GetClearedHunkMemory(sizeof(bot_replychat_t));
 		replychat->keys = NULL;
 		replychat->next = replychatlist;
 		replychatlist = replychat;
@@ -2263,7 +2263,7 @@ int BotLoadChatFile(int chatstate, char *chatfile, char *chatname)
 	} //end if
 	if (!LibVarGetValue("bot_reloadcharacters"))
 	{
-		ichatdata[avail] = GetClearedMemory( sizeof(bot_ichatdata_t) );
+		ichatdata[avail] = (bot_ichatdata_t*)GetClearedMemory( sizeof(bot_ichatdata_t) );
 		ichatdata[avail]->chat = cs->chat;
 		Q_strncpyz( ichatdata[avail]->chatname, chatname, sizeof(ichatdata[avail]->chatname) );
 		Q_strncpyz( ichatdata[avail]->filename, chatfile, sizeof(ichatdata[avail]->filename) );
@@ -2313,7 +2313,7 @@ int BotExpandChatMessage(char *outmessage, char *message, unsigned long mcontext
 					} //end if
 					if (match->variables[num].offset >= 0)
 					{
-					        assert( match->variables[num].offset >= 0 );
+							assert( match->variables[num].offset >= 0 );
 						ptr = &match->string[ (int) match->variables[num].offset];
 						for (i = 0; i < match->variables[num].length; i++)
 						{
@@ -2582,7 +2582,7 @@ void BotInitialChat(int chatstate, char *type, int mcontext, char *var0, char *v
 		match.variables[7].offset = index;
 		match.variables[7].length = strlen(var7);
 	}
- 	//
+	//
 	BotConstructChatMessage(cs, message, mcontext, &match, 0, qfalse);
 } //end of the function BotInitialChat
 //===========================================================================
@@ -2920,7 +2920,7 @@ int BotAllocChatState(void)
 	{
 		if (!botchatstates[i])
 		{
-			botchatstates[i] = GetClearedMemory(sizeof(bot_chatstate_t));
+			botchatstates[i] = (bot_chatstate_t*)GetClearedMemory(sizeof(bot_chatstate_t));
 			return i;
 		} //end if
 	} //end for

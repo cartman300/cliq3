@@ -6,7 +6,7 @@
 // SSE is enabled.
 #ifndef _USE_SSE
 #  define USE_ALLOCA
-#  if defined(__sun)  /* Solaris needs this for alloca(). */
+#  if defined(__sun)  /* Solaris needs This for alloca(). */
 #    define HAVE_ALLOCA_H
 #  endif
 #endif

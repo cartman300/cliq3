@@ -115,7 +115,7 @@ const char *VM_ValueToSymbol( vm_t *vm, int value ) {
 ===============
 VM_ValueToFunctionSymbol
 
-For profiling, find the symbol behind this value
+For profiling, find the symbol behind This value
 ===============
 */
 vmSymbol_t *VM_ValueToFunctionSymbol( vm_t *vm, int value ) {
@@ -276,7 +276,7 @@ void VM_LoadSymbols( vm_t *vm ) {
 			break;
 		}
 		chars = strlen( token );
-		sym = Hunk_Alloc( sizeof( *sym ) + chars, h_high );
+		sym = (vmSymbol_t*)Hunk_Alloc( sizeof( *sym ) + chars, h_high );
 		*prev = sym;
 		prev = &sym->next;
 		sym->next = NULL;
@@ -301,7 +301,7 @@ void VM_LoadSymbols( vm_t *vm ) {
 ============
 VM_DllSyscall
 
-Dlls will call this directly
+Dlls will call This directly
 
  rcg010206 The horror; the horror.
 
@@ -346,7 +346,7 @@ intptr_t QDECL VM_DllSyscall( intptr_t arg, ... ) {
   
   va_start(ap, arg);
   for (i = 1; i < ARRAY_LEN (args); i++)
-    args[i] = va_arg(ap, intptr_t);
+	args[i] = va_arg(ap, intptr_t);
   va_end(ap);
   
   return currentVM->systemCall( args );
@@ -451,7 +451,7 @@ vmHeader_t *VM_LoadQVM( vm_t *vm, qboolean alloc, qboolean unpure)
 	if(alloc)
 	{
 		// allocate zero filled space for initialized and uninitialized data
-		vm->dataBase = Hunk_Alloc(dataLength, h_high);
+		vm->dataBase = (byte*)Hunk_Alloc(dataLength, h_high);
 		vm->dataMask = dataLength - 1;
 	}
 	else
@@ -490,7 +490,7 @@ vmHeader_t *VM_LoadQVM( vm_t *vm, qboolean alloc, qboolean unpure)
 
 		if(alloc)
 		{
-			vm->jumpTableTargets = Hunk_Alloc(header.h->jtrgLength, h_high);
+			vm->jumpTableTargets = (byte*)Hunk_Alloc(header.h->jtrgLength, h_high);
 		}
 		else
 		{
@@ -644,7 +644,7 @@ vm_t *VM_Create( const char *module, intptr_t (*systemCalls)(intptr_t *),
 
 	// allocate space for the jump targets, which will be filled in by the compile/prep functions
 	vm->instructionCount = header->instructionCount;
-	vm->instructionPointers = Hunk_Alloc(vm->instructionCount * sizeof(*vm->instructionPointers), h_high);
+	vm->instructionPointers = (intptr_t*)Hunk_Alloc(vm->instructionCount * sizeof(*vm->instructionPointers), h_high);
 
 	// copy or compile the instructions
 	vm->codeLength = header->codeLength;
@@ -822,7 +822,7 @@ intptr_t QDECL VM_Call( vm_t *vm, int callnum, ... )
 	++vm->callLevel;
 	// if we have a dll loaded, call it directly
 	if ( vm->entryPoint ) {
-		//rcg010207 -  see dissertation at top of VM_DllSyscall() in this file.
+		//rcg010207 -  see dissertation at top of VM_DllSyscall() in This file.
 		int args[MAX_VMMAIN_ARGS-1];
 		va_list ap;
 		va_start(ap, callnum);
@@ -832,8 +832,8 @@ intptr_t QDECL VM_Call( vm_t *vm, int callnum, ... )
 		va_end(ap);
 
 		r = vm->entryPoint( callnum,  args[0],  args[1],  args[2], args[3],
-                            args[4],  args[5],  args[6], args[7],
-                            args[8],  args[9], args[10], args[11]);
+							args[4],  args[5],  args[6], args[7],
+							args[8],  args[9], args[10], args[11]);
 	} else {
 #if ( id386 || idsparc ) && !defined __clang__ // calling convention doesn't need conversion in some cases
 #ifndef NO_VM_COMPILED
@@ -909,7 +909,7 @@ void VM_VmProfile_f( void ) {
 		return;
 	}
 
-	sorted = Z_Malloc( vm->numSymbols * sizeof( *sorted ) );
+	sorted = (vmSymbol_t**)Z_Malloc( vm->numSymbols * sizeof( *sorted ) );
 	sorted[0] = vm->symbols;
 	total = sorted[0]->profileCount;
 	for ( i = 1 ; i < vm->numSymbols ; i++ ) {
@@ -970,7 +970,7 @@ void VM_VmInfo_f( void ) {
 ===============
 VM_LogSyscalls
 
-Insert calls to this while debugging the vm compiler
+Insert calls to This while debugging the vm compiler
 ===============
 */
 void VM_LogSyscalls( int *args ) {

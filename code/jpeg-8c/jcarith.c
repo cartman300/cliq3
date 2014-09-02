@@ -8,9 +8,9 @@
  * This file contains portable arithmetic entropy encoding routines for JPEG
  * (implementing the ISO/IEC IS 10918-1 and CCITT Recommendation ITU-T T.81).
  *
- * Both sequential and progressive modes are supported in this single module.
+ * Both sequential and progressive modes are supported in This single module.
  *
- * Suspension is not currently supported in this module.
+ * Suspension is not currently supported in This module.
  */
 
 #define JPEG_INTERNALS
@@ -34,7 +34,7 @@ typedef struct {
   int last_dc_val[MAX_COMPS_IN_SCAN]; /* last DC coef for each component */
   int dc_context[MAX_COMPS_IN_SCAN]; /* context index for DC conditioning */
 
-  unsigned int restarts_to_go;	/* MCUs left in this restart interval */
+  unsigned int restarts_to_go;	/* MCUs left in This restart interval */
   int next_restart_num;		/* next restart number to write (0-7) */
 
   /* Pointers to statistics areas (these workspaces have image lifespan) */
@@ -67,9 +67,9 @@ typedef arith_entropy_encoder * arith_entropy_ptr;
  * given formula for calculating the AC conditioning parameter Kx
  * for spectral selection progressive coding in section G.1.3.2
  * of the spec (Kx = Kmin + SRL (8 + Se - Kmin) 4).
- * Although the spec and P&M authors claim that this "has proven
+ * Although the spec and P&M authors claim that This "has proven
  * to give good results for 8 bit precision samples", I'm not
- * convinced yet that this is really beneficial.
+ * convinced yet that This is really beneficial.
  * Early tests gave only very marginal compression enhancements
  * (a few - around 5 or so - bytes even for very large files),
  * which would turn out rather negative if we'd suppress the
@@ -80,7 +80,7 @@ typedef arith_entropy_encoder * arith_entropy_ptr;
  * This is not worth worrying about IMHO. However, since the
  * spec defines the default values to be used if the tables
  * are omitted (unlike Huffman tables, which are required
- * anyway), one might optimize this behaviour in the future,
+ * anyway), one might optimize This behaviour in the future,
  * and then it would be disadvantageous to use custom tables if
  * they don't provide sufficient gain to exceed the DAC size.
  *
@@ -114,7 +114,7 @@ typedef arith_entropy_encoder * arith_entropy_ptr;
 
 LOCAL(void)
 emit_byte (int val, j_compress_ptr cinfo)
-/* Write next output byte; we do not support suspension in this module. */
+/* Write next output byte; we do not support suspension in This module. */
 {
   struct jpeg_destination_mgr * dest = cinfo->dest;
 
@@ -197,8 +197,8 @@ finish_pass (j_compress_ptr cinfo)
  * The core arithmetic encoding routine (common in JPEG and JBIG).
  * This needs to go as fast as possible.
  * Machine-dependent optimization facilities
- * are not utilized in this portable implementation.
- * However, this code should be fairly efficient and
+ * are not utilized in This portable implementation.
+ * However, This code should be fairly efficient and
  * may be a good base for further optimizations anyway.
  *
  * Parameter 'val' to be encoded may be 0 or 1 (binary decision).
@@ -210,7 +210,7 @@ finish_pass (j_compress_ptr cinfo)
  * stream compliant to the spec (no trailing zero bytes,
  * except for FF stuffing).
  *
- * I've also introduced a new scheme for accessing
+ * I've also introduced a New scheme for accessing
  * the probability estimation state machine table,
  * derived from Markus Kuhn's JBIG implementation.
  */
@@ -278,9 +278,9 @@ arith_encode (j_compress_ptr cinfo, unsigned char *st, int val)
 	e->zc += e->sc;  /* carry-over converts stacked 0xFF bytes to 0x00 */
 	e->sc = 0;
 	/* Note: The 3 spacer bits in the C register guarantee
-	 * that the new buffer byte can't be 0xFF here
+	 * that the New buffer byte can't be 0xFF here
 	 * (see page 160 in the P&M JPEG book). */
-	e->buffer = temp & 0xFF;  /* new output byte, might overflow later */
+	e->buffer = temp & 0xFF;  /* New output byte, might overflow later */
       } else if (temp == 0xFF) {
 	++e->sc;  /* stack 0xFF byte (which might overflow later) */
       } else {
@@ -302,7 +302,7 @@ arith_encode (j_compress_ptr cinfo, unsigned char *st, int val)
 	    emit_byte(0x00, cinfo);
 	  } while (--e->sc);
 	}
-	e->buffer = temp & 0xFF;  /* new output byte (can still overflow) */
+	e->buffer = temp & 0xFF;  /* New output byte (can still overflow) */
       }
       e->c &= 0x7FFFFL;
       e->ct += 8;
@@ -480,8 +480,8 @@ encode_mcu_AC_first (j_compress_ptr cinfo, JBLOCKROW *MCU_data)
 
   /* Establish EOB (end-of-block) index */
   for (ke = cinfo->Se; ke > 0; ke--)
-    /* We must apply the point transform by Al.  For AC coefficients this
-     * is an integer division with rounding towards 0.  To do this portably
+    /* We must apply the point transform by Al.  For AC coefficients This
+     * is an integer division with rounding towards 0.  To do This portably
      * in C, we shift after obtaining the absolute value.
      */
     if ((v = (*block)[natural_order[ke]]) >= 0) {
@@ -617,8 +617,8 @@ encode_mcu_AC_refine (j_compress_ptr cinfo, JBLOCKROW *MCU_data)
 
   /* Establish EOB (end-of-block) index */
   for (ke = cinfo->Se; ke > 0; ke--)
-    /* We must apply the point transform by Al.  For AC coefficients this
-     * is an integer division with rounding towards 0.  To do this portably
+    /* We must apply the point transform by Al.  For AC coefficients This
+     * is an integer division with rounding towards 0.  To do This portably
      * in C, we shift after obtaining the absolute value.
      */
     if ((v = (*block)[natural_order[ke]]) >= 0) {
@@ -647,7 +647,7 @@ encode_mcu_AC_refine (j_compress_ptr cinfo, JBLOCKROW *MCU_data)
 	if (v >>= cinfo->Al) {
 	  if (v >> 1)			/* previously nonzero coef */
 	    arith_encode(cinfo, st + 2, (v & 1));
-	  else {			/* newly nonzero coef */
+	  else {			/* Newly nonzero coef */
 	    arith_encode(cinfo, st + 1, 1);
 	    arith_encode(cinfo, entropy->fixed_bin, 0);
 	  }
@@ -658,7 +658,7 @@ encode_mcu_AC_refine (j_compress_ptr cinfo, JBLOCKROW *MCU_data)
 	if (v >>= cinfo->Al) {
 	  if (v >> 1)			/* previously nonzero coef */
 	    arith_encode(cinfo, st + 2, (v & 1));
-	  else {			/* newly nonzero coef */
+	  else {			/* Newly nonzero coef */
 	    arith_encode(cinfo, st + 1, 1);
 	    arith_encode(cinfo, entropy->fixed_bin, 1);
 	  }

@@ -10,9 +10,9 @@
  * quantization/reduction steps; specifically, it controls the buffering
  * between upsample/color conversion and color quantization/reduction.
  *
- * If no color quantization/reduction is required, then this module has no
+ * If no color quantization/reduction is required, then This module has no
  * work to do, and it just hands off to the upsample/color conversion code.
- * An integrated upsample/convert/quantize process would replace this module
+ * An integrated upsample/convert/quantize process would replace This module
  * entirely.
  */
 
@@ -26,7 +26,7 @@
 typedef struct {
   struct jpeg_d_post_controller pub; /* public fields */
 
-  /* Color quantization source buffer: this holds output data from
+  /* Color quantization source buffer: This holds output data from
    * the upsample/color conversion step to be passed to the quantizer.
    * For two-pass color quantization, we need a full-image buffer;
    * for one-pass operation, a strip buffer is sufficient.
@@ -177,7 +177,7 @@ post_process_prepass (j_decompress_ptr cinfo,
 		input_buf, in_row_group_ctr, in_row_groups_avail,
 		post->buffer, &post->next_row, post->strip_height);
 
-  /* Allow quantizer to scan new data.  No data is emitted, */
+  /* Allow quantizer to scan New data.  No data is emitted, */
   /* but we advance out_row_ctr so outer loop can tell when we're done. */
   if (post->next_row > old_next_row) {
     num_rows = post->next_row - old_next_row;

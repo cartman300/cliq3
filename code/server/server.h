@@ -113,7 +113,7 @@ typedef struct {
 } clientSnapshot_t;
 
 typedef enum {
-	CS_FREE,		// can be reused for a new connection
+	CS_FREE,		// can be reused for a New connection
 	CS_ZOMBIE,		// client has been disconnected, but don't reuse
 					// connection for a couple seconds
 	CS_CONNECTED,	// has been assigned to a client_t, but no gamestate yet
@@ -180,7 +180,7 @@ typedef struct client_s {
 	// TTimo
 	// queuing outgoing fragmented messages to send them properly, without udp packet bursts
 	// in case large fragmented messages are stacking up
-	// buffer them into this queue, and hand them out to netchan as needed
+	// buffer them into This queue, and hand them out to netchan as needed
 	netchan_buffer_t *netchan_start_queue;
 	netchan_buffer_t **netchan_end_queue;
 
@@ -226,7 +226,7 @@ typedef struct {
 	qboolean	connected;
 } challenge_t;
 
-// this structure will be cleared only when the game dll changes
+// This structure will be cleared only when the game dll changes
 typedef struct {
 	qboolean	initialized;				// sv_init has completed
 
@@ -461,7 +461,7 @@ int SV_AreaEntities( const vec3_t mins, const vec3_t maxs, int *entityList, int 
 // to be returned that doesn't actually intersect the area on an exact
 // test.
 // returns the number of pointers filled in
-// The world entity is never returned in this list.
+// The world entity is never returned in This list.
 
 
 int SV_PointContents( const vec3_t p, int passEntityNum );

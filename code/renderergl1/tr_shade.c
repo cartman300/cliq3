@@ -97,8 +97,8 @@ static void R_DrawStripElements( int numIndexes, const glIndex_t *indexes, void 
 				assert( indexes[i+2] < tess.numVertexes );
 				even = qtrue;
 			}
-			// otherwise we're done with this strip so finish it and start
-			// a new one
+			// otherwise we're done with This strip so finish it and start
+			// a New one
 			else
 			{
 				qglEnd();
@@ -125,8 +125,8 @@ static void R_DrawStripElements( int numIndexes, const glIndex_t *indexes, void 
 
 				even = qfalse;
 			}
-			// otherwise we're done with this strip so finish it and start
-			// a new one
+			// otherwise we're done with This strip so finish it and start
+			// a New one
 			else
 			{
 				qglEnd();
@@ -231,7 +231,7 @@ static void R_BindAnimatedImage( textureBundle_t *bundle ) {
 		return;
 	}
 
-	// it is necessary to do this messy calc to make sure animations line up
+	// it is necessary to do This messy calc to make sure animations line up
 	// exactly with waveforms of the same frequency
 	index = ri.ftol(tess.shaderTime * bundle->imageAnimationSpeed * FUNCTABLE_SIZE);
 	index >>= FUNCTABLE_SIZE2;
@@ -352,7 +352,7 @@ static void DrawMultitextured( shaderCommands_t *input, int stage ) {
 
 	GL_State( pStage->stateBits );
 
-	// this is an ugly hack to work around a GeForce driver
+	// This is an ugly hack to work around a GeForce driver
 	// bug with multitexture and clip planes
 	if ( backEnd.viewParms.isPortal ) {
 		qglPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
@@ -413,9 +413,9 @@ static void ProjectDlightTexture_altivec( void ) {
 	vector signed int colorInt;
 	vector unsigned char floatColorVecPerm, modulatePerm, colorChar;
 	vector unsigned char vSel = VECCONST_UINT8(0x00, 0x00, 0x00, 0xff,
-                                               0x00, 0x00, 0x00, 0xff,
-                                               0x00, 0x00, 0x00, 0xff,
-                                               0x00, 0x00, 0x00, 0xff);
+											   0x00, 0x00, 0x00, 0xff,
+											   0x00, 0x00, 0x00, 0xff,
+											   0x00, 0x00, 0x00, 0xff);
 	float	*texCoords;
 	byte	*colors;
 	byte	clipBits[SHADER_MAX_VERTEXES];
@@ -432,7 +432,7 @@ static void ProjectDlightTexture_altivec( void ) {
 		return;
 	}
 
-	// There has to be a better way to do this so that floatColor
+	// There has to be a better way to do This so that floatColor
 	// and/or modulate are already 16-byte aligned.
 	floatColorVecPerm = vec_lvsl(0,(float *)floatColor);
 	modulatePerm = vec_lvsl(0,(float *)&modulate);
@@ -443,7 +443,7 @@ static void ProjectDlightTexture_altivec( void ) {
 		dlight_t	*dl;
 
 		if ( !( tess.dlightBits & ( 1 << l ) ) ) {
-			continue;	// this surface definately doesn't have any of this light
+			continue;	// This surface definately doesn't have any of This light
 		}
 		texCoords = texCoordsArray[0];
 		colors = colorArray[0];
@@ -608,7 +608,7 @@ static void ProjectDlightTexture_scalar( void ) {
 		dlight_t	*dl;
 
 		if ( !( tess.dlightBits & ( 1 << l ) ) ) {
-			continue;	// this surface definately doesn't have any of this light
+			continue;	// This surface definately doesn't have any of This light
 		}
 		texCoords = texCoordsArray[0];
 		colors = colorArray[0];
@@ -911,19 +911,19 @@ static void ComputeColors( shaderStage_t *pStage )
 	case AGEN_ONE_MINUS_ENTITY:
 		RB_CalcAlphaFromOneMinusEntity( ( unsigned char * ) tess.svars.colors );
 		break;
-    case AGEN_VERTEX:
+	case AGEN_VERTEX:
 		if ( pStage->rgbGen != CGEN_VERTEX ) {
 			for ( i = 0; i < tess.numVertexes; i++ ) {
 				tess.svars.colors[i][3] = tess.vertexColors[i][3];
 			}
 		}
-        break;
-    case AGEN_ONE_MINUS_VERTEX:
-        for ( i = 0; i < tess.numVertexes; i++ )
-        {
+		break;
+	case AGEN_ONE_MINUS_VERTEX:
+		for ( i = 0; i < tess.numVertexes; i++ )
+		{
 			tess.svars.colors[i][3] = 255 - tess.vertexColors[i][3];
-        }
-        break;
+		}
+		break;
 	case AGEN_PORTAL:
 		{
 			unsigned char alpha;
@@ -985,7 +985,7 @@ static void ComputeColors( shaderStage_t *pStage )
 		for(i = 0; i < tess.numVertexes; i++)
 		{
 			scale = LUMA(tess.svars.colors[i][0], tess.svars.colors[i][1], tess.svars.colors[i][2]);
- 			tess.svars.colors[i][0] = tess.svars.colors[i][1] = tess.svars.colors[i][2] = scale;
+			tess.svars.colors[i][0] = tess.svars.colors[i][1] = tess.svars.colors[i][2] = scale;
 		}
 	}
 	else if(r_greyscale->value)
@@ -1062,7 +1062,7 @@ static void ComputeTexCoords( shaderStage_t *pStage ) {
 
 			case TMOD_TURBULENT:
 				RB_CalcTurbulentTexCoords( &pStage->bundle[b].texMods[tm].wave, 
-						                 ( float * ) tess.svars.texcoords[b] );
+										 ( float * ) tess.svars.texcoords[b] );
 				break;
 
 			case TMOD_ENTITY_TRANSLATE:
@@ -1082,12 +1082,12 @@ static void ComputeTexCoords( shaderStage_t *pStage ) {
 			
 			case TMOD_STRETCH:
 				RB_CalcStretchTexCoords( &pStage->bundle[b].texMods[tm].wave, 
-						               ( float * ) tess.svars.texcoords[b] );
+									   ( float * ) tess.svars.texcoords[b] );
 				break;
 
 			case TMOD_TRANSFORM:
 				RB_CalcTransformTexCoords( &pStage->bundle[b].texMods[tm],
-						                 ( float * ) tess.svars.texcoords[b] );
+										 ( float * ) tess.svars.texcoords[b] );
 				break;
 
 			case TMOD_ROTATE:
@@ -1177,7 +1177,7 @@ void RB_StageIteratorGeneric( void )
 	RB_DeformTessGeometry();
 
 	//
-	// log this call
+	// log This call
 	//
 	if ( r_logFile->integer ) 
 	{
@@ -1296,7 +1296,7 @@ void RB_StageIteratorVertexLitTexture( void )
 	RB_CalcDiffuseColor( ( unsigned char * ) tess.svars.colors );
 
 	//
-	// log this call
+	// log This call
 	//
 	if ( r_logFile->integer ) 
 	{
@@ -1367,7 +1367,7 @@ void RB_StageIteratorLightmappedMultitexture( void ) {
 	shader = input->shader;
 
 	//
-	// log this call
+	// log This call
 	//
 	if ( r_logFile->integer ) {
 		// don't just call LogComment, or we will get

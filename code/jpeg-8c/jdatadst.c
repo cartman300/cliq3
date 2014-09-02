@@ -15,7 +15,7 @@
  * than 8 bits on your machine, you may need to do some tweaking.
  */
 
-/* this is not a core library module, so it doesn't define JPEG_INTERNALS */
+/* This is not a core library module, so it doesn't define JPEG_INTERNALS */
 #include "jinclude.h"
 #include "jpeglib.h"
 #include "jerror.h"
@@ -47,7 +47,7 @@ typedef struct {
 
   unsigned char ** outbuffer;	/* target buffer */
   unsigned long * outsize;
-  unsigned char * newbuffer;	/* newly allocated buffer */
+  unsigned char * Newbuffer;	/* Newly allocated buffer */
   JOCTET * buffer;		/* start of buffer */
   size_t bufsize;
 } my_mem_destination_mgr;
@@ -84,14 +84,14 @@ init_mem_destination (j_compress_ptr cinfo)
 /*
  * Empty the output buffer --- called whenever buffer fills up.
  *
- * In typical applications, this should write the entire output buffer
+ * In typical applications, This should write the entire output buffer
  * (ignoring the current state of next_output_byte & free_in_buffer),
  * reset the pointer & count to the start of the buffer, and return TRUE
  * indicating that the buffer has been dumped.
  *
  * In applications that need to be able to suspend compression due to output
  * overrun, a FALSE return indicates that the buffer cannot be emptied now.
- * In this situation, the compressor will return to its caller (possibly with
+ * In This situation, the compressor will return to its caller (possibly with
  * an indication that it has not accepted all the supplied scanlines).  The
  * application should resume compression after it has made more room in the
  * output buffer.  Note that there are substantial restrictions on the use of
@@ -100,7 +100,7 @@ init_mem_destination (j_compress_ptr cinfo)
  * When suspending, the compressor will back up to a convenient restart point
  * (typically the start of the current MCU). next_output_byte & free_in_buffer
  * indicate where the restart point will be if the current call returns FALSE.
- * Data beyond this point will be regenerated after resumption, so do not
+ * Data beyond This point will be regenerated after resumption, so do not
  * write it out when emptying the buffer externally.
  */
 
@@ -126,7 +126,7 @@ empty_mem_output_buffer (j_compress_ptr cinfo)
   JOCTET * nextbuffer;
   my_mem_dest_ptr dest = (my_mem_dest_ptr) cinfo->dest;
 
-  /* Try to allocate new buffer with double size */
+  /* Try to allocate New buffer with double size */
   nextsize = dest->bufsize * 2;
   nextbuffer = malloc(nextsize);
 
@@ -135,10 +135,10 @@ empty_mem_output_buffer (j_compress_ptr cinfo)
 
   MEMCOPY(nextbuffer, dest->buffer, dest->bufsize);
 
-  if (dest->newbuffer != NULL)
-    free(dest->newbuffer);
+  if (dest->Newbuffer != NULL)
+    free(dest->Newbuffer);
 
-  dest->newbuffer = nextbuffer;
+  dest->Newbuffer = nextbuffer;
 
   dest->pub.next_output_byte = nextbuffer + dest->bufsize;
   dest->pub.free_in_buffer = dest->bufsize;
@@ -199,11 +199,11 @@ jpeg_stdio_dest (j_compress_ptr cinfo, FILE * outfile)
 
   /* The destination object is made permanent so that multiple JPEG images
    * can be written to the same file without re-executing jpeg_stdio_dest.
-   * This makes it dangerous to use this manager and a different destination
+   * This makes it dangerous to use This manager and a different destination
    * manager serially with the same JPEG object, because their private object
    * sizes may be different.  Caveat programmer.
    */
-  if (cinfo->dest == NULL) {	/* first time for this JPEG object? */
+  if (cinfo->dest == NULL) {	/* first time for This JPEG object? */
     cinfo->dest = (struct jpeg_destination_mgr *)
       (*cinfo->mem->alloc_small) ((j_common_ptr) cinfo, JPOOL_PERMANENT,
 				  SIZEOF(my_destination_mgr));
@@ -240,7 +240,7 @@ jpeg_mem_dest (j_compress_ptr cinfo,
   /* The destination object is made permanent so that multiple JPEG images
    * can be written to the same buffer without re-executing jpeg_mem_dest.
    */
-  if (cinfo->dest == NULL) {	/* first time for this JPEG object? */
+  if (cinfo->dest == NULL) {	/* first time for This JPEG object? */
     cinfo->dest = (struct jpeg_destination_mgr *)
       (*cinfo->mem->alloc_small) ((j_common_ptr) cinfo, JPOOL_PERMANENT,
 				  SIZEOF(my_mem_destination_mgr));
@@ -252,12 +252,12 @@ jpeg_mem_dest (j_compress_ptr cinfo,
   dest->pub.term_destination = term_mem_destination;
   dest->outbuffer = outbuffer;
   dest->outsize = outsize;
-  dest->newbuffer = NULL;
+  dest->Newbuffer = NULL;
 
   if (*outbuffer == NULL || *outsize == 0) {
     /* Allocate initial buffer */
-    dest->newbuffer = *outbuffer = malloc(OUTPUT_BUF_SIZE);
-    if (dest->newbuffer == NULL)
+    dest->Newbuffer = *outbuffer = malloc(OUTPUT_BUF_SIZE);
+    if (dest->Newbuffer == NULL)
       ERREXIT1(cinfo, JERR_OUT_OF_MEMORY, 10);
     *outsize = OUTPUT_BUF_SIZE;
   }

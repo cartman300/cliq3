@@ -372,9 +372,9 @@ qboolean CL_OpenAVIForWriting( const char *fileName )
   // Allocate a bit more space for the capture buffer to account for possible
   // padding at the end of pixel lines, and padding for alignment
   #define MAX_PACK_LEN 16
-  afd.cBuffer = Z_Malloc((afd.width * 3 + MAX_PACK_LEN - 1) * afd.height + MAX_PACK_LEN - 1);
+  afd.cBuffer = (byte*)Z_Malloc((afd.width * 3 + MAX_PACK_LEN - 1) * afd.height + MAX_PACK_LEN - 1);
   // raw avi files have pixel lines start on 4-byte boundaries
-  afd.eBuffer = Z_Malloc(PAD(afd.width * 3, AVI_LINE_PADDING) * afd.height);
+  afd.eBuffer = (byte*)Z_Malloc(PAD(afd.width * 3, AVI_LINE_PADDING) * afd.height);
 
   afd.a.rate = dma.speed;
   afd.a.format = WAV_FORMAT_PCM;
@@ -439,9 +439,9 @@ CL_CheckFileSize
 */
 static qboolean CL_CheckFileSize( int bytesToAdd )
 {
-  unsigned int newFileSize;
+  unsigned int NewFileSize;
 
-  newFileSize =
+  NewFileSize =
     afd.fileSize +                // Current file size
     bytesToAdd +                  // What we want to add
     ( afd.numIndices * 16 ) +     // The index
@@ -449,12 +449,12 @@ static qboolean CL_CheckFileSize( int bytesToAdd )
 
   // I assume all the operating systems
   // we target can handle a 2Gb file
-  if( newFileSize > INT_MAX )
+  if( NewFileSize > INT_MAX )
   {
     // Close the current file...
     CL_CloseAVI( );
 
-    // ...And open a new one
+    // ...And open a New one
     CL_OpenAVIForWriting( va( "%s_", afd.fileName ) );
 
     return qtrue;

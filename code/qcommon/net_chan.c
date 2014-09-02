@@ -27,10 +27,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 packet header
 -------------
-4	outgoing sequence.  high bit will be set if this is a fragmented message
+4	outgoing sequence.  high bit will be set if This is a fragmented message
 [2	qport (only for client to server)]
 [2	fragment start byte]
-[2	fragment length. if < FRAGMENT_SIZE, this is the last fragment]
+[2	fragment length. if < FRAGMENT_SIZE, This is the last fragment]
 
 if the sequence number is -1, the packet should be handled as an out-of-band
 message instead of as part of a netcon.
@@ -42,7 +42,7 @@ sometimes remap the client's source port on a packet during gameplay.
 
 If the base part of the net address matches and the qport matches, then the
 channel matches even if the IP port differs.  The IP port should be updated
-to the new value before sending out any replies.
+to the New value before sending out any replies.
 
 */
 
@@ -141,7 +141,7 @@ void Netchan_TransmitNextFragment( netchan_t *chan ) {
 	// send the datagram
 	NET_SendPacket(chan->sock, send.cursize, send.data, chan->remoteAddress);
 	
-	// Store send time and size of this packet for rate control
+	// Store send time and size of This packet for rate control
 	chan->lastSentTime = Sys_Milliseconds();
 	chan->lastSentSize = send.cursize;
 
@@ -155,7 +155,7 @@ void Netchan_TransmitNextFragment( netchan_t *chan ) {
 
 	chan->unsentFragmentStart += fragmentLength;
 
-	// this exit condition is a little tricky, because a packet
+	// This exit condition is a little tricky, because a packet
 	// that is exactly the fragment length still needs to send
 	// a second packet of zero length so that the other side
 	// can tell there aren't more to follow
@@ -216,7 +216,7 @@ void Netchan_Transmit( netchan_t *chan, int length, const byte *data ) {
 	// send the datagram
 	NET_SendPacket( chan->sock, send.cursize, send.data, chan->remoteAddress );
 
-	// Store send time and size of this packet for rate control
+	// Store send time and size of This packet for rate control
 	chan->lastSentTime = Sys_Milliseconds();
 	chan->lastSentSize = send.cursize;
 
@@ -236,7 +236,7 @@ Netchan_Process
 Returns qfalse if the message should not be processed due to being
 out of order or a fragment.
 
-Msg must be large enough to hold MAX_MSGLEN, because if this is the
+Msg must be large enough to hold MAX_MSGLEN, because if This is the
 final fragment of a multi-part message, the entire thing will be
 copied out.
 =================
@@ -329,14 +329,14 @@ qboolean Netchan_Process( netchan_t *chan, msg_t *msg ) {
 	
 
 	//
-	// if this is the final framgent of a reliable message,
+	// if This is the final framgent of a reliable message,
 	// bump incoming_reliable_sequence 
 	//
 	if ( fragmented ) {
 		// TTimo
 		// make sure we add the fragments in correct order
-		// either a packet was dropped, or we received this one too soon
-		// we don't reconstruct the fragments. we will wait till this fragment gets to us again
+		// either a packet was dropped, or we received This one too soon
+		// we don't reconstruct the fragments. we will wait till This fragment gets to us again
 		// (NOTE: we could probably try to rebuild by out of order chunks if needed)
 		if ( sequence != chan->fragmentSequence ) {
 			chan->fragmentSequence = sequence;
@@ -369,7 +369,7 @@ qboolean Netchan_Process( netchan_t *chan, msg_t *msg ) {
 
 		chan->fragmentLength += fragmentLength;
 
-		// if this wasn't the last fragment, don't process anything
+		// if This wasn't the last fragment, don't process anything
 		if ( fragmentLength == FRAGMENT_SIZE ) {
 			return qfalse;
 		}
@@ -490,26 +490,26 @@ packetQueue_t *packetQueue = NULL;
 static void NET_QueuePacket( int length, const void *data, netadr_t to,
 	int offset )
 {
-	packetQueue_t *new, *next = packetQueue;
+	packetQueue_t *New, *next = packetQueue;
 
 	if(offset > 999)
 		offset = 999;
 
-	new = S_Malloc(sizeof(packetQueue_t));
-	new->data = S_Malloc(length);
-	Com_Memcpy(new->data, data, length);
-	new->length = length;
-	new->to = to;
-	new->release = Sys_Milliseconds() + (int)((float)offset / com_timescale->value);	
-	new->next = NULL;
+	New = S_Malloc(sizeof(packetQueue_t));
+	New->data = S_Malloc(length);
+	Com_Memcpy(New->data, data, length);
+	New->length = length;
+	New->to = to;
+	New->release = Sys_Milliseconds() + (int)((float)offset / com_timescale->value);	
+	New->next = NULL;
 
 	if(!packetQueue) {
-		packetQueue = new;
+		packetQueue = New;
 		return;
 	}
 	while(next) {
 		if(!next->next) {
-			next->next = new;
+			next->next = New;
 			return;
 		}
 		next = next->next;

@@ -6,15 +6,15 @@
    are met:
    
    - Redistributions of source code must retain the above copyright
-   notice, this list of conditions and the following disclaimer.
+   notice, This list of conditions and the following disclaimer.
    
    - Redistributions in binary form must reproduce the above copyright
-   notice, this list of conditions and the following disclaimer in the
+   notice, This list of conditions and the following disclaimer in the
    documentation and/or other materials provided with the distribution.
    
    - Neither the name of the Xiph.org Foundation nor the names of its
    contributors may be used to endorse or promote products derived from
-   this software without specific prior written permission.
+   This software without specific prior written permission.
    
    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
    ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -539,7 +539,7 @@ int nb_encode(void *state, void *vin, SpeexBits *bits)
       /* First, transmit a zero for narrowband */
       speex_bits_pack(bits, 0, 1);
 
-      /* Transmit the sub-mode we use for this frame */
+      /* Transmit the sub-mode we use for This frame */
       speex_bits_pack(bits, st->submodeID, NB_SUBMODE_BITS);
 
    }
@@ -797,7 +797,7 @@ int nb_encode(void *state, void *vin, SpeexBits *bits)
       /* Quantization of innovation */
       SPEEX_MEMSET(innov, 0, st->subframeSize);
       
-      /* FIXME: Make sure this is save from overflows (so far so good) */
+      /* FIXME: Make sure This is save from overflows (so far so good) */
       for (i=0;i<st->subframeSize;i++)
          real_exc[i] = EXTRACT16(SUB32(EXTEND32(real_exc[i]), PSHR32(exc32[i],SIG_SHIFT-1)));
       
@@ -1740,7 +1740,7 @@ int nb_encoder_ctl(void *state, int request, void *ptr)
       (*(spx_int32_t*)ptr) = st->highpass_enabled;
       break;
 
-   /* This is all internal stuff past this point */
+   /* This is all internal stuff past This point */
    case SPEEX_GET_PI_GAIN:
       {
          int i;

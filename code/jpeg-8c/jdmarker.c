@@ -122,7 +122,7 @@ typedef my_marker_reader * my_marker_ptr;
 	const JOCTET * next_input_byte = datasrc->next_input_byte;  \
 	size_t bytes_in_buffer = datasrc->bytes_in_buffer
 
-/* Unload the local copies --- do this only at a restart boundary */
+/* Unload the local copies --- do This only at a restart boundary */
 #define INPUT_SYNC(cinfo)  \
 	( datasrc->next_input_byte = next_input_byte,  \
 	  datasrc->bytes_in_buffer = bytes_in_buffer )
@@ -186,7 +186,7 @@ typedef my_marker_reader * my_marker_ptr;
  * what it's consumed (ie, the end of the buffer) before returning FALSE.
  * On resumption, cinfo->unread_marker still contains the marker code,
  * but the data source will point to the next chunk of marker data.
- * The marker processor must retain internal state to deal with this.
+ * The marker processor must retain internal state to deal with This.
  *
  * Note that we don't bother to avoid duplicate trace messages if a
  * suspension occurs within marker parameters.  Other side effects
@@ -642,9 +642,9 @@ examine_app0 (j_decompress_ptr cinfo, JOCTET FAR * data,
     cinfo->Y_density = (GETJOCTET(data[10]) << 8) + GETJOCTET(data[11]);
     /* Check version.
      * Major version must be 1, anything else signals an incompatible change.
-     * (We used to treat this as an error, but now it's a nonfatal warning,
+     * (We used to treat This as an error, but now it's a nonfatal warning,
      * because some bozo at Hijaak couldn't read the spec.)
-     * Minor version should be 0..2, but process anyway if newer.
+     * Minor version should be 0..2, but process anyway if Newer.
      */
     if (cinfo->JFIF_major_version != 1)
       WARNMS2(cinfo, JWRN_JFIF_MAJOR,
@@ -837,7 +837,7 @@ save_marker (j_decompress_ptr cinfo)
 
   /* Done reading what we want to read */
   if (cur_marker != NULL) {	/* will be NULL if bogus length word */
-    /* Add new marker to end of list */
+    /* Add New marker to end of list */
     if (cinfo->marker_list == NULL) {
       cinfo->marker_list = cur_marker;
     } else {
@@ -957,7 +957,7 @@ next_marker (j_decompress_ptr cinfo)
 LOCAL(boolean)
 first_marker (j_decompress_ptr cinfo)
 /* Like next_marker, but used to obtain the initial SOI marker. */
-/* For this marker, we do not allow preceding garbage or fill; otherwise,
+/* For This marker, we do not allow preceding garbage or fill; otherwise,
  * we might well scan an entire input file before realizing it ain't JPEG.
  * If an application wants to process non-JFIF files, it must seek to the
  * SOI before calling the JPEG library.
@@ -1006,9 +1006,9 @@ read_markers (j_decompress_ptr cinfo)
 	  return JPEG_SUSPENDED;
       }
     }
-    /* At this point cinfo->unread_marker contains the marker code and the
+    /* At This point cinfo->unread_marker contains the marker code and the
      * input point is just past the marker proper, but before any parameters.
-     * A suspension will cause us to return with this state still true.
+     * A suspension will cause us to return with This state still true.
      */
     switch (cinfo->unread_marker) {
     case M_SOI:
@@ -1131,7 +1131,7 @@ read_markers (j_decompress_ptr cinfo)
     default:			/* must be DHP, EXP, JPGn, or RESn */
       /* For now, we treat the reserved markers as fatal errors since they are
        * likely to be used to signal incompatible JPEG Part 3 extensions.
-       * Once the JPEG 3 version-number marker is well defined, this code
+       * Once the JPEG 3 version-number marker is well defined, This code
        * ought to change!
        */
       ERREXIT1(cinfo, JERR_UNKNOWN_MARKER, cinfo->unread_marker);
@@ -1205,7 +1205,7 @@ read_restart_marker (j_decompress_ptr cinfo)
  * Returns FALSE if suspension is required.
  *
  * This implementation is substantially constrained by wanting to treat the
- * input as a data stream; this means we can't back up.  Therefore, we have
+ * input as a data stream; This means we can't back up.  Therefore, we have
  * only the following actions to work with:
  *   1. Simply discard the marker and let the entropy decoder resume at next
  *      byte of file.
@@ -1272,7 +1272,7 @@ jpeg_resync_to_restart (j_decompress_ptr cinfo, int desired)
       marker = cinfo->unread_marker;
       break;
     case 3:
-      /* Return without advancing past this marker. */
+      /* Return without advancing past This marker. */
       /* Entropy decoder will be forced to process an empty segment. */
       return TRUE;
     }

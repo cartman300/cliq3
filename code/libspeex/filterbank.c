@@ -9,14 +9,14 @@
    met:
 
    1. Redistributions of source code must retain the above copyright notice,
-   this list of conditions and the following disclaimer.
+   This list of conditions and the following disclaimer.
 
    2. Redistributions in binary form must reproduce the above copyright
-   notice, this list of conditions and the following disclaimer in the
+   notice, This list of conditions and the following disclaimer in the
    documentation and/or other materials provided with the distribution.
 
    3. The name of the author may not be used to endorse or promote products
-   derived from this software without specific prior written permission.
+   derived from This software without specific prior written permission.
 
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -51,7 +51,7 @@
        
 #define toMEL(n)    (2595.f*log10(1.f+(n)/700.f))
 
-FilterBank *filterbank_new(int banks, spx_word32_t sampling, int len, int type)
+FilterBank *filterbank_New(int banks, spx_word32_t sampling, int len, int type)
 {
    FilterBank *bank;
    spx_word32_t df;

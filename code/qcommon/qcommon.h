@@ -58,7 +58,7 @@ void MSG_Bitstream( msg_t *buf );
 
 // TTimo
 // copy a msg_t in case we need to store it as is for a bit
-// (as I needed this to keep an msg_t from a static var for later use)
+// (as I needed This to keep an msg_t from a static var for later use)
 // sets data buffer as MSG_Init does prior to do the copy
 void MSG_Copy(msg_t *buf, byte *data, int length, msg_t *src);
 
@@ -121,7 +121,7 @@ NET
 
 #define NET_ENABLEV4            0x01
 #define NET_ENABLEV6            0x02
-// if this flag is set, always attempt ipv6 connections instead of ipv4 if a v6 address is found.
+// if This flag is set, always attempt ipv6 connections instead of ipv4 if a v6 address is found.
 #define NET_PRIOV6              0x04
 // disables ipv6 multicast support if set.
 #define NET_DISABLEMCAST        0x08
@@ -191,7 +191,7 @@ void		NET_Sleep(int msec);
 #define	MAX_MSGLEN				16384		// max length of a message, which may
 											// be fragmented into multiple packets
 
-#define MAX_DOWNLOAD_WINDOW		48	// ACK window of 48 download chunks. Cannot set this higher, or clients
+#define MAX_DOWNLOAD_WINDOW		48	// ACK window of 48 download chunks. Cannot set This higher, or clients
 						// will overflow the reliable commands buffer
 #define MAX_DOWNLOAD_BLKSIZE		1024	// 896 byte block chunks
 
@@ -269,7 +269,7 @@ extern int demo_protocols[];
 
 #ifndef STANDALONE
   #ifndef AUTHORIZE_SERVER_NAME
-    #define	AUTHORIZE_SERVER_NAME	"authorize.quake3arena.com"
+	#define	AUTHORIZE_SERVER_NAME	"authorize.quake3arena.com"
   #endif
   #ifndef PORT_AUTHORIZE
   #define	PORT_AUTHORIZE		27952
@@ -279,12 +279,12 @@ extern int demo_protocols[];
 #define	PORT_MASTER			27950
 #define	PORT_UPDATE			27951
 #define	PORT_SERVER			27960
-#define	NUM_SERVER_PORTS	4		// broadcast scan this many ports after
+#define	NUM_SERVER_PORTS	4		// broadcast scan This many ports after
 									// PORT_SERVER so a single machine can
 									// run multiple servers
 
 
-// the svc_strings[] array in cl_parse.c should mirror this
+// the svc_strings[] array in cl_parse.c should mirror This
 //
 // server to client
 //
@@ -299,8 +299,8 @@ enum svc_ops_e {
 	svc_snapshot,
 	svc_EOF,
 
-// new commands, supported only by ioquake3 protocol but not legacy
-	svc_voip,     // not wrapped in USE_VOIP, so this value is reserved.
+// New commands, supported only by ioquake3 protocol but not legacy
+	svc_voip,     // not wrapped in USE_VOIP, so This value is reserved.
 };
 
 
@@ -315,8 +315,8 @@ enum clc_ops_e {
 	clc_clientCommand,		// [string] message
 	clc_EOF,
 
-// new commands, supported only by ioquake3 protocol but not legacy
-	clc_voip,   // not wrapped in USE_VOIP, so this value is reserved.
+// New commands, supported only by ioquake3 protocol but not legacy
+	clc_voip,   // not wrapped in USE_VOIP, so This value is reserved.
 };
 
 /*
@@ -406,7 +406,7 @@ void Cbuf_AddText( const char *text );
 // Adds command text at the end of the buffer, does NOT add a final \n
 
 void Cbuf_ExecuteText( int exec_when, const char *text );
-// this can be used in place of either Cbuf_AddText or Cbuf_InsertText
+// This can be used in place of either Cbuf_AddText or Cbuf_InsertText
 
 void Cbuf_Execute (void);
 // Pulls off \n terminated lines of text from the command buffer and sends
@@ -489,7 +489,7 @@ r_draworder			prints the current value
 r_draworder 0		sets the current value to 0
 set r_draworder 0	as above, but creates the cvar if not present
 
-Cvars are restricted from having the same names as commands to keep this
+Cvars are restricted from having the same names as commands to keep This
 interface from being ambiguous.
 
 The are also occasionally used to communicated information between different
@@ -569,7 +569,7 @@ void	Cvar_Restart_f( void );
 void Cvar_CompleteCvarName( char *args, int argNum );
 
 extern	int			cvar_modifiedFlags;
-// whenever a cvar is modifed, its flags will be OR'd into this, so
+// whenever a cvar is modifed, its flags will be OR'd into This, so
 // a single check can determine if any CVAR_USERINFO, CVAR_SERVERINFO,
 // etc, variables have been modified since the last check.  The bit
 // can then be cleared to allow another change detection.
@@ -643,7 +643,7 @@ fileHandle_t FS_SV_FOpenFileWrite( const char *filename );
 long		FS_SV_FOpenFileRead( const char *filename, fileHandle_t *fp );
 void	FS_SV_Rename( const char *from, const char *to, qboolean safe );
 long		FS_FOpenFileRead( const char *qpath, fileHandle_t *file, qboolean uniqueFILE );
-// if uniqueFILE is true, then a new FILE will be fopened even if the file
+// if uniqueFILE is true, then a New FILE will be fopened even if the file
 // is found in an already open pak file.  If uniqueFILE is false, you must call
 // FS_FCloseFile instead of fclose, otherwise the pak FILE would be improperly closed
 // It is generally safe to always set uniqueFILE to true, because the majority of
@@ -702,13 +702,13 @@ const char *FS_LoadedPakNames( void );
 const char *FS_LoadedPakChecksums( void );
 const char *FS_LoadedPakPureChecksums( void );
 // Returns a space separated string containing the checksums of all loaded pk3 files.
-// Servers with sv_pure set will get this string and pass it to clients.
+// Servers with sv_pure set will get This string and pass it to clients.
 
 const char *FS_ReferencedPakNames( void );
 const char *FS_ReferencedPakChecksums( void );
 const char *FS_ReferencedPakPureChecksums( void );
 // Returns a space separated string containing the checksums of all loaded 
-// AND referenced pk3 files. Servers with sv_pure set will get this string 
+// AND referenced pk3 files. Servers with sv_pure set will get This string 
 // back from clients for pure validation 
 
 void FS_ClearPakReferences( int flags );
@@ -804,7 +804,7 @@ typedef struct {
 	sysEventType_t	evType;
 	int				evValue, evValue2;
 	int				evPtrLength;	// bytes of data pointed to by evPtr, for journaling
-	void			*evPtr;			// this must be manually freed if not NULL
+	void			*evPtr;			// This must be manually freed if not NULL
 } sysEvent_t;
 
 void		Com_QueueEvent( int time, sysEventType_t type, int value, int value2, int ptrLength, void *ptr );
@@ -988,7 +988,7 @@ void CL_ConsolePrint( char *text );
 
 void CL_MapLoading( void );
 // do a screen update before starting to load a map
-// when the server is going to load a new map, the entire hunk
+// when the server is going to load a New map, the entire hunk
 // will be cleared, so the client must shutdown cgame, ui, and
 // the renderer
 
@@ -1067,7 +1067,7 @@ char	*Sys_GetCurrentUser( void );
 
 void	QDECL Sys_Error( const char *error, ...) __attribute__ ((noreturn, format (printf, 1, 2)));
 void	Sys_Quit (void) __attribute__ ((noreturn));
-char	*Sys_GetClipboardData( void );	// note that this isn't journaled...
+char	*Sys_GetClipboardData( void );	// note that This isn't journaled...
 
 void	Sys_Print( const char *msg );
 

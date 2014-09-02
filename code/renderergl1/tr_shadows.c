@@ -157,7 +157,7 @@ void RB_ShadowTessEnd( void ) {
 	vec3_t	lightDir;
 	GLboolean rgba[4];
 
-	// we can only do this if we have enough space in the vertex buffers
+	// we can only do This if we have enough space in the vertex buffers
 	if ( tess.numVertexes >= SHADER_MAX_VERTEXES / 2 ) {
 		return;
 	}
@@ -256,7 +256,7 @@ void RB_ShadowTessEnd( void ) {
 RB_ShadowFinish
 
 Darken everything that is is a shadow volume.
-We have to delay this until everything has been shadowed,
+We have to delay This until everything has been shadowed,
 because otherwise shadows from different body parts would
 overlap and double darken.
 =================

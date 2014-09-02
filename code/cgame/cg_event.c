@@ -359,7 +359,7 @@ static void CG_UseItem( centity_t *cent ) {
 		if ( !itemNum ) {
 			CG_CenterPrint( "No item to use", SCREEN_HEIGHT * 0.30, BIGCHAR_WIDTH );
 		} else {
-			item = BG_FindItemForHoldable( itemNum );
+			item = BG_FindItemForHoldable( (holdable_t)itemNum );
 			CG_CenterPrint( va("Use %s", item->pickup_name), SCREEN_HEIGHT * 0.30, BIGCHAR_WIDTH );
 		}
 	}
@@ -1080,7 +1080,7 @@ void CG_EntityEvent( centity_t *cent, vec3_t position ) {
 								CG_AddBufferedSound( cgs.media.enemyTookTheFlagSound );
 							else
 #endif
- 							CG_AddBufferedSound( cgs.media.yourTeamTookEnemyFlagSound );
+							CG_AddBufferedSound( cgs.media.yourTeamTookEnemyFlagSound );
 						}
 					}
 					break;

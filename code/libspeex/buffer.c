@@ -9,14 +9,14 @@
    met:
 
    1. Redistributions of source code must retain the above copyright notice,
-   this list of conditions and the following disclaimer.
+   This list of conditions and the following disclaimer.
 
    2. Redistributions in binary form must reproduce the above copyright
-   notice, this list of conditions and the following disclaimer in the
+   notice, This list of conditions and the following disclaimer in the
    documentation and/or other materials provided with the distribution.
 
    3. The name of the author may not be used to endorse or promote products
-   derived from this software without specific prior written permission.
+   derived from This software without specific prior written permission.
 
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -50,8 +50,8 @@ struct SpeexBuffer_ {
 
 SpeexBuffer *speex_buffer_init(int size)
 {
-   SpeexBuffer *st = speex_alloc(sizeof(SpeexBuffer));
-   st->data = speex_alloc(size);
+   SpeexBuffer *st = (SpeexBuffer*)speex_alloc(sizeof(SpeexBuffer));
+   st->data = (char*)speex_alloc(size);
    st->size = size;
    st->read_ptr = 0;
    st->write_ptr = 0;
@@ -69,7 +69,7 @@ int speex_buffer_write(SpeexBuffer *st, void *_data, int len)
 {
    int end;
    int end1;
-   char *data = _data;
+   char *data = (char*)_data;
    if (len > st->size)
    {
       data += len-st->size;
@@ -132,7 +132,7 @@ int speex_buffer_writezeros(SpeexBuffer *st, int len)
 int speex_buffer_read(SpeexBuffer *st, void *_data, int len)
 {
    int end, end1;
-   char *data = _data;
+   char *data = (char*)_data;
    if (len > st->available)
    {
       SPEEX_MEMSET(data+st->available, 0, st->size-st->available);
@@ -166,11 +166,11 @@ int speex_buffer_resize(SpeexBuffer *st, int len)
    int old_len = st->size;
    if (len > old_len)
    {
-      st->data = speex_realloc(st->data, len);
+      st->data = (char*)speex_realloc(st->data, len);
       /* FIXME: move data/pointers properly for growing the buffer */
    } else {
       /* FIXME: move data/pointers properly for shrinking the buffer */
-      st->data = speex_realloc(st->data, len);
+      st->data = (char*)speex_realloc(st->data, len);
    }
    return len;
 }

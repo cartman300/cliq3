@@ -6,15 +6,15 @@
    are met:
    
    - Redistributions of source code must retain the above copyright
-   notice, this list of conditions and the following disclaimer.
+   notice, This list of conditions and the following disclaimer.
    
    - Redistributions in binary form must reproduce the above copyright
-   notice, this list of conditions and the following disclaimer in the
+   notice, This list of conditions and the following disclaimer in the
    documentation and/or other materials provided with the distribution.
    
    - Neither the name of the Xiph.org Foundation nor the names of its
    contributors may be used to endorse or promote products derived from
-   this software without specific prior written permission.
+   This software without specific prior written permission.
    
    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
    ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -74,7 +74,7 @@ static const spx_word16_t balance_bounds[31] = {18, 23, 30, 38, 49, 63,  81, 104
 
 SpeexStereoState *speex_stereo_state_init()
 {
-   SpeexStereoState *stereo = speex_alloc(sizeof(SpeexStereoState));
+   SpeexStereoState *stereo = (SpeexStereoState*)speex_alloc(sizeof(SpeexStereoState));
    speex_stereo_state_reset(stereo);
    return stereo;
 }
@@ -137,7 +137,7 @@ void speex_encode_stereo(float *data, int frame_size, SpeexBits *bits)
    
    speex_bits_pack(bits, (int)balance, 5);
    
-   /* FIXME: this is a hack */
+   /* FIXME: This is a hack */
    tmp=scal_quant(e_ratio*Q15_ONE, e_ratio_quant_bounds, 4);
    speex_bits_pack(bits, tmp, 2);
 }
@@ -164,7 +164,7 @@ void speex_encode_stereo_int(spx_int16_t *data, int frame_size, SpeexBits *bits)
       e_left  += SHR32(MULT16_16(data[2*i],data[2*i]),8);
       e_right += SHR32(MULT16_16(data[2*i+1],data[2*i+1]),8);
 #ifdef FIXED_POINT
-      /* I think this is actually unbiased */
+      /* I think This is actually unbiased */
       data[i] =  SHR16(data[2*i],1)+PSHR16(data[2*i+1],1);
 #else
       data[i] =  .5*(((float)data[2*i])+data[2*i+1]);

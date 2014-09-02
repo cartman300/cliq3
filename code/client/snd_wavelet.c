@@ -121,7 +121,7 @@ void NXPutc(NXStream *stream, char out) {
 void encodeWavelet( sfx_t *sfx, short *packets) {
 	float	wksp[4097] = {0}, temp;
 	int		i, samples, size;
-	sndBuffer		*newchunk, *chunk;
+	sndBuffer		*Newchunk, *chunk;
 	byte			*out;
 
 	if (!madeTable) {
@@ -143,13 +143,13 @@ void encodeWavelet( sfx_t *sfx, short *packets) {
 			size = 4;
 		}
 
-		newchunk = SND_malloc();
+		Newchunk = SND_malloc();
 		if (sfx->soundData == NULL) {
-			sfx->soundData = newchunk;
+			sfx->soundData = Newchunk;
 		} else if (chunk != NULL) {
-			chunk->next = newchunk;
+			chunk->next = Newchunk;
 		}
-		chunk = newchunk;
+		chunk = Newchunk;
 		for(i=0; i<size; i++) {
 			wksp[i] = *packets;
 			packets++;
@@ -192,7 +192,7 @@ void decodeWavelet(sndBuffer *chunk, short *to) {
 
 void encodeMuLaw( sfx_t *sfx, short *packets) {
 	int		i, samples, size, grade, poop;
-	sndBuffer		*newchunk, *chunk;
+	sndBuffer		*Newchunk, *chunk;
 	byte			*out;
 
 	if (!madeTable) {
@@ -212,13 +212,13 @@ void encodeMuLaw( sfx_t *sfx, short *packets) {
 			size = (SND_CHUNK_SIZE*2);
 		}
 
-		newchunk = SND_malloc();
+		Newchunk = SND_malloc();
 		if (sfx->soundData == NULL) {
-			sfx->soundData = newchunk;
+			sfx->soundData = Newchunk;
 		} else if (chunk != NULL) {
-			chunk->next = newchunk;
+			chunk->next = Newchunk;
 		}
-		chunk = newchunk;
+		chunk = Newchunk;
 		out = (byte *)chunk->sndChunk;
 		for(i=0; i<size; i++) {
 			poop = packets[0]+grade;

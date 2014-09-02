@@ -12,7 +12,7 @@
  * case.
  *
  * Most of the routines intended to be called directly by an application
- * are in this file or in jcapistd.c.  But also see jcparam.c for
+ * are in This file or in jcapistd.c.  But also see jcparam.c for
  * parameter-setup helper routines, jcomapi.c for routines shared by
  * compression and decompression, and jctrans.c for the transcoding case.
  */
@@ -55,7 +55,7 @@ jpeg_CreateCompress (j_compress_ptr cinfo, int version, size_t structsize)
   }
   cinfo->is_decompressor = FALSE;
 
-  /* Initialize a memory manager instance for this object */
+  /* Initialize a memory manager instance for This object */
   jinit_memory_mgr((j_common_ptr) cinfo);
 
   /* Zero out pointers to permanent structures. */
@@ -147,7 +147,7 @@ jpeg_suppress_tables (j_compress_ptr cinfo, boolean suppress)
 /*
  * Finish JPEG compression.
  *
- * If a multipass operating mode was selected, this may do a great deal of
+ * If a multipass operating mode was selected, This may do a great deal of
  * work including most of the actual output.
  */
 
@@ -239,7 +239,7 @@ jpeg_write_m_byte (j_compress_ptr cinfo, int val)
 
 /*
  * Alternate compression function: just write an abbreviated table file.
- * Before calling this, all parameters and a data destination must be set up.
+ * Before calling This, all parameters and a data destination must be set up.
  *
  * To produce a pair of files containing abbreviated tables and abbreviated
  * image data, one would proceed as follows:

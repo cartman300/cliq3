@@ -58,12 +58,12 @@ typedef struct {
 	byte			areamask[MAX_MAP_AREA_BYTES];		// portalarea visibility bits
 
 	int				cmdNum;			// the next cmdNum the server is expecting
-	playerState_t	ps;						// complete information about the current player at this time
+	playerState_t	ps;						// complete information about the current player at This time
 
 	int				numEntities;			// all of the entities that need to be presented
-	int				parseEntitiesNum;		// at the time of this snapshot
+	int				parseEntitiesNum;		// at the time of This snapshot
 
-	int				serverCommandNum;		// execute all commands up to this before
+	int				serverCommandNum;		// execute all commands up to This before
 											// making the snapshot current
 } clSnapshot_t;
 
@@ -73,7 +73,7 @@ typedef struct {
 =============================================================================
 
 the clientActive_t structure is wiped completely at every
-new gamestate_t, potentially several times during an established connection
+New gamestate_t, potentially several times during an established connection
 
 =============================================================================
 */
@@ -101,10 +101,10 @@ typedef struct {
 	int			oldServerTime;		// to prevent time from flowing bakcwards
 	int			oldFrameServerTime;	// to check tournament restarts
 	int			serverTimeDelta;	// cl.serverTime = cls.realtime + cl.serverTimeDelta
-									// this value changes as net lag varies
+									// This value changes as net lag varies
 	qboolean	extrapolatedSnapshot;	// set if any cgame frame has been forced to extrapolate
 									// cleared when CL_AdjustTimeDelta looks at it
-	qboolean	newSnapshots;		// set on parse of any valid packet
+	qboolean	NewSnapshots;		// set on parse of any valid packet
 
 	gameState_t	gameState;			// configstrings
 	char		mapname[MAX_QPATH];	// extracted from CS_SERVERINFO
@@ -227,7 +227,7 @@ typedef struct {
 
 	int			timeDemoFrames;		// counter of rendered frames
 	int			timeDemoStart;		// cls.realtime before first frame
-	int			timeDemoBaseTime;	// each frame will be at this time + frameNum * 50
+	int			timeDemoBaseTime;	// each frame will be at This time + frameNum * 50
 	int			timeDemoLastFrame;// time the last frame was rendered
 	int			timeDemoMinDuration;	// minimum frame duration
 	int			timeDemoMaxDuration;	// maximum frame duration
@@ -490,7 +490,7 @@ qboolean CL_CheckPaused(void);
 typedef struct {
 	int			down[2];		// key nums holding it down
 	unsigned	downtime;		// msec timestamp
-	unsigned	msec;			// msec down this frame if both a down and up happened
+	unsigned	msec;			// msec down This frame if both a down and up happened
 	qboolean	active;			// current state
 	qboolean	wasPressed;		// set when down, not cleared when up
 } kbutton_t;

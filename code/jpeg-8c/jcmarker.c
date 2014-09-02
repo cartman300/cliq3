@@ -224,7 +224,7 @@ LOCAL(void)
 emit_dac (j_compress_ptr cinfo)
 /* Emit a DAC marker */
 /* Since the useful info is so small, we want to emit all the tables in */
-/* one DAC marker.  Therefore this routine does its own scan of the table. */
+/* one DAC marker.  Therefore This routine does its own scan of the table. */
 {
 #ifdef C_ARITH_CODING_SUPPORTED
   char dc_in_use[NUM_ARITH_TBLS];
@@ -329,7 +329,7 @@ emit_sos (j_compress_ptr cinfo)
     compptr = cinfo->cur_comp_info[i];
     emit_byte(cinfo, compptr->component_id);
 
-    /* We emit 0 for unused field(s); this is recommended by the P&M text
+    /* We emit 0 for unused field(s); This is recommended by the P&M text
      * but does not seem to be specified in the standard.
      */
 
