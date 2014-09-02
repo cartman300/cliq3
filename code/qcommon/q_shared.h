@@ -133,7 +133,7 @@ CLI stuf
 	#using <system.dll>
 	#using <System.Windows.Forms.dll>
 
-	#define CreateNString(N, S) const char* N = (const char*)System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi( S ).ToPointer()
+	#define CreateNString(S) System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi( S ).ToPointer()
 	#define DestroyNString(N) System::Runtime::InteropServices::Marshal::FreeHGlobal(IntPtr((void*) N ))
 	#define Str(S) gcnew String(S)
 

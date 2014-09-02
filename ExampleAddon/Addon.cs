@@ -12,11 +12,20 @@ namespace Example {
 		}
 
 		public override void Load() {
-			sAPI.Print("Loading example addon!\n");
 		}
 
 		public override void Unload() {
-			sAPI.Print("Unloading example addon!\n");
+		}
+
+		public override void EntityCreated(Entity E) {
+			sAPI.Print(sAPI.ConColor.Blue + "Entity " + E.GetClassname() + " created!\n");
+
+			Entity.DieFunc DFunc = E.GetDieFunc();
+
+			E.SetDieFunc((Self, Inf, Att, Dmg, Mod) => {
+				sAPI.Print(sAPI.ConColor.Cyan + "Entity " + E.GetClassname() + " died!\n");
+				DFunc(Self, Inf, Att, Dmg, Mod);
+			});
 		}
 	}
 }

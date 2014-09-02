@@ -67,6 +67,14 @@ typedef enum {
 typedef struct gentity_s gentity_t;
 typedef struct gclient_s gclient_t;
 
+typedef void (*entThinkFunc)(gentity_t *self);
+typedef void (*entReachedFunc)(gentity_t *self);	// movers call this when hitting endpoint
+typedef void (*entBlockedFunc)(gentity_t *self, gentity_t *other);
+typedef void (*entTouchFunc)(gentity_t *self, gentity_t *other, trace_t *trace);
+typedef void (*entUseFunc)(gentity_t *self, gentity_t *other, gentity_t *activator);
+typedef void (*entPainFunc)(gentity_t *self, gentity_t *attacker, int damage);
+typedef void (*entDieFunc)(gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int damage, int mod);
+
 struct gentity_s {
 	entityState_t	s;				// communicated by server to clients
 	entityShared_t	r;				// shared by both the server system and game
@@ -129,13 +137,14 @@ struct gentity_s {
 	vec3_t		movedir;
 
 	int			nextthink;
-	void		(*think)(gentity_t *self);
-	void		(*reached)(gentity_t *self);	// movers call this when hitting endpoint
-	void		(*blocked)(gentity_t *self, gentity_t *other);
-	void		(*touch)(gentity_t *self, gentity_t *other, trace_t *trace);
-	void		(*use)(gentity_t *self, gentity_t *other, gentity_t *activator);
-	void		(*pain)(gentity_t *self, gentity_t *attacker, int damage);
-	void		(*die)(gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int damage, int mod);
+
+	entThinkFunc	think;
+	entReachedFunc	reached;
+	entBlockedFunc	blocked;
+	entTouchFunc	touch;
+	entUseFunc		use;
+	entPainFunc		pain;
+	entDieFunc		die;
 
 	int			pain_debounce_time;
 	int			fly_sound_debounce_time;	// wind tunnel

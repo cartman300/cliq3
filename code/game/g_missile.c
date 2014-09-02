@@ -21,6 +21,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 //
 #include "g_local.h"
+#include "../CLI/header/sAPI.h"
 
 #define	MISSILE_PRESTEP_TIME	50
 
@@ -549,6 +550,7 @@ gentity_t *fire_plasma (gentity_t *self, vec3_t start, vec3_t dir) {
 
 	VectorCopy (start, bolt->r.currentOrigin);
 
+	CLIq3::sAPI::OnEntityCreated(gcnew CLIq3::Entity(IntPtr(bolt)));
 	return bolt;
 }	
 
@@ -591,6 +593,7 @@ gentity_t *fire_grenade (gentity_t *self, vec3_t start, vec3_t dir) {
 
 	VectorCopy (start, bolt->r.currentOrigin);
 
+	CLIq3::sAPI::OnEntityCreated(gcnew CLIq3::Entity(IntPtr(bolt)));
 	return bolt;
 }
 
@@ -631,6 +634,7 @@ gentity_t *fire_bfg (gentity_t *self, vec3_t start, vec3_t dir) {
 	SnapVector( bolt->s.pos.trDelta );			// save net bandwidth
 	VectorCopy (start, bolt->r.currentOrigin);
 
+	CLIq3::sAPI::OnEntityCreated(gcnew CLIq3::Entity(IntPtr(bolt)));
 	return bolt;
 }
 
@@ -671,6 +675,7 @@ gentity_t *fire_rocket (gentity_t *self, vec3_t start, vec3_t dir) {
 	SnapVector( bolt->s.pos.trDelta );			// save net bandwidth
 	VectorCopy (start, bolt->r.currentOrigin);
 
+	CLIq3::sAPI::OnEntityCreated(gcnew CLIq3::Entity(IntPtr(bolt)));
 	return bolt;
 }
 
@@ -707,6 +712,7 @@ gentity_t *fire_grapple (gentity_t *self, vec3_t start, vec3_t dir) {
 
 	self->client->hook = hook;
 
+	CLIq3::sAPI::OnEntityCreated(gcnew CLIq3::Entity(IntPtr(hook)));
 	return hook;
 }
 

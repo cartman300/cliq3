@@ -11,15 +11,15 @@ using namespace System::Windows::Forms;
 #define Protected(body) try body catch(Exception^ E) { CLIq3::sAPI::PrintError(String::Format("{0}\n", E->ToString())); }
 
 void sAPI::Print(String^ S) {
-	CreateNString(NS, S);
-	Com_Printf("%s", NS);
-	DestroyNString(NS);
+	auto Ns = (const char*)CreateNString(S);
+	Com_Printf("%s", Ns);
+	DestroyNString(Ns);
 }
 
 void sAPI::PrintError(String^ S) {
-	CreateNString(NS, S);
-	Com_Printf(S_COLOR_RED "%s", NS);
-	DestroyNString(NS);
+	auto Ns = (const char*)CreateNString(S);
+	Com_Printf(S_COLOR_RED "%s", Ns);
+	DestroyNString(Ns);
 }
 
 void sAPI::LoadPlugins() {
@@ -27,10 +27,8 @@ void sAPI::LoadPlugins() {
 		auto Files = Directory::GetFiles(Path::Combine(Application::StartupPath, BASEGAME), "*.cliq3.dll",
 			System::IO::SearchOption::AllDirectories);
 
-		for each (auto F in Files) {
-			Print(String::Format(S_COLOR_GREEN "Loading {0}\n", Path::GetFileName(F)));
+		for each (auto F in Files)
 			LoadPlugin(Assembly::LoadFrom(F));
-		}
 	})
 }
 
@@ -46,16 +44,27 @@ void sAPI::UnloadPlugins() {
 }
 
 void sAPI::LoadPlugin(Assembly^ Asm) {
-	auto Typs = Asm->GetExportedTypes();
+	Protected({
+		auto Typs = Asm->GetExportedTypes();
 
-	for each (auto Typ in Typs) {
-		if (Typ->BaseType == sAPIAddon::typeid) {
-			auto Inst = dynamic_cast<sAPIAddon^>(Activator::CreateInstance(Typ));
-			if (Inst != nullptr) {
-				Inst->Load();
-				Instances->Add(Inst);
-			} else
-				sAPI::Print(String::Format(Str("Could not load type '{0}'"), Typ->ToString()));
+		for each (auto Typ in Typs) {
+			if (Typ->BaseType == sAPIAddon::typeid) {
+				Print(String::Format(S_COLOR_GREEN "Loading {0}\n", Typ->ToString()));
+				auto Inst = dynamic_cast<sAPIAddon^>(Activator::CreateInstance(Typ));
+
+				if (Inst != nullptr) {
+					Inst->Load();
+					Instances->Add(Inst);
+				} else
+					sAPI::Print(String::Format(Str("Could not load {0}"), Typ->ToString()));
+			}
 		}
-	}
+	})
+}
+
+void sAPI::OnEntityCreated(Entity^ E) {
+	Protected({
+		for each (sAPIAddon^ A in Instances)
+			A->EntityCreated(E);
+	})
 }

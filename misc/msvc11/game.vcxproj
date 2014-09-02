@@ -536,6 +536,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\code\CLI\src\Entity.cpp" />
     <ClCompile Include="..\..\code\CLI\src\sAPI.cpp" />
     <ClCompile Include="..\..\code\game\ai_chat.c">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug TA|Win32'">Disabled</Optimization>
