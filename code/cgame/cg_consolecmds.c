@@ -23,7 +23,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // cg_consolecmds.c -- text commands typed in at the local console, or
 // executed by a key binding
 
+
 #include "cg_local.h"
+
+
 #ifdef MISSIONPACK
 #include "../ui/ui_shared.h"
 extern menuDef_t *menuScoreboard;
@@ -384,11 +387,11 @@ CG_TeamMenu_f
 /*
 static void CG_TeamMenu_f( void ) {
   if (trap_Key_GetCatcher() & KEYCATCH_CGAME) {
-    CG_EventHandling(CGAME_EVENT_NONE);
-    trap_Key_SetCatcher(0);
+	CG_EventHandling(CGAME_EVENT_NONE);
+	trap_Key_SetCatcher(0);
   } else {
-    CG_EventHandling(CGAME_EVENT_TEAMMENU);
-    //trap_Key_SetCatcher(KEYCATCH_CGAME);
+	CG_EventHandling(CGAME_EVENT_TEAMMENU);
+	//trap_Key_SetCatcher(KEYCATCH_CGAME);
   }
 }
 */
