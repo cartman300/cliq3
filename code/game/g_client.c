@@ -920,10 +920,10 @@ char *ClientConnect( int clientNum, qboolean firstTime, qboolean isBot ) {
 
 	trap_GetUserinfo( clientNum, userinfo, sizeof( userinfo ) );
 
- 	// IP filtering
- 	// https://zerowing.idsoftware.com/bugzilla/show_bug.cgi?id=500
- 	// recommanding PB based IP / GUID banning, the builtin system is pretty limited
- 	// check to see if they are on the banned IP list
+	// IP filtering
+	// https://zerowing.idsoftware.com/bugzilla/show_bug.cgi?id=500
+	// recommanding PB based IP / GUID banning, the builtin system is pretty limited
+	// check to see if they are on the banned IP list
 	value = Info_ValueForKey (userinfo, "ip");
 	if ( G_FilterPacket( value ) ) {
 		return "You are banned from this server.";
@@ -965,7 +965,7 @@ char *ClientConnect( int clientNum, qboolean firstTime, qboolean isBot ) {
 	if( isBot ) {
 		ent->r.svFlags |= SVF_BOT;
 		ent->inuse = qtrue;
-		if( !G_BotConnect( clientNum, !firstTime ) ) {
+		if( !G_BotConnect( clientNum, toqbool(!firstTime) ) ) {
 			return "BotConnectfailed";
 		}
 	}
@@ -1091,7 +1091,7 @@ void ClientSpawn(gentity_t *ent) {
 						client->sess.sessionTeam, 
 						client->pers.teamState.state, 
 						spawn_origin, spawn_angles,
-						!!(ent->r.svFlags & SVF_BOT));
+						toqbool(!!(ent->r.svFlags & SVF_BOT)));
 	}
 	else
 	{
@@ -1100,14 +1100,14 @@ void ClientSpawn(gentity_t *ent) {
 		{
 			client->pers.initialSpawn = qtrue;
 			spawnPoint = SelectInitialSpawnPoint(spawn_origin, spawn_angles,
-							     !!(ent->r.svFlags & SVF_BOT));
+								 toqbool(!!(ent->r.svFlags & SVF_BOT)));
 		}
 		else
 		{
 			// don't spawn near existing origin if possible
 			spawnPoint = SelectSpawnPoint ( 
 				client->ps.origin, 
-				spawn_origin, spawn_angles, !!(ent->r.svFlags & SVF_BOT));
+				spawn_origin, spawn_angles, toqbool(!!(ent->r.svFlags & SVF_BOT)));
 		}
 	}
 	client->pers.teamState.state = TEAM_ACTIVE;

@@ -109,13 +109,17 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #endif
 
 #if (defined _MSC_VER)
-#define Q_EXPORT __declspec(dllexport)
+	#if __cplusplus
+		#define Q_EXPORT extern "C" __declspec(dllexport)
+	#else
+		#define Q_EXPORT __declspec(dllexport)
+	#endif
 #elif (defined __SUNPRO_C)
-#define Q_EXPORT __global
+	#define Q_EXPORT __global
 #elif ((__GNUC__ >= 3) && (!__EMX__) && (!sun))
-#define Q_EXPORT __attribute__((visibility("default")))
+	#define Q_EXPORT __attribute__((visibility("default")))
 #else
-#define Q_EXPORT
+	#define Q_EXPORT
 #endif
 
 /**********************************************************************
@@ -182,7 +186,15 @@ typedef int intptr_t;
 
 typedef unsigned char 		byte;
 
-typedef enum {qfalse, qtrue}	qboolean;
+#ifdef __cplusplus
+	typedef bool qboolean;
+	#define qtrue true
+	#define qfalse false
+#else
+	typedef enum {qfalse, qtrue}	qboolean;
+#endif
+
+#define toqbool(b) ((qboolean)b)
 
 typedef union {
 	float f;

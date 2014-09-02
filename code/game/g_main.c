@@ -206,7 +206,7 @@ Q_EXPORT intptr_t vmMain( int command, int arg0, int arg1, int arg2, int arg3, i
 		G_ShutdownGame( arg0 );
 		return 0;
 	case GAME_CLIENT_CONNECT:
-		return (intptr_t)ClientConnect( arg0, arg1, arg2 );
+		return (intptr_t)ClientConnect( arg0, toqbool(arg1), toqbool(arg2) );
 	case GAME_CLIENT_THINK:
 		ClientThink( arg0 );
 		return 0;
@@ -501,7 +501,7 @@ void G_InitGame( int levelTime, int randomSeed, int restart ) {
 	if ( trap_Cvar_VariableIntegerValue( "bot_enable" ) ) {
 		BotAISetup( restart );
 		BotAILoadMap( restart );
-		G_InitBots( restart );
+		G_InitBots( toqbool(restart) );
 	}
 
 	G_RemapTeamShaders();
@@ -1305,13 +1305,13 @@ qboolean ScoreIsTied( void ) {
 	}
 	
 	if ( g_gametype.integer >= GT_TEAM ) {
-		return level.teamScores[TEAM_RED] == level.teamScores[TEAM_BLUE];
+		return toqbool(level.teamScores[TEAM_RED] == level.teamScores[TEAM_BLUE]);
 	}
 
 	a = level.clients[level.sortedClients[0]].ps.persistant[PERS_SCORE];
 	b = level.clients[level.sortedClients[1]].ps.persistant[PERS_SCORE];
 
-	return a == b;
+	return toqbool(a == b);
 }
 
 /*
@@ -1324,7 +1324,7 @@ can see the last frag.
 =================
 */
 void CheckExitRules( void ) {
- 	int			i;
+	int			i;
 	gclient_t	*cl;
 	// if at the intermission, wait for all non-bots to
 	// signal ready, then go to next level

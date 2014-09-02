@@ -159,7 +159,7 @@ float	LittleFloat (const float *l) {return _LittleFloat(l);}
 
 void CopyShortSwap(void *dest, void *src)
 {
-	byte *to = dest, *from = src;
+	byte *to = (byte*)dest, *from = (byte*)src;
 
 	to[0] = from[1];
 	to[1] = from[0];
@@ -167,7 +167,7 @@ void CopyShortSwap(void *dest, void *src)
 
 void CopyLongSwap(void *dest, void *src)
 {
-	byte *to = dest, *from = src;
+	byte *to = (byte*)dest, *from = (byte*)src;
 
 	to[0] = from[3];
 	to[1] = from[2];
@@ -587,7 +587,7 @@ qboolean SkipBracedSection (char **program, int depth) {
 		}
 	} while( depth && *program );
 
-	return ( depth == 0 );
+	return toqbool( depth == 0 );
 }
 
 /*
@@ -738,12 +738,12 @@ qboolean Q_isanumber( const char *s )
 
 	d = strtod( s, &p );
 
-	return *p == '\0';
+	return toqbool(*p == '\0');
 }
 
 qboolean Q_isintegral( float f )
 {
-	return (int)f == f;
+	return toqbool((int)f == f);
 }
 
 #ifdef _MSC_VER
@@ -788,7 +788,7 @@ Safe strncpy that ensures a trailing zero
 */
 void Q_strncpyz( char *dest, const char *src, int destsize ) {
   if ( !dest ) {
-    Com_Error( ERR_FATAL, "Q_strncpyz: NULL dest" );
+	Com_Error( ERR_FATAL, "Q_strncpyz: NULL dest" );
   }
 	if ( !src ) {
 		Com_Error( ERR_FATAL, "Q_strncpyz: NULL src" );
@@ -800,18 +800,18 @@ void Q_strncpyz( char *dest, const char *src, int destsize ) {
 	strncpy( dest, src, destsize-1 );
   dest[destsize-1] = 0;
 }
-                 
+				 
 int Q_stricmpn (const char *s1, const char *s2, int n) {
 	int		c1, c2;
 
-        if ( s1 == NULL ) {
-           if ( s2 == NULL )
-             return 0;
-           else
-             return -1;
-        }
-        else if ( s2==NULL )
-          return 1;
+		if ( s1 == NULL ) {
+		   if ( s2 == NULL )
+			 return 0;
+		   else
+			 return -1;
+		}
+		else if ( s2==NULL )
+		  return 1;
 
 
 	
@@ -864,25 +864,25 @@ int Q_stricmp (const char *s1, const char *s2) {
 
 
 char *Q_strlwr( char *s1 ) {
-    char	*s;
+	char	*s;
 
-    s = s1;
+	s = s1;
 	while ( *s ) {
 		*s = tolower(*s);
 		s++;
 	}
-    return s1;
+	return s1;
 }
 
 char *Q_strupr( char *s1 ) {
-    char	*s;
+	char	*s;
 
-    s = s1;
+	s = s1;
 	while ( *s ) {
 		*s = toupper(*s);
 		s++;
 	}
-    return s1;
+	return s1;
 }
 
 
@@ -907,24 +907,24 @@ const char *Q_stristr( const char *s, const char *find)
 
   if ((c = *find++) != 0)
   {
-    if (c >= 'a' && c <= 'z')
-    {
-      c -= ('a' - 'A');
-    }
-    len = strlen(find);
-    do
-    {
-      do
-      {
-        if ((sc = *s++) == 0)
-          return NULL;
-        if (sc >= 'a' && sc <= 'z')
-        {
-          sc -= ('a' - 'A');
-        }
-      } while (sc != c);
-    } while (Q_stricmpn(s, find, len) != 0);
-    s--;
+	if (c >= 'a' && c <= 'z')
+	{
+	  c -= ('a' - 'A');
+	}
+	len = strlen(find);
+	do
+	{
+	  do
+	  {
+		if ((sc = *s++) == 0)
+		  return NULL;
+		if (sc >= 'a' && sc <= 'z')
+		{
+		  sc -= ('a' - 'A');
+		}
+	  } while (sc != c);
+	} while (Q_stricmpn(s, find, len) != 0);
+	s--;
   }
   return s;
 }

@@ -221,7 +221,7 @@ qboolean	PM_SlideMove( qboolean gravity ) {
 		VectorCopy( primal_velocity, pm->ps->velocity );
 	}
 
-	return ( bumpcount != 0 );
+	return toqbool( bumpcount != 0 );
 }
 
 /*
