@@ -346,7 +346,7 @@ intptr_t QDECL VM_DllSyscall( intptr_t arg, ... ) {
   
   va_start(ap, arg);
   for (i = 1; i < ARRAY_LEN (args); i++)
-    args[i] = va_arg(ap, intptr_t);
+	args[i] = va_arg(ap, intptr_t);
   va_end(ap);
   
   return currentVM->systemCall( args );
@@ -832,8 +832,8 @@ intptr_t QDECL VM_Call( vm_t *vm, int callnum, ... )
 		va_end(ap);
 
 		r = vm->entryPoint( callnum,  args[0],  args[1],  args[2], args[3],
-                            args[4],  args[5],  args[6], args[7],
-                            args[8],  args[9], args[10], args[11]);
+							args[4],  args[5],  args[6], args[7],
+							args[8],  args[9], args[10], args[11]);
 	} else {
 #if ( id386 || idsparc ) && !defined __clang__ // calling convention doesn't need conversion in some cases
 #ifndef NO_VM_COMPILED

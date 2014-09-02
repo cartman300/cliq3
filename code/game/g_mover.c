@@ -247,7 +247,7 @@ qboolean G_TryPushingProxMine( gentity_t *check, gentity_t *pusher, vec3_t move,
 		VectorCopy( check->s.pos.trBase, check->r.currentOrigin );
 		trap_LinkEntity (check);
 	}
-	return ret;
+	return toqbool(ret);
 }
 
 void G_ExplodeMissile( gentity_t *ent );
