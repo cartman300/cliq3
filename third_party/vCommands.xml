@@ -1,0 +1,1909 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>vCommands</name>
+    </assembly>
+    <members>
+        <member name="T:vCommands.Commands.Alias">
+            <summary>
+            Represents a command which can be executed in a console host.
+            </summary>
+        </member>
+        <member name="T:vCommands.Commands.Command">
+            <summary>
+            Represents a command which can be executed in a console host.
+            </summary>
+        </member>
+        <member name="F:vCommands.Commands.Command.DefaultCategory">
+            <summary>
+            The default category for commands (when null is specified).
+            </summary>
+        </member>
+        <member name="M:vCommands.Commands.Command.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:vCommands.Commands.Command"/> class with the given name and function.
+            </summary>
+            <param name="name">The name of the command, used to find and invoke it.</param>
+            <param name="category">The named category under which the command goes.</param>
+            <param name="description">The description of the command, for displaying in help text.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given name string is null.</exception>
+            <exception cref="T:System.ArgumentException">Thrown when the given name or category strings are empty or consist only of white-space characters..</exception>
+        </member>
+        <member name="M:vCommands.Commands.Command.Invoke(System.Nullable{System.Boolean},vCommands.EvaluationContext,vCommands.Parsing.Expressions.Expression[])">
+            <summary>
+            Invokes the underlying function of the command.
+            </summary>
+            <param name="toggle">The toggle status of the command.</param>
+            <param name="context">The context under which the command is invoked.</param>
+            <param name="args">The results of evaluating each argument given to the command.</param>
+            <returns>A status code accompanied by text output.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given argument array is null.</exception>
+        </member>
+        <member name="M:vCommands.Commands.Command.OnInvocation(vCommands.EventArguments.CommandInvocationEventArgs)">
+            <summary>
+            Raisese the <see cref="E:vCommands.Commands.Command.Invocation"/> event.
+            </summary>
+            <param name="e">A <see cref="T:vCommands.EventArguments.CommandInvocationEventArgs"/> that contains event data.</param>
+        </member>
+        <member name="M:vCommands.Commands.Command._Invoke(System.Nullable{System.Boolean},vCommands.EvaluationContext,vCommands.Parsing.Expressions.Expression[])">
+            <summary>
+            Invokes the underlying logic of the command.
+            </summary>
+            <param name="toggle"></param>
+            <param name="context"></param>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="P:vCommands.Commands.Command.Name">
+            <summary>
+            Gets the name of the command.
+            </summary>
+        </member>
+        <member name="P:vCommands.Commands.Command.Category">
+            <summary>
+            Gets the category of the command.
+            </summary>
+        </member>
+        <member name="P:vCommands.Commands.Command.Abstract">
+            <summary>
+            Gets a brief description of the command.
+            </summary>
+        </member>
+        <member name="E:vCommands.Commands.Command.Invocation">
+            <summary>
+            Raised before the command is invoked.
+            </summary>
+        </member>
+        <member name="F:vCommands.Commands.Alias.UniversalCategory">
+            <summary>
+            The category given to all aliases.
+            </summary>
+        </member>
+        <member name="F:vCommands.Commands.Alias.UniversalDescription">
+            <summary>
+            The description given to all aliases.
+            </summary>
+        </member>
+        <member name="M:vCommands.Commands.Alias.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:vCommands.Commands.UserCommand"/> class with the given name and function.
+            </summary>
+            <param name="name">The name of the command, used to find and invoke it.</param>
+            <param name="expr">The expression to execute with the command.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when either of the given arguments is null.</exception>
+        </member>
+        <member name="M:vCommands.Commands.Alias._Invoke(System.Nullable{System.Boolean},vCommands.EvaluationContext,vCommands.Parsing.Expressions.Expression[])">
+            <summary>
+            Invokes the underlying function of the command.
+            </summary>
+            <param name="toggle"></param>
+            <param name="context">The context under which the command is invoked.</param>
+            <param name="args">The results of evaluating each argument given to the command.</param>
+            <returns>A status code accompanied by text output.</returns>
+        </member>
+        <member name="P:vCommands.Commands.Alias.Expression">
+            <summary>
+            Gets the expression evaluated by this command.
+            </summary>
+        </member>
+        <member name="T:vCommands.Commands.UserCommand">
+            <summary>
+            Represents a command which can be executed in a console host.
+            </summary>
+        </member>
+        <member name="F:vCommands.Commands.UserCommand.UniversalCategory">
+            <summary>
+            The category given to all user commands.
+            </summary>
+        </member>
+        <member name="F:vCommands.Commands.UserCommand.UniversalDescription">
+            <summary>
+            The description given to all user commands.
+            </summary>
+        </member>
+        <member name="M:vCommands.Commands.UserCommand.#ctor(System.String,vCommands.Parsing.Expressions.Expression)">
+            <summary>
+            Initializes a new instance of the <see cref="T:vCommands.Commands.UserCommand"/> class with the given name and function.
+            </summary>
+            <param name="name">The name of the command, used to find and invoke it.</param>
+            <param name="expr">The expression to execute with the command.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when either of the given arguments is null.</exception>
+        </member>
+        <member name="M:vCommands.Commands.UserCommand._Invoke(System.Nullable{System.Boolean},vCommands.EvaluationContext,vCommands.Parsing.Expressions.Expression[])">
+            <summary>
+            Invokes the underlying function of the command.
+            </summary>
+            <param name="toggle"></param>
+            <param name="context">The context under which the command is invoked.</param>
+            <param name="args">The results of evaluating each argument given to the command.</param>
+            <returns>A status code accompanied by text output.</returns>
+        </member>
+        <member name="P:vCommands.Commands.UserCommand.Expression">
+            <summary>
+            Gets the expression evaluated by this command.
+            </summary>
+        </member>
+        <member name="T:vCommands.Commands.CommandMethod">
+            <summary>
+            Encapsulates a method which can be executed by a console command.
+            </summary>
+            <param name="toggle">The toggle status of the command.</param>
+            <param name="context">The context under which the command is invoked.</param>
+            <param name="args">The results of evaluating each argument given to the command.</param>
+            <returns>A status code accompanied by text output.</returns>
+        </member>
+        <member name="T:vCommands.Commands.MethodCommand">
+            <summary>
+            Represents a command which can be executed in a console host.
+            </summary>
+        </member>
+        <member name="M:vCommands.Commands.MethodCommand.#ctor(System.String,System.String,System.String,vCommands.Commands.CommandMethod)">
+            <summary>
+            Initializes a new instance of the <see cref="T:vCommands.Commands.MethodCommand"/> class with the given name and function.
+            </summary>
+            <param name="category">The named category under which the command goes.</param>
+            <param name="name">The name of the command, used to find and invoke it.</param>
+            <param name="description">The description of the command, for displaying in help text.</param>
+            <param name="function">The underlying method to be invoked by the command.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when either of the given arguments is null.</exception>
+        </member>
+        <member name="M:vCommands.Commands.MethodCommand._Invoke(System.Nullable{System.Boolean},vCommands.EvaluationContext,vCommands.Parsing.Expressions.Expression[])">
+            <summary>
+            Invokes the underlying function of the command.
+            </summary>
+            <param name="toggle">The toggle status of the command.</param>
+            <param name="context">The context under which the command is invoked.</param>
+            <param name="args">The results of evaluating each argument given to the command.</param>
+            <returns>A status code accompanied by text output.</returns>
+        </member>
+        <member name="P:vCommands.Commands.MethodCommand.Method">
+            <summary>
+            Gets the delegate of the method executed by the command.
+            </summary>
+        </member>
+        <member name="T:vCommands.EvaluationContext">
+            <summary>
+            Represents the context in which a <see cref="T:vCommands.Parsing.Expressions.Expression"/> is evaluated.
+            </summary>
+        </member>
+        <member name="M:vCommands.EvaluationContext.#ctor(vCommands.CommandHost,System.Collections.Generic.IList{vCommands.Parsing.Expressions.Expression},System.Collections.Generic.IDictionary{System.String,System.String},System.Object)">
+            <summary>
+            Initializes a new instance of the <see cref="T:vCommands.EvaluationContext"/> class with the specified status and output.
+            </summary>
+            <param name="host">The <see cref="T:vCommands.CommandHost"/> under which the evaluation occurs.</param>
+            <param name="userArguments">optional; An list of expressions as arguments to a user command.</param>
+            <param name="locals">optional; A list of local variables (pairs of names and values).</param>
+            <param name="state">optional; Object representing the state of the evaluation.</param>
+        </member>
+        <member name="M:vCommands.EvaluationContext.WithUserArguments(System.Collections.Generic.IList{vCommands.Parsing.Expressions.Expression})">
+            <summary>
+            Creates a new <see cref="T:vCommands.EvaluationContext"/> with the properties of the current one, but with the given user argument list and no locals.
+            </summary>
+            <param name="userArguments">A list of expressions as arguments to a user command.</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given user argument list is null.</exception>
+        </member>
+        <member name="M:vCommands.EvaluationContext.WithLocal(System.String,System.String)">
+            <summary>
+            Creates a new <see cref="T:vCommands.EvaluationContext"/> with the properties of the current one, but with the given local.
+            </summary>
+            <param name="name">The name of the local, as it will be accessed.</param>
+            <param name="value">The value of the local.</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when either of the given arguments is null.</exception>
+        </member>
+        <member name="M:vCommands.EvaluationContext.WithLocal(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.String}})">
+            <summary>
+            Creates a new <see cref="T:vCommands.EvaluationContext"/> with the properties of the current one, but with the given iterator.
+            </summary>
+            <param name="locals">A list of local variables (pair of name and value).</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given arguments is null.</exception>
+            <exception cref="T:System.ArgumentException">Thrown when a key or a value in the enumerable is null.</exception>
+        </member>
+        <member name="P:vCommands.EvaluationContext.Host">
+            <summary>
+            Gets the <see cref="T:vCommands.CommandHost"/> under which the evaluation occurs.
+            </summary>
+        </member>
+        <member name="P:vCommands.EvaluationContext.UserArguments">
+            <summary>
+            Gets a read-only collection of argument expressions to a user command.
+            </summary>
+        </member>
+        <member name="P:vCommands.EvaluationContext.Locals">
+            <summary>
+            Gets a dictionary of iterators available in the context.
+            </summary>
+        </member>
+        <member name="P:vCommands.EvaluationContext.State">
+            <summary>
+            Gets an object representing the sate of the evaluation.
+            </summary>
+        </member>
+        <member name="T:vCommands.EventArguments.ContextuallyCancellableEventArgs">
+            <summary>
+            Provides data for an event which can be cancelled under on a context and for a specified reason.
+            </summary>
+        </member>
+        <member name="M:vCommands.EventArguments.ContextuallyCancellableEventArgs.#ctor(vCommands.EvaluationContext,System.Boolean,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:vCommands.EventArguments.ContextuallyCancellableEventArgs"/> class with the specified invocation context, cancel flag and cancel reason.
+            </summary>
+            <param name="context"></param>
+            <param name="cancel">True to cancel; otherwise false.</param>
+            <param name="cancelReason">A text representing a human-readable reason for cancelling the event.</param>
+        </member>
+        <member name="P:vCommands.EventArguments.ContextuallyCancellableEventArgs.Context">
+            <summary>
+            Gets the context under which the event is raised.
+            </summary>
+        </member>
+        <member name="P:vCommands.EventArguments.ContextuallyCancellableEventArgs.CancelReason">
+            <summary>
+            Gets or sets a string representing the reason for cancelling the event.
+            </summary>
+        </member>
+        <member name="T:vCommands.EventArguments.VariableChangeEventArgs">
+            <summary>
+            Provides data for the <see cref="E:vCommands.Variables.IVariable.Change"/> event.
+            </summary>
+        </member>
+        <member name="M:vCommands.EventArguments.VariableChangeEventArgs.#ctor(vCommands.EvaluationContext,System.String,vCommands.Parsing.Expressions.Expression)">
+            <summary>
+            Initializes a new instance of the <see cref="T:vCommands.EventArguments.VariableChangeEventArgs"/> class with the specified change context, current string value and argument.
+            </summary>
+            <param name="context"></param>
+            <param name="csv">Current string value.</param>
+            <param name="arg"></param>
+        </member>
+        <member name="P:vCommands.EventArguments.VariableChangeEventArgs.CurrentStringValue">
+            <summary>
+            Gets the current string value of the 
+            </summary>
+        </member>
+        <member name="P:vCommands.EventArguments.VariableChangeEventArgs.Argument">
+            <summary>
+            Gets the argument passed to the variable.
+            </summary>
+        </member>
+        <member name="T:vCommands.EventArguments.CommandInvocationEventArgs">
+            <summary>
+            Provides data for the <see cref="E:vCommands.Commands.Command.Invocation"/> event.
+            </summary>
+        </member>
+        <member name="M:vCommands.EventArguments.CommandInvocationEventArgs.#ctor(vCommands.EvaluationContext,System.Nullable{System.Boolean},vCommands.Parsing.Expressions.Expression[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:vCommands.EventArguments.CommandInvocationEventArgs"/> class with the specified invocation context, toggle status and arguments.
+            </summary>
+            <param name="context"></param>
+            <param name="toggle"></param>
+            <param name="args"></param>
+        </member>
+        <member name="P:vCommands.EventArguments.CommandInvocationEventArgs.Toggle">
+            <summary>
+            Gets the toggle status of the command.
+            </summary>
+        </member>
+        <member name="P:vCommands.EventArguments.CommandInvocationEventArgs.Arguments">
+            <summary>
+            Gets the arguments passed to the command.
+            </summary>
+        </member>
+        <member name="T:vCommands.CommandHost">
+            <summary>
+            Represents a host of console commands.
+            </summary>
+        </member>
+        <member name="M:vCommands.CommandHost.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:vCommands.CommandHost"/> class.
+            </summary>
+        </member>
+        <member name="M:vCommands.CommandHost.RegisterCommand(vCommands.Commands.Command,System.Boolean,System.Boolean)">
+            <summary>
+            Registers the given command to the host.
+            </summary>
+            <param name="cmd"></param>
+            <param name="overwrite">True to overwrite an existing command; otherwise false.</param>
+            <param name="overwriteSameTypeOnly">True to only override a command of the same type, otherwise false.</param>
+            <returns>True if the command was added; fakse if it already existed.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given command is null.</exception>
+        </member>
+        <member name="M:vCommands.CommandHost.RemoveCommand(System.String)">
+            <summary>
+            Removes the command with the given name, if found.
+            </summary>
+            <param name="name"></param>
+            <returns>True if the command was found and removed; otherwise false.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given name is null.</exception>
+        </member>
+        <member name="M:vCommands.CommandHost.RemoveCommand``1(System.String)">
+            <summary>
+            Removes the command with the given name and type, if found.
+            </summary>
+            <param name="name"></param>
+            <typeparam name="T">The type of command to remove.</typeparam>
+            <returns>True if the command was found and removed; otherwise false.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given name is null.</exception>
+        </member>
+        <member name="M:vCommands.CommandHost.GetCommand(System.String)">
+            <summary>
+            Gets the command registerd with the given name.
+            </summary>
+            <param name="name"></param>
+            <returns>A <see cref="T:vCommands.Commands.Command"/> object if found; otherwise null.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given name is null.</exception>
+        </member>
+        <member name="M:vCommands.CommandHost.Evaluate(System.String,System.Object)">
+            <summary>
+            Evaluates the given command string and returns the result.
+            </summary>
+            <remarks>
+            The "state" parameter will be preserved in the evaluation context.
+            <para>This will allow a user to, for example, have a command perform based on a user's credentials passed through this parameter.</para>
+            </remarks>
+            <param name="command"></param>
+            <param name="state">An object representing the state of the evaluation.</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given command string is null.</exception>
+        </member>
+        <member name="M:vCommands.CommandHost.RegisterDefaultCommands(System.Boolean,System.Boolean)">
+            <summary>
+            Registers a default set of commands to the host.
+            </summary>
+        </member>
+        <member name="M:vCommands.CommandHost.RegisterVariable``1(``0,System.Boolean)">
+            <summary>
+            Registers the given command variable to the host.
+            </summary>
+            <typeparam name="TVar">The type of variable to register, implementing <see cref="T:vCommands.Variables.IVariable"/>.</typeparam>
+            <param name="variable"></param>
+            <param name="overwrite">True to override an existing variable with the same name if found; otherwise false.</param>
+            <returns>The given variable.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given variable is null.</exception>
+        </member>
+        <member name="M:vCommands.CommandHost.RemoveVariable(System.String)">
+            <summary>
+            Removes the variable with the given name, if found.
+            </summary>
+            <param name="name"></param>
+            <returns>True if the variable was found and removed; otherwise false.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given name is null.</exception>
+        </member>
+        <member name="M:vCommands.CommandHost.GetVariable(System.String)">
+            <summary>
+            Gets the variable registered with the given name.
+            </summary>
+            <param name="name"></param>
+            <returns>A <see cref="T:vCommands.Variables.IVariable"/> object if found; otherwise null.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given name is null.</exception>
+        </member>
+        <member name="M:vCommands.CommandHost.GetValue``1(System.String)">
+            <summary>
+            Gets the underlying value of a variable.
+            </summary>
+            <typeparam name="T">The type of data to attempt to get.</typeparam>
+            <param name="name">The name of the variable.</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given name is null.</exception>
+            <exception cref="T:System.ArgumentException">Thrown when there is no variable with the given name.</exception>
+        </member>
+        <member name="M:vCommands.CommandHost.GetValue(System.String)">
+            <summary>
+            Gets the underlying value of a variable.
+            </summary>
+            <param name="name">The name of the variable.</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given name is null.</exception>
+            <exception cref="T:System.ArgumentException">Thrown when there is no variable with the given name.</exception>
+        </member>
+        <member name="P:vCommands.CommandHost.Library">
+            <summary>
+            Gets the library of manuals for this host.
+            </summary>
+        </member>
+        <member name="P:vCommands.CommandHost.ManualDrivers">
+            <summary>
+            Gets a collection of manual drivers for this host.
+            </summary>
+        </member>
+        <member name="T:vCommands.EvaluationResult">
+            <summary>
+            Represents the result of evaluating a <see cref="T:vCommands.Parsing.Expressions.Expression"/>.
+            </summary>
+        </member>
+        <member name="F:vCommands.EvaluationResult.EmptyPositive">
+            <summary>
+            A result whic contains no output text and status zero.
+            </summary>
+        </member>
+        <member name="M:vCommands.EvaluationResult.#ctor(System.Int32,System.String,vCommands.Parsing.Expressions.Expression)">
+            <summary>
+            Initializes a new instance of the <see cref="T:vCommands.EvaluationResult"/> class with the specified status, output and optional expression.
+            </summary>
+            <param name="status">Numerical status indicating the success of the evaluation.</param>
+            <param name="output">The text output of the evaluation.</param>
+            <param name="exp">optional; The expression which evaluated to the current result.</param>
+        </member>
+        <member name="P:vCommands.EvaluationResult.Status">
+            <summary>
+            Gets the numerical status of the result.
+            </summary>
+            <remarks>
+            0 means True/positive, anything else is False/negative.
+            </remarks>
+        </member>
+        <member name="P:vCommands.EvaluationResult.TruthValue">
+            <summary>
+            Gets the truth value interpretede from the status.
+            </summary>
+        </member>
+        <member name="P:vCommands.EvaluationResult.Output">
+            <summary>
+            Gets the resulted text output of the expression.
+            </summary>
+        </member>
+        <member name="P:vCommands.EvaluationResult.Expression">
+            <summary>
+            Gets the expression which evaluated to the current result.
+            </summary>
+        </member>
+        <member name="T:vCommands.Manuals.Drivers.DriverCollection">
+            <summary>
+            Represents a collection of <see cref="T:vCommands.Manuals.Drivers.IDriver"/>s.
+            </summary>
+        </member>
+        <member name="M:vCommands.Manuals.Drivers.DriverCollection.Add(vCommands.Manuals.Drivers.IDriver)">
+            <summary>
+            Adds the given driver to the collection.
+            </summary>
+            <param name="driver"></param>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given driver is null.</exception>
+            <exception cref="T:System.ArgumentException">Thrown when the collection already contains a driver with the name of the given one -or- the given driver's name is null.</exception>
+            <exception cref="T:System.NotSupportedException">Thrown when the collection is read-only.</exception>
+        </member>
+        <member name="M:vCommands.Manuals.Drivers.DriverCollection.Add(System.Collections.Generic.IEnumerable{vCommands.Manuals.Drivers.IDriver})">
+            <summary>
+            Adds every driver in the given enumeration to the collection.
+            </summary>
+            <param name="drivers"></param>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given enumeration is null.</exception>
+            <exception cref="T:System.ArgumentException">Thrown when the collection already contains a driver with the name of a given one -or- a given driver's name is null.</exception>
+            <exception cref="T:System.NotSupportedException">Thrown when the collection is read-only.</exception>
+        </member>
+        <member name="M:vCommands.Manuals.Drivers.DriverCollection.Clear">
+            <summary>
+            Removes all drivers from the collection.
+            </summary>
+            <exception cref="T:System.NotSupportedException">Thrown when the collection is read-only.</exception>
+        </member>
+        <member name="M:vCommands.Manuals.Drivers.DriverCollection.Contains(vCommands.Manuals.Drivers.IDriver)">
+            <summary>
+            Determines whether the collection contains the given driver specifically.
+            </summary>
+            <param name="driver"></param>
+            <returns>True if the specific driver is contained within the collection; otherwise false.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given driver is null.</exception>
+            <exception cref="T:System.ArgumentException">Thrown when the given driver's name is null.</exception>
+        </member>
+        <member name="M:vCommands.Manuals.Drivers.DriverCollection.Contains(System.String)">
+            <summary>
+            Determines whether the collection contains a driver with the given name.
+            </summary>
+            <param name="name"></param>
+            <returns>True if a driver with the specific name is contained within the collection; otherwise false.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given name is null.</exception>
+        </member>
+        <member name="M:vCommands.Manuals.Drivers.DriverCollection.CopyTo(vCommands.Manuals.Drivers.IDriver[],System.Int32)">
+            <summary>
+            Copies the drivers of the current collection to an <see cref="T:System.Array"/>, starting at a particular <see cref="T:System.Array"/> index.
+            </summary>
+            <param name="array"></param>
+            <param name="arrayIndex"></param>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given array is null.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown when the given array index is less than 0.</exception>
+            <exception cref="T:System.ArgumentException">Thrown when the number of drivers in the collection is greater than the available space from the given index to the end of the destination array.</exception>
+        </member>
+        <member name="M:vCommands.Manuals.Drivers.DriverCollection.Remove(vCommands.Manuals.Drivers.IDriver)">
+            <summary>
+            Removes the specific driver from the collection.
+            </summary>
+            <param name="driver"></param>
+            <returns>True if the specific driver was found and removed; false if not found.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given driver is null.</exception>
+            <exception cref="T:System.ArgumentException">Thrown when the given driver's name is null.</exception>
+        </member>
+        <member name="M:vCommands.Manuals.Drivers.DriverCollection.Remove(System.String)">
+            <summary>
+            Removes the driver with the specified name from the library.
+            </summary>
+            <param name="name"></param>
+            <returns>True if found and removed; false if not found</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given name string is null.</exception>
+        </member>
+        <member name="M:vCommands.Manuals.Drivers.DriverCollection.GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through the collection.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:vCommands.Manuals.Drivers.DriverCollection.FindDriver(System.Text.RegularExpressions.Regex)">
+            <summary>
+            Finds a driver by matching the name against a regular expression.
+            </summary>
+            <param name="mask"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given regular expression is null.</exception>
+        </member>
+        <member name="M:vCommands.Manuals.Drivers.DriverCollection.SetDefault(System.String)">
+            <summary>
+            Sets the default driver to the one carrying the specified name.
+            </summary>
+            <param name="name"></param>
+            <returns>True if found and set; false if not found.</returns>
+        </member>
+        <member name="M:vCommands.Manuals.Drivers.DriverCollection.SetDefault(vCommands.Manuals.Drivers.IDriver)">
+            <summary>
+            Sets the default driver to the given driver.
+            </summary>
+            <param name="driver"></param>
+            <returns>True if the driver is contained in the collection and set; false if not contained.</returns>
+        </member>
+        <member name="P:vCommands.Manuals.Drivers.DriverCollection.Count">
+            <summary>
+            Gets the number of drivers contained in the collection.
+            </summary>
+        </member>
+        <member name="P:vCommands.Manuals.Drivers.DriverCollection.IsReadOnly">
+            <summary>
+            Gets a value indicating whether the collection is read-only (no drivers can be added).
+            </summary>
+        </member>
+        <member name="P:vCommands.Manuals.Drivers.DriverCollection.Item(System.String)">
+            <summary>
+            Retrieves the driver with the given name.
+            </summary>
+            <param name="name"></param>
+            <returns>A <see cref="T:vCommands.Manuals.Drivers.IDriver"/> object if found; otherwise null.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given name is null.</exception>
+        </member>
+        <member name="P:vCommands.Manuals.Drivers.DriverCollection.DefaultDriver">
+            <summary>
+            Gets the default driver, if any.
+            </summary>
+        </member>
+        <member name="T:vCommands.Manuals.Drivers.IDriver">
+            <summary>
+            Represents a driver which accesses and displays a manual.
+            </summary>
+        </member>
+        <member name="M:vCommands.Manuals.Drivers.IDriver.Display(vCommands.EvaluationContext,vCommands.Manuals.Manual)">
+            <summary>
+            Displays the given manual.
+            </summary>
+            <param name="context">A context under which the manual will be displayed.</param>
+            <param name="m"></param>
+            <returns></returns>
+        </member>
+        <member name="P:vCommands.Manuals.Drivers.IDriver.Name">
+            <summary>
+            Gets the name of the driver.
+            </summary>
+        </member>
+        <member name="T:vCommands.Manuals.Drivers.OutputDriver">
+            <summary>
+            A driver which prints the manual in the command output.
+            </summary>
+            <remarks>
+            This class has no internal state, so it is recommended to use <see cref="P:vCommands.Manuals.Drivers.OutputDriver.Instance"/> whenever an instance is needed.
+            </remarks>
+        </member>
+        <member name="F:vCommands.Manuals.Drivers.OutputDriver.SectionIndexesSeparator">
+            <summary>
+            The character used to separate section indexes.
+            </summary>
+        </member>
+        <member name="F:vCommands.Manuals.Drivers.OutputDriver.SectionTitlesSeparator">
+            <summary>
+            The character used to separate section titles and indexes.
+            </summary>
+        </member>
+        <member name="F:vCommands.Manuals.Drivers.OutputDriver.LargeSeparator">
+            <summary>
+            A line which separates the actual manual contents from the index, abstract and title.
+            </summary>
+        </member>
+        <member name="M:vCommands.Manuals.Drivers.OutputDriver.Display(vCommands.EvaluationContext,vCommands.Manuals.Manual)">
+            <summary>
+            Formats the given manual and outputs it in the result.
+            </summary>
+            <param name="context"></param>
+            <param name="m"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given context or manual are null.</exception>
+            <exception cref="T:System.ArgumentException">Thrown when the given manual has a null title.</exception>
+        </member>
+        <member name="P:vCommands.Manuals.Drivers.OutputDriver.Instance">
+            <summary>
+            Gets an instance of <see cref="T:vCommands.Manuals.Drivers.OutputDriver"/>.
+            </summary>
+        </member>
+        <member name="P:vCommands.Manuals.Drivers.OutputDriver.Name">
+            <summary>
+            Gets the name of the driver.
+            </summary>
+        </member>
+        <member name="T:vCommands.Manuals.Keyword">
+            <summary>
+            Represents a word or a group of words of importance, accompanied by a definition.
+            </summary>
+        </member>
+        <member name="T:vCommands.Utilities.Sealable">
+            <summary>
+            Represents an object which can be sealed. After that, it cannot be changed.
+            </summary>
+        </member>
+        <member name="M:vCommands.Utilities.Sealable.Seal">
+            <summary>
+            Seals the object, making it unchangeable.
+            </summary>
+        </member>
+        <member name="M:vCommands.Utilities.Sealable.CheckSeal">
+            <summary>
+            Checks if the object is sealed. If it is, an <see cref="T:System.InvalidOperationException"/> is thrown.
+            </summary>
+        </member>
+        <member name="P:vCommands.Utilities.Sealable.Sealed">
+            <summary>
+            Gets a value indicating whether the object is sealed or not.
+            </summary>
+        </member>
+        <member name="M:vCommands.Manuals.Keyword.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:vCommands.Manuals.Keyword"/> class.
+            </summary>
+        </member>
+        <member name="M:vCommands.Manuals.Keyword.Equals(System.Object)">
+            <summary>
+            Determines whether the given <see cref="T:System.Object"/> is equal to the current <see cref="T:vCommands.Manuals.Keyword"/>.
+            </summary>
+            <param name="obj">The object to compare with the current keyword.</param>
+            <returns>true if the specified object is equal to the current keyword; otherwise, false.</returns>
+        </member>
+        <member name="M:vCommands.Manuals.Keyword.Equals(vCommands.Manuals.Keyword)">
+            <summary>
+            Determines whether the given <see cref="T:vCommands.Manuals.Keyword"/> is equal to the current <see cref="T:vCommands.Manuals.Keyword"/>.
+            </summary>
+            <param name="obj">The keyword to compare with the current keyword.</param>
+            <returns>true if the specified keyword is equal to the current keyword; otherwise, false.</returns>
+        </member>
+        <member name="M:vCommands.Manuals.Keyword.GetHashCode">
+            <summary>
+            Serves as a hash function for <see cref="T:vCommands.Manuals.Keyword"/>.
+            </summary>
+            <returns>A hash code for the current <see cref="T:vCommands.Manuals.Keyword"/>.</returns>
+        </member>
+        <member name="M:vCommands.Manuals.Keyword.op_Equality(vCommands.Manuals.Keyword,vCommands.Manuals.Keyword)">
+            <summary>
+            Determines whether two keywords are equal.
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:vCommands.Manuals.Keyword.op_Inequality(vCommands.Manuals.Keyword,vCommands.Manuals.Keyword)">
+            <summary>
+            Determines whether two keywords are unequal.
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:vCommands.Manuals.Keyword.ToString">
+            <summary>
+            Returns a string that represents the current keyword.
+            </summary>
+            <remarks>
+            This is only for debugging purposes. The resulted string is not suitable for placing in a manual.
+            </remarks>
+            <returns>A string that represents the current keyword.</returns>
+        </member>
+        <member name="P:vCommands.Manuals.Keyword.Word">
+            <summary>
+            Gets the word defined by the keyword.
+            </summary>
+        </member>
+        <member name="P:vCommands.Manuals.Keyword.Definition">
+            <summary>
+            Gets the body of the section.
+            </summary>
+        </member>
+        <member name="T:vCommands.Manuals.Library">
+            <summary>
+            Represents a collection of <see cref="T:vCommands.Manuals.Manual"/>s.
+            </summary>
+        </member>
+        <member name="M:vCommands.Manuals.Library.Add(vCommands.Manuals.Manual)">
+            <summary>
+            Adds the given manual to the library.
+            </summary>
+            <param name="manual"></param>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given manual is null.</exception>
+            <exception cref="T:System.ArgumentException">Thrown when the library already contains a manual with the title of the given one -or- the given manual's title is null.</exception>
+            <exception cref="T:System.InvalidOperationException">Thrown when the given manual is not sealed.</exception>
+            <exception cref="T:System.NotSupportedException">Thrown when the library is read-only.</exception>
+        </member>
+        <member name="M:vCommands.Manuals.Library.Add(System.Collections.Generic.IEnumerable{vCommands.Manuals.Manual})">
+            <summary>
+            Adds every manual in the given enumeration to the library.
+            </summary>
+            <param name="manuals"></param>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given enumeration is null.</exception>
+            <exception cref="T:System.ArgumentException">Thrown when the library already contains a manual with the title of a given one -or- a given manual's title is null.</exception>
+            <exception cref="T:System.InvalidOperationException">Thrown when a given manual is not sealed.</exception>
+            <exception cref="T:System.NotSupportedException">Thrown when the library is read-only.</exception>
+        </member>
+        <member name="M:vCommands.Manuals.Library.Clear">
+            <summary>
+            Removes all manuals from the library.
+            </summary>
+            <exception cref="T:System.NotSupportedException">Thrown when the library is read-only.</exception>
+        </member>
+        <member name="M:vCommands.Manuals.Library.Contains(vCommands.Manuals.Manual)">
+            <summary>
+            Determines whether the library contains the given manual specifically.
+            </summary>
+            <param name="manual"></param>
+            <returns>True if the specific manual is contained within the library; otherwise false.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given manual is null.</exception>
+            <exception cref="T:System.ArgumentException">Thrown when the given manual's title is null.</exception>
+        </member>
+        <member name="M:vCommands.Manuals.Library.Contains(System.String)">
+            <summary>
+            Determines whether the library contains a manual with the given title.
+            </summary>
+            <param name="title"></param>
+            <returns>True if a manual with the specific title is contained within the library; otherwise false.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given title is null.</exception>
+        </member>
+        <member name="M:vCommands.Manuals.Library.CopyTo(vCommands.Manuals.Manual[],System.Int32)">
+            <summary>
+            Copies the manuals of the current library to an <see cref="T:System.Array"/>, starting at a particular <see cref="T:System.Array"/> index.
+            </summary>
+            <param name="array"></param>
+            <param name="arrayIndex"></param>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given array is null.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown when the given array index is less than 0.</exception>
+            <exception cref="T:System.ArgumentException">Thrown when the number of manuals in the library is greater than the available space from the given index to the end of the destination array.</exception>
+        </member>
+        <member name="M:vCommands.Manuals.Library.Remove(vCommands.Manuals.Manual)">
+            <summary>
+            Removes the specific manual from the library.
+            </summary>
+            <param name="manual"></param>
+            <returns>True if the specific manual was found and removed; false if not found.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given manual is null.</exception>
+            <exception cref="T:System.ArgumentException">Thrown when the given manual's title is null.</exception>
+        </member>
+        <member name="M:vCommands.Manuals.Library.Remove(System.String)">
+            <summary>
+            Removes the manual with the specified title from the library.
+            </summary>
+            <param name="title"></param>
+            <returns>True if found and removed; false if not found</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given title string is null.</exception>
+        </member>
+        <member name="M:vCommands.Manuals.Library.GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through the library.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:vCommands.Manuals.Library.FindManual(System.Text.RegularExpressions.Regex,vCommands.Manuals.ManualLookupLocation)">
+            <summary>
+            Finds a manual by matching specific elements against a regular expression.
+            </summary>
+            <param name="mask"></param>
+            <param name="lookupLocation">A set of flags containing elements to look up.</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given regular expression is null.</exception>
+            <exception cref="T:System.ArgumentException">Thrown when the given lookup location set does not contain any location (is 0).</exception>
+        </member>
+        <member name="P:vCommands.Manuals.Library.Count">
+            <summary>
+            Gets the number of manuals contained in the library.
+            </summary>
+        </member>
+        <member name="P:vCommands.Manuals.Library.IsReadOnly">
+            <summary>
+            Gets a value indicating whether the library is read-only (no manuals can be added).
+            </summary>
+        </member>
+        <member name="P:vCommands.Manuals.Library.Item(System.String)">
+            <summary>
+            Retrieves the manual with the given title.
+            </summary>
+            <param name="title"></param>
+            <returns>A <see cref="T:vCommands.Manuals.Manual"/> object if found; otherwise null.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given title is null.</exception>
+        </member>
+        <member name="P:vCommands.Manuals.Library.Item(System.String,System.Int32[])">
+            <summary>
+            Retrieves the section at the given index from the manual with the given title.
+            </summary>
+            <remarks>
+            If the manual or any section is not found, it returns null.
+            </remarks>
+            <param name="title"></param>
+            <param name="indexes">Sequential indexes to look up for in the manual.</param>
+            <returns>A <see cref="T:vCommands.Manuals.Section"/> object if found; otherwise null.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given title or indexes array is null.</exception>
+            <exception cref="T:System.ArgumentException">Thrown when the given indexes array does not contain at least one element.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown when the given indexes array contains a negative element.</exception>
+        </member>
+        <member name="T:vCommands.Manuals.ManualLookupLocation">
+            <summary>
+            Possible locations to look up for finding a manual.
+            </summary>
+        </member>
+        <member name="F:vCommands.Manuals.ManualLookupLocation.ManualTitle">
+            <summary>
+            The lookup will include the title of a manual.
+            </summary>
+        </member>
+        <member name="F:vCommands.Manuals.ManualLookupLocation.ManualAbstract">
+            <summary>
+            The lookup will include the abstract of a manual.
+            </summary>
+        </member>
+        <member name="F:vCommands.Manuals.ManualLookupLocation.SectionTitles">
+            <summary>
+            The lookup will include titles of sections.
+            </summary>
+        </member>
+        <member name="F:vCommands.Manuals.ManualLookupLocation.SectionBodies">
+            <summary>
+            The lookup will include bodies of sections.
+            </summary>
+        </member>
+        <member name="F:vCommands.Manuals.ManualLookupLocation.WholeManual">
+            <summary>
+            The whole manual will be looked up.
+            </summary>
+        </member>
+        <member name="T:vCommands.Manuals.Parser">
+            <summary>
+            Contains methods for parsing manuals.
+            </summary>
+        </member>
+        <member name="M:vCommands.Manuals.Parser.ParseXML(System.String)">
+            <summary>
+            Parses a <see cref="T:vCommands.Manuals.Manual"/> or a collection of <see cref="T:vCommands.Manuals.Manual"/>s from the given XML document string.
+            </summary>
+            <param name="xmlText"></param>
+            <returns>An enumeration of manuals.</returns>
+        </member>
+        <member name="M:vCommands.Manuals.Parser.ParseXElementManual(System.Xml.Linq.XElement)">
+            <summary>
+            Parses a <see cref="T:vCommands.Manuals.Manual"/> from the given <see cref="T:System.Xml.Linq.XElement"/>.
+            </summary>
+            <param name="element"></param>
+            <returns></returns>
+        </member>
+        <member name="M:vCommands.Manuals.Parser.ParseXElementSection(System.Xml.Linq.XElement)">
+            <summary>
+            Parses a <see cref="T:vCommands.Manuals.Section"/> from the given <see cref="T:System.Xml.Linq.XElement"/>.
+            </summary>
+            <param name="element"></param>
+            <returns></returns>
+        </member>
+        <member name="T:vCommands.Manuals.Section">
+            <summary>
+            Represents a section in a manual.
+            </summary>
+        </member>
+        <member name="M:vCommands.Manuals.Section.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:vCommands.Manuals.Section"/> class.
+            </summary>
+        </member>
+        <member name="M:vCommands.Manuals.Section.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:vCommands.Manuals.Section"/> class with the specified title and body.
+            </summary>
+            <param name="title"></param>
+            <param name="body"></param>
+        </member>
+        <member name="M:vCommands.Manuals.Section.AddSubsection(vCommands.Manuals.Section)">
+            <summary>
+            Adds the given section as a subsection to the current section.
+            </summary>
+            <param name="sub"></param>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given subsection is null.</exception>
+            <exception cref="T:System.ArgumentException">Thrown when the given section is identical to the current one -or- the given section is contained within the hierarcy of the current one -or- the current section is contained within the hierarchy of the given one -or- the current section already contains a subsection with the title of the given section.</exception>
+        </member>
+        <member name="M:vCommands.Manuals.Section.AddSubsections(System.Collections.Generic.IEnumerable{vCommands.Manuals.Section})">
+            <summary>
+            Adds all sections from the given enumeration as subsections to the current section.
+            </summary>
+            <param name="subs"></param>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given enumeration is null.</exception>
+            <exception cref="T:System.ArgumentException">Thrown when the enumeration contains a null section -or- an enumerated section is identical to the current one -or- an enumerated section is contained within the hierarcy of the current one -or- the current section is contained within the hierarchy of an enumerated one -or- the current section already contains a subsection with the title of an enumerated section.</exception>
+        </member>
+        <member name="M:vCommands.Manuals.Section.RemoveSubsection(vCommands.Manuals.Section)">
+            <summary>
+            Removes the given subection from the current section, if found.
+            </summary>
+            <param name="sub"></param>
+            <returns>True if found and removed; false if not found.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given subsection is null.</exception>
+        </member>
+        <member name="M:vCommands.Manuals.Section.RemoveSubsection(System.String)">
+            <summary>
+            Removes the subsection with the given title from the current section, if found.
+            </summary>
+            <param name="title"></param>
+            <returns>True if found and removed; false if not found.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given title is null.</exception>
+        </member>
+        <member name="M:vCommands.Manuals.Section.Seal">
+            <summary>
+            Seals the section, making it unchangeable and refuse to add new subsections.
+            </summary>
+            <remarks>
+            Subsections are sealed as well.
+            </remarks>
+        </member>
+        <member name="M:vCommands.Manuals.Section.Equals(System.Object)">
+            <summary>
+            Determines whether the given <see cref="T:System.Object"/> is equal to the current <see cref="T:vCommands.Manuals.Section"/>.
+            </summary>
+            <param name="obj">The object to compare with the current section.</param>
+            <returns>true if the specified object is equal to the current section; otherwise, false.</returns>
+        </member>
+        <member name="M:vCommands.Manuals.Section.Equals(vCommands.Manuals.Section)">
+            <summary>
+            Determines whether the given <see cref="T:vCommands.Manuals.Section"/> is equal to the current <see cref="T:vCommands.Manuals.Section"/>.
+            </summary>
+            <param name="obj">The section to compare with the current section.</param>
+            <returns>true if the specified section is equal to the current section; otherwise, false.</returns>
+        </member>
+        <member name="M:vCommands.Manuals.Section.GetHashCode">
+            <summary>
+            Serves as a hash function for <see cref="T:vCommands.Manuals.Section"/>.
+            </summary>
+            <returns>A hash code for the current <see cref="T:vCommands.Manuals.Section"/>.</returns>
+        </member>
+        <member name="M:vCommands.Manuals.Section.op_Equality(vCommands.Manuals.Section,vCommands.Manuals.Section)">
+            <summary>
+            Determines whether two sections are equal.
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:vCommands.Manuals.Section.op_Inequality(vCommands.Manuals.Section,vCommands.Manuals.Section)">
+            <summary>
+            Determines whether two sections are unequal.
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:vCommands.Manuals.Section.ToString">
+            <summary>
+            Returns a string that represents the current section.
+            </summary>
+            <remarks>
+            This is only for debugging purposes. The resulted string is not suitable for placing in a manual.
+            </remarks>
+            <returns>A string that represents the current section.</returns>
+        </member>
+        <member name="P:vCommands.Manuals.Section.Title">
+            <summary>
+            Gets the title of the section.
+            </summary>
+        </member>
+        <member name="P:vCommands.Manuals.Section.Body">
+            <summary>
+            Gets the body of the section.
+            </summary>
+        </member>
+        <member name="P:vCommands.Manuals.Section.Subsections">
+            <summary>
+            Gets a read only sequential collection of subsections of the current section.
+            </summary>
+        </member>
+        <member name="T:vCommands.Manuals.Manual">
+            <summary>
+            Represents a virtual set of instructions for using a command or variable or for learning a subject.
+            </summary>
+        </member>
+        <member name="M:vCommands.Manuals.Manual.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:vCommands.Manuals.Manual"/> class.
+            </summary>
+        </member>
+        <member name="M:vCommands.Manuals.Manual.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:vCommands.Manuals.Manual"/> class with the specified title and abstract.
+            </summary>
+            <param name="title">A suitable title to represent the subject of the manual.</param>
+            <param name="abstr">A brief description of the subject of the manual.</param>
+        </member>
+        <member name="M:vCommands.Manuals.Manual.AddSection(vCommands.Manuals.Section)">
+            <summary>
+            Adds the given section to the manual.
+            </summary>
+            <param name="sub"></param>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given section is null.</exception>
+            <exception cref="T:System.ArgumentException">Thrown when the given section is contained within the hierarcy of the manual -or- the manual already contains a section with the title of the given section.</exception>
+        </member>
+        <member name="M:vCommands.Manuals.Manual.AddSections(System.Collections.Generic.IEnumerable{vCommands.Manuals.Section})">
+            <summary>
+            Adds all sections from the given enumeration to the current manual.
+            </summary>
+            <param name="subsenum"></param>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given enumeration is null.</exception>
+            <exception cref="T:System.ArgumentException">Thrown when the enumeration contains a null section -or- an enumerated section is contained within the hierarcy of the manual -or- the manual already contains a section with the title of an enumerated section.</exception>
+        </member>
+        <member name="M:vCommands.Manuals.Manual.RemoveSection(vCommands.Manuals.Section)">
+            <summary>
+            Removes the given subection from the manual, if found.
+            </summary>
+            <param name="sub"></param>
+            <returns>True if found and removed; false if not found.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given section is null.</exception>
+        </member>
+        <member name="M:vCommands.Manuals.Manual.RemoveSection(System.String)">
+            <summary>
+            Removes the section with the given title from the manual, if found.
+            </summary>
+            <param name="title"></param>
+            <returns>True if found and removed; false if not found.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given title is null.</exception>
+        </member>
+        <member name="M:vCommands.Manuals.Manual.AddKeyword(vCommands.Manuals.Keyword)">
+            <summary>
+            Adds the given keyword to the manual.
+            </summary>
+            <remarks>
+            There can be duplicate words.
+            </remarks>
+            <param name="keyword"></param>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given keyword is null.</exception>
+            <exception cref="T:System.ArgumentException">Thrown when the manual already contains the given keyword (identical word AND definition).</exception>
+        </member>
+        <member name="M:vCommands.Manuals.Manual.AddKeywords(System.Collections.Generic.IEnumerable{vCommands.Manuals.Keyword})">
+            <summary>
+            Adds all keywords from the given enumeration to the current manual.
+            </summary>
+            <param name="keysenum"></param>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given enumeration is null.</exception>
+            <exception cref="T:System.ArgumentException">Thrown when the enumeration contains a null keyword -or- the manual already contains an enumerated keyword (identical word AND definition).</exception>
+        </member>
+        <member name="M:vCommands.Manuals.Manual.RemoveKeyword(vCommands.Manuals.Keyword)">
+            <summary>
+            Removes the given keyword from the manual, if found.
+            </summary>
+            <param name="keyword"></param>
+            <returns>True if found and removed; false if not found.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given keyword is null.</exception>
+        </member>
+        <member name="M:vCommands.Manuals.Manual.RemoveKeyword(System.String)">
+            <summary>
+            Removes the subsection with the given title from the current section, if found.
+            </summary>
+            <param name="word"></param>
+            <returns>True if found and removed; false if not found.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given title is null.</exception>
+        </member>
+        <member name="M:vCommands.Manuals.Manual.AddReference(System.String)">
+            <summary>
+            Adds the given reference string to the manual.
+            </summary>
+            <remarks>
+            There can be duplicate words.
+            </remarks>
+            <param name="reff"></param>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given string is null.</exception>
+            <exception cref="T:System.ArgumentException">Thrown when the manual already contains the given reference string.</exception>
+        </member>
+        <member name="M:vCommands.Manuals.Manual.AddReferences(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Adds all reference strings from the given enumeration to the current manual.
+            </summary>
+            <param name="refsenum"></param>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given enumeration is null.</exception>
+            <exception cref="T:System.ArgumentException">Thrown when the enumeration contains a null keyword -or- the manual already contains an enumerated reference string.</exception>
+        </member>
+        <member name="M:vCommands.Manuals.Manual.RemoveReference(System.String)">
+            <summary>
+            Removes the given reference string from the manual, if found.
+            </summary>
+            <param name="reff"></param>
+            <returns>True if found and removed; false if not found.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given reference string is null.</exception>
+        </member>
+        <member name="M:vCommands.Manuals.Manual.Seal">
+            <summary>
+            Seals the manual, making it unchangeable and refuse to add new sections, keywords or references.
+            </summary>
+            <remarks>
+            Subsections are sealed as well.
+            </remarks>
+        </member>
+        <member name="M:vCommands.Manuals.Manual.Equals(System.Object)">
+            <summary>
+            Determines whether the given <see cref="T:System.Object"/> is equal to the current <see cref="T:vCommands.Manuals.Manual"/>.
+            </summary>
+            <param name="obj">The object to compare with the current manual.</param>
+            <returns>true if the specified object is equal to the current manual; otherwise, false.</returns>
+        </member>
+        <member name="M:vCommands.Manuals.Manual.Equals(vCommands.Manuals.Manual)">
+            <summary>
+            Determines whether the given <see cref="T:vCommands.Manuals.Manual"/> is equal to the current <see cref="T:vCommands.Manuals.Manual"/>.
+            </summary>
+            <param name="obj">The manual to compare with the current manual.</param>
+            <returns>true if the specified manual is equal to the current manual; otherwise, false.</returns>
+        </member>
+        <member name="M:vCommands.Manuals.Manual.GetHashCode">
+            <summary>
+            Serves as a hash function for <see cref="T:vCommands.Manuals.Manual"/>.
+            </summary>
+            <returns>A hash code for the current <see cref="T:vCommands.Manuals.Manual"/>.</returns>
+        </member>
+        <member name="M:vCommands.Manuals.Manual.op_Equality(vCommands.Manuals.Manual,vCommands.Manuals.Manual)">
+            <summary>
+            Determines whether two manuals are equal.
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:vCommands.Manuals.Manual.op_Inequality(vCommands.Manuals.Manual,vCommands.Manuals.Manual)">
+            <summary>
+            Determines whether two manuals are unequal.
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:vCommands.Manuals.Manual.ToString">
+            <summary>
+            Returns a string that represents the current manual.
+            </summary>
+            <remarks>
+            This is only for debugging purposes. The resulted string is not suitable for placing in a manual.
+            </remarks>
+            <returns>A string that represents the current manual.</returns>
+        </member>
+        <member name="P:vCommands.Manuals.Manual.Title">
+            <summary>
+            Gets the title of the section.
+            </summary>
+        </member>
+        <member name="P:vCommands.Manuals.Manual.Abstract">
+            <summary>
+            Gets a brief description of the subject of the manual.
+            </summary>
+        </member>
+        <member name="P:vCommands.Manuals.Manual.Sections">
+            <summary>
+            Gets a read only sequential collection of sections of the current manual.
+            </summary>
+        </member>
+        <member name="P:vCommands.Manuals.Manual.Item(System.Int32[])">
+            <summary>
+            Retrieves the section at the given index from the manual.
+            </summary>
+            <remarks>
+            If any section is not found, it returns null.
+            </remarks>
+            <param name="indexes">Sequential indexes to look up for in the manual.</param>
+            <returns>A <see cref="T:vCommands.Manuals.Section"/> object if found; otherwise null.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given indexes array is null.</exception>
+            <exception cref="T:System.ArgumentException">Thrown when the given indexes array does not contain at least one element.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown when the given indexes array contains a negative element.</exception>
+        </member>
+        <member name="T:vCommands.Parsing.Expressions.SeriesExpression">
+            <summary>
+            Represents a series of expressions.
+            </summary>
+        </member>
+        <member name="T:vCommands.Parsing.Expressions.Expression">
+            <summary>
+            Represents a console command expression.
+            </summary>
+        </member>
+        <member name="M:vCommands.Parsing.Expressions.Expression.Evaluate(vCommands.EvaluationContext)">
+            <summary>
+            Evaluates the current expression, returning the result.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:vCommands.Parsing.Expressions.Expression.Evaluate(System.Int32@,System.String@,vCommands.EvaluationContext)">
+            <summary>
+            Evaluates the current expression.
+            </summary>
+            <param name="status">Numerical status value of the evaluation.</param>
+            <param name="output">Text output of the evaluation.</param>
+            <param name="context">The context of the evaluation.</param>
+        </member>
+        <member name="M:vCommands.Parsing.Expressions.SeriesExpression.Evaluate(System.Int32@,System.String@,vCommands.EvaluationContext)">
+            <summary>
+            Evaluates the expression in the series, yielding the concatenated outputs and the status of the last evaluation.
+            </summary>
+            <param name="status">Numerical status value of the evaluation.</param>
+            <param name="output">Text output of the evaluation.</param>
+            <param name="context">The context of the evaluation.</param>
+        </member>
+        <member name="M:vCommands.Parsing.Expressions.SeriesExpression.#ctor(System.Collections.Generic.IEnumerable{vCommands.Parsing.Expressions.Expression})">
+            <summary>
+            Initializes a new instance of the <see cref="T:vCommands.Parsing.Expressions.ConditionalExpression"/> class with the specified toggle flag, command name and optional arguments.
+            </summary>
+            <param name="subexpressions">optional; An enumeration of expressions to add to the series.</param>
+        </member>
+        <member name="M:vCommands.Parsing.Expressions.SeriesExpression.AddExpression(vCommands.Parsing.Expressions.Expression)">
+            <summary>
+            Adds the given expression to the series.
+            </summary>
+            <param name="arg"></param>
+            <returns>True if the expression was added (series is not sealed); otherwise false.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given expression is null.</exception>
+        </member>
+        <member name="M:vCommands.Parsing.Expressions.SeriesExpression.ToString">
+            <summary>
+            Returns a string that represents the current series of expressions.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:vCommands.Parsing.Expressions.SeriesExpression.Subexpressions">
+            <summary>
+            Gets a read-only collection of arguments to the command.
+            </summary>
+        </member>
+        <member name="T:vCommands.Parsing.Expressions.ConditionalExpression">
+            <summary>
+            Represents a conditional statement - a condition with a required truth value, followed by a primary action and, optionally, a secondary action.
+            </summary>
+        </member>
+        <member name="M:vCommands.Parsing.Expressions.ConditionalExpression.Evaluate(System.Int32@,System.String@,vCommands.EvaluationContext)">
+            <summary>
+            Evaluates the condition, and if it meets the required truth value, evaluates the primary action, otherwise the secondary action, if any.
+            </summary>
+            <param name="status">Numerical status value of the evaluation.</param>
+            <param name="output">Text output of the evaluation.</param>
+            <param name="context">The context of the evaluation.</param>
+        </member>
+        <member name="M:vCommands.Parsing.Expressions.ConditionalExpression.#ctor(System.Boolean,vCommands.Parsing.Expressions.Expression,vCommands.Parsing.Expressions.Expression,vCommands.Parsing.Expressions.Expression)">
+            <summary>
+            Initializes a new instance of the <see cref="T:vCommands.Parsing.Expressions.ConditionalExpression"/> class with the specified truth value, condition and actions.
+            </summary>
+            <param name="value">optional; The truth value against which the condition is checked to determine which action is executed.</param>
+            <param name="condition">optional; The expression which acts as a condition.</param>
+            <param name="primaryAction">optional; The expression which evaluates when the condition meets the required truth value.</param>
+            <param name="secondaryAction">optional; The expression which evaluates when the condition does not meet the required truth value.</param>
+        </member>
+        <member name="M:vCommands.Parsing.Expressions.ConditionalExpression.ToString">
+            <summary>
+            Returns a string that represents the current conditional expression.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:vCommands.Parsing.Expressions.ConditionalExpression.TruthValue">
+            <summary>
+            Gets or sets the truth value of the condition necessary to trigger the primary action.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">Thrown when trying to set the property after the expression is sealed.</exception>
+        </member>
+        <member name="P:vCommands.Parsing.Expressions.ConditionalExpression.Condition">
+            <summary>
+            Gets or sets the expression which acts as a condition.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">Thrown when trying to set the property after the expression is sealed.</exception>
+        </member>
+        <member name="P:vCommands.Parsing.Expressions.ConditionalExpression.PrimaryAction">
+            <summary>
+            Gets or sets the expression which evaluates when the condition meets the required truth value.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">Thrown when trying to set the property after the expression is sealed.</exception>
+        </member>
+        <member name="P:vCommands.Parsing.Expressions.ConditionalExpression.SecondaryAction">
+            <summary>
+            Gets or sets the expression which evaluates when the condition does not meet the required truth value.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">Thrown when trying to set the property after the expression is sealed.</exception>
+        </member>
+        <member name="T:vCommands.Parsing.Expressions.CommandInvocationExpression">
+            <summary>
+            Represents a command execution - a command name optionally followed by arguments.
+            </summary>
+        </member>
+        <member name="M:vCommands.Parsing.Expressions.CommandInvocationExpression.Evaluate(System.Int32@,System.String@,vCommands.EvaluationContext)">
+            <summary>
+            Evaluates the current expression.
+            </summary>
+            <param name="status">Numerical status value of the evaluation.</param>
+            <param name="output">Text output of the evaluation.</param>
+            <param name="context">The context of the evaluation.</param>
+        </member>
+        <member name="M:vCommands.Parsing.Expressions.CommandInvocationExpression.#ctor(System.Nullable{System.Boolean},System.String,System.Collections.Generic.IEnumerable{vCommands.Parsing.Expressions.Expression})">
+            <summary>
+            Initializes a new instance of the <see cref="T:vCommands.Parsing.Expressions.CommandInvocationExpression"/> class with the specified toggle flag, command name and optional arguments.
+            </summary>
+            <param name="toggle">optional; A flag indicating whether the command is toggled on, off or not toggled at all.</param>
+            <param name="commandName">optional; The name of the command to execute.</param>
+            <param name="arguments">optional; A set of arguments to provide at the start.</param>
+        </member>
+        <member name="M:vCommands.Parsing.Expressions.CommandInvocationExpression.AddArgument(vCommands.Parsing.Expressions.Expression)">
+            <summary>
+            Adds the given expression as an argument.
+            </summary>
+            <param name="arg"></param>
+            <returns>True if the argument was added (expression is not sealed); otherwise false.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given expression is null.</exception>
+        </member>
+        <member name="M:vCommands.Parsing.Expressions.CommandInvocationExpression.Seal">
+            <summary>
+            Marks the expression as sealed, making it unchangeable.
+            </summary>
+            <returns>The current instance.</returns>
+        </member>
+        <member name="M:vCommands.Parsing.Expressions.CommandInvocationExpression.ToString">
+            <summary>
+            Returns a string that represents the current conditional expression.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:vCommands.Parsing.Expressions.CommandInvocationExpression.Toggle">
+            <summary>
+            Gets or sets the toggle flag of the command.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">Thrown when trying to set the property after the expression is sealed.</exception>
+        </member>
+        <member name="P:vCommands.Parsing.Expressions.CommandInvocationExpression.CommandName">
+            <summary>
+            Gets or sets the name of the command.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">Thrown when trying to set the property after the expression is sealed.</exception>
+        </member>
+        <member name="P:vCommands.Parsing.Expressions.CommandInvocationExpression.Arguments">
+            <summary>
+            Gets a read-only collection of arguments to the command.
+            </summary>
+        </member>
+        <member name="T:vCommands.Parsing.Expressions.ConstantExpression">
+            <summary>
+            Represents a constant expression - its result is always positive and the value never changes.
+            </summary>
+        </member>
+        <member name="M:vCommands.Parsing.Expressions.ConstantExpression.Evaluate(System.Int32@,System.String@,vCommands.EvaluationContext)">
+            <summary>
+            Evaluates the current expression.
+            </summary>
+            <param name="status">Numerical status value of the evaluation.</param>
+            <param name="output">Text output of the evaluation.</param>
+            <param name="context">The context of the evaluation.</param>
+        </member>
+        <member name="M:vCommands.Parsing.Expressions.ConstantExpression.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:vCommands.Parsing.Expressions.ConstantExpression"/> class with the specified value.
+            </summary>
+            <param name="value"></param>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given value is null.</exception>
+        </member>
+        <member name="M:vCommands.Parsing.Expressions.ConstantExpression.ToString">
+            <summary>
+            Returns a string that represents the current constant expression.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:vCommands.Parsing.Expressions.ConstantExpression.Value">
+            <summary>
+            Gets the constant value of the expression.
+            </summary>
+        </member>
+        <member name="T:vCommands.Parsing.Parser">
+            <summary>
+            Contains methods for parsing commands.
+            </summary>
+        </member>
+        <member name="M:vCommands.Parsing.Parser.Tokenize(System.String)">
+            <summary>
+            Turns the given command string into a series of tokens.
+            </summary>
+            <param name="command"></param>
+            <returns>An enumeration of tokens extracted from the string.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given command string is null.</exception>
+            <exception cref="T:System.ArgumentException">Thrown when the given command string is empty or consists only of white-space characters.</exception>
+        </member>
+        <member name="M:vCommands.Parsing.Parser.Parse(System.String)">
+            <summary>
+            Turns the given string into an expression.
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given command string is null.</exception>
+        </member>
+        <member name="M:vCommands.Parsing.Parser.Parse(System.Collections.Generic.IEnumerable{vCommands.Parsing.Token})">
+            <summary>
+            Turns the given enumeration of tokens into an expression.
+            </summary>
+            <param name="tokens"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given enumeration of tokens is null.</exception>
+        </member>
+        <member name="M:vCommands.Parsing.Parser.Parse(System.Collections.Generic.IEnumerator{vCommands.Parsing.Token})">
+            <summary>
+            Builds an expression from the tokens given by the enumerator.
+            </summary>
+            <param name="tokens"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given enumerator of tokens is null.</exception>
+        </member>
+        <member name="T:vCommands.Parsing.TokenTypes">
+            <summary>
+            Possible types of tokens in a console command string.
+            </summary>
+        </member>
+        <member name="F:vCommands.Parsing.TokenTypes.Separator">
+            <summary>
+            Separates a sequence of commands.
+            </summary>
+        </member>
+        <member name="F:vCommands.Parsing.TokenTypes.Include">
+            <summary>
+            Equivalent to 'then' in "if left-hand then right-hand".
+            </summary>
+        </member>
+        <member name="F:vCommands.Parsing.TokenTypes.Otherwise">
+            <summary>
+            Equivalent to 'else' in "if left-hand then middle-hand else right-hand".
+            </summary>
+        </member>
+        <member name="F:vCommands.Parsing.TokenTypes.Exclude">
+            <summary>
+            Equivalent to 'then' in "if not left-hand then right-hand".
+            </summary>
+        </member>
+        <member name="F:vCommands.Parsing.TokenTypes.CompoundArgumentStart">
+            <summary>
+            The beginning of a compound argument.
+            </summary>
+        </member>
+        <member name="F:vCommands.Parsing.TokenTypes.CompoundArgumentEnd">
+            <summary>
+            The end of a compound argument.
+            </summary>
+        </member>
+        <member name="F:vCommands.Parsing.TokenTypes.Toggler">
+            <summary>
+            A sign representing the toggle mode of a command.
+            </summary>
+        </member>
+        <member name="F:vCommands.Parsing.TokenTypes.CommandName">
+            <summary>
+            The name of a command.
+            </summary>
+        </member>
+        <member name="F:vCommands.Parsing.TokenTypes.Argument">
+            <summary>
+            An argument for a command.
+            </summary>
+        </member>
+        <member name="T:vCommands.Parsing.Token">
+            <summary>
+            A token in a console command string.
+            </summary>
+        </member>
+        <member name="M:vCommands.Parsing.Token.#ctor(vCommands.Parsing.TokenTypes,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:vCommands.Parsing.Token"/> class with the given type and content.
+            </summary>
+            <param name="type"></param>
+            <param name="content"></param>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given content string is empty.</exception>
+        </member>
+        <member name="P:vCommands.Parsing.Token.Type">
+            <summary>
+            Gets the type of the token.
+            </summary>
+        </member>
+        <member name="P:vCommands.Parsing.Token.Content">
+            <summary>
+            Gets the content of the token.
+            </summary>
+        </member>
+        <member name="T:vCommands.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:vCommands.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:vCommands.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:vCommands.Properties.Resources.default_manual">
+             <summary>
+               Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+            &lt;manuals&gt;
+                &lt;manual title=&quot;man&quot;&gt;
+                    This manual explains the usage of the &quot;man&quot; command and how to read and interpret vCommand manuals.
+                    
+                    &lt;section title=&quot;Command Parameters&quot;&gt;
+                        Hodor, hodor hodor hodor, hodor hodor hodor hodor hodor hodor. Hodor hodor hodor hodor, hodor hodor Hodor hodor hodor hodor hodor hodor hodor hodor,
+                        hodor Hodor hodor hodor hodor hodor hodor. Hodor Hodor, hodor, hodor hodor hodor hodor hodor ho [rest of string was truncated]&quot;;.
+             </summary>
+        </member>
+        <member name="T:vCommands.Utilities.CommandRegistration">
+            <summary>
+            Utilitary methods for registering commands.
+            </summary>
+        </member>
+        <member name="M:vCommands.Utilities.CommandRegistration.FromType``1(System.Boolean,System.String,System.String)">
+            <summary>
+            Attempts to turn all suitable static methods from the given type into commands.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="includePrivate">optional; True to include private methods in the search; otherwise false.</param>
+            <param name="prefix">optional; A prefix to add to all command names.</param>
+            <param name="forcedCategory">optional; The category in which to place the commands, regardless of their setting. Null means the method's attributed category is used.</param>
+            <returns></returns>
+        </member>
+        <member name="M:vCommands.Utilities.CommandRegistration.FromType(System.Type,System.Boolean,System.String,System.String)">
+            <summary>
+            Attempts to turn all suitable static methods from the given type into commands.
+            </summary>
+            <param name="t"></param>
+            <param name="includePrivate">optional; True to include private methods in the search; otherwise false.</param>
+            <param name="prefix">optional; A prefix to add to all command names.</param>
+            <param name="forcedCategory">optional; The category in which to place the commands, regardless of their setting. Null means the method's attributed category is used.</param>
+            <returns></returns>
+        </member>
+        <member name="M:vCommands.Utilities.CommandRegistration.FromMethod(System.Reflection.MethodInfo,System.String,System.String)">
+            <summary>
+            Attempts to turn the given method into a command, if the method matches the signature.
+            </summary>
+            <param name="m"></param>
+            <param name="prefix">optional; A prefix to add to the command's name.</param>
+            <param name="forcedCategory">optional; The category in which to place the command, regardless of the method's setting. Null means the method's attributed category is used.</param>
+            <returns>A <see cref="T:vCommands.Commands.MethodCommand"/> if successful; otherwise nil.</returns>
+        </member>
+        <member name="T:vCommands.Utilities.MethodCommandDataAttribute">
+            <summary>
+            Specifies information about a method which would be a command. This class cannot be inherited.
+            </summary>
+        </member>
+        <member name="M:vCommands.Utilities.MethodCommandDataAttribute.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:vCommands.Utilities.MethodCommandDataAttribute"/> class.
+            </summary>
+        </member>
+        <member name="P:vCommands.Utilities.MethodCommandDataAttribute.Name">
+            <summary>
+            Gets the name of the command.
+            </summary>
+        </member>
+        <member name="P:vCommands.Utilities.MethodCommandDataAttribute.Category">
+            <summary>
+            Gets the category of the command.
+            </summary>
+        </member>
+        <member name="P:vCommands.Utilities.MethodCommandDataAttribute.Abstract">
+            <summary>
+            Gets the description of the command.
+            </summary>
+        </member>
+        <member name="T:vCommands.Utilities.TypedEventHandler`2">
+            <summary>
+            Represents the method that will handle an event for a specific type of sender when the event provides data.
+            </summary>
+            <typeparam name="TObj">The type of the source of the event.</typeparam>
+            <typeparam name="TEventArgs">The type of the event data generated by the event.</typeparam>
+            <param name="sender">The source of the event.</param>
+            <param name="e">An object that contains the event data.</param>
+        </member>
+        <member name="T:vCommands.Utilities.TypedEventHandler`1">
+            <summary>
+            Represents the method that will handle an event for a specific type of sender that has no data.
+            </summary>
+            <typeparam name="TObj">The type of the source of the event.</typeparam>
+            <param name="sender">The source of the event.</param>
+            <param name="e">An object that contains no event data.</param>
+        </member>
+        <member name="T:vCommands.Variables.IVariable">
+            <summary>
+            Defines the functionality of a command variable.
+            </summary>
+        </member>
+        <member name="M:vCommands.Variables.IVariable.GetValue``1">
+            <summary>
+            Gets the underlying value of the variable.
+            </summary>
+            <typeparam name="T">The type of data to attempt to get.</typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:vCommands.Variables.IVariable.ChangeValue(vCommands.EvaluationContext,vCommands.Parsing.Expressions.Expression)">
+            <summary>
+            Changes the underlying value of the variable under the given context and according to the given value expression.
+            </summary>
+            <param name="context"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="P:vCommands.Variables.IVariable.StringValue">
+            <summary>
+            Gets or sets the string representing the value of the variable.
+            </summary>
+        </member>
+        <member name="P:vCommands.Variables.IVariable.Name">
+            <summary>
+            Gets the name of the variable.
+            </summary>
+        </member>
+        <member name="P:vCommands.Variables.IVariable.Abstract">
+            <summary>
+            Gets a brief description of the variable.
+            </summary>
+        </member>
+        <member name="E:vCommands.Variables.IVariable.Change">
+            <summary>
+            Raised before the value of the variable is changed.
+            </summary>
+        </member>
+        <member name="T:vCommands.Variables.SynchronousVariable`1">
+            <summary>
+            Represents a variable that can be used in the console and accessed from any number of places.
+            </summary>
+        </member>
+        <member name="T:vCommands.Variables.Variable`1">
+            <summary>
+            Represents a variable that can be used in the console.
+            </summary>
+        </member>
+        <member name="F:vCommands.Variables.Variable`1.DefaultAbstract">
+            <summary>
+            The default abstract of a <see cref="T:vCommands.Variables.Variable`1"/>.
+            </summary>
+        </member>
+        <member name="F:vCommands.Variables.Variable`1.val">
+            <summary>
+            The underlying value.
+            </summary>
+        </member>
+        <member name="M:vCommands.Variables.Variable`1.#ctor(System.String,System.String,`0)">
+            <summary>
+            Initializes a new instance of the <see cref="T:vCommands.Variables.Variable`1"/> class with the specified name and, optionally, an initial value.
+            </summary>
+            <param name="name"></param>
+            <param name="abstr">optional; A brief description of the variable.</param>
+            <param name="value">The initial value.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given name is null.</exception>
+        </member>
+        <member name="M:vCommands.Variables.Variable`1.GetValue``1">
+            <summary>
+            Gets the underlying value of the variable.
+            </summary>
+            <typeparam name="TVar">The type of data to attempt to get.</typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:vCommands.Variables.Variable`1.ChangeValue(vCommands.EvaluationContext,vCommands.Parsing.Expressions.Expression)">
+            <summary>
+            Changes the underlying value of the variable under the given context and according to the given value expression.
+            </summary>
+            <param name="context"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:vCommands.Variables.Variable`1.op_Implicit(vCommands.Variables.Variable{`0})~`0">
+            <summary>
+            Converts the variable to its value.
+            </summary>
+            <param name="v"></param>
+            <returns></returns>
+        </member>
+        <member name="M:vCommands.Variables.Variable`1.ToString">
+            <summary>
+            Returns a string that represents the current <see cref="T:vCommands.Variables.Variable`1"/>.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:vCommands.Variables.Variable`1.GetHashCode">
+            <summary>
+            Servers as a hash function for <see cref="T:vCommands.Variables.Variable`1"/>.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:vCommands.Variables.Variable`1.OnChange(vCommands.EventArguments.VariableChangeEventArgs)">
+            <summary>
+            Raisese the <see cref="E:vCommands.Variables.Variable`1.Change"/> event.
+            </summary>
+            <param name="e">A <see cref="T:vCommands.EventArguments.VariableChangeEventArgs"/> that contains event data.</param>
+        </member>
+        <member name="P:vCommands.Variables.Variable`1.Setter">
+            <summary>
+            Gets the method which would convert the string to the current type.
+            </summary>
+        </member>
+        <member name="P:vCommands.Variables.Variable`1.Value">
+            <summary>
+            Gets or sets the value of the variable.
+            </summary>
+        </member>
+        <member name="P:vCommands.Variables.Variable`1.StringValue">
+            <summary>
+            Gets or sets the string representing the value of the variable.
+            </summary>
+        </member>
+        <member name="P:vCommands.Variables.Variable`1.Name">
+            <summary>
+            Gets the name of the variable.
+            </summary>
+        </member>
+        <member name="P:vCommands.Variables.Variable`1.Abstract">
+            <summary>
+            Gets a brief description of the variable.
+            </summary>
+        </member>
+        <member name="E:vCommands.Variables.Variable`1.Change">
+            <summary>
+            Raised before the value of the variable is changed.
+            </summary>
+        </member>
+        <member name="F:vCommands.Variables.SynchronousVariable`1.DefaultAbstract">
+            <summary>
+            The default abstract of a <see cref="T:vCommands.Variables.SynchronousVariable`1"/>.
+            </summary>
+        </member>
+        <member name="M:vCommands.Variables.SynchronousVariable`1.#ctor(System.String,System.String,`0)">
+            <summary>
+            Initializes a new instance of the <see cref="T:vCommands.Variables.SynchronousVariable`1"/> class with the specified name and, optionally, an initial value.
+            </summary>
+            <param name="name"></param>
+            <param name="abstr">optional; A brief description of the variable.</param>
+            <param name="value">The initial value.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given name is null.</exception>
+        </member>
+        <member name="M:vCommands.Variables.SynchronousVariable`1.ToString">
+            <summary>
+            Returns a string that represents the current <see cref="T:vCommands.Variables.SynchronousVariable`1"/>.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:vCommands.Variables.SynchronousVariable`1.Value">
+            <summary>
+            Gets or sets the value of the variable.
+            </summary>
+        </member>
+        <member name="P:vCommands.Variables.SynchronousVariable`1.StringValue">
+            <summary>
+            Gets or sets the string representing the value of the variable.
+            </summary>
+        </member>
+        <member name="T:vCommands.Variables.DelegatedVariable`1">
+            <summary>
+            Represents a variable that can be used in the console.
+            </summary>
+        </member>
+        <member name="F:vCommands.Variables.DelegatedVariable`1.DefaultAbstract">
+            <summary>
+            The default abstract of a <see cref="T:vCommands.Variables.DelegatedVariable`1"/>.
+            </summary>
+        </member>
+        <member name="M:vCommands.Variables.DelegatedVariable`1.#ctor(System.String,System.Func{`0},System.Action{`0},System.Func{System.String},System.Func{System.String,System.Boolean},System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:vCommands.Variables.DelegatedVariable`1"/> class with the specified name and, optionally, an initial value.
+            </summary>
+            <param name="name"></param>
+            <param name="valueGetter">The method used to retrieve the underlying value of the variable.</param>
+            <param name="valueSetter">optional; The method used to set the underlying value of the variable.</param>
+            <param name="stringGetter">optional; The method used to retrieve the underlying value of the variable as a string. If null, the value getter's result will be turned into a string.</param>
+            <param name="stringSetter">optional; The method used to set the underlying value of the variable as a string. If null and a value setter is present, an automatic conversion will be attempted.</param>
+            <param name="abstr">optional; A brief description of the variable.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when the given name is null.</exception>
+        </member>
+        <member name="M:vCommands.Variables.DelegatedVariable`1.GetValue``1">
+            <summary>
+            Gets the underlying value of the variable.
+            </summary>
+            <typeparam name="TVar">The type of data to attempt to get.</typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:vCommands.Variables.DelegatedVariable`1.ChangeValue(vCommands.EvaluationContext,vCommands.Parsing.Expressions.Expression)">
+            <summary>
+            Changes the underlying value of the variable under the given context and according to the given value expression.
+            </summary>
+            <param name="context"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:vCommands.Variables.DelegatedVariable`1.op_Implicit(vCommands.Variables.DelegatedVariable{`0})~`0">
+            <summary>
+            Converts the variable to its value.
+            </summary>
+            <param name="v"></param>
+            <returns></returns>
+        </member>
+        <member name="M:vCommands.Variables.DelegatedVariable`1.ToString">
+            <summary>
+            Returns a string that represents the current <see cref="T:vCommands.Variables.DelegatedVariable`1"/>.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:vCommands.Variables.DelegatedVariable`1.GetHashCode">
+            <summary>
+            Servers as a hash function for <see cref="T:vCommands.Variables.DelegatedVariable`1"/>.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:vCommands.Variables.DelegatedVariable`1.OnChange(vCommands.EventArguments.VariableChangeEventArgs)">
+            <summary>
+            Raisese the <see cref="E:vCommands.Variables.DelegatedVariable`1.Change"/> event.
+            </summary>
+            <param name="e">A <see cref="T:vCommands.EventArguments.VariableChangeEventArgs"/> that contains event data.</param>
+        </member>
+        <member name="P:vCommands.Variables.DelegatedVariable`1.Value">
+            <summary>
+            Gets or sets the value of the variable.
+            </summary>
+        </member>
+        <member name="P:vCommands.Variables.DelegatedVariable`1.StringValue">
+            <summary>
+            Gets or sets the string representing the value of the variable.
+            </summary>
+        </member>
+        <member name="P:vCommands.Variables.DelegatedVariable`1.Name">
+            <summary>
+            Gets the name of the variable.
+            </summary>
+        </member>
+        <member name="P:vCommands.Variables.DelegatedVariable`1.Abstract">
+            <summary>
+            Gets a brief description of the variable.
+            </summary>
+        </member>
+        <member name="E:vCommands.Variables.DelegatedVariable`1.Change">
+            <summary>
+            Raised before the value of the variable is changed.
+            </summary>
+        </member>
+        <member name="T:vCommands.Variables.Setter`1">
+            <summary>
+            Represents a method which can attempt to turn a string into another value type.
+            </summary>
+            <typeparam name="T">The target type.</typeparam>
+            <param name="str">String to turn.</param>
+            <param name="val"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

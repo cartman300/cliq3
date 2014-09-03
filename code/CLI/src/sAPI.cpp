@@ -66,3 +66,12 @@ void sAPI::OnEntityCreated(IntPtr E) {
 			A->EntityCreated(E);
 	} ProtectedCatch
 }
+
+bool sAPI::OnCommand(String^ S) {
+	try {
+		bool R = false;
+		for each (sAPIAddon^ A in Instances)
+			R |= A->Command(S);
+		return R;
+	} ProtectedCatch
+}

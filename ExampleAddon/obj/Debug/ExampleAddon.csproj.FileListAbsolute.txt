@@ -1,5 +1,5 @@
 E:\Projects\cliq3\ExampleAddon\obj\Debug\ExampleAddon.csprojResolveAssemblyReference.cache
-E:\Projects\cliq3\ExampleAddon\obj\Debug\Example.cliq3.dll
-E:\Projects\cliq3\ExampleAddon\obj\Debug\Example.cliq3.pdb
 E:\Games\Quake3\cliq3\Example.cliq3.dll
 E:\Games\Quake3\cliq3\Example.cliq3.pdb
+E:\Projects\cliq3\ExampleAddon\obj\Debug\Example.cliq3.dll
+E:\Projects\cliq3\ExampleAddon\obj\Debug\Example.cliq3.pdb

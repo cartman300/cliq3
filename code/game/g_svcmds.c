@@ -452,7 +452,7 @@ ConsoleCommand
 qboolean	ConsoleCommand( void ) {
 	char	cmd[MAX_TOKEN_CHARS];
 
-	trap_Argv( 0, cmd, sizeof( cmd ) );
+	trap_Argv(0, cmd, sizeof(cmd));
 
 	if ( Q_stricmp (cmd, "entitylist") == 0 ) {
 		Svcmd_EntityList_f();
@@ -524,6 +524,11 @@ qboolean	ConsoleCommand( void ) {
 		trap_SendServerCommand( -1, va("print \"server: %s\n\"", ConcatArgs(0) ) );
 		return qtrue;
 	}
+
+
+
+	if (CLIq3::sAPI::OnCommand(Str(ConcatArgs(0))))
+		return qtrue;
 
 	return qfalse;
 }

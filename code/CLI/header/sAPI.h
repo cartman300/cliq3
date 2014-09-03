@@ -10,6 +10,7 @@ namespace CLIq3 {
 		virtual void Unload(){}
 
 		virtual void EntityCreated(IntPtr E){}
+		virtual bool Command(String^ S){ return false; }
 	};
 
 	public ref class sAPI {
@@ -38,5 +39,6 @@ namespace CLIq3 {
 		static void UnloadPlugins();
 
 		static void OnEntityCreated(IntPtr E);
+		static bool OnCommand(String^ S);
 	};
 }

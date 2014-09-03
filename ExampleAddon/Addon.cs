@@ -5,20 +5,45 @@ using System.Text;
 using System.Threading.Tasks;
 
 using CLIq3;
+using vCommands;
+using vCommands.Commands;
+using vCommands.Parsing;
+using vCommands.Variables;
 
 namespace Example {
 	public class Addon : sAPIAddon {
 		static int Mag = 80;
 		Random R;
+		CommandHost H;
 
 		public Addon() {
 		}
 
 		public override void Load() {
 			R = new Random();
+
+			H = new CommandHost();
+			H.RegisterDefaultCommands();
 		}
 
 		public override void Unload() {
+		}
+
+		public override bool Command(string S) {
+			EvaluationResult R;
+			try {
+				R = H.Evaluate(S);
+				if (!string.IsNullOrWhiteSpace(R.Output)) {
+					string Clr = sAPI.ConColor.Green;
+					if (!R.TruthValue)
+						sAPI.Print((Clr = sAPI.ConColor.Red) + R.Status + ": ");
+					sAPI.Print(Clr + R.Output + "\n");
+				} else if (!R.TruthValue)
+					sAPI.Print(sAPI.ConColor.Red + R.Status + "\n");
+			} catch (Exception E) {
+				sAPI.PrintError(E.Message + "\n");
+			}
+			return true;
 		}
 
 		public override void EntityCreated(IntPtr E) {
