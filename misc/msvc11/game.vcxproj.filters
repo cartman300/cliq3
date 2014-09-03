@@ -131,6 +131,9 @@
     <ClCompile Include="..\..\code\CLI\src\Entity.cpp">
       <Filter>Source Files\CLI\src</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\code\CLI\src\Structs.cpp">
+      <Filter>Source Files\CLI\src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\code\game\ai_chat.h">
@@ -215,6 +218,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\code\CLI\header\sAPI.h">
+      <Filter>Source Files\CLI\header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\CLI\header\Entity.h">
+      <Filter>Source Files\CLI\header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\CLI\header\Enums.h">
       <Filter>Source Files\CLI\header</Filter>
     </ClInclude>
   </ItemGroup>

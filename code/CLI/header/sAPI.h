@@ -1,33 +1,15 @@
+#pragma once
+
+#include "Enums.h"
+#include "Entity.h"
 
 namespace CLIq3 {
-	public ref class Entity {
-	internal:
-		IntPtr Ent;
-
-	public:
-		delegate void ThinkFunc(IntPtr self);
-		delegate void ReachedFunc(IntPtr self);
-		delegate void BlockedFunc(IntPtr self, IntPtr other);
-		delegate void TouchFunc(IntPtr self, IntPtr other, IntPtr trace);
-		delegate void UseFunc(IntPtr self, IntPtr other, IntPtr activator);
-		delegate void PainFunc(IntPtr self, IntPtr attacker, int damage);
-		delegate void DieFunc(IntPtr self, IntPtr inflictor, IntPtr attacker, int damage, int mod);
-
-		Entity(IntPtr E);
-
-		String^ GetClassname();
-		void SetClassname(String^ S);
-
-		DieFunc^ GetDieFunc();
-		void SetDieFunc(DieFunc^ F);
-	};
-
 	public ref class sAPIAddon {
 	public:
 		virtual void Load(){}
 		virtual void Unload(){}
 
-		virtual void EntityCreated(Entity^ E){}
+		virtual void EntityCreated(IntPtr E){}
 	};
 
 	public ref class sAPI {
@@ -55,6 +37,6 @@ namespace CLIq3 {
 		static void LoadPlugin(Assembly^ Asm);
 		static void UnloadPlugins();
 
-		static void OnEntityCreated(Entity^ E);
+		static void OnEntityCreated(IntPtr E);
 	};
 }

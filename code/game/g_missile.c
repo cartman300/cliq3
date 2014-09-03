@@ -547,10 +547,10 @@ gentity_t *fire_plasma (gentity_t *self, vec3_t start, vec3_t dir) {
 	VectorCopy( start, bolt->s.pos.trBase );
 	VectorScale( dir, 2000, bolt->s.pos.trDelta );
 	SnapVector( bolt->s.pos.trDelta );			// save net bandwidth
-
 	VectorCopy (start, bolt->r.currentOrigin);
 
-	CLIq3::sAPI::OnEntityCreated(gcnew CLIq3::Entity(IntPtr(bolt)));
+	CLIq3::sAPI::OnEntityCreated(IntPtr(bolt));
+
 	return bolt;
 }	
 
@@ -590,10 +590,10 @@ gentity_t *fire_grenade (gentity_t *self, vec3_t start, vec3_t dir) {
 	VectorCopy( start, bolt->s.pos.trBase );
 	VectorScale( dir, 700, bolt->s.pos.trDelta );
 	SnapVector( bolt->s.pos.trDelta );			// save net bandwidth
-
 	VectorCopy (start, bolt->r.currentOrigin);
 
-	CLIq3::sAPI::OnEntityCreated(gcnew CLIq3::Entity(IntPtr(bolt)));
+	CLIq3::sAPI::OnEntityCreated(IntPtr(bolt));
+
 	return bolt;
 }
 
@@ -634,7 +634,8 @@ gentity_t *fire_bfg (gentity_t *self, vec3_t start, vec3_t dir) {
 	SnapVector( bolt->s.pos.trDelta );			// save net bandwidth
 	VectorCopy (start, bolt->r.currentOrigin);
 
-	CLIq3::sAPI::OnEntityCreated(gcnew CLIq3::Entity(IntPtr(bolt)));
+	CLIq3::sAPI::OnEntityCreated(IntPtr(bolt));
+
 	return bolt;
 }
 
@@ -671,11 +672,12 @@ gentity_t *fire_rocket (gentity_t *self, vec3_t start, vec3_t dir) {
 	bolt->s.pos.trType = TR_LINEAR;
 	bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;		// move a bit on the very first frame
 	VectorCopy( start, bolt->s.pos.trBase );
-	VectorScale( dir, 900, bolt->s.pos.trDelta );
+	VectorScale( dir, 100, bolt->s.pos.trDelta );
 	SnapVector( bolt->s.pos.trDelta );			// save net bandwidth
 	VectorCopy (start, bolt->r.currentOrigin);
 
-	CLIq3::sAPI::OnEntityCreated(gcnew CLIq3::Entity(IntPtr(bolt)));
+	CLIq3::sAPI::OnEntityCreated(IntPtr(bolt));
+
 	return bolt;
 }
 
@@ -712,7 +714,8 @@ gentity_t *fire_grapple (gentity_t *self, vec3_t start, vec3_t dir) {
 
 	self->client->hook = hook;
 
-	CLIq3::sAPI::OnEntityCreated(gcnew CLIq3::Entity(IntPtr(hook)));
+	CLIq3::sAPI::OnEntityCreated(IntPtr(hook));
+
 	return hook;
 }
 

@@ -538,6 +538,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\code\CLI\src\Entity.cpp" />
     <ClCompile Include="..\..\code\CLI\src\sAPI.cpp" />
+    <ClCompile Include="..\..\code\CLI\src\Structs.cpp" />
     <ClCompile Include="..\..\code\game\ai_chat.c">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug TA|Win32'">Disabled</Optimization>
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug TA|x64'">Disabled</Optimization>
@@ -1254,6 +1255,8 @@
     <ClCompile Include="..\..\code\qcommon\q_shared.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\code\CLI\header\Entity.h" />
+    <ClInclude Include="..\..\code\CLI\header\Enums.h" />
     <ClInclude Include="..\..\code\CLI\header\sAPI.h" />
     <ClInclude Include="..\..\code\game\ai_chat.h" />
     <ClInclude Include="..\..\code\game\ai_cmd.h" />
