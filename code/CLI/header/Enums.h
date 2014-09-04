@@ -110,6 +110,10 @@ namespace CLIq3 {
 		float X; float Y; float Z;
 
 		void Snap();
+		Vec3 Perpendicular();
+		Vec3 Cross(Vec3 Vec);
+		float Normalize();
+
 	internal:
 		void ToVec3t(vec3_t Vec);
 		static Vec3 FromVec3t(vec3_t Vec);

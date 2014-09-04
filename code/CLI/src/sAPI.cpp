@@ -7,18 +7,7 @@ using namespace System::Runtime::InteropServices;
 using namespace System::Windows::Forms;
 
 #define ProtectedCatch catch(Exception^ E) { CLIq3::sAPI::PrintError(String::Format("{0}\n", E->ToString())); }
-
-void sAPI::Print(String^ S) {
-	auto Ns = (const char*)CreateNString(S);
-	Com_Printf("%s", Ns);
-	DestroyNString(Ns);
-}
-
-void sAPI::PrintError(String^ S) {
-	auto Ns = (const char*)CreateNString(S);
-	Com_Printf(S_COLOR_RED "%s", Ns);
-	DestroyNString(Ns);
-}
+#define LEVEL
 
 void sAPI::LoadPlugins() {
 	try {
@@ -60,7 +49,7 @@ void sAPI::LoadPlugin(Assembly^ Asm) {
 	} ProtectedCatch
 }
 
-void sAPI::OnEntityCreated(IntPtr E) {
+void sAPI::OnEntityCreated(EntPtr^ E) {
 	try {
 		for each (sAPIAddon^ A in Instances)
 			A->EntityCreated(E);
@@ -71,7 +60,40 @@ bool sAPI::OnCommand(String^ S) {
 	try {
 		bool R = false;
 		for each (sAPIAddon^ A in Instances)
-			R |= A->Command(S);
+			R = R || A->Command(S);
 		return R;
 	} ProtectedCatch
+}
+
+bool sAPI::OnFireWeapon(EntPtr^ Ent, Vec3 Muzzle, Vec3 Forward) {
+	try {
+		bool R = false;
+		for each (sAPIAddon^ A in Instances)
+			R = R || A->FireWeapon(Ent, Muzzle, Forward);
+		return R;
+	} ProtectedCatch
+}
+
+void sAPI::Print(String^ S) {
+	auto Ns = (const char*)CreateNString(S);
+	Com_Printf("%s", Ns);
+	DestroyNString(Ns);
+}
+
+void sAPI::PrintError(String^ S) {
+	auto Ns = (const char*)CreateNString(S);
+	Com_Printf(S_COLOR_RED "%s", Ns);
+	DestroyNString(Ns);
+}
+
+int sAPI::GetTime() {
+	return level.time;
+}
+
+Vec3 sAPI::EvaluateTrajectory(Trajectory T, int Time) {
+	vec3_t V;
+	trajectory_t Tr;
+	T.ToTrajectoryt(&Tr);
+	BG_EvaluateTrajectory(&Tr, Time, V);
+	return Vec3::FromVec3t(V);
 }

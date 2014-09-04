@@ -26,12 +26,37 @@ Vec3 Vec3::FromVec3t(vec3_t Vec) {
 	return V;
 }
 
+Vec3 Vec3::Perpendicular() {
+	vec3_t A, B;
+	ToVec3t(A);
+	PerpendicularVector(B, A);
+	return Vec3::FromVec3t(B);
+}
+
+Vec3 Vec3::Cross(Vec3 Vec) {
+	vec3_t A, B, C;
+	ToVec3t(A);
+	Vec.ToVec3t(B);
+	CrossProduct(A, B, C);
+	return Vec3::FromVec3t(C);
+}
+
+float Vec3::Normalize() {
+	vec3_t V;
+	ToVec3t(V);
+	float Len = VectorNormalize(V);
+	X = V[0];
+	Y = V[1];
+	Z = V[2];
+	return Len;
+}
+
 void Trajectory::ToTrajectoryt(trajectory_t* T) {
 	Base.ToVec3t(T->trBase);
 	Delta.ToVec3t(T->trDelta);
 	T->trDuration = Duration;
 	T->trTime = Time;
-	T->trType = (trType_t)this->Type;
+	T->trType = (trType_t)(int)this->Type;
 }
 
 Trajectory Trajectory::FromTrajectoryt(trajectory_t* T) {
@@ -40,6 +65,6 @@ Trajectory Trajectory::FromTrajectoryt(trajectory_t* T) {
 	Tr.Delta = Vec3::FromVec3t(T->trDelta);
 	Tr.Duration = T->trDuration;
 	Tr.Time = T->trTime;
-	Tr.Type = (TrajectoryType)T->trType;
+	Tr.Type = (TrajectoryType)(int)T->trType;
 	return Tr;
 }

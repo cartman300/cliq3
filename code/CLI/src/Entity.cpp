@@ -1,25 +1,33 @@
 #include "../../qcommon/q_shared.h"
 #include "../../game/g_local.h"
 
+#include "../header/Entity.h"
+
 using namespace CLIq3;
 using namespace System::IO;
 using namespace System::Runtime::InteropServices;
 using namespace System::Windows::Forms;
+using namespace System::Runtime::CompilerServices;
 
 #define Protected(body) try body catch(Exception^ E) { CLIq3::sAPI::PrintError(String::Format("{0}\n", E->ToString())); }
 
-#define ToGEntity(P) ((gentity_t*)P.ToPointer())
+#define GEntityType EntPtr^
+#define ToGEntity(P) ((gentity_t*)P->Ptr)
 #define ENT ToGEntity(Ent)
 
-#define ToGClient(P) ((gclient_t*)P.ToPointer())
+#define ToGClient(P) ((gclient_t*)P->Ptr)
 
 #define DefineFunc(A, B) \
-	Entity::A^ Entity::Get##A(IntPtr Ent) { \
-	gentity_t* E = ToGEntity(Ent); if (E == NULL) throw gcnew Exception("Ent was null in Get" #A); \
-	if (E->B == NULL) throw gcnew Exception("Ent->" #B " was null in Get" #A); \
-	return (Entity::A^)Marshal::GetDelegateForFunctionPointer(IntPtr(E->B), Entity::A::typeid); } \
-	void Entity::Set##A(IntPtr Ent, Entity::A^ F) { \
-	ToGEntity(Ent)->B = (ent##A)Marshal::GetFunctionPointerForDelegate(F).ToPointer(); }
+	A^ Entity::Get##A(EntPtr^ Ent) { \
+		if (ENT == NULL) \
+			throw gcnew Exception("Ent was null in Get" #A); \
+		if (ENT->B == NULL) \
+			/*throw gcnew Exception("Ent->" #B " was null in Get" #A);*/ return nullptr; \
+		return (A^)Marshal::GetDelegateForFunctionPointer(IntPtr(ENT->B), A::typeid); \
+	} \
+	void Entity::Set##A(EntPtr^ Ent, A^ F) { \
+		ENT->B = (ent##A)Marshal::GetFunctionPointerForDelegate(F).ToPointer(); \
+	}
 
 DefineFunc(ThinkFunc, think);
 DefineFunc(ReachedFunc, reached);
@@ -31,136 +39,136 @@ DefineFunc(DieFunc, die);
 
 #undef DefineFunc
 
-IntPtr Entity::Spawn() {
-	return IntPtr(G_Spawn());
+GEntityType Entity::Spawn() {
+	return gcnew EntPtr(G_Spawn());
 }
 
-void Entity::Free(IntPtr Ent) {
+void Entity::Free(GEntityType Ent) {
 	G_FreeEntity(ENT);
 }
 
-IntPtr Entity::GetClient(IntPtr Ent) {
-	return IntPtr(ENT->client);
+ClientPtr^ Entity::GetClient(GEntityType Ent) {
+	return gcnew ClientPtr(ENT->client);
 }
-void Entity::SetClient(IntPtr Ent, IntPtr Client) {
+void Entity::SetClient(GEntityType Ent, ClientPtr^ Client) {
 	ENT->client = ToGClient(Client);
 }
 
-bool Entity::GetInUse(IntPtr Ent) {
+bool Entity::GetInUse(GEntityType Ent) {
 	return (bool)ENT->inuse;
 }
-void Entity::SetInUse(IntPtr Ent, bool B) {
+void Entity::SetInUse(GEntityType Ent, bool B) {
 	ENT->inuse = (qboolean)B;
 }
 
-String^ Entity::GetClassname(IntPtr Ent) {
+String^ Entity::GetClassname(GEntityType Ent) {
 	return gcnew String(ToGEntity(Ent)->classname);
 }
-void Entity::SetClassname(IntPtr Ent, String^ S) {
+void Entity::SetClassname(GEntityType Ent, String^ S) {
 	ENT->classname = (char*)CreateNString(S);
 }
 
-int Entity::GetNextThink(IntPtr Ent) {
+int Entity::GetNextThink(GEntityType Ent) {
 	return ENT->nextthink;
 }
-void Entity::SetNextThink(IntPtr Ent, int Time) {
+void Entity::SetNextThink(GEntityType Ent, int Time) {
 	ENT->nextthink = Time;
 }
 
-EntType Entity::GetEType(IntPtr Ent) {
+EntType Entity::GetEType(GEntityType Ent) {
 	return (EntType)ENT->s.eType;
 }
-void Entity::SetEType(IntPtr Ent, EntType T) {
+void Entity::SetEType(GEntityType Ent, EntType T) {
 	ENT->s.eType = (int)T;
 }
 
-SVFlags Entity::GetSVFlags(IntPtr Ent) {
+SVFlags Entity::GetSVFlags(GEntityType Ent) {
 	return (SVFlags)ENT->r.svFlags;
 }
-void Entity::SetSVFlags(IntPtr Ent, SVFlags Flags) {
+void Entity::SetSVFlags(GEntityType Ent, SVFlags Flags) {
 	ENT->r.svFlags = (int)Flags;
 }
 
-Weapon Entity::GetWeapon(IntPtr Ent) {
+Weapon Entity::GetWeapon(GEntityType Ent) {
 	return (Weapon)ENT->s.weapon;
 }
-void Entity::SetWeapon(IntPtr Ent, Weapon W) {
+void Entity::SetWeapon(GEntityType Ent, Weapon W) {
 	ENT->s.weapon = (int)W;
 }
 
-int Entity::GetOwnerNum(IntPtr Ent) {
+int Entity::GetOwnerNum(GEntityType Ent) {
 	return ENT->r.ownerNum;
 }
-void Entity::SetOwnerNum(IntPtr Ent, int O) {
+void Entity::SetOwnerNum(GEntityType Ent, int O) {
 	ENT->r.ownerNum = O;
 }
 
-IntPtr Entity::GetParent(IntPtr Ent) {
-	return IntPtr(ENT->parent);
+GEntityType Entity::GetParent(GEntityType Ent) {
+	return gcnew EntPtr(ENT->parent);
 }
-void Entity::SetParent(IntPtr Ent, IntPtr Parent) {
+void Entity::SetParent(GEntityType Ent, GEntityType Parent) {
 	ENT->parent = ToGEntity(Parent);
 }
 
-int Entity::GetDamage(IntPtr Ent) {
+int Entity::GetDamage(GEntityType Ent) {
 	return ENT->damage;
 }
-void Entity::SetDamage(IntPtr Ent, int Dmg) {
+void Entity::SetDamage(GEntityType Ent, int Dmg) {
 	ENT->damage = Dmg;
 }
 
-int Entity::GetSplashDamage(IntPtr Ent) {
+int Entity::GetSplashDamage(GEntityType Ent) {
 	return ENT->splashDamage;
 }
-void Entity::SetSplashDamage(IntPtr Ent, int Dmg) {
+void Entity::SetSplashDamage(GEntityType Ent, int Dmg) {
 	ENT->splashDamage = Dmg;
 }
 
-int Entity::GetSplashRadius(IntPtr Ent) {
+int Entity::GetSplashRadius(GEntityType Ent) {
 	return ENT->splashRadius;
 }
-void Entity::SetSplashRadius(IntPtr Ent, int R) {
+void Entity::SetSplashRadius(GEntityType Ent, int R) {
 	ENT->splashRadius = R;
 }
 
-MeansOfDeath Entity::GetMethodOfDeath(IntPtr Ent) {
+MeansOfDeath Entity::GetMethodOfDeath(GEntityType Ent) {
 	return (MeansOfDeath)ENT->methodOfDeath;
 }
-void Entity::SetMethodOfDeath(IntPtr Ent, MeansOfDeath M) {
+void Entity::SetMethodOfDeath(GEntityType Ent, MeansOfDeath M) {
 	ENT->methodOfDeath = (meansOfDeath_t)M;
 }
 
-MeansOfDeath Entity::GetSplashMethodOfDeath(IntPtr Ent) {
+MeansOfDeath Entity::GetSplashMethodOfDeath(GEntityType Ent) {
 	return (MeansOfDeath)ENT->splashMethodOfDeath;
 }
-void Entity::SetSplashMethodOfDeath(IntPtr Ent, MeansOfDeath M) {
+void Entity::SetSplashMethodOfDeath(GEntityType Ent, MeansOfDeath M) {
 	ENT->splashMethodOfDeath = (meansOfDeath_t)M;
 }
 
-Clipmask Entity::GetClipmask(IntPtr Ent) {
+Clipmask Entity::GetClipmask(GEntityType Ent) {
 	return (Clipmask)ENT->clipmask;
 }
-void Entity::SetClipmask(IntPtr Ent, Clipmask Mask) {
+void Entity::SetClipmask(GEntityType Ent, Clipmask Mask) {
 	ENT->clipmask = (int)Mask;
 }
 
-IntPtr Entity::GetTargetEnt(IntPtr Ent) {
-	return IntPtr(ENT->target_ent);
+GEntityType Entity::GetTargetEnt(GEntityType Ent) {
+	return gcnew EntPtr(ENT->target_ent);
 }
-void Entity::SetTargetEnt(IntPtr Ent, IntPtr TEnt) {
+void Entity::SetTargetEnt(GEntityType Ent, GEntityType TEnt) {
 	ENT->target_ent = ToGEntity(TEnt);
 }
 
-Trajectory Entity::GetTrajectory(IntPtr Ent) {
+Trajectory Entity::GetTrajectory(GEntityType Ent) {
 	return Trajectory::FromTrajectoryt(&ENT->s.pos);
 }
-void Entity::SetTrajectory(IntPtr Ent, Trajectory T) {
+void Entity::SetTrajectory(GEntityType Ent, Trajectory T) {
 	T.ToTrajectoryt(&ENT->s.pos);
 }
 
-Vec3 Entity::GetOrigin(IntPtr Ent) {
+Vec3 Entity::GetOrigin(GEntityType Ent) {
 	return Vec3::FromVec3t(ENT->r.currentOrigin);
 }
-void Entity::SetOrigin(IntPtr Ent, Vec3 Vec) {
+void Entity::SetOrigin(GEntityType Ent, Vec3 Vec) {
 	Vec.ToVec3t(ENT->r.currentOrigin);
 }

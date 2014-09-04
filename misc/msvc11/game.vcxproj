@@ -35,6 +35,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <ProjectGuid>{F9EE10DA-2404-4154-B904-F93C936C040A}</ProjectGuid>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -537,7 +538,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\code\CLI\src\Entity.cpp" />
+    <ClCompile Include="..\..\code\CLI\src\Pointers.cpp" />
     <ClCompile Include="..\..\code\CLI\src\sAPI.cpp" />
+    <ClCompile Include="..\..\code\CLI\src\sQuake.cpp" />
     <ClCompile Include="..\..\code\CLI\src\Structs.cpp" />
     <ClCompile Include="..\..\code\game\ai_chat.c">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug TA|Win32'">Disabled</Optimization>
@@ -1257,7 +1260,9 @@
   <ItemGroup>
     <ClInclude Include="..\..\code\CLI\header\Entity.h" />
     <ClInclude Include="..\..\code\CLI\header\Enums.h" />
+    <ClInclude Include="..\..\code\CLI\header\Pointers.h" />
     <ClInclude Include="..\..\code\CLI\header\sAPI.h" />
+    <ClInclude Include="..\..\code\CLI\header\sQuake.h" />
     <ClInclude Include="..\..\code\game\ai_chat.h" />
     <ClInclude Include="..\..\code\game\ai_cmd.h" />
     <ClInclude Include="..\..\code\game\ai_dmnet.h" />

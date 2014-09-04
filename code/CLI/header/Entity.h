@@ -1,75 +1,82 @@
 #pragma once
 
+#define GEntityType EntPtr^
 #define DeclareFunc(T) \
-	static T^ Get##T(IntPtr Ent); static void Set##T(IntPtr Ent, T^ Func)
+	[System::Runtime::CompilerServices::Extension] \
+	static T^ Get##T(EntPtr^ Ent); \
+	[System::Runtime::CompilerServices::Extension] \
+	static void Set##T(EntPtr^ Ent, T^ Func)
+#define METHOD [System::Runtime::CompilerServices::Extension] static
+#define DELEGATE public delegate
 
 namespace CLIq3 {
-	public ref class Entity {
+	DELEGATE void ThinkFunc(IntPtr self);
+	DELEGATE void ReachedFunc(IntPtr self);
+	DELEGATE void BlockedFunc(IntPtr self, IntPtr other);
+	DELEGATE void TouchFunc(IntPtr self, IntPtr other, IntPtr trace);
+	DELEGATE void UseFunc(IntPtr self, IntPtr other, IntPtr activator);
+	DELEGATE void PainFunc(IntPtr self, IntPtr attacker, int damage);
+	DELEGATE void DieFunc(IntPtr self, IntPtr inflictor, IntPtr attacker, int damage, int mod);
+
+	[System::Runtime::CompilerServices::Extension]
+	public ref class Entity abstract sealed {
 	public:
-		static IntPtr Spawn();
-		static void Free(IntPtr Ent);
+		METHOD GEntityType Spawn();
+		METHOD void Free(GEntityType Ent);
 
-		delegate void ThinkFunc(IntPtr self);
-		delegate void ReachedFunc(IntPtr self);
-		delegate void BlockedFunc(IntPtr self, IntPtr other);
-		delegate void TouchFunc(IntPtr self, IntPtr other, IntPtr trace);
-		delegate void UseFunc(IntPtr self, IntPtr other, IntPtr activator);
-		delegate void PainFunc(IntPtr self, IntPtr attacker, int damage);
-		delegate void DieFunc(IntPtr self, IntPtr inflictor, IntPtr attacker, int damage, int mod);
+		METHOD ClientPtr^ GetClient(GEntityType Ent);
+		METHOD void SetClient(GEntityType Ent, ClientPtr^ Client);
 
-		static IntPtr GetClient(IntPtr Ent);
-		static void SetClient(IntPtr Ent, IntPtr Client);
+		METHOD bool GetInUse(GEntityType Ent);
+		METHOD void SetInUse(GEntityType Ent, bool B);
 
-		static bool GetInUse(IntPtr Ent);
-		static void SetInUse(IntPtr Ent, bool B);
+		METHOD String^ GetClassname(GEntityType Ent);
+		METHOD void SetClassname(GEntityType Ent, String^ S);
 
-		static String^ GetClassname(IntPtr Ent);
-		static void SetClassname(IntPtr Ent, String^ S);
+		METHOD int GetNextThink(GEntityType Ent);
+		METHOD void SetNextThink(GEntityType Ent, int Time);
 
-		static int GetNextThink(IntPtr Ent);
-		static void SetNextThink(IntPtr Ent, int Time);
+		METHOD EntType GetEType(GEntityType Ent);
+		METHOD void SetEType(GEntityType Ent, EntType T);
 
-		static EntType GetEType(IntPtr Ent);
-		static void SetEType(IntPtr Ent, EntType T);
+		METHOD SVFlags GetSVFlags(GEntityType Ent);
+		METHOD void SetSVFlags(GEntityType Ent, SVFlags Flags);
 
-		static SVFlags GetSVFlags(IntPtr Ent);
-		static void SetSVFlags(IntPtr Ent, SVFlags Flags);
+		METHOD Weapon GetWeapon(GEntityType Ent);
+		METHOD void SetWeapon(GEntityType Ent, Weapon W);
 
-		static Weapon GetWeapon(IntPtr Ent);
-		static void SetWeapon(IntPtr Ent, Weapon W);
+		METHOD int GetOwnerNum(GEntityType Ent);
+		METHOD void SetOwnerNum(GEntityType Ent, int O);
 
-		static int GetOwnerNum(IntPtr Ent);
-		static void SetOwnerNum(IntPtr Ent, int O);
+		METHOD GEntityType GetParent(GEntityType Ent);
+		METHOD void SetParent(GEntityType Ent, GEntityType Parent);
 
-		static IntPtr GetParent(IntPtr Ent);
-		static void SetParent(IntPtr Ent, IntPtr Parent);
+		METHOD int GetDamage(GEntityType Ent);
+		METHOD void SetDamage(GEntityType Ent, int Dmg);
 
-		static int GetDamage(IntPtr Ent);
-		static void SetDamage(IntPtr Ent, int Dmg);
+		METHOD int GetSplashDamage(GEntityType Ent);
+		METHOD void SetSplashDamage(GEntityType Ent, int Dmg);
 
-		static int GetSplashDamage(IntPtr Ent);
-		static void SetSplashDamage(IntPtr Ent, int Dmg);
+		METHOD int GetSplashRadius(GEntityType Ent);
+		METHOD void SetSplashRadius(GEntityType Ent, int R);
 
-		static int GetSplashRadius(IntPtr Ent);
-		static void SetSplashRadius(IntPtr Ent, int R);
+		METHOD MeansOfDeath GetMethodOfDeath(GEntityType Ent);
+		METHOD void SetMethodOfDeath(GEntityType Ent, MeansOfDeath M);
 
-		static MeansOfDeath GetMethodOfDeath(IntPtr Ent);
-		static void SetMethodOfDeath(IntPtr Ent, MeansOfDeath M);
+		METHOD MeansOfDeath GetSplashMethodOfDeath(GEntityType Ent);
+		METHOD void SetSplashMethodOfDeath(GEntityType Ent, MeansOfDeath M);
 
-		static MeansOfDeath GetSplashMethodOfDeath(IntPtr Ent);
-		static void SetSplashMethodOfDeath(IntPtr Ent, MeansOfDeath M);
+		METHOD Clipmask GetClipmask(GEntityType Ent);
+		METHOD void SetClipmask(GEntityType Ent, Clipmask Mask);
 
-		static Clipmask GetClipmask(IntPtr Ent);
-		static void SetClipmask(IntPtr Ent, Clipmask Mask);
+		METHOD GEntityType GetTargetEnt(GEntityType Ent);
+		METHOD void SetTargetEnt(GEntityType Ent, GEntityType TEnt);
 
-		static IntPtr GetTargetEnt(IntPtr Ent);
-		static void SetTargetEnt(IntPtr Ent, IntPtr TEnt);
+		METHOD Trajectory GetTrajectory(GEntityType Ent);
+		METHOD void SetTrajectory(GEntityType Ent, Trajectory T);
 
-		static Trajectory GetTrajectory(IntPtr Ent);
-		static void SetTrajectory(IntPtr Ent, Trajectory T);
-
-		static Vec3 GetOrigin(IntPtr Ent);
-		static void SetOrigin(IntPtr Ent, Vec3 V);
+		METHOD Vec3 GetOrigin(GEntityType Ent);
+		METHOD void SetOrigin(GEntityType Ent, Vec3 V);
 
 		DeclareFunc(ThinkFunc);
 		DeclareFunc(ReachedFunc);
@@ -82,3 +89,6 @@ namespace CLIq3 {
 }
 
 #undef DeclareFunc
+#undef GEntityType
+#undef METHOD
+#undef DELEGATE

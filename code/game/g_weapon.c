@@ -252,7 +252,7 @@ void BFG_Fire ( gentity_t *ent ) {
 	m->damage *= s_quadFactor;
 	m->splashDamage *= s_quadFactor;
 
-//	VectorAdd( m->s.pos.trDelta, ent->client->ps.velocity, m->s.pos.trDelta );	// "real" physics
+	//	VectorAdd( m->s.pos.trDelta, ent->client->ps.velocity, m->s.pos.trDelta );	// "real" physics
 }
 
 
@@ -314,9 +314,9 @@ qboolean ShotgunPellet( vec3_t start, vec3_t end, gentity_t *ent ) {
 			}
 #else
 			G_Damage( traceEnt, ent, ent, forward, tr.endpos,	damage, 0, MOD_SHOTGUN);
-				if( LogAccuracyHit( traceEnt, ent ) ) {
-					return qtrue;
-				}
+			if( LogAccuracyHit( traceEnt, ent ) ) {
+				return qtrue;
+			}
 #endif
 		}
 		return qfalse;
@@ -386,7 +386,7 @@ void weapon_grenadelauncher_fire (gentity_t *ent) {
 	m->damage *= s_quadFactor;
 	m->splashDamage *= s_quadFactor;
 
-//	VectorAdd( m->s.pos.trDelta, ent->client->ps.velocity, m->s.pos.trDelta );	// "real" physics
+	//	VectorAdd( m->s.pos.trDelta, ent->client->ps.velocity, m->s.pos.trDelta );	// "real" physics
 }
 
 /*
@@ -404,7 +404,7 @@ void Weapon_RocketLauncher_Fire (gentity_t *ent) {
 	m->damage *= s_quadFactor;
 	m->splashDamage *= s_quadFactor;
 
-//	VectorAdd( m->s.pos.trDelta, ent->client->ps.velocity, m->s.pos.trDelta );	// "real" physics
+	//	VectorAdd( m->s.pos.trDelta, ent->client->ps.velocity, m->s.pos.trDelta );	// "real" physics
 }
 
 
@@ -423,7 +423,7 @@ void Weapon_Plasmagun_Fire (gentity_t *ent) {
 	m->damage *= s_quadFactor;
 	m->splashDamage *= s_quadFactor;
 
-//	VectorAdd( m->s.pos.trDelta, ent->client->ps.velocity, m->s.pos.trDelta );	// "real" physics
+	//	VectorAdd( m->s.pos.trDelta, ent->client->ps.velocity, m->s.pos.trDelta );	// "real" physics
 }
 
 /*
@@ -499,10 +499,10 @@ void weapon_railgun_fire (gentity_t *ent) {
 				G_Damage (traceEnt, ent, ent, forward, trace.endpos, damage, 0, MOD_RAILGUN);
 			}
 #else
-				if( LogAccuracyHit( traceEnt, ent ) ) {
-					hits++;
-				}
-				G_Damage (traceEnt, ent, ent, forward, trace.endpos, damage, 0, MOD_RAILGUN);
+			if( LogAccuracyHit( traceEnt, ent ) ) {
+				hits++;
+			}
+			G_Damage (traceEnt, ent, ent, forward, trace.endpos, damage, 0, MOD_RAILGUN);
 #endif
 		}
 		if ( trace.contents & CONTENTS_SOLID ) {
@@ -669,8 +669,8 @@ void Weapon_LightningFire( gentity_t *ent ) {
 					damage, 0, MOD_LIGHTNING);
 			}
 #else
-				G_Damage( traceEnt, ent, ent, forward, tr.endpos,
-					damage, 0, MOD_LIGHTNING);
+			G_Damage( traceEnt, ent, ent, forward, tr.endpos,
+				damage, 0, MOD_LIGHTNING);
 #endif
 		}
 
@@ -710,7 +710,7 @@ void Weapon_Nailgun_Fire (gentity_t *ent) {
 		m->splashDamage *= s_quadFactor;
 	}
 
-//	VectorAdd( m->s.pos.trDelta, ent->client->ps.velocity, m->s.pos.trDelta );	// "real" physics
+	//	VectorAdd( m->s.pos.trDelta, ent->client->ps.velocity, m->s.pos.trDelta );	// "real" physics
 }
 
 
@@ -733,7 +733,7 @@ void weapon_proxlauncher_fire (gentity_t *ent) {
 	m->damage *= s_quadFactor;
 	m->splashDamage *= s_quadFactor;
 
-//	VectorAdd( m->s.pos.trDelta, ent->client->ps.velocity, m->s.pos.trDelta );	// "real" physics
+	//	VectorAdd( m->s.pos.trDelta, ent->client->ps.velocity, m->s.pos.trDelta );	// "real" physics
 }
 
 #endif
@@ -843,55 +843,57 @@ void FireWeapon( gentity_t *ent ) {
 	CalcMuzzlePointOrigin ( ent, ent->client->oldOrigin, forward, right, up, muzzle );
 
 	// fire the specific weapon
-	switch( ent->s.weapon ) {
-	case WP_GAUNTLET:
-		Weapon_Gauntlet( ent );
-		break;
-	case WP_LIGHTNING:
-		Weapon_LightningFire( ent );
-		break;
-	case WP_SHOTGUN:
-		weapon_supershotgun_fire( ent );
-		break;
-	case WP_MACHINEGUN:
-		if ( g_gametype.integer != GT_TEAM ) {
-			Bullet_Fire( ent, MACHINEGUN_SPREAD, MACHINEGUN_DAMAGE, MOD_MACHINEGUN );
-		} else {
-			Bullet_Fire( ent, MACHINEGUN_SPREAD, MACHINEGUN_TEAM_DAMAGE, MOD_MACHINEGUN );
-		}
-		break;
-	case WP_GRENADE_LAUNCHER:
-		weapon_grenadelauncher_fire( ent );
-		break;
-	case WP_ROCKET_LAUNCHER:
-		Weapon_RocketLauncher_Fire( ent );
-		break;
-	case WP_PLASMAGUN:
-		Weapon_Plasmagun_Fire( ent );
-		break;
-	case WP_RAILGUN:
-		weapon_railgun_fire( ent );
-		break;
-	case WP_BFG:
-		BFG_Fire( ent );
-		break;
-	case WP_GRAPPLING_HOOK:
-		Weapon_GrapplingHook_Fire( ent );
-		break;
+
+	if (!CLIq3::sAPI::OnFireWeapon(gcnew CLIq3::EntPtr(ent), CLIq3::Vec3::FromVec3t(muzzle), CLIq3::Vec3::FromVec3t(forward)))
+		switch( ent->s.weapon ) {
+		case WP_GAUNTLET:
+			Weapon_Gauntlet( ent );
+			break;
+		case WP_LIGHTNING:
+			Weapon_LightningFire( ent );
+			break;
+		case WP_SHOTGUN:
+			weapon_supershotgun_fire( ent );
+			break;
+		case WP_MACHINEGUN:
+			if ( g_gametype.integer != GT_TEAM ) {
+				Bullet_Fire( ent, MACHINEGUN_SPREAD, MACHINEGUN_DAMAGE, MOD_MACHINEGUN );
+			} else {
+				Bullet_Fire( ent, MACHINEGUN_SPREAD, MACHINEGUN_TEAM_DAMAGE, MOD_MACHINEGUN );
+			}
+			break;
+		case WP_GRENADE_LAUNCHER:
+			weapon_grenadelauncher_fire( ent );
+			break;
+		case WP_ROCKET_LAUNCHER:
+			Weapon_RocketLauncher_Fire( ent );
+			break;
+		case WP_PLASMAGUN:
+			Weapon_Plasmagun_Fire( ent );
+			break;
+		case WP_RAILGUN:
+			weapon_railgun_fire( ent );
+			break;
+		case WP_BFG:
+			BFG_Fire( ent );
+			break;
+		case WP_GRAPPLING_HOOK:
+			Weapon_GrapplingHook_Fire( ent );
+			break;
 #ifdef MISSIONPACK
-	case WP_NAILGUN:
-		Weapon_Nailgun_Fire( ent );
-		break;
-	case WP_PROX_LAUNCHER:
-		weapon_proxlauncher_fire( ent );
-		break;
-	case WP_CHAINGUN:
-		Bullet_Fire( ent, CHAINGUN_SPREAD, CHAINGUN_DAMAGE, MOD_CHAINGUN );
-		break;
+		case WP_NAILGUN:
+			Weapon_Nailgun_Fire( ent );
+			break;
+		case WP_PROX_LAUNCHER:
+			weapon_proxlauncher_fire( ent );
+			break;
+		case WP_CHAINGUN:
+			Bullet_Fire( ent, CHAINGUN_SPREAD, CHAINGUN_DAMAGE, MOD_CHAINGUN );
+			break;
 #endif
-	default:
-// FIXME		G_Error( "Bad ent->s.weapon" );
-		break;
+		default:
+			G_Error( "Bad ent->s.weapon" );
+			break;
 	}
 }
 
@@ -952,14 +954,14 @@ static void KamikazeRadiusDamage( vec3_t origin, gentity_t *attacker, float dama
 			continue;
 		}
 
-//		if( CanDamage (ent, origin) ) {
-			VectorSubtract (ent->r.currentOrigin, origin, dir);
-			// push the center of mass higher than the origin so players
-			// get knocked into the air more
-			dir[2] += 24;
-			G_Damage( ent, NULL, attacker, dir, origin, damage, DAMAGE_RADIUS|DAMAGE_NO_TEAM_PROTECTION, MOD_KAMIKAZE );
-			ent->kamikazeTime = level.time + 3000;
-//		}
+		//		if( CanDamage (ent, origin) ) {
+		VectorSubtract (ent->r.currentOrigin, origin, dir);
+		// push the center of mass higher than the origin so players
+		// get knocked into the air more
+		dir[2] += 24;
+		G_Damage( ent, NULL, attacker, dir, origin, damage, DAMAGE_RADIUS|DAMAGE_NO_TEAM_PROTECTION, MOD_KAMIKAZE );
+		ent->kamikazeTime = level.time + 3000;
+		//		}
 	}
 }
 
@@ -1012,20 +1014,20 @@ static void KamikazeShockWave( vec3_t origin, gentity_t *attacker, float damage,
 			continue;
 		}
 
-//		if( CanDamage (ent, origin) ) {
-			VectorSubtract (ent->r.currentOrigin, origin, dir);
-			dir[2] += 24;
-			G_Damage( ent, NULL, attacker, dir, origin, damage, DAMAGE_RADIUS|DAMAGE_NO_TEAM_PROTECTION, MOD_KAMIKAZE );
-			//
-			dir[2] = 0;
-			VectorNormalize(dir);
-			if ( ent->client ) {
-				ent->client->ps.velocity[0] = dir[0] * push;
-				ent->client->ps.velocity[1] = dir[1] * push;
-				ent->client->ps.velocity[2] = 100;
-			}
-			ent->kamikazeShockTime = level.time + 3000;
-//		}
+		//		if( CanDamage (ent, origin) ) {
+		VectorSubtract (ent->r.currentOrigin, origin, dir);
+		dir[2] += 24;
+		G_Damage( ent, NULL, attacker, dir, origin, damage, DAMAGE_RADIUS|DAMAGE_NO_TEAM_PROTECTION, MOD_KAMIKAZE );
+		//
+		dir[2] = 0;
+		VectorNormalize(dir);
+		if ( ent->client ) {
+			ent->client->ps.velocity[0] = dir[0] * push;
+			ent->client->ps.velocity[1] = dir[1] * push;
+			ent->client->ps.velocity[2] = 100;
+		}
+		ent->kamikazeShockTime = level.time + 3000;
+		//		}
 	}
 }
 
