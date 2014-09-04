@@ -23,5 +23,24 @@ namespace Example {
 				sAPI.PrintError(E.Message + "\n");
 			}
 		}
+
+		public static EntPtr FireGrenadeLancher(EntPtr Ply, Vec3 Muzzle, Vec3 Forward) {
+			EntPtr R = sQuake.Fire_grenade(Ply, Muzzle, Forward);
+
+			Trajectory T = R.GetTrajectory();
+			T.Type = TrajectoryType.TR_LINEAR;
+			R.SetTrajectory(T);
+
+			ThinkFunc F = R.GetThinkFunc();
+			int ShotTime = sAPI.GetTime();
+			R.SetThinkFunc((_) => {
+				Mods.Randomize(_);
+				if (ShotTime < sAPI.GetTime() - 2500)
+					F(_);
+			});
+			R.SetNextThink(sAPI.GetTime() + 200);
+
+			return R;
+		}
 	}
 }

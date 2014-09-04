@@ -44,21 +44,14 @@ namespace Example {
 		}
 
 		public override bool FireWeapon(EntPtr Ply, Vec3 Muzzle, Vec3 Forward) {
+			int Grenades = 3;
+
 			if (Ply.GetWeapon() == Weapon.WP_GRENADE_LAUNCHER) {
-				EntPtr R = sQuake.Fire_grenade(Ply, Muzzle, Forward);
-
-				Trajectory T = R.GetTrajectory();
-				T.Type = TrajectoryType.TR_LINEAR;
-				R.SetTrajectory(T);
-
-				ThinkFunc F = R.GetThinkFunc();
-				int ShotTime = sAPI.GetTime();
-				R.SetThinkFunc((_) => {
-					Mods.Randomize(_);
-					if (ShotTime < sAPI.GetTime() - 2500)
-						F(_);
-				});
-				R.SetNextThink(sAPI.GetTime() + 200);
+				for (int i = 0; i < Grenades; i++) {
+					EntPtr G = Mods.FireGrenadeLancher(Ply, Muzzle, Forward);
+					G.SetDamage(G.GetDamage() / (Grenades / 2));
+					G.SetSplashDamage(G.GetSplashDamage() / (Grenades / 2));
+				}
 				return true;
 			}
 
