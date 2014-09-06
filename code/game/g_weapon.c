@@ -116,7 +116,7 @@ qboolean CheckGauntletAttack( gentity_t *ent ) {
 	}
 #endif
 
-	damage = 50 * s_quadFactor;
+	damage = 80 * s_quadFactor;
 	G_Damage( traceEnt, ent, ent, forward, tr.endpos,
 		damage, 0, MOD_GAUNTLET );
 
@@ -162,7 +162,7 @@ void SnapVectorTowards( vec3_t v, vec3_t to ) {
 #define	MACHINEGUN_DAMAGE	7
 #define	MACHINEGUN_TEAM_DAMAGE	5		// wimpier MG in teamplay
 
-void Bullet_Fire (gentity_t *ent, float spread, int damage, int mod ) {
+void fire_bullet(gentity_t *ent, float spread, int damage, int mod, vec3_t muzzle, vec3_t forward) {
 	trace_t		tr;
 	vec3_t		end;
 #ifdef MISSIONPACK
@@ -172,7 +172,8 @@ void Bullet_Fire (gentity_t *ent, float spread, int damage, int mod ) {
 	float		u;
 	gentity_t	*tent;
 	gentity_t	*traceEnt;
-	int			i, passent;
+	int			i;
+	int passent = 0;
 
 	damage *= s_quadFactor;
 
@@ -183,7 +184,8 @@ void Bullet_Fire (gentity_t *ent, float spread, int damage, int mod ) {
 	VectorMA (end, r, right, end);
 	VectorMA (end, u, up, end);
 
-	passent = ent->s.number;
+	if (ent != NULL)
+		passent = ent->s.number;
 	for (i = 0; i < 10; i++) {
 
 		trap_Trace (&tr, muzzle, NULL, NULL, end, passent, MASK_SHOT);
@@ -200,14 +202,15 @@ void Bullet_Fire (gentity_t *ent, float spread, int damage, int mod ) {
 		if ( traceEnt->takedamage && traceEnt->client ) {
 			tent = G_TempEntity( tr.endpos, EV_BULLET_HIT_FLESH );
 			tent->s.eventParm = traceEnt->s.number;
-			if( LogAccuracyHit( traceEnt, ent ) ) {
+			if(ent != NULL && LogAccuracyHit( traceEnt, ent ))
 				ent->client->accuracy_hits++;
-			}
 		} else {
 			tent = G_TempEntity( tr.endpos, EV_BULLET_HIT_WALL );
 			tent->s.eventParm = DirToByte( tr.plane.normal );
 		}
-		tent->s.otherEntityNum = ent->s.number;
+
+		if (ent != NULL)
+			tent->s.otherEntityNum = ent->s.number;
 
 		if ( traceEnt->takedamage) {
 #ifdef MISSIONPACK
@@ -226,8 +229,7 @@ void Bullet_Fire (gentity_t *ent, float spread, int damage, int mod ) {
 			}
 			else {
 #endif
-				G_Damage( traceEnt, ent, ent, forward, tr.endpos,
-					damage, 0, mod);
+				G_Damage( traceEnt, ent, ent, forward, tr.endpos, damage, 0, mod);
 #ifdef MISSIONPACK
 			}
 #endif
@@ -235,6 +237,10 @@ void Bullet_Fire (gentity_t *ent, float spread, int damage, int mod ) {
 		break;
 	}
 }
+
+/*void Bullet_Fire (gentity_t *ent, float spread, int damage, int mod ) {
+fire_bullet(ent, spread, damage, mod, muzzle, forward);
+}*/
 
 
 /*
@@ -266,7 +272,7 @@ SHOTGUN
 
 // DEFAULT_SHOTGUN_SPREAD and DEFAULT_SHOTGUN_COUNT	are in bg_public.h, because
 // client predicts same spreads
-#define	DEFAULT_SHOTGUN_DAMAGE	10
+#define	DEFAULT_SHOTGUN_DAMAGE	7
 
 qboolean ShotgunPellet( vec3_t start, vec3_t end, gentity_t *ent ) {
 	trace_t		tr;
@@ -340,11 +346,8 @@ void ShotgunPattern( vec3_t origin, vec3_t origin2, int seed, gentity_t *ent ) {
 
 	// generate the "random" spread pattern
 	for ( i = 0 ; i < DEFAULT_SHOTGUN_COUNT ; i++ ) {
-		r = Q_crandom( &seed ) * DEFAULT_SHOTGUN_SPREAD * 16;
-		u = Q_crandom( &seed ) * DEFAULT_SHOTGUN_SPREAD * 16;
-		VectorMA( origin, 8192 * 16, forward, end);
-		VectorMA (end, r, right, end);
-		VectorMA (end, u, up, end);
+		SHOTGUN_RANDOMIZE;
+
 		if( ShotgunPellet( origin, end, ent ) && !hitClient ) {
 			hitClient = qtrue;
 			ent->client->accuracy_hits++;
@@ -456,7 +459,7 @@ void weapon_railgun_fire (gentity_t *ent) {
 	int			passent;
 	gentity_t	*unlinkedEntities[MAX_RAIL_HITS];
 
-	damage = 100 * s_quadFactor;
+	damage = 80 * s_quadFactor;
 
 	VectorMA (muzzle, 8192, forward, end);
 
@@ -812,7 +815,7 @@ void CalcMuzzlePointOrigin ( gentity_t *ent, vec3_t origin, vec3_t forward, vec3
 FireWeapon
 ===============
 */
-void FireWeapon( gentity_t *ent ) {
+void FireWeapon( gentity_t *ent, int isAltFire ) {
 	if (ent->client->ps.powerups[PW_QUAD] ) {
 		s_quadFactor = g_quadfactor.value;
 	} else {
@@ -844,29 +847,29 @@ void FireWeapon( gentity_t *ent ) {
 
 	// fire the specific weapon
 
-	if (!CLIq3::sAPI::OnFireWeapon(gcnew CLIq3::EntPtr(ent), CLIq3::Vec3::FromVec3t(muzzle), CLIq3::Vec3::FromVec3t(forward)))
+	if (!CLIq3::sAPI::OnFireWeapon(gcnew CLIq3::EntPtr(ent), (bool)isAltFire,
+		CLIq3::Vec3::FromVec3t(muzzle), CLIq3::Vec3::FromVec3t(forward)))
 		switch( ent->s.weapon ) {
 		case WP_GAUNTLET:
 			Weapon_Gauntlet( ent );
 			break;
-		case WP_LIGHTNING:
-			Weapon_LightningFire( ent );
+		case WP_MACHINEGUN:
+			if ( g_gametype.integer != GT_TEAM )
+				fire_bullet(ent, MACHINEGUN_SPREAD, MACHINEGUN_DAMAGE, MOD_MACHINEGUN, muzzle, forward);
+			else 
+				fire_bullet(ent, MACHINEGUN_SPREAD, MACHINEGUN_TEAM_DAMAGE, MOD_MACHINEGUN, muzzle, forward);
 			break;
 		case WP_SHOTGUN:
 			weapon_supershotgun_fire( ent );
-			break;
-		case WP_MACHINEGUN:
-			if ( g_gametype.integer != GT_TEAM ) {
-				Bullet_Fire( ent, MACHINEGUN_SPREAD, MACHINEGUN_DAMAGE, MOD_MACHINEGUN );
-			} else {
-				Bullet_Fire( ent, MACHINEGUN_SPREAD, MACHINEGUN_TEAM_DAMAGE, MOD_MACHINEGUN );
-			}
 			break;
 		case WP_GRENADE_LAUNCHER:
 			weapon_grenadelauncher_fire( ent );
 			break;
 		case WP_ROCKET_LAUNCHER:
 			Weapon_RocketLauncher_Fire( ent );
+			break;
+		case WP_LIGHTNING:
+			Weapon_LightningFire( ent );
 			break;
 		case WP_PLASMAGUN:
 			Weapon_Plasmagun_Fire( ent );

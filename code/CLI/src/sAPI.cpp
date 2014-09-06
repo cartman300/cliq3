@@ -56,20 +56,20 @@ void sAPI::OnEntityCreated(EntPtr^ E) {
 	} ProtectedCatch
 }
 
-bool sAPI::OnCommand(String^ S) {
+void sAPI::OnCommand(String^ S) {
 	try {
-		bool R = false;
+		//bool R = false;
 		for each (sAPIAddon^ A in Instances)
-			R = R || A->Command(S);
-		return R;
+			/*R = R || */A->Command(S);
+		//return R;
 	} ProtectedCatch
 }
 
-bool sAPI::OnFireWeapon(EntPtr^ Ent, Vec3 Muzzle, Vec3 Forward) {
+bool sAPI::OnFireWeapon(EntPtr^ Ent, bool AltFire, Vec3 Muzzle, Vec3 Forward) {
 	try {
 		bool R = false;
 		for each (sAPIAddon^ A in Instances)
-			R = R || A->FireWeapon(Ent, Muzzle, Forward);
+			R = R || A->FireWeapon(Ent, AltFire, Muzzle, Forward);
 		return R;
 	} ProtectedCatch
 }

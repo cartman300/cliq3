@@ -71,9 +71,9 @@ void CG_CheckAmmo( void ) {
 
 	if ( total == 0 ) {
 		cg.lowAmmoWarning = 2;
-	} else {
+	} /*else { // No low ammo warning
 		cg.lowAmmoWarning = 1;
-	}
+	}*/
 
 	// play a sound on transitions
 	if ( cg.lowAmmoWarning != previous ) {

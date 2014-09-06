@@ -145,23 +145,23 @@ void P_WorldEffects( gentity_t *ent ) {
 	//
 	if (waterlevel && 
 		(ent->watertype&(CONTENTS_LAVA|CONTENTS_SLIME)) ) {
-		if (ent->health > 0
-			&& ent->pain_debounce_time <= level.time	) {
+			if (ent->health > 0
+				&& ent->pain_debounce_time <= level.time	) {
 
-			if ( envirosuit ) {
-				G_AddEvent( ent, EV_POWERUP_BATTLESUIT, 0 );
-			} else {
-				if (ent->watertype & CONTENTS_LAVA) {
-					G_Damage (ent, NULL, NULL, NULL, NULL, 
-						30*waterlevel, 0, MOD_LAVA);
-				}
+					if ( envirosuit ) {
+						G_AddEvent( ent, EV_POWERUP_BATTLESUIT, 0 );
+					} else {
+						if (ent->watertype & CONTENTS_LAVA) {
+							G_Damage (ent, NULL, NULL, NULL, NULL, 
+								30*waterlevel, 0, MOD_LAVA);
+						}
 
-				if (ent->watertype & CONTENTS_SLIME) {
-					G_Damage (ent, NULL, NULL, NULL, NULL, 
-						10*waterlevel, 0, MOD_SLIME);
-				}
+						if (ent->watertype & CONTENTS_SLIME) {
+							G_Damage (ent, NULL, NULL, NULL, NULL, 
+								10*waterlevel, 0, MOD_SLIME);
+						}
+					}
 			}
-		}
 	}
 }
 
@@ -179,11 +179,11 @@ void G_SetClientSound( gentity_t *ent ) {
 	}
 	else
 #endif
-	if (ent->waterlevel && (ent->watertype&(CONTENTS_LAVA|CONTENTS_SLIME)) ) {
-		ent->client->ps.loopSound = level.snd_fry;
-	} else {
-		ent->client->ps.loopSound = 0;
-	}
+		if (ent->waterlevel && (ent->watertype&(CONTENTS_LAVA|CONTENTS_SLIME)) ) {
+			ent->client->ps.loopSound = level.snd_fry;
+		} else {
+			ent->client->ps.loopSound = 0;
+		}
 }
 
 
@@ -273,9 +273,9 @@ void	G_TouchTriggers( gentity_t *ent ) {
 		if ( ent->client->sess.sessionTeam == TEAM_SPECTATOR ) {
 			if ( hit->s.eType != ET_TELEPORT_TRIGGER &&
 				// this is ugly but adding a new ET_? type will
-				// most likely cause network incompatibilities
-				hit->touch != Touch_DoorTrigger) {
-				continue;
+					// most likely cause network incompatibilities
+						hit->touch != Touch_DoorTrigger) {
+							continue;
 			}
 		}
 
@@ -369,8 +369,8 @@ qboolean ClientInactivityTimer( gclient_t *client ) {
 		client->pers.cmd.rightmove || 
 		client->pers.cmd.upmove ||
 		(client->pers.cmd.buttons & BUTTON_ATTACK) ) {
-		client->inactivityTime = level.time + g_inactivity.integer * 1000;
-		client->inactivityWarning = qfalse;
+			client->inactivityTime = level.time + g_inactivity.integer * 1000;
+			client->inactivityWarning = qfalse;
 	} else if ( !client->pers.localClient ) {
 		if ( level.time > client->inactivityTime ) {
 			trap_DropClient( client - level.clients, "Dropped due to inactivity" );
@@ -459,39 +459,39 @@ void ClientTimerActions( gentity_t *ent, int msec ) {
 #ifdef MISSIONPACK
 	if( bg_itemlist[client->ps.stats[STAT_PERSISTANT_POWERUP]].giTag == PW_AMMOREGEN ) {
 		int w, max, inc, t, i;
-    int weapList[]={WP_MACHINEGUN,WP_SHOTGUN,WP_GRENADE_LAUNCHER,WP_ROCKET_LAUNCHER,WP_LIGHTNING,WP_RAILGUN,WP_PLASMAGUN,WP_BFG,WP_NAILGUN,WP_PROX_LAUNCHER,WP_CHAINGUN};
-    int weapCount = ARRAY_LEN( weapList );
+		int weapList[]={WP_MACHINEGUN,WP_SHOTGUN,WP_GRENADE_LAUNCHER,WP_ROCKET_LAUNCHER,WP_LIGHTNING,WP_RAILGUN,WP_PLASMAGUN,WP_BFG,WP_NAILGUN,WP_PROX_LAUNCHER,WP_CHAINGUN};
+		int weapCount = ARRAY_LEN( weapList );
 		//
-    for (i = 0; i < weapCount; i++) {
-		  w = weapList[i];
+		for (i = 0; i < weapCount; i++) {
+			w = weapList[i];
 
-		  switch(w) {
-			  case WP_MACHINEGUN: max = 50; inc = 4; t = 1000; break;
-			  case WP_SHOTGUN: max = 10; inc = 1; t = 1500; break;
-			  case WP_GRENADE_LAUNCHER: max = 10; inc = 1; t = 2000; break;
-			  case WP_ROCKET_LAUNCHER: max = 10; inc = 1; t = 1750; break;
-			  case WP_LIGHTNING: max = 50; inc = 5; t = 1500; break;
-			  case WP_RAILGUN: max = 10; inc = 1; t = 1750; break;
-			  case WP_PLASMAGUN: max = 50; inc = 5; t = 1500; break;
-			  case WP_BFG: max = 10; inc = 1; t = 4000; break;
-			  case WP_NAILGUN: max = 10; inc = 1; t = 1250; break;
-			  case WP_PROX_LAUNCHER: max = 5; inc = 1; t = 2000; break;
-			  case WP_CHAINGUN: max = 100; inc = 5; t = 1000; break;
-			  default: max = 0; inc = 0; t = 1000; break;
-		  }
-		  client->ammoTimes[w] += msec;
-		  if ( client->ps.ammo[w] >= max ) {
-			  client->ammoTimes[w] = 0;
-		  }
-		  if ( client->ammoTimes[w] >= t ) {
-			  while ( client->ammoTimes[w] >= t )
-				  client->ammoTimes[w] -= t;
-			  client->ps.ammo[w] += inc;
-			  if ( client->ps.ammo[w] > max ) {
-				  client->ps.ammo[w] = max;
-			  }
-		  }
-    }
+			switch(w) {
+			case WP_MACHINEGUN: max = 50; inc = 4; t = 1000; break;
+			case WP_SHOTGUN: max = 10; inc = 1; t = 1500; break;
+			case WP_GRENADE_LAUNCHER: max = 10; inc = 1; t = 2000; break;
+			case WP_ROCKET_LAUNCHER: max = 10; inc = 1; t = 1750; break;
+			case WP_LIGHTNING: max = 50; inc = 5; t = 1500; break;
+			case WP_RAILGUN: max = 10; inc = 1; t = 1750; break;
+			case WP_PLASMAGUN: max = 50; inc = 5; t = 1500; break;
+			case WP_BFG: max = 10; inc = 1; t = 4000; break;
+			case WP_NAILGUN: max = 10; inc = 1; t = 1250; break;
+			case WP_PROX_LAUNCHER: max = 5; inc = 1; t = 2000; break;
+			case WP_CHAINGUN: max = 100; inc = 5; t = 1000; break;
+			default: max = 0; inc = 0; t = 1000; break;
+			}
+			client->ammoTimes[w] += msec;
+			if ( client->ps.ammo[w] >= max ) {
+				client->ammoTimes[w] = 0;
+			}
+			if ( client->ammoTimes[w] >= t ) {
+				while ( client->ammoTimes[w] >= t )
+					client->ammoTimes[w] -= t;
+				client->ps.ammo[w] += inc;
+				if ( client->ps.ammo[w] > max ) {
+					client->ps.ammo[w] = max;
+				}
+			}
+		}
 	}
 #endif
 }
@@ -531,7 +531,7 @@ void ClientEvents( gentity_t *ent, int oldEventSequence ) {
 	gclient_t *client;
 	int		damage;
 	vec3_t	origin, angles;
-//	qboolean	fired;
+	//	qboolean	fired;
 	gitem_t *item;
 	gentity_t *drop;
 
@@ -562,7 +562,10 @@ void ClientEvents( gentity_t *ent, int oldEventSequence ) {
 			break;
 
 		case EV_FIRE_WEAPON:
-			FireWeapon( ent );
+			FireWeapon(ent, 0);
+			break;
+		case EV_FIRE_WEAPON_ALT:
+			FireWeapon(ent, 1);
 			break;
 
 		case EV_USE_ITEM1:		// teleporter
@@ -761,11 +764,11 @@ void ClientThink_real( gentity_t *ent ) {
 	// sanity check the command time to prevent speedup cheating
 	if ( ucmd->serverTime > level.time + 200 ) {
 		ucmd->serverTime = level.time + 200;
-//		G_Printf("serverTime <<<<<\n" );
+		//		G_Printf("serverTime <<<<<\n" );
 	}
 	if ( ucmd->serverTime < level.time - 1000 ) {
 		ucmd->serverTime = level.time - 1000;
-//		G_Printf("serverTime >>>>>\n" );
+		//		G_Printf("serverTime >>>>>\n" );
 	} 
 
 	msec = ucmd->serverTime - client->ps.commandTime;
@@ -837,80 +840,80 @@ void ClientThink_real( gentity_t *ent ) {
 	}
 	else
 #endif
-	if ( client->ps.powerups[PW_HASTE] ) {
-		client->ps.speed *= 1.3;
-	}
+		if ( client->ps.powerups[PW_HASTE] ) {
+			client->ps.speed *= 1.3;
+		}
 
-	// Let go of the hook if we aren't firing
-	if ( client->ps.weapon == WP_GRAPPLING_HOOK &&
-		client->hook && !( ucmd->buttons & BUTTON_ATTACK ) ) {
-		Weapon_HookFree(client->hook);
-	}
+		// Let go of the hook if we aren't firing
+		if ( client->ps.weapon == WP_GRAPPLING_HOOK &&
+			client->hook && !( ucmd->buttons & BUTTON_ATTACK ) ) {
+				Weapon_HookFree(client->hook);
+		}
 
-	// set up for pmove
-	oldEventSequence = client->ps.eventSequence;
+		// set up for pmove
+		oldEventSequence = client->ps.eventSequence;
 
-	memset (&pm, 0, sizeof(pm));
+		memset (&pm, 0, sizeof(pm));
 
-	// check for the hit-scan gauntlet, don't let the action
-	// go through as an attack unless it actually hits something
-	if ( client->ps.weapon == WP_GAUNTLET && !( ucmd->buttons & BUTTON_TALK ) &&
-		( ucmd->buttons & BUTTON_ATTACK ) && client->ps.weaponTime <= 0 ) {
-		pm.gauntletHit = CheckGauntletAttack( ent );
-	}
+		// check for the hit-scan gauntlet, don't let the action
+		// go through as an attack unless it actually hits something
+		if ( client->ps.weapon == WP_GAUNTLET && !( ucmd->buttons & BUTTON_TALK ) &&
+			( ucmd->buttons & BUTTON_ATTACK ) && client->ps.weaponTime <= 0 ) {
+				pm.gauntletHit = CheckGauntletAttack( ent );
+		}
 
-	if ( ent->flags & FL_FORCE_GESTURE ) {
-		ent->flags &= ~FL_FORCE_GESTURE;
-		ent->client->pers.cmd.buttons |= BUTTON_GESTURE;
-	}
+		if ( ent->flags & FL_FORCE_GESTURE ) {
+			ent->flags &= ~FL_FORCE_GESTURE;
+			ent->client->pers.cmd.buttons |= BUTTON_GESTURE;
+		}
 
 #ifdef MISSIONPACK
-	// check for invulnerability expansion before doing the Pmove
-	if (client->ps.powerups[PW_INVULNERABILITY] ) {
-		if ( !(client->ps.pm_flags & PMF_INVULEXPAND) ) {
-			vec3_t mins = { -42, -42, -42 };
-			vec3_t maxs = { 42, 42, 42 };
-			vec3_t oldmins, oldmaxs;
+		// check for invulnerability expansion before doing the Pmove
+		if (client->ps.powerups[PW_INVULNERABILITY] ) {
+			if ( !(client->ps.pm_flags & PMF_INVULEXPAND) ) {
+				vec3_t mins = { -42, -42, -42 };
+				vec3_t maxs = { 42, 42, 42 };
+				vec3_t oldmins, oldmaxs;
 
-			VectorCopy (ent->r.mins, oldmins);
-			VectorCopy (ent->r.maxs, oldmaxs);
-			// expand
-			VectorCopy (mins, ent->r.mins);
-			VectorCopy (maxs, ent->r.maxs);
-			trap_LinkEntity(ent);
-			// check if this would get anyone stuck in this player
-			if ( !StuckInOtherClient(ent) ) {
-				// set flag so the expanded size will be set in PM_CheckDuck
-				client->ps.pm_flags |= PMF_INVULEXPAND;
+				VectorCopy (ent->r.mins, oldmins);
+				VectorCopy (ent->r.maxs, oldmaxs);
+				// expand
+				VectorCopy (mins, ent->r.mins);
+				VectorCopy (maxs, ent->r.maxs);
+				trap_LinkEntity(ent);
+				// check if this would get anyone stuck in this player
+				if ( !StuckInOtherClient(ent) ) {
+					// set flag so the expanded size will be set in PM_CheckDuck
+					client->ps.pm_flags |= PMF_INVULEXPAND;
+				}
+				// set back
+				VectorCopy (oldmins, ent->r.mins);
+				VectorCopy (oldmaxs, ent->r.maxs);
+				trap_LinkEntity(ent);
 			}
-			// set back
-			VectorCopy (oldmins, ent->r.mins);
-			VectorCopy (oldmaxs, ent->r.maxs);
-			trap_LinkEntity(ent);
 		}
-	}
 #endif
 
-	pm.ps = &client->ps;
-	pm.cmd = *ucmd;
-	if ( pm.ps->pm_type == PM_DEAD ) {
-		pm.tracemask = MASK_PLAYERSOLID & ~CONTENTS_BODY;
-	}
-	else if ( ent->r.svFlags & SVF_BOT ) {
-		pm.tracemask = MASK_PLAYERSOLID | CONTENTS_BOTCLIP;
-	}
-	else {
-		pm.tracemask = MASK_PLAYERSOLID;
-	}
-	pm.trace = trap_Trace;
-	pm.pointcontents = trap_PointContents;
-	pm.debugLevel = g_debugMove.integer;
-	pm.noFootsteps = toqbool(( g_dmflags.integer & DF_NO_FOOTSTEPS ) > 0);
+		pm.ps = &client->ps;
+		pm.cmd = *ucmd;
+		if ( pm.ps->pm_type == PM_DEAD ) {
+			pm.tracemask = MASK_PLAYERSOLID & ~CONTENTS_BODY;
+		}
+		else if ( ent->r.svFlags & SVF_BOT ) {
+			pm.tracemask = MASK_PLAYERSOLID | CONTENTS_BOTCLIP;
+		}
+		else {
+			pm.tracemask = MASK_PLAYERSOLID;
+		}
+		pm.trace = trap_Trace;
+		pm.pointcontents = trap_PointContents;
+		pm.debugLevel = g_debugMove.integer;
+		pm.noFootsteps = toqbool(( g_dmflags.integer & DF_NO_FOOTSTEPS ) > 0);
 
-	pm.pmove_fixed = pmove_fixed.integer | client->pers.pmoveFixed;
-	pm.pmove_msec = pmove_msec.integer;
+		pm.pmove_fixed = pmove_fixed.integer | client->pers.pmoveFixed;
+		pm.pmove_msec = pmove_msec.integer;
 
-	VectorCopy( client->ps.origin, client->oldOrigin );
+		VectorCopy( client->ps.origin, client->oldOrigin );
 
 #ifdef MISSIONPACK
 		if (level.intermissionQueued != 0 && g_singlePlayer.integer) {
@@ -930,80 +933,80 @@ void ClientThink_real( gentity_t *ent ) {
 		Pmove (&pm);
 #endif
 
-	// save results of pmove
-	if ( ent->client->ps.eventSequence != oldEventSequence ) {
-		ent->eventTime = level.time;
-	}
-	if (g_smoothClients.integer) {
-		BG_PlayerStateToEntityStateExtraPolate( &ent->client->ps, &ent->s, ent->client->ps.commandTime, qtrue );
-	}
-	else {
-		BG_PlayerStateToEntityState( &ent->client->ps, &ent->s, qtrue );
-	}
-	SendPendingPredictableEvents( &ent->client->ps );
-
-	if ( !( ent->client->ps.eFlags & EF_FIRING ) ) {
-		client->fireHeld = qfalse;		// for grapple
-	}
-
-	// use the snapped origin for linking so it matches client predicted versions
-	VectorCopy( ent->s.pos.trBase, ent->r.currentOrigin );
-
-	VectorCopy (pm.mins, ent->r.mins);
-	VectorCopy (pm.maxs, ent->r.maxs);
-
-	ent->waterlevel = pm.waterlevel;
-	ent->watertype = pm.watertype;
-
-	// execute client events
-	ClientEvents( ent, oldEventSequence );
-
-	// link entity now, after any personal teleporters have been used
-	trap_LinkEntity (ent);
-	if ( !ent->client->noclip ) {
-		G_TouchTriggers( ent );
-	}
-
-	// NOTE: now copy the exact origin over otherwise clients can be snapped into solid
-	VectorCopy( ent->client->ps.origin, ent->r.currentOrigin );
-
-	//test for solid areas in the AAS file
-	BotTestAAS(ent->r.currentOrigin);
-
-	// touch other objects
-	ClientImpacts( ent, &pm );
-
-	// save results of triggers and client events
-	if (ent->client->ps.eventSequence != oldEventSequence) {
-		ent->eventTime = level.time;
-	}
-
-	// swap and latch button actions
-	client->oldbuttons = client->buttons;
-	client->buttons = ucmd->buttons;
-	client->latched_buttons |= client->buttons & ~client->oldbuttons;
-
-	// check for respawning
-	if ( client->ps.stats[STAT_HEALTH] <= 0 ) {
-		// wait for the attack button to be pressed
-		if ( level.time > client->respawnTime ) {
-			// forcerespawn is to prevent users from waiting out powerups
-			if ( g_forcerespawn.integer > 0 && 
-				( level.time - client->respawnTime ) > g_forcerespawn.integer * 1000 ) {
-				ClientRespawn( ent );
-				return;
-			}
-		
-			// pressing attack or use is the normal respawn method
-			if ( ucmd->buttons & ( BUTTON_ATTACK | BUTTON_USE_HOLDABLE ) ) {
-				ClientRespawn( ent );
-			}
+		// save results of pmove
+		if ( ent->client->ps.eventSequence != oldEventSequence ) {
+			ent->eventTime = level.time;
 		}
-		return;
-	}
+		if (g_smoothClients.integer) {
+			BG_PlayerStateToEntityStateExtraPolate( &ent->client->ps, &ent->s, ent->client->ps.commandTime, qtrue );
+		}
+		else {
+			BG_PlayerStateToEntityState( &ent->client->ps, &ent->s, qtrue );
+		}
+		SendPendingPredictableEvents( &ent->client->ps );
 
-	// perform once-a-second actions
-	ClientTimerActions( ent, msec );
+		if ( !( ent->client->ps.eFlags & EF_FIRING ) ) {
+			client->fireHeld = qfalse;		// for grapple
+		}
+
+		// use the snapped origin for linking so it matches client predicted versions
+		VectorCopy( ent->s.pos.trBase, ent->r.currentOrigin );
+
+		VectorCopy (pm.mins, ent->r.mins);
+		VectorCopy (pm.maxs, ent->r.maxs);
+
+		ent->waterlevel = pm.waterlevel;
+		ent->watertype = pm.watertype;
+
+		// execute client events
+		ClientEvents( ent, oldEventSequence );
+
+		// link entity now, after any personal teleporters have been used
+		trap_LinkEntity (ent);
+		if ( !ent->client->noclip ) {
+			G_TouchTriggers( ent );
+		}
+
+		// NOTE: now copy the exact origin over otherwise clients can be snapped into solid
+		VectorCopy( ent->client->ps.origin, ent->r.currentOrigin );
+
+		//test for solid areas in the AAS file
+		BotTestAAS(ent->r.currentOrigin);
+
+		// touch other objects
+		ClientImpacts( ent, &pm );
+
+		// save results of triggers and client events
+		if (ent->client->ps.eventSequence != oldEventSequence) {
+			ent->eventTime = level.time;
+		}
+
+		// swap and latch button actions
+		client->oldbuttons = client->buttons;
+		client->buttons = ucmd->buttons;
+		client->latched_buttons |= client->buttons & ~client->oldbuttons;
+
+		// check for respawning
+		if ( client->ps.stats[STAT_HEALTH] <= 0 ) {
+			// wait for the attack button to be pressed
+			if ( level.time > client->respawnTime ) {
+				// forcerespawn is to prevent users from waiting out powerups
+				if ( g_forcerespawn.integer > 0 && 
+					( level.time - client->respawnTime ) > g_forcerespawn.integer * 1000 ) {
+						ClientRespawn( ent );
+						return;
+				}
+
+				// pressing attack or use is the normal respawn method
+				if ( ucmd->buttons & ( BUTTON_ATTACK | BUTTON_USE_HOLDABLE ) ) {
+					ClientRespawn( ent );
+				}
+			}
+			return;
+		}
+
+		// perform once-a-second actions
+		ClientTimerActions( ent, msec );
 }
 
 /*
@@ -1170,8 +1173,8 @@ void ClientEndFrame( gentity_t *ent ) {
 	SendPendingPredictableEvents( &ent->client->ps );
 
 	// set the bit for the reachability area the client is currently in
-//	i = trap_AAS_PointReachabilityAreaIndex( ent->client->ps.origin );
-//	ent->client->areabits[i >> 3] |= 1 << (i & 7);
+	//	i = trap_AAS_PointReachabilityAreaIndex( ent->client->ps.origin );
+	//	ent->client->areabits[i >> 3] |= 1 << (i & 7);
 }
 
 

@@ -145,9 +145,9 @@ void PM_ClipVelocity( vec3_t in, vec3_t normal, vec3_t out, float overbounce ) {
 	float	backoff;
 	float	change;
 	int		i;
-	
+
 	backoff = DotProduct (in, normal);
-	
+
 	if ( backoff < 0 ) {
 		backoff *= overbounce;
 	} else {
@@ -173,9 +173,9 @@ static void PM_Friction( void ) {
 	float	*vel;
 	float	speed, newspeed, control;
 	float	drop;
-	
+
 	vel = pm->ps->velocity;
-	
+
 	VectorCopy( vel, vec );
 	if ( pml.walking ) {
 		vec[2] = 0;	// ignore slope movement
@@ -251,7 +251,7 @@ static void PM_Accelerate( vec3_t wishdir, float wishspeed, float accel ) {
 	if (accelspeed > addspeed) {
 		accelspeed = addspeed;
 	}
-	
+
 	for (i=0 ; i<3 ; i++) {
 		pm->ps->velocity[i] += accelspeed*wishdir[i];	
 	}
@@ -742,7 +742,7 @@ static void PM_WalkMove( void ) {
 		wishvel[i] = pml.forward[i]*fmove + pml.right[i]*smove;
 	}
 	// when going up or down slopes the wish velocity should Not be zero
-//	wishvel[2] = 0;
+	//	wishvel[2] = 0;
 
 	VectorCopy (wishvel, wishdir);
 	wishspeed = VectorNormalize(wishdir);
@@ -783,7 +783,7 @@ static void PM_WalkMove( void ) {
 		pm->ps->velocity[2] -= pm->ps->gravity * pml.frametime;
 	} else {
 		// don't reset the z velocity for slopes
-//		pm->ps->velocity[2] = 0;
+		//		pm->ps->velocity[2] = 0;
 	}
 
 	vel = VectorLength(pm->ps->velocity);
@@ -878,7 +878,7 @@ static void PM_NoclipMove( void ) {
 
 	fmove = pm->cmd.forwardmove;
 	smove = pm->cmd.rightmove;
-	
+
 	for (i=0 ; i<3 ; i++)
 		wishvel[i] = pml.forward[i]*fmove + pml.right[i]*smove;
 	wishvel[2] += pm->cmd.upmove;
@@ -1006,12 +1006,12 @@ PM_CheckStuck
 */
 /*
 void PM_CheckStuck(void) {
-	trace_t trace;
+trace_t trace;
 
-	pm->trace (&trace, pm->ps->origin, pm->mins, pm->maxs, pm->ps->origin, pm->ps->clientNum, pm->tracemask);
-	if (trace.allsolid) {
-		//int shit = qtrue;
-	}
+pm->trace (&trace, pm->ps->origin, pm->mins, pm->maxs, pm->ps->origin, pm->ps->clientNum, pm->tracemask);
+if (trace.allsolid) {
+//int shit = qtrue;
+}
 }
 */
 
@@ -1147,7 +1147,7 @@ static void PM_GroundTrace( void ) {
 		pml.walking = qfalse;
 		return;
 	}
-	
+
 	// slopes that are too steep will not be considered onground
 	if ( trace.plane.normal[2] < MIN_WALK_NORMAL ) {
 		if ( pm->debugLevel ) {
@@ -1176,7 +1176,7 @@ static void PM_GroundTrace( void ) {
 		if ( pm->debugLevel ) {
 			Com_Printf("%i:Land\n", c_pmove);
 		}
-		
+
 		PM_CrashLand();
 
 		// don't do landing time if we were just going down a slope
@@ -1190,7 +1190,7 @@ static void PM_GroundTrace( void ) {
 	pm->ps->groundEntityNum = trace.entityNum;
 
 	// don't reset the z velocity for slopes
-//	pm->ps->velocity[2] = 0;
+	//	pm->ps->velocity[2] = 0;
 
 	PM_AddTouchEnt( trace.entityNum );
 }
@@ -1328,7 +1328,7 @@ static void PM_Footsteps( void ) {
 	// all cyclic walking effects
 	//
 	pm->xyspeed = sqrt( pm->ps->velocity[0] * pm->ps->velocity[0]
-		+  pm->ps->velocity[1] * pm->ps->velocity[1] );
+	+  pm->ps->velocity[1] * pm->ps->velocity[1] );
 
 	if ( pm->ps->groundEntityNum == ENTITYNUM_NONE ) {
 
@@ -1354,7 +1354,7 @@ static void PM_Footsteps( void ) {
 		}
 		return;
 	}
-	
+
 
 	footstep = qfalse;
 
@@ -1367,16 +1367,16 @@ static void PM_Footsteps( void ) {
 			PM_ContinueLegsAnim( LEGS_WALKCR );
 		}
 		// ducked characters never play footsteps
-	/*
-	} else 	if ( pm->ps->pm_flags & PMF_BACKWARDS_RUN ) {
+		/*
+		} else 	if ( pm->ps->pm_flags & PMF_BACKWARDS_RUN ) {
 		if ( !( pm->cmd.buttons & BUTTON_WALKING ) ) {
-			bobmove = 0.4;	// faster speeds bob faster
-			footstep = qtrue;
+		bobmove = 0.4;	// faster speeds bob faster
+		footstep = qtrue;
 		} else {
-			bobmove = 0.3;
+		bobmove = 0.3;
 		}
 		PM_ContinueLegsAnim( LEGS_BACK );
-	*/
+		*/
 	} else {
 		if ( !( pm->cmd.buttons & BUTTON_WALKING ) ) {
 			bobmove = 0.4f;	// faster speeds bob faster
@@ -1473,7 +1473,7 @@ static void PM_BeginWeaponChange( int weapon ) {
 	if ( !( pm->ps->stats[STAT_WEAPONS] & ( 1 << weapon ) ) ) {
 		return;
 	}
-	
+
 	if ( pm->ps->weaponstate == WEAPON_DROPPING ) {
 		return;
 	}
@@ -1558,7 +1558,7 @@ static void PM_Weapon( void ) {
 		if ( ! ( pm->ps->pm_flags & PMF_USE_ITEM_HELD ) ) {
 			if ( bg_itemlist[pm->ps->stats[STAT_HOLDABLE_ITEM]].giTag == HI_MEDKIT
 				&& pm->ps->stats[STAT_HEALTH] >= (pm->ps->stats[STAT_MAX_HEALTH] + 25) ) {
-				// don't use medkit if at max health
+					// don't use medkit if at max health
 			} else {
 				pm->ps->pm_flags |= PMF_USE_ITEM_HELD;
 				PM_AddEvent( EV_USE_ITEM0 + bg_itemlist[pm->ps->stats[STAT_HOLDABLE_ITEM]].giTag );
@@ -1606,7 +1606,7 @@ static void PM_Weapon( void ) {
 	}
 
 	// check for fire
-	if ( ! (pm->cmd.buttons & BUTTON_ATTACK) ) {
+	if ( ! (pm->cmd.buttons & (BUTTON_ATTACK | BUTTON_ATTACK_ALT)) ) {
 		pm->ps->weaponTime = 0;
 		pm->ps->weaponstate = WEAPON_READY;
 		return;
@@ -1640,7 +1640,10 @@ static void PM_Weapon( void ) {
 	}
 
 	// fire weapon
-	PM_AddEvent( EV_FIRE_WEAPON );
+	if (pm->cmd.buttons & BUTTON_ATTACK_ALT)
+		PM_AddEvent(EV_FIRE_WEAPON_ALT);
+	else
+		PM_AddEvent(EV_FIRE_WEAPON);
 
 	switch( pm->ps->weapon ) {
 	default:
@@ -1692,16 +1695,16 @@ static void PM_Weapon( void ) {
 		addTime /= 1.5;
 	}
 	else
-	if( bg_itemlist[pm->ps->stats[STAT_PERSISTANT_POWERUP]].giTag == PW_AMMOREGEN ) {
-		addTime /= 1.3;
-  }
-  else
+		if( bg_itemlist[pm->ps->stats[STAT_PERSISTANT_POWERUP]].giTag == PW_AMMOREGEN ) {
+			addTime /= 1.3;
+		}
+		else
 #endif
-	if ( pm->ps->powerups[PW_HASTE] ) {
-		addTime /= 1.3;
-	}
+			if ( pm->ps->powerups[PW_HASTE] ) {
+				addTime /= 1.3;
+			}
 
-	pm->ps->weaponTime += addTime;
+			pm->ps->weaponTime += addTime;
 }
 
 /*
@@ -1864,7 +1867,7 @@ void PmoveSingle (pmove_t *pmove) {
 	// set the firing flag for continuous beam weapons
 	if ( !(pm->ps->pm_flags & PMF_RESPAWNED) && pm->ps->pm_type != PM_INTERMISSION && pm->ps->pm_type != PM_NOCLIP
 		&& ( pm->cmd.buttons & BUTTON_ATTACK ) && pm->ps->ammo[ pm->ps->weapon ] ) {
-		pm->ps->eFlags |= EF_FIRING;
+			pm->ps->eFlags |= EF_FIRING;
 	} else {
 		pm->ps->eFlags &= ~EF_FIRING;
 	}
@@ -1872,7 +1875,7 @@ void PmoveSingle (pmove_t *pmove) {
 	// clear the respawned flag if attack and use are cleared
 	if ( pm->ps->stats[STAT_HEALTH] > 0 && 
 		!( pm->cmd.buttons & (BUTTON_ATTACK | BUTTON_USE_HOLDABLE) ) ) {
-		pm->ps->pm_flags &= ~PMF_RESPAWNED;
+			pm->ps->pm_flags &= ~PMF_RESPAWNED;
 	}
 
 	// if talk button is down, dissallow all other input
@@ -1972,46 +1975,46 @@ void PmoveSingle (pmove_t *pmove) {
 		PM_InvulnerabilityMove();
 	} else
 #endif
-	if ( pm->ps->powerups[PW_FLIGHT] ) {
-		// flight powerup doesn't allow jump and has different friction
-		PM_FlyMove();
-	} else if (pm->ps->pm_flags & PMF_GRAPPLE_PULL) {
-		PM_GrappleMove();
-		// We can wiggle a bit
-		PM_AirMove();
-	} else if (pm->ps->pm_flags & PMF_TIME_WATERJUMP) {
-		PM_WaterJumpMove();
-	} else if ( pm->waterlevel > 1 ) {
-		// swimming
-		PM_WaterMove();
-	} else if ( pml.walking ) {
-		// walking on ground
-		PM_WalkMove();
-	} else {
-		// airborne
-		PM_AirMove();
-	}
+		if ( pm->ps->powerups[PW_FLIGHT] ) {
+			// flight powerup doesn't allow jump and has different friction
+			PM_FlyMove();
+		} else if (pm->ps->pm_flags & PMF_GRAPPLE_PULL) {
+			PM_GrappleMove();
+			// We can wiggle a bit
+			PM_AirMove();
+		} else if (pm->ps->pm_flags & PMF_TIME_WATERJUMP) {
+			PM_WaterJumpMove();
+		} else if ( pm->waterlevel > 1 ) {
+			// swimming
+			PM_WaterMove();
+		} else if ( pml.walking ) {
+			// walking on ground
+			PM_WalkMove();
+		} else {
+			// airborne
+			PM_AirMove();
+		}
 
-	PM_Animate();
+		PM_Animate();
 
-	// set groundentity, watertype, and waterlevel
-	PM_GroundTrace();
-	PM_SetWaterLevel();
+		// set groundentity, watertype, and waterlevel
+		PM_GroundTrace();
+		PM_SetWaterLevel();
 
-	// weapons
-	PM_Weapon();
+		// weapons
+		PM_Weapon();
 
-	// torso animation
-	PM_TorsoAnimation();
+		// torso animation
+		PM_TorsoAnimation();
 
-	// footstep events / legs animations
-	PM_Footsteps();
+		// footstep events / legs animations
+		PM_Footsteps();
 
-	// entering / leaving water splashes
-	PM_WaterEvents();
+		// entering / leaving water splashes
+		PM_WaterEvents();
 
-	// snap some parts of playerstate to save network bandwidth
-	trap_SnapVector( pm->ps->velocity );
+		// snap some parts of playerstate to save network bandwidth
+		trap_SnapVector( pm->ps->velocity );
 }
 
 

@@ -131,6 +131,9 @@ typedef enum {
 
 	G_ARGV,			// ( int n, char *buffer, int bufferLength );
 
+	G_ARGS,
+	G_CMDS,
+
 	G_FS_FOPEN_FILE,	// ( const char *qpath, fileHandle_t *file, fsMode_t mode );
 	G_FS_READ,		// ( void *buffer, int len, fileHandle_t f );
 	G_FS_WRITE,		// ( const void *buffer, int len, fileHandle_t f );

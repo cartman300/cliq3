@@ -58,6 +58,8 @@ kbutton_t	in_voiprecord;
 
 kbutton_t	in_buttons[16];
 
+kbutton_t	in_attack2;
+
 
 qboolean	in_mlooking;
 
@@ -266,6 +268,9 @@ void IN_Button14Down(void) {IN_KeyDown(&in_buttons[14]);}
 void IN_Button14Up(void) {IN_KeyUp(&in_buttons[14]);}
 void IN_Button15Down(void) {IN_KeyDown(&in_buttons[15]);}
 void IN_Button15Up(void) {IN_KeyUp(&in_buttons[15]);}
+
+void IN_Attack2Down(void) {IN_KeyDown(&in_attack2);}
+void IN_Attack2Up(void) {IN_KeyUp(&in_attack2);}
 
 void IN_CenterView (void) {
 	cl.viewangles[PITCH] = -SHORT2ANGLE(cl.snap.ps.delta_angles[PITCH]);
@@ -511,6 +516,12 @@ void CL_MouseMove(usercmd_t *cmd)
 }
 
 
+void CL_CheckButton(int i, usercmd_t* cmd) {
+	if ( in_buttons[i].active || in_buttons[i].wasPressed ) 
+		cmd->buttons |= 1 << i;
+	in_buttons[i].wasPressed = qfalse;
+}
+
 /*
 ==============
 CL_CmdButtons
@@ -524,12 +535,12 @@ void CL_CmdButtons( usercmd_t *cmd ) {
 	// send a button bit even if the key was pressed and released in
 	// less than a frame
 	//	
-	for (i = 0 ; i < 15 ; i++) {
-		if ( in_buttons[i].active || in_buttons[i].wasPressed ) {
-			cmd->buttons |= 1 << i;
-		}
-		in_buttons[i].wasPressed = qfalse;
-	}
+	for (i = 0 ; i < 15 ; i++)
+		CL_CheckButton(i, cmd);
+
+	if (in_attack2.active || in_attack2.wasPressed)
+		cmd->buttons |= BUTTON_ATTACK_ALT;
+	in_attack2.wasPressed = qfalse;
 
 	if ( Key_GetCatcher( ) ) {
 		cmd->buttons |= BUTTON_TALK;
@@ -948,6 +959,8 @@ void CL_InitInput( void ) {
 	Cmd_AddCommand ("-speed", IN_SpeedUp);
 	Cmd_AddCommand ("+attack", IN_Button0Down);
 	Cmd_AddCommand ("-attack", IN_Button0Up);
+	Cmd_AddCommand ("+attack2", IN_Attack2Down);
+	Cmd_AddCommand ("-attack2", IN_Attack2Up);
 	Cmd_AddCommand ("+button0", IN_Button0Down);
 	Cmd_AddCommand ("-button0", IN_Button0Up);
 	Cmd_AddCommand ("+button1", IN_Button1Down);
@@ -1025,6 +1038,8 @@ void CL_ShutdownInput(void)
 	Cmd_RemoveCommand("-speed");
 	Cmd_RemoveCommand("+attack");
 	Cmd_RemoveCommand("-attack");
+	Cmd_RemoveCommand("+attack2");
+	Cmd_RemoveCommand("-attack2");
 	Cmd_RemoveCommand("+button0");
 	Cmd_RemoveCommand("-button0");
 	Cmd_RemoveCommand("+button1");

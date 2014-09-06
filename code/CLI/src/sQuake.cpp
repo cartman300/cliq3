@@ -44,3 +44,11 @@ EntPtr^ sQuake::Fire_grapple(EntPtr^ Parent, Vec3 Start, Vec3 Dir) {
 	Dir.ToVec3t(_Dir);
 	return gcnew EntPtr(fire_grapple((gentity_t*)Parent->Ptr, _Start, _Dir));
 }
+
+void sQuake::Fire_bullet(EntPtr^ Parent, float Spread, int Damage, MeansOfDeath Mod, Vec3 Start, Vec3 Dir) {
+	vec3_t _Start;
+	Start.ToVec3t(_Start);
+	vec3_t _Dir;
+	Dir.ToVec3t(_Dir);
+	fire_bullet((gentity_t*)Parent->Ptr, Spread, Damage, (int)Mod, _Start, _Dir);
+}

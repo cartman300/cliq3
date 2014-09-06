@@ -19,50 +19,81 @@ namespace Example {
 		}
 
 		public override void Load() {
-			R = new Random();
+			try {
+				R = new Random();
 
-			H = new CommandHost();
-			H.RegisterDefaultCommands();
+				H = new CommandHost();
+				H.RegisterDefaultCommands();
+			} catch (Exception E) {
+				sAPI.PrintError(E.ToString() + "\n");
+			}
 		}
 
-		public override void Unload() {
-		}
-
-		public override bool Command(string S) {
+		public override void Command(string S) {
 			try {
 				EvaluationResult R = H.Evaluate(S);
 				if (!string.IsNullOrWhiteSpace(R.Output)) {
-					if (!R.TruthValue)
-						return false;
-					sAPI.Print(sAPI.ConColor.Green + R.Output + "\n");
-					return true;
-				}
+					string Clr = sAPI.ConColor.Green;
+					if (!R.TruthValue) {
+						Clr = sAPI.ConColor.Red;
+						sAPI.Print(Clr + R.Status + ": ");
+					}
+					sAPI.Print(Clr + R.Output + "\n");
+				} else if (!R.TruthValue)
+					sAPI.Print(sAPI.ConColor.Red + R.Status + "\n");
 			} catch (Exception E) {
-				sAPI.PrintError(E.Message + "\n");
+				sAPI.PrintError(E.ToString() + "\n");
+			}
+		}
+
+		public override bool FireWeapon(EntPtr Ply, bool AltFire, Vec3 Muzzle, Vec3 Forward) {
+			try {
+				if (AltFire)
+					return AltFireWeapon(Ply, Muzzle, Forward);
+				else
+					return PrimaryFireWeapon(Ply, Muzzle, Forward);
+			} catch (Exception E) {
+				sAPI.PrintError(E.ToString() + "\n");
 			}
 			return false;
 		}
 
-		public override bool FireWeapon(EntPtr Ply, Vec3 Muzzle, Vec3 Forward) {
-			int Grenades = 3;
+		bool PrimaryFireWeapon(EntPtr Ply, Vec3 Muzzle, Vec3 Forward) {
+			return false;
+		}
 
-			if (Ply.GetWeapon() == Weapon.WP_GRENADE_LAUNCHER) {
-				for (int i = 0; i < Grenades; i++) {
-					EntPtr G = Mods.FireGrenadeLancher(Ply, Muzzle, Forward);
-					G.SetDamage(G.GetDamage() / (Grenades / 2));
-					G.SetSplashDamage(G.GetSplashDamage() / (Grenades / 2));
-				}
+		bool AltFireWeapon(EntPtr Ply, Vec3 Muzzle, Vec3 Forward) {
+			Weapon W = Ply.GetWeapon();
+
+			if (W == Weapon.WP_MACHINEGUN) {
+				sQuake.Fire_bullet(Ply, 200 * 2, 14 * 2, MeansOfDeath.MOD_MACHINEGUN, Muzzle, Forward);
+				return true;
+			} else if (W == Weapon.WP_ROCKET_LAUNCHER) {
+				EntPtr R = sQuake.Fire_rocket(Ply, Muzzle, Forward);
+				Trajectory T = R.GetTrajectory();
+				T.Type = TrajectoryType.TR_GRAVITY;
+				R.SetTrajectory(T);
+				return true;
+			} else if (W == Weapon.WP_GRENADE_LAUNCHER) {
+				Mods.FireFancyGrenades(Ply, Muzzle, Forward, 3);
+				return true;
+			} else if (W == Weapon.WP_PLASMAGUN) {
+				Mods.FireFrancyPlasma(Ply, Muzzle, Forward);
 				return true;
 			}
 
-			return false;
+			return true;
 		}
 
 		public override void EntityCreated(EntPtr E) {
-			if (E.GetClassname() == "plasma" || E.GetClassname() == "rocket" || E.GetClassname() == "bfg") {
-				Trajectory T = E.GetTrajectory();
-				T.Delta = T.Delta.Randomize(25);
-				E.SetTrajectory(T);
+			try {
+				if (E.GetClassname() == "plasma" || E.GetClassname() == "bfg") {
+					Trajectory T = E.GetTrajectory();
+					T.Delta = T.Delta.Randomize(25);
+					E.SetTrajectory(T);
+				}
+			} catch (Exception Ex) {
+				sAPI.PrintError(Ex.ToString() + "\n");
 			}
 		}
 	}

@@ -36,7 +36,13 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define	RANK_TIED_FLAG		0x4000
 
 #define DEFAULT_SHOTGUN_SPREAD	700
-#define DEFAULT_SHOTGUN_COUNT	11
+#define DEFAULT_SHOTGUN_COUNT	20
+#define SHOTGUN_RANDOMIZE \
+	r = Q_crandom( &seed ) * DEFAULT_SHOTGUN_SPREAD * 16; \
+	u = Q_crandom( &seed ) * DEFAULT_SHOTGUN_SPREAD * 16; \
+	VectorMA( origin, 8192 * 16, forward, end); \
+	VectorMA (end, r, right, end); \
+	VectorMA (end, u, up, end)
 
 #define	ITEM_RADIUS			15		// item sizes are needed for client side pickup detection
 
@@ -376,6 +382,7 @@ typedef enum {
 	EV_NOAMMO,
 	EV_CHANGE_WEAPON,
 	EV_FIRE_WEAPON,
+	EV_FIRE_WEAPON_ALT,
 
 	EV_USE_ITEM0,
 	EV_USE_ITEM1,

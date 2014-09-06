@@ -318,10 +318,15 @@ intptr_t SV_GameSystemCalls( intptr_t *args ) {
 	case G_ARGV:
 		Cmd_ArgvBuffer( args[1], VMA(2), args[3] );
 		return 0;
+	case G_ARGS:
+		*((char**)VMA(1)) = Cmd_Args();
+		return 0;
+	case G_CMDS:
+		*((char**)VMA(1)) = Cmd_Cmd();
+		return 0;
 	case G_SEND_CONSOLE_COMMAND:
 		Cbuf_ExecuteText( args[1], VMA(2) );
 		return 0;
-
 	case G_FS_FOPEN_FILE:
 		return FS_FOpenFileByMode( VMA(1), VMA(2), args[3] );
 	case G_FS_READ:

@@ -31,7 +31,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 ==============================================================================
 
 PACKET FILTERING
- 
+
 
 You can add or remove addresses from the filter list with:
 
@@ -82,13 +82,13 @@ static qboolean StringToFilter (char *s, ipFilter_t *f)
 	int		i, j;
 	byte	b[4];
 	byte	m[4];
-	
+
 	for (i=0 ; i<4 ; i++)
 	{
 		b[i] = 0;
 		m[i] = 0;
 	}
-	
+
 	for (i=0 ; i<4 ; i++)
 	{
 		if (*s < '0' || *s > '9')
@@ -105,7 +105,7 @@ static qboolean StringToFilter (char *s, ipFilter_t *f)
 			G_Printf( "Bad filter address: %s\n", s );
 			return qfalse;
 		}
-		
+
 		j = 0;
 		while (*s >= '0' && *s <= '9')
 		{
@@ -119,10 +119,10 @@ static qboolean StringToFilter (char *s, ipFilter_t *f)
 			break;
 		s++;
 	}
-	
+
 	f->mask = *(unsigned *)m;
 	f->compare = *(unsigned *)b;
-	
+
 	return qtrue;
 }
 
@@ -194,7 +194,7 @@ qboolean G_FilterPacket (char *from)
 			break;
 		i++, p++;
 	}
-	
+
 	in = *(unsigned *)m;
 
 	for (i=0 ; i<numIPFilters ; i++)
@@ -225,7 +225,7 @@ static void AddIP( char *str )
 		}
 		numIPFilters++;
 	}
-	
+
 	if (!StringToFilter (str, &ipFilters[i]))
 		ipFilters[i].compare = 0xffffffffu;
 
@@ -301,11 +301,11 @@ void Svcmd_RemoveIP_f (void)
 	for (i=0 ; i<numIPFilters ; i++) {
 		if (ipFilters[i].mask == f.mask	&&
 			ipFilters[i].compare == f.compare) {
-			ipFilters[i].compare = 0xffffffffu;
-			G_Printf ("Removed.\n");
+				ipFilters[i].compare = 0xffffffffu;
+				G_Printf ("Removed.\n");
 
-			UpdateIPBans();
-			return;
+				UpdateIPBans();
+				return;
 		}
 	}
 
@@ -503,7 +503,7 @@ qboolean	ConsoleCommand( void ) {
 		CLIq3::sAPI::LoadPlugins();
 		return qtrue;
 	}
-	
+
 	if (Q_stricmp (cmd, "sv_unloadplugins") == 0) {
 		CLIq3::sAPI::UnloadPlugins();
 		return qtrue;
@@ -525,10 +525,14 @@ qboolean	ConsoleCommand( void ) {
 		return qtrue;
 	}
 
+	char* args = 0;
+	trap_Cmds(&args);
+	auto S = Str(args);
 
-
-	if (CLIq3::sAPI::OnCommand(Str(ConcatArgs(0))))
+	if (S->StartsWith("\\")) {
+		CLIq3::sAPI::OnCommand(S->TrimStart('\\')->Trim());
 		return qtrue;
+	}
 
 	return qfalse;
 }

@@ -9,20 +9,17 @@ using CLIq3;
 namespace Example {
 	static class Vector {
 		public static Vec3 Randomize(this Vec3 T, int Amp) {
-			/*Vec3 Norm = T;
-			Norm.Normalize();*/
-
 			T.X += Addon.R.Next(-Amp, Amp);
 			T.Y += Addon.R.Next(-Amp, Amp);
 			T.Z += Addon.R.Next(-Amp, Amp);
-
 			return T;
 		}
 
-		public static Vec3 RandomizeDir(this Vec3 V) {
-			V.X *= (float)Addon.R.Next(-100, 100) / 100;
-			V.Y *= (float)Addon.R.Next(-100, 100) / 100;
-			V.Z *= (float)Addon.R.Next(-100, 100) / 100;
+		public static Vec3 RandomizeDir() {
+			Vec3 V = new Vec3();
+			V.X = (float)(Addon.R.NextDouble() + Addon.R.NextDouble() - 1);
+			V.Y = (float)(Addon.R.NextDouble() + Addon.R.NextDouble() - 1);
+			V.Z = (float)(Addon.R.NextDouble() + Addon.R.NextDouble() - 1);
 			return V;
 		}
 
@@ -45,6 +42,11 @@ namespace Example {
 			A.Y *= F;
 			A.Z *= F;
 			return A;
+		}
+
+		public static Vec3 Norm(this Vec3 V) {
+			V.Normalize();
+			return V;
 		}
 	}
 }

@@ -62,6 +62,14 @@ void	trap_Argv( int n, char *buffer, int bufferLength ) {
 	syscall( G_ARGV, n, buffer, bufferLength );
 }
 
+void trap_Args(char** buffer) {
+	syscall(G_ARGS, buffer);
+}
+
+void trap_Cmds(char** buffer) {
+	syscall(G_CMDS, buffer);
+}
+
 int		trap_FS_FOpenFile( const char *qpath, fileHandle_t *f, fsMode_t mode ) {
 	return syscall( G_FS_FOPEN_FILE, qpath, f, mode );
 }
@@ -113,7 +121,7 @@ void trap_Cvar_VariableStringBuffer( const char *var_name, char *buffer, int buf
 
 void trap_LocateGameData( gentity_t *gEnts, int numGEntities, int sizeofGEntity_t,
 						 playerState_t *clients, int sizeofGClient ) {
-	syscall( G_LOCATE_GAME_DATA, gEnts, numGEntities, sizeofGEntity_t, clients, sizeofGClient );
+							 syscall( G_LOCATE_GAME_DATA, gEnts, numGEntities, sizeofGEntity_t, clients, sizeofGClient );
 }
 
 void trap_DropClient( int clientNum, const char *reason ) {
@@ -353,15 +361,15 @@ int trap_AAS_EnableRoutingArea( int areanum, int enable ) {
 }
 
 int trap_AAS_PredictRoute(void /*struct aas_predictroute_s*/ *route, int areanum, vec3_t origin,
-							int goalareanum, int travelflags, int maxareas, int maxtime,
-							int stopevent, int stopcontents, int stoptfl, int stopareanum) {
-	return syscall( BOTLIB_AAS_PREDICT_ROUTE, route, areanum, origin, goalareanum, travelflags, maxareas, maxtime, stopevent, stopcontents, stoptfl, stopareanum );
+						  int goalareanum, int travelflags, int maxareas, int maxtime,
+						  int stopevent, int stopcontents, int stoptfl, int stopareanum) {
+							  return syscall( BOTLIB_AAS_PREDICT_ROUTE, route, areanum, origin, goalareanum, travelflags, maxareas, maxtime, stopevent, stopcontents, stoptfl, stopareanum );
 }
 
 int trap_AAS_AlternativeRouteGoals(vec3_t start, int startareanum, vec3_t goal, int goalareanum, int travelflags,
-										void /*struct aas_altroutegoal_s*/ *altroutegoals, int maxaltroutegoals,
-										int type) {
-	return syscall( BOTLIB_AAS_ALTERNATIVE_ROUTE_GOAL, start, startareanum, goal, goalareanum, travelflags, altroutegoals, maxaltroutegoals, type );
+								   void /*struct aas_altroutegoal_s*/ *altroutegoals, int maxaltroutegoals,
+								   int type) {
+									   return syscall( BOTLIB_AAS_ALTERNATIVE_ROUTE_GOAL, start, startareanum, goal, goalareanum, travelflags, altroutegoals, maxaltroutegoals, type );
 }
 
 int trap_AAS_Swimming(vec3_t origin) {

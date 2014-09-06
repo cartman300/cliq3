@@ -12,8 +12,8 @@ namespace CLIq3 {
 		virtual void Unload(){}
 
 		virtual void EntityCreated(EntPtr^ E) {}
-		virtual bool Command(String^ S) { return false; }
-		virtual bool FireWeapon(EntPtr^ Ply, Vec3 Muzzle, Vec3 Forward) { return false; }
+		virtual void Command(String^ S) {}
+		virtual bool FireWeapon(EntPtr^ Ply, bool AltFire, Vec3 Muzzle, Vec3 Forward) { return false; }
 	};
 
 	public ref class sAPI {
@@ -45,7 +45,7 @@ namespace CLIq3 {
 		static void UnloadPlugins();
 
 		static void OnEntityCreated(EntPtr^ Ent);
-		static bool OnCommand(String^ S);
-		static bool OnFireWeapon(EntPtr^ Ent, Vec3 Muzzle, Vec3 Forward);
+		static void OnCommand(String^ S);
+		static bool OnFireWeapon(EntPtr^ Ent, bool AltFire, Vec3 Muzzle, Vec3 Forward);
 	};
 }
