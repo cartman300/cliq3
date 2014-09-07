@@ -249,9 +249,7 @@ int Pickup_Weapon (gentity_t *ent, gentity_t *other) {
 			if (!(ent->count) && (other->client->ps.ammo[ ent->item->giTag ] < quantity)) {
 				quantity = quantity - other->client->ps.ammo[ ent->item->giTag ];
 			} else {
-				if (ent->count)
-					quantity = ent->count;
-				else
+				if (!ent->count)
 					quantity = 1;
 			}
 		}
