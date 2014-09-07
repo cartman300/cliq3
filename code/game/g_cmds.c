@@ -46,7 +46,7 @@ void DeathmatchScoreboardMessage( gentity_t *ent ) {
 	scoreFlags = 0;
 
 	numSorted = level.numConnectedClients;
-	
+
 	for (i=0 ; i < numSorted ; i++) {
 		int		ping;
 
@@ -270,6 +270,13 @@ void Cmd_Give_f (gentity_t *ent)
 			return;
 	}
 
+	if (Q_stricmp(name, "infammo") == 0)
+	{
+		for (i = 0 ; i < MAX_WEAPONS ; i++) 
+			ent->client->ps.ammo[i] = -1;
+		return;
+	}
+
 	if (give_all || Q_stricmp(name, "armor") == 0)
 	{
 		ent->client->ps.stats[STAT_ARMOR] = 200;
@@ -491,13 +498,13 @@ void BroadcastTeamChange( gclient_t *client, int oldTeam )
 			client->pers.netname) );
 	} else if ( client->sess.sessionTeam == TEAM_BLUE ) {
 		trap_SendServerCommand( -1, va("cp \"%s" S_COLOR_WHITE " joined the blue team.\n\"",
-		client->pers.netname));
+			client->pers.netname));
 	} else if ( client->sess.sessionTeam == TEAM_SPECTATOR && oldTeam != TEAM_SPECTATOR ) {
 		trap_SendServerCommand( -1, va("cp \"%s" S_COLOR_WHITE " joined the spectators.\n\"",
-		client->pers.netname));
+			client->pers.netname));
 	} else if ( client->sess.sessionTeam == TEAM_FREE ) {
 		trap_SendServerCommand( -1, va("cp \"%s" S_COLOR_WHITE " joined the battle.\n\"",
-		client->pers.netname));
+			client->pers.netname));
 	}
 }
 
@@ -577,10 +584,10 @@ void SetTeam( gentity_t *ent, char *s ) {
 	// override decision if limiting the players
 	if ( (g_gametype.integer == GT_TOURNAMENT)
 		&& level.numNonSpectatorClients >= 2 ) {
-		team = TEAM_SPECTATOR;
+			team = TEAM_SPECTATOR;
 	} else if ( g_maxGameClients.integer > 0 && 
 		level.numNonSpectatorClients >= g_maxGameClients.integer ) {
-		team = TEAM_SPECTATOR;
+			team = TEAM_SPECTATOR;
 	}
 
 	//
@@ -692,7 +699,7 @@ void Cmd_Team_f( gentity_t *ent ) {
 	// if they are playing a tournement game, count as a loss
 	if ( (g_gametype.integer == GT_TOURNAMENT )
 		&& ent->client->sess.sessionTeam == TEAM_FREE ) {
-		ent->client->sess.losses++;
+			ent->client->sess.losses++;
 	}
 
 	trap_Argv( 1, s, sizeof( s ) );
@@ -738,7 +745,7 @@ void Cmd_Follow_f( gentity_t *ent ) {
 	// if they are playing a tournement game, count as a loss
 	if ( (g_gametype.integer == GT_TOURNAMENT )
 		&& ent->client->sess.sessionTeam == TEAM_FREE ) {
-		ent->client->sess.losses++;
+			ent->client->sess.losses++;
 	}
 
 	// first set them to spectator
@@ -762,7 +769,7 @@ void Cmd_FollowCycle_f( gentity_t *ent, int dir ) {
 	// if they are playing a tournement game, count as a loss
 	if ( (g_gametype.integer == GT_TOURNAMENT )
 		&& ent->client->sess.sessionTeam == TEAM_FREE ) {
-		ent->client->sess.losses++;
+			ent->client->sess.losses++;
 	}
 	// first set them to spectator
 	if ( ent->client->sess.spectatorState == SPECTATOR_NOT ) {
@@ -840,7 +847,7 @@ static void G_SayTo( gentity_t *ent, gentity_t *other, int mode, int color, cons
 	if ( (g_gametype.integer == GT_TOURNAMENT )
 		&& other->client->sess.sessionTeam == TEAM_FREE
 		&& ent->client->sess.sessionTeam != TEAM_FREE ) {
-		return;
+			return;
 	}
 
 	trap_SendServerCommand( other-g_entities, va("%s \"%s%c%c%s\"", 
@@ -874,10 +881,10 @@ void G_Say( gentity_t *ent, gentity_t *target, int mode, const char *chatText ) 
 		G_LogPrintf( "sayteam: %s: %s\n", ent->client->pers.netname, chatText );
 		if (Team_GetLocationMsg(ent, location, sizeof(location)))
 			Com_sprintf (name, sizeof(name), EC"(%s%c%c"EC") (%s)"EC": ", 
-				ent->client->pers.netname, Q_COLOR_ESCAPE, COLOR_WHITE, location);
+			ent->client->pers.netname, Q_COLOR_ESCAPE, COLOR_WHITE, location);
 		else
 			Com_sprintf (name, sizeof(name), EC"(%s%c%c"EC")"EC": ", 
-				ent->client->pers.netname, Q_COLOR_ESCAPE, COLOR_WHITE );
+			ent->client->pers.netname, Q_COLOR_ESCAPE, COLOR_WHITE );
 		color = COLOR_CYAN;
 		break;
 	case SAY_TELL:
@@ -1282,11 +1289,11 @@ void Cmd_CallVote_f( gentity_t *ent ) {
 	// check for command separators in arg2
 	for( c = arg2; *c; ++c) {
 		switch(*c) {
-			case '\n':
-			case '\r':
-			case ';':
-				trap_SendServerCommand( ent-g_entities, "print \"Invalid vote string.\n\"" );
-				return;
+		case '\n':
+		case '\r':
+		case ';':
+			trap_SendServerCommand( ent-g_entities, "print \"Invalid vote string.\n\"" );
+			return;
 			break;
 		}
 	}
@@ -1621,20 +1628,20 @@ Cmd_Stats_f
 =================
 */
 void Cmd_Stats_f( gentity_t *ent ) {
-/*
+	/*
 	int max, n, i;
 
 	max = trap_AAS_PointReachabilityAreaIndex( NULL );
 
 	n = 0;
 	for ( i = 0; i < max; i++ ) {
-		if ( ent->client->areabits[i >> 3] & (1 << (i & 7)) )
-			n++;
+	if ( ent->client->areabits[i >> 3] & (1 << (i & 7)) )
+	n++;
 	}
 
 	//trap_SendServerCommand( ent-g_entities, va("print \"visited %d of %d areas\n\"", n, max));
 	trap_SendServerCommand( ent-g_entities, va("print \"%d%% level coverage\n\"", n * 100 / max));
-*/
+	*/
 }
 
 /*
