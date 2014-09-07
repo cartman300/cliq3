@@ -102,7 +102,10 @@ void TossClientItems( gentity_t *self ) {
 		item = BG_FindItemForWeapon( (weapon_t)weapon );
 
 		// spawn the item
-		Drop_Item( self, item, 0 );
+		drop = Drop_Item( self, item, 0 );
+		drop->count = self->client->ps.ammo[item->giTag];
+		if (!drop->count)
+			drop->count = 1;
 	}
 
 	// drop all the powerups if not in teamplay

@@ -275,6 +275,10 @@ void trigger_teleporter_touch (gentity_t *self, gentity_t *other, trace_t *trace
 	gentity_t	*dest;
 
 	if ( !other->client ) {
+		dest = G_PickTarget(self->target);
+		VectorCopy(dest->s.origin, other->r.currentOrigin);
+		VectorCopy(dest->s.origin, other->s.pos.trBase);
+		other->s.pos.trTime = level.time;
 		return;
 	}
 	if ( other->client->ps.pm_type == PM_DEAD ) {

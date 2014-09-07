@@ -238,20 +238,21 @@ int Pickup_Weapon (gentity_t *ent, gentity_t *other) {
 	if ( ent->count < 0 ) {
 		quantity = 0; // None for you, sir!
 	} else {
-		if ( ent->count ) {
+		if ( ent->count )
 			quantity = ent->count;
-		} else {
+		else
 			quantity = ent->item->quantity;
-		}
 
 		// dropped items and teamplay weapons always have full ammo
 		if ( ! (ent->flags & FL_DROPPED_ITEM) && g_gametype.integer != GT_TEAM ) {
 			// respawning rules
-			// drop the quantity if the already have over the minimum
-			if ( other->client->ps.ammo[ ent->item->giTag ] < quantity ) {
+			if (!(ent->count) && (other->client->ps.ammo[ ent->item->giTag ] < quantity)) {
 				quantity = quantity - other->client->ps.ammo[ ent->item->giTag ];
 			} else {
-				quantity = 1;		// only add a single shot
+				if (ent->count)
+					quantity = ent->count;
+				else
+					quantity = 1;
 			}
 		}
 	}
