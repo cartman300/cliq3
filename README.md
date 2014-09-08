@@ -13,7 +13,11 @@ Based upon ioquake3.
 Some of the major features and changes since ioquake3 fork are:
 
   * No support for other operating systems besides Windows (i call it a feature)
-
+  * Secondary weapon fire
+  * Wall jumping
+  * "Rope physics" for the grappling hook
+  * Posibility to override primary and secodary weapon fire from .NET
+  
 The map editor and associated compiling tools are not included. We suggest you
 use a modern copy from http://icculus.org/gtkradiant/.
 
