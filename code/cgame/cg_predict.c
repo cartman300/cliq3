@@ -332,7 +332,7 @@ static void CG_TouchTriggerPrediction( void ) {
 	qboolean	spectator;
 
 	// dead clients and grappling hook'd clients don't activate triggers
-	if ( cg.predictedPlayerState.stats[STAT_HEALTH] <= 0 || cg.predictedPlayerEntity.pe.grappleFiring == qtrue ) {
+	if ( cg.predictedPlayerState.stats[STAT_HEALTH] <= 0 ) {
 		return;
 	}
 

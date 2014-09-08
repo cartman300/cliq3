@@ -247,13 +247,13 @@ static void PM_Accelerate( vec3_t wishdir, float wishspeed, float accel ) {
 	if (addspeed <= 0) {
 		return;
 	}
-	accelspeed = accel*pml.frametime*wishspeed;
+	accelspeed = accel * pml.frametime * wishspeed;
 	if (accelspeed > addspeed) {
 		accelspeed = addspeed;
 	}
 
-	for (i=0 ; i<3 ; i++) {
-		pm->ps->velocity[i] += accelspeed*wishdir[i];	
+	for (i = 0; i < 3; i++) {
+		pm->ps->velocity[i] += accelspeed * wishdir[i];	
 	}
 #else
 	// proper way (avoids strafe jump maxspeed bug), but feels bad
@@ -349,6 +349,29 @@ static void PM_SetMovementDir( void ) {
 	}
 }
 
+/*
+=============
+PM_ForwardTrace
+=============
+*/
+static qboolean PM_WallTrace( void ) {
+	vec3_t		point, flatforward;
+	trace_t		trace;
+
+	pml.wallPlane = qfalse;
+
+	VectorSet(flatforward, pml.forward[0], pml.forward[1], 0);
+	VectorNormalize(flatforward);
+	VectorMA (pm->ps->origin, 30, flatforward, point);
+
+	point[2] += 4;
+	int cont = pm->pointcontents(point, pm->ps->clientNum );
+	if ((cont & CONTENTS_SOLID))
+		pml.wallPlane = qtrue;
+
+	return pml.wallPlane;
+}
+
 
 /*
 =============
@@ -356,13 +379,8 @@ PM_CheckJump
 =============
 */
 static qboolean PM_CheckJump( void ) {
-	if ( pm->ps->pm_flags & PMF_RESPAWNED ) {
+	if ((pm->ps->pm_flags & PMF_RESPAWNED) || (pm->cmd.upmove < 10)) {
 		return qfalse;		// don't allow jump until all buttons are up
-	}
-
-	if ( pm->cmd.upmove < 10 ) {
-		// not holding jump
-		return qfalse;
 	}
 
 	// must wait for jump to be released
@@ -372,12 +390,21 @@ static qboolean PM_CheckJump( void ) {
 		return qfalse;
 	}
 
+	pm->ps->velocity[2] += JUMP_VELOCITY;
+
+	if (pml.wallPlane) {
+		vec3_t flatforward;
+		VectorSet(flatforward, pml.forward[0], pml.forward[1], 0);
+		VectorNormalize(flatforward);
+		VectorScale(flatforward, -JUMP_VELOCITY / 2, flatforward);
+		VectorAdd(flatforward, pm->ps->velocity, pm->ps->velocity);
+	}
+
 	pml.groundPlane = qfalse;		// jumping away
+	pml.wallPlane = qfalse;
 	pml.walking = qfalse;
 	pm->ps->pm_flags |= PMF_JUMP_HELD;
-
 	pm->ps->groundEntityNum = ENTITYNUM_NONE;
-	pm->ps->velocity[2] = JUMP_VELOCITY;
 	PM_AddEvent( EV_JUMP );
 
 	if ( pm->cmd.forwardmove >= 0 ) {
@@ -387,6 +414,8 @@ static qboolean PM_CheckJump( void ) {
 		PM_ForceLegsAnim( LEGS_JUMPB );
 		pm->ps->pm_flags |= PMF_BACKWARDS_JUMP;
 	}
+
+
 
 	return qtrue;
 }
@@ -654,32 +683,9 @@ static void PM_AirMove( void ) {
 #endif
 
 	PM_StepSlideMove ( qtrue );
-}
 
-/*
-===================
-PM_GrappleMove
-
-===================
-*/
-static void PM_GrappleMove( void ) {
-	vec3_t vel, v;
-	float vlen;
-
-	VectorScale(pml.forward, -16, v);
-	VectorAdd(pm->ps->grapplePoint, v, v);
-	VectorSubtract(v, pm->ps->origin, vel);
-	vlen = VectorLength(vel);
-	VectorNormalize( vel );
-
-	if (vlen <= 100)
-		VectorScale(vel, 10 * vlen, vel);
-	else
-		VectorScale(vel, 800, vel);
-
-	VectorCopy(vel, pm->ps->velocity);
-
-	pml.groundPlane = qfalse;
+	if (PM_WallTrace())
+		PM_CheckJump();
 }
 
 /*
@@ -807,6 +813,29 @@ static void PM_WalkMove( void ) {
 
 }
 
+static void PM_GrappleMove( void ) {
+	if (pm->ps->pm_flags & PMF_TIME_WATERJUMP)
+		PM_WaterJumpMove();
+	else if (pm->waterlevel > 1)
+		PM_WaterMove();
+	else if (pml.walking)
+		PM_WalkMove();
+	else
+		PM_AirMove();
+
+	float dist;
+
+	if ((dist = Distance(pm->ps->grapplePoint, pm->ps->origin)) > pm->ps->grappleLength) {
+		vec3_t clipNorm;
+		VectorSubtract(pm->ps->grapplePoint, pm->ps->origin, clipNorm);	
+		VectorInverse(clipNorm);
+		VectorNormalize(clipNorm);
+		PM_ClipVelocity(pm->ps->velocity, clipNorm, pm->ps->velocity, OVERCLIP);
+
+		VectorScale(clipNorm, -0.01 * dist, clipNorm);
+		VectorAdd(clipNorm, pm->ps->velocity, pm->ps->velocity);
+	}
+}
 
 /*
 ==============
@@ -1194,7 +1223,6 @@ static void PM_GroundTrace( void ) {
 
 	PM_AddTouchEnt( trace.entityNum );
 }
-
 
 /*
 =============
@@ -1978,10 +2006,8 @@ void PmoveSingle (pmove_t *pmove) {
 		if ( pm->ps->powerups[PW_FLIGHT] ) {
 			// flight powerup doesn't allow jump and has different friction
 			PM_FlyMove();
-		} else if (pm->ps->pm_flags & PMF_GRAPPLE_PULL) {
+		} else if ((pm->ps->pm_flags & PMF_GRAPPLE_PULL) && (pm->ps->grappleLength != 0)) {
 			PM_GrappleMove();
-			// We can wiggle a bit
-			PM_AirMove();
 		} else if (pm->ps->pm_flags & PMF_TIME_WATERJUMP) {
 			PM_WaterJumpMove();
 		} else if ( pm->waterlevel > 1 ) {

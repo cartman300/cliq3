@@ -513,6 +513,8 @@ float Q_rsqrt( float number )
 //	y  = y * ( threehalfs - ( x2 * y * y ) );   // 2nd iteration, this can be removed
 
 	return y;
+
+	//return sqrtf(number); // Who the fuck uses fast sqrt anymore
 }
 
 float Q_fabs( float f ) {
@@ -790,7 +792,7 @@ vec_t VectorNormalize( vec3_t v ) {
 
 	if ( length ) {
 		/* writing it this way allows gcc to recognize that rsqrt can be used */
-		ilength = 1/(float)sqrt (length);
+		ilength = 1.0f / (float)sqrt (length);
 		/* sqrt(length) = length * (1 / sqrt(length)) */
 		length *= ilength;
 		v[0] *= ilength;
@@ -809,7 +811,7 @@ vec_t VectorNormalize2( const vec3_t v, vec3_t out) {
 	if (length)
 	{
 		/* writing it this way allows gcc to recognize that rsqrt can be used */
-		ilength = 1/(float)sqrt (length);
+		ilength = 1.0f / (float)sqrt (length);
 		/* sqrt(length) = length * (1 / sqrt(length)) */
 		length *= ilength;
 		out[0] = v[0]*ilength;

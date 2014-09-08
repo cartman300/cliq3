@@ -46,6 +46,9 @@ typedef struct {
 	qboolean	groundPlane;
 	trace_t		groundTrace;
 
+	qboolean	wallPlane;
+	//trace_t		forwardTrace;
+
 	float		impactSpeed;
 
 	vec3_t		previous_origin;

@@ -146,8 +146,8 @@ void trigger_push_touch (gentity_t *self, gentity_t *other, trace_t *trace ) {
 		return;
 	}
 
-	if (other->client && other->client->hook)
-		return;
+	/*if (other->client && other->client->hook)
+		return;*/
 
 	BG_TouchJumpPad( &other->client->ps, &self->s );
 }

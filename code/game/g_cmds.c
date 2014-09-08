@@ -270,8 +270,7 @@ void Cmd_Give_f (gentity_t *ent)
 			return;
 	}
 
-	if (Q_stricmp(name, "infammo") == 0)
-	{
+	if (Q_stricmp(name, "infammo") == 0) {
 		for (i = 0 ; i < MAX_WEAPONS ; i++) 
 			ent->client->ps.ammo[i] = -1;
 		return;

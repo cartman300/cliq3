@@ -267,7 +267,7 @@ void CG_RailTrail (clientInfo_t *ci, vec3_t start, vec3_t end) {
 	PerpendicularVector(temp, vec);
 	for (i = 0 ; i < 36; i++)
 	{
-		RotatePointAroundVector(axis[i], vec, temp, i * 10);//banshee 2.4 was 10
+		RotatePointAroundVector(axis[i], vec, temp, i * 2.4);//banshee 2.4 was 10
 	}
 
 	VectorMA(move, 20, vec, move);
