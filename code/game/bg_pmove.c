@@ -390,24 +390,25 @@ static qboolean PM_CheckJump( void ) {
 		return qfalse;
 	}
 
-	pm->ps->velocity[2] += JUMP_VELOCITY;
+	pm->ps->velocity[2] = JUMP_VELOCITY;
 
 	if (pml.wallPlane) {
 		vec3_t flatforward;
 		VectorSet(flatforward, pml.forward[0], pml.forward[1], 0);
 		VectorNormalize(flatforward);
-		VectorScale(flatforward, -JUMP_VELOCITY / 2, flatforward);
-		VectorAdd(flatforward, pm->ps->velocity, pm->ps->velocity);
+		VectorScale(flatforward, -JUMP_VELOCITY, flatforward);
+
+		for (int i = 0; i < 2; i++)
+			pm->ps->velocity[i] = flatforward[i];
+		pm->ps->velocity[2] += flatforward[2];
 	}
 
-	pml.groundPlane = qfalse;		// jumping away
-	pml.wallPlane = qfalse;
 	pml.walking = qfalse;
 	pm->ps->pm_flags |= PMF_JUMP_HELD;
 	pm->ps->groundEntityNum = ENTITYNUM_NONE;
 	PM_AddEvent( EV_JUMP );
 
-	if ( pm->cmd.forwardmove >= 0 ) {
+	if (pm->cmd.forwardmove >= 0 && ! pml.wallPlane) {
 		PM_ForceLegsAnim( LEGS_JUMP );
 		pm->ps->pm_flags &= ~PMF_BACKWARDS_JUMP;
 	} else {
@@ -415,7 +416,8 @@ static qboolean PM_CheckJump( void ) {
 		pm->ps->pm_flags |= PMF_BACKWARDS_JUMP;
 	}
 
-
+	pml.groundPlane = qfalse;		// jumping away
+	pml.wallPlane = qfalse;
 
 	return qtrue;
 }
