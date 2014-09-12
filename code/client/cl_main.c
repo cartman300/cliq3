@@ -221,9 +221,9 @@ void CL_UpdateVoipIgnore(const char *idstr, qboolean ignore)
 		if ((id >= 0) && (id < MAX_CLIENTS)) {
 			clc.voipIgnore[id] = ignore;
 			CL_AddReliableCommand(va("voip %s %d",
-			                         ignore ? "ignore" : "unignore", id), qfalse);
+									 ignore ? "ignore" : "unignore", id), qfalse);
 			Com_Printf("VoIP: %s ignoring player #%d\n",
-			            ignore ? "Now" : "No longer", id);
+						ignore ? "Now" : "No longer", id);
 			return;
 		}
 	}
@@ -291,8 +291,8 @@ void CL_Voip_f( void )
 		clc.voipMuteAll = qfalse;
 	} else {
 		Com_Printf("usage: voip [un]ignore <playerID#>\n"
-		           "       voip [un]muteall\n"
-		           "       voip gain <playerID#> [value]\n");
+				   "       voip [un]muteall\n"
+				   "       voip gain <playerID#> [value]\n");
 	}
 }
 
@@ -522,10 +522,10 @@ void CL_CaptureVoip(void)
 				// encode raw audio samples into Speex data...
 				speex_bits_reset(&clc.speexEncoderBits);
 				speex_encode_int(clc.speexEncoder, sampptr,
-				                 &clc.speexEncoderBits);
+								 &clc.speexEncoderBits);
 				bytes = speex_bits_write(&clc.speexEncoderBits,
-				                         (char *) &clc.voipOutgoingData[wpos+1],
-				                         sizeof (clc.voipOutgoingData) - (wpos+1));
+										 (char *) &clc.voipOutgoingData[wpos+1],
+										 sizeof (clc.voipOutgoingData) - (wpos+1));
 				assert((bytes > 0) && (bytes < 256));
 				clc.voipOutgoingData[wpos] = (byte) bytes;
 				wpos += bytes + 1;
@@ -537,8 +537,8 @@ void CL_CaptureVoip(void)
 			}
 
 			clc.voipPower = (voipPower / (32768.0f * 32768.0f *
-			                 ((float) (clc.speexFrameSize * speexFrames)))) *
-			                 100.0f;
+							 ((float) (clc.speexFrameSize * speexFrames)))) *
+							 100.0f;
 
 			if ((useVad) && (clc.voipPower < cl_voipVADThreshold->value)) {
 				CL_VoipNewGeneration();  // no "talk" for at least 1/4 second.
@@ -547,7 +547,7 @@ void CL_CaptureVoip(void)
 				clc.voipOutgoingDataFrames = speexFrames;
 
 				Com_DPrintf("VoIP: Send %d frames, %d bytes, %f power\n",
-				            speexFrames, wpos, clc.voipPower);
+							speexFrames, wpos, clc.voipPower);
 
 				#if 0
 				static FILE *encio = NULL;
@@ -596,7 +596,7 @@ void CL_AddReliableCommand(const char *cmd, qboolean isDisconnectCmd)
 	// also leave one slot open for the disconnect command in this case.
 	
 	if ((isDisconnectCmd && unacknowledged > MAX_RELIABLE_COMMANDS) ||
-	    (!isDisconnectCmd && unacknowledged >= MAX_RELIABLE_COMMANDS))
+		(!isDisconnectCmd && unacknowledged >= MAX_RELIABLE_COMMANDS))
 	{
 		if(com_errorEntered)
 			return;
@@ -2262,20 +2262,20 @@ void CL_InitDownloads(void) {
 
   if ( !(cl_allowDownload->integer & DLF_ENABLE) )
   {
-    // autodownload is disabled on the client
-    // but it's possible that some referenced files on the server are missing
-    if (FS_ComparePaks( missingfiles, sizeof( missingfiles ), qfalse ) )
-    {      
-      // NOTE TTimo I would rather have that printed as a modal message box
-      //   but at this point while joining the game we don't know wether we will successfully join or not
-      Com_Printf( "\nWARNING: You are missing some files referenced by the server:\n%s"
-                  "You might not be able to join the game\n"
-                  "Go to the setting menu to turn on autodownload, or get the file elsewhere\n\n", missingfiles );
-    }
+	// autodownload is disabled on the client
+	// but it's possible that some referenced files on the server are missing
+	if (FS_ComparePaks( missingfiles, sizeof( missingfiles ), qfalse ) )
+	{      
+	  // NOTE TTimo I would rather have that printed as a modal message box
+	  //   but at this point while joining the game we don't know wether we will successfully join or not
+	  Com_Printf( "\nWARNING: You are missing some files referenced by the server:\n%s"
+				  "You might not be able to join the game\n"
+				  "Go to the setting menu to turn on autodownload, or get the file elsewhere\n\n", missingfiles );
+	}
   }
   else if ( FS_ComparePaks( clc.downloadList, sizeof( clc.downloadList ) , qtrue ) ) {
 
-    Com_Printf("Need paks: %s\n", clc.downloadList );
+	Com_Printf("Need paks: %s\n", clc.downloadList );
 
 		if ( *clc.downloadList ) {
 			// if autodownloading is not enabled on the server
@@ -2358,17 +2358,17 @@ void CL_CheckForResend( void ) {
 		Info_SetValueForKey( info, "challenge", va("%i", clc.challenge ) );
 		
 		strcpy(data, "connect ");
-    // TTimo adding " " around the userinfo string to avoid truncated userinfo on the server
-    //   (Com_TokenizeString tokenizes around spaces)
-    data[8] = '"';
+	// TTimo adding " " around the userinfo string to avoid truncated userinfo on the server
+	//   (Com_TokenizeString tokenizes around spaces)
+	data[8] = '"';
 
 		for(i=0;i<strlen(info);i++) {
 			data[9+i] = info[i];	// + (clc.challenge)&0x3;
 		}
-    data[9+i] = '"';
+	data[9+i] = '"';
 		data[10+i] = 0;
 
-    // NOTE TTimo don't forget to set the right data length!
+	// NOTE TTimo don't forget to set the right data length!
 		NET_OutOfBandData( NS_CLIENT, clc.serverAddress, (byte *) &data[0], i+10 );
 		// the most current userinfo has been sent, so watch for any
 		// newer changes to userinfo variables
@@ -2702,10 +2702,10 @@ void CL_ConnectionlessPacket( netadr_t from, msg_t *msg ) {
 
 #ifdef LEGACY_PROTOCOL
 		Netchan_Setup(NS_CLIENT, &clc.netchan, from, Cvar_VariableValue("net_qport"),
-			      clc.challenge, clc.compat);
+				  clc.challenge, clc.compat);
 #else
 		Netchan_Setup(NS_CLIENT, &clc.netchan, from, Cvar_VariableValue("net_qport"),
-			      clc.challenge, qfalse);
+				  clc.challenge, qfalse);
 #endif
 
 		clc.state = CA_CONNECTED;
@@ -2841,7 +2841,7 @@ void CL_CheckTimeout( void ) {
 	//
 	if ( ( !CL_CheckPaused() || !sv_paused->integer ) 
 		&& clc.state >= CA_CONNECTED && clc.state != CA_CINEMATIC
-	    && cls.realtime - clc.lastPacketTime > cl_timeout->value*1000) {
+		&& cls.realtime - clc.lastPacketTime > cl_timeout->value*1000) {
 		if (++cl.timeoutcount > 5) {	// timeoutcount saves debugger
 			Com_Printf ("\nServer connection timed out.\n");
 			CL_Disconnect( qtrue );
@@ -3313,44 +3313,44 @@ void CL_Video_f( void )
 
   if( !clc.demoplaying )
   {
-    Com_Printf( "The video command can only be used when playing back demos\n" );
-    return;
+	Com_Printf( "The video command can only be used when playing back demos\n" );
+	return;
   }
 
   if( Cmd_Argc( ) == 2 )
   {
-    // explicit filename
-    Com_sprintf( filename, MAX_OSPATH, "videos/%s.avi", Cmd_Argv( 1 ) );
+	// explicit filename
+	Com_sprintf( filename, MAX_OSPATH, "videos/%s.avi", Cmd_Argv( 1 ) );
   }
   else
   {
-    // scan for a free filename
-    for( i = 0; i <= 9999; i++ )
-    {
-      int a, b, c, d;
+	// scan for a free filename
+	for( i = 0; i <= 9999; i++ )
+	{
+	  int a, b, c, d;
 
-      last = i;
+	  last = i;
 
-      a = last / 1000;
-      last -= a * 1000;
-      b = last / 100;
-      last -= b * 100;
-      c = last / 10;
-      last -= c * 10;
-      d = last;
+	  a = last / 1000;
+	  last -= a * 1000;
+	  b = last / 100;
+	  last -= b * 100;
+	  c = last / 10;
+	  last -= c * 10;
+	  d = last;
 
-      Com_sprintf( filename, MAX_OSPATH, "videos/video%d%d%d%d.avi",
-          a, b, c, d );
+	  Com_sprintf( filename, MAX_OSPATH, "videos/video%d%d%d%d.avi",
+		  a, b, c, d );
 
-      if( !FS_FileExists( filename ) )
-        break; // file doesn't exist
-    }
+	  if( !FS_FileExists( filename ) )
+		break; // file doesn't exist
+	}
 
-    if( i > 9999 )
-    {
-      Com_Printf( S_COLOR_RED "ERROR: no free file names to create video\n" );
-      return;
-    }
+	if( i > 9999 )
+	{
+	  Com_Printf( S_COLOR_RED "ERROR: no free file names to create video\n" );
+	  return;
+	}
   }
 
   CL_OpenAVIForWriting( filename );
@@ -3459,7 +3459,7 @@ void CL_Init( void ) {
 	cl_pitchspeed = Cvar_Get ("cl_pitchspeed", "140", CVAR_ARCHIVE);
 	cl_anglespeedkey = Cvar_Get ("cl_anglespeedkey", "1.5", 0);
 
-	cl_maxpackets = Cvar_Get ("cl_maxpackets", "30", CVAR_ARCHIVE );
+	cl_maxpackets = Cvar_Get ("cl_maxpackets", "125", CVAR_ARCHIVE );
 	cl_packetdup = Cvar_Get ("cl_packetdup", "1", CVAR_ARCHIVE );
 
 	cl_run = Cvar_Get ("cl_run", "1", CVAR_ARCHIVE);
@@ -3539,7 +3539,7 @@ void CL_Init( void ) {
 	// userinfo
 	Cvar_Get ("name", "UnnamedPlayer", CVAR_USERINFO | CVAR_ARCHIVE );
 	cl_rate = Cvar_Get ("rate", "25000", CVAR_USERINFO | CVAR_ARCHIVE );
-	Cvar_Get ("snaps", "20", CVAR_USERINFO | CVAR_ARCHIVE );
+	Cvar_Get ("snaps", "125", CVAR_USERINFO | CVAR_ARCHIVE );
 	Cvar_Get ("model", "sarge", CVAR_USERINFO | CVAR_ARCHIVE );
 	Cvar_Get ("headmodel", "sarge", CVAR_USERINFO | CVAR_ARCHIVE );
 	Cvar_Get ("team_model", "james", CVAR_USERINFO | CVAR_ARCHIVE );
