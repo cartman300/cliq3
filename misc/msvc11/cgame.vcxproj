@@ -535,6 +535,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\code\CLI\src\cAPI.cpp" />
+    <ClCompile Include="..\..\code\CLI\src\Draw.cpp" />
     <ClCompile Include="..\..\code\game\bg_lib.c">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug TA|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug TA|x64'">true</ExcludedFromBuild>
@@ -1124,6 +1125,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\code\CLI\header\cAPI.h" />
+    <ClInclude Include="..\..\code\CLI\header\Draw.h" />
     <ClInclude Include="..\..\code\game\bg_public.h" />
     <ClInclude Include="..\..\code\cgame\cg_local.h" />
     <ClInclude Include="..\..\code\cgame\cg_public.h" />

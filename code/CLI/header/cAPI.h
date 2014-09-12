@@ -13,6 +13,9 @@ namespace CLIq3 {
 	public:
 		virtual void Load() {}
 		virtual void Unload() {}
+
+		virtual void Draw3D(IntPtr RefDef) {}
+		virtual void Draw2D() {}
 	};
 
 	public ref class cAPI {
@@ -27,5 +30,8 @@ namespace CLIq3 {
 		static void LoadPlugins();
 		static void LoadPlugin(Assembly^ Asm);
 		static void UnloadPlugins();
+
+		static void OnDraw3D(IntPtr RefDef);
+		static void OnDraw2D();
 	};
 }

@@ -60,3 +60,17 @@ void cAPI::PrintError(String^ S) {
 	Com_Printf(S_COLOR_RED "CLIENT: %s", Ns);
 	DestroyNString(Ns);
 }
+
+void cAPI::OnDraw3D(IntPtr RefDef) {
+	try {
+		for each (cAddon^ A in Instances)
+			A->Draw3D(RefDef);
+	} ProtectedCatch
+}
+
+void cAPI::OnDraw2D() {
+	try {
+		for each (cAddon^ A in Instances)
+			A->Draw2D();
+	} ProtectedCatch
+}

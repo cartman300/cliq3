@@ -2650,9 +2650,11 @@ void CG_DrawActive( stereoFrame_t stereoView ) {
 		CG_DrawCrosshair3D();
 
 	// draw 3D view
+	CLIq3::cAPI::OnDraw3D(IntPtr(&cg.refdef));
 	trap_R_RenderScene( &cg.refdef );
 
 	// draw status bar and other floating elements
+	CLIq3::cAPI::OnDraw2D();
 	CG_Draw2D(stereoView);
 }
 

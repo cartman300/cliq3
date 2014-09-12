@@ -140,6 +140,9 @@
     <ClCompile Include="..\..\code\CLI\src\cAPI.cpp">
       <Filter>Source Files\CLI\src\cl</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\code\CLI\src\Draw.cpp">
+      <Filter>Source Files\CLI\src\cl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\code\qcommon\surfaceflags.h">
@@ -158,6 +161,9 @@
       <Filter>Header Files\q</Filter>
     </ClInclude>
     <ClInclude Include="..\..\code\CLI\header\cAPI.h">
+      <Filter>Source Files\CLI\header\cl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\CLI\header\Draw.h">
       <Filter>Source Files\CLI\header\cl</Filter>
     </ClInclude>
   </ItemGroup>

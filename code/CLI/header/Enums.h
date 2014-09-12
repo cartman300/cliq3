@@ -118,8 +118,8 @@ namespace CLIq3 {
 		Vec3 Cross(Vec3 Vec);
 		float Normalize();
 
-	internal:
 		void ToVec3t(vec3_t Vec);
+		void ToVec3t(array<float>^ Vec);
 		static Vec3 FromVec3t(vec3_t Vec);
 	};
 
@@ -131,7 +131,6 @@ namespace CLIq3 {
 		Vec3 Base;
 		Vec3 Delta;			// velocity, etc
 
-	internal:
 		void ToTrajectoryt(trajectory_t* T);
 		static Trajectory FromTrajectoryt(trajectory_t* T);
 	};

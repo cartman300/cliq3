@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO.MemoryMappedFiles;
 
 using CLIq3;
 using vCommands;
@@ -11,16 +12,59 @@ using vCommands.Parsing;
 using vCommands.Variables;
 
 namespace Example {
+	public static class staticAddon {
+		public static MemoryMappedFile MF;
+
+		public static Vec3 PlyPos {
+			set {
+				if (MF != null) {
+					var Acc = MF.CreateViewAccessor(0, sizeof(float) * 3);
+					Acc.Write(sizeof(float) * 0, value.X);
+					Acc.Write(sizeof(float) * 1, value.Y);
+					Acc.Write(sizeof(float) * 2, value.Z);
+				}
+			}
+			get {
+				Vec3 V = new Vec3();
+				if (MF != null) {
+					var Acc = MF.CreateViewAccessor(0, sizeof(float) * 3);
+					Acc.Read<float>(sizeof(float) * 0, out V.X);
+					Acc.Read<float>(sizeof(float) * 1, out V.Y);
+					Acc.Read<float>(sizeof(float) * 2, out V.Z);
+				}
+				return V;
+			}
+		}
+	}
+
 	public class clAddon : cAddon {
 		public clAddon() {
 		}
 
 		public override void Load() {
-			cAPI.Print("Loading example addon!\n");
+			try {
+				staticAddon.MF = MemoryMappedFile.CreateOrOpen("CLIq3_Data", sizeof(float) * 3);
+			} catch (Exception E) {
+				cAPI.PrintError(E.ToString() + "\n");
+			}
 		}
 
 		public override void Unload() {
-			cAPI.Print("Unloading example addon!\n");
+			try {
+				staticAddon.MF.Dispose();
+			} catch (Exception E) {
+				cAPI.PrintError(E.ToString() + "\n");
+			}
+		}
+
+		public override void Draw3D(IntPtr RefDef) {
+			try {
+				Vec3 PlyPos = staticAddon.PlyPos;
+				Draw.DynamicLight(PlyPos);
+				//cAPI.Print(string.Format("{0}, {1}, {2}", PlyPos.X, PlyPos.Y, PlyPos.Z));
+			} catch (Exception E) {
+				cAPI.PrintError(E.ToString() + "\n");
+			}
 		}
 	}
 
@@ -35,8 +79,18 @@ namespace Example {
 			try {
 				R = new Random();
 
+				staticAddon.MF = MemoryMappedFile.CreateOrOpen("CLIq3_Data", sizeof(float) * 3);
+
 				H = new CommandHost();
 				H.RegisterDefaultCommands();
+			} catch (Exception E) {
+				sAPI.PrintError(E.ToString() + "\n");
+			}
+		}
+
+		public override void Unload() {
+			try {
+				staticAddon.MF.Dispose();
 			} catch (Exception E) {
 				sAPI.PrintError(E.ToString() + "\n");
 			}
@@ -93,6 +147,8 @@ namespace Example {
 			} else if (W == Weapon.WP_PLASMAGUN) {
 				Mods.FireFrancyPlasma(Ply, Muzzle, Forward);
 				return true;
+			} else if (W == Weapon.WP_RAILGUN) {
+				staticAddon.PlyPos = Ply.GetOrigin();
 			}
 
 			return true;

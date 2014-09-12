@@ -18,6 +18,12 @@ void Vec3::ToVec3t(vec3_t Vec) {
 	Vec[2] = Z;
 }
 
+void Vec3::ToVec3t(array<float>^ Vec) {
+	Vec[0] = X;
+	Vec[1] = Y;
+	Vec[2] = Z;
+}
+
 Vec3 Vec3::FromVec3t(vec3_t Vec) {
 	Vec3 V;
 	V.X = Vec[0];
