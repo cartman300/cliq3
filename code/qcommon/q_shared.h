@@ -59,7 +59,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define BASETA				"missionpack"
 
 #ifndef PRODUCT_VERSION
-  #define PRODUCT_VERSION "1.36"
+  #define PRODUCT_VERSION "0.0.1"
 #endif
 
 #define Q3_VERSION PRODUCT_NAME " " PRODUCT_VERSION
@@ -132,6 +132,9 @@ CLI stuf
 	#using <mscorlib.dll>
 	#using <system.dll>
 	#using <System.Windows.Forms.dll>
+	#if CLIENT
+		#using <E:\Games\Quake3\cliq3\qagamex86.dll>
+	#endif
 
 	#define CreateNString(S) System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi( S ).ToPointer()
 	#define DestroyNString(N) System::Runtime::InteropServices::Marshal::FreeHGlobal(IntPtr((void*) N ))

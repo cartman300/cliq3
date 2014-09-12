@@ -1,5 +1,9 @@
 #pragma once
 
+#ifndef SERVER
+#error Must compile under SERVER
+#endif
+
 namespace CLIq3 {
 	public ref class Pointer {
 	public:

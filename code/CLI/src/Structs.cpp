@@ -1,5 +1,5 @@
 #include "../../qcommon/q_shared.h"
-#include "../../game/g_local.h"
+#include "../header/Enums.h"
 
 using namespace CLIq3;
 using namespace System::IO;

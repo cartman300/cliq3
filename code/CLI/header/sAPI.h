@@ -1,15 +1,20 @@
 #pragma once
 
+#ifndef SERVER
+#error Must compile under SERVER
+#endif
+
 #include "Enums.h"
 #include "Pointers.h"
 #include "Entity.h"
 #include "sQuake.h"
+#include "ConColor.h"
 
 namespace CLIq3 {
-	public ref class sAPIAddon {
+	public ref class sAddon {
 	public:
-		virtual void Load(){}
-		virtual void Unload(){}
+		virtual void Load() {}
+		virtual void Unload() {}
 
 		virtual void EntityCreated(EntPtr^ E) {}
 		virtual void Command(String^ S) {}
@@ -18,20 +23,9 @@ namespace CLIq3 {
 
 	public ref class sAPI {
 	private:
-		static List<sAPIAddon^>^ Instances = gcnew List<sAPIAddon^>();
+		static List<sAddon^>^ Instances = gcnew List<sAddon^>();
 
 	public:
-		ref class ConColor {
-		public:
-			literal String^ Black = "^0";
-			literal String^ Red = "^1";
-			literal String^ Green = "^2";
-			literal String^ Yellow = "^3";
-			literal String^ Blue = "^4";
-			literal String^ Cyan = "^5";
-			literal String^ Magenta = "^6";
-			literal String^ White = "^7";
-		};
 
 		static void Print(String^ S);
 		static void PrintError(String^ S);

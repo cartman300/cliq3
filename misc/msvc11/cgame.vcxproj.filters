@@ -12,108 +12,153 @@
     <Filter Include="Resource Files">
       <UniqueIdentifier>{3d2e36fc-1a0f-433d-bc76-20e2520707af}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\CLI">
+      <UniqueIdentifier>{78b57cf1-1ce5-4f32-a651-668940c72286}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\CLI\header">
+      <UniqueIdentifier>{b27bed42-0192-4c8a-a69a-e49e01589ffb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\CLI\src">
+      <UniqueIdentifier>{bcd31186-b92c-42cb-9a0d-70fa276e09f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\src">
+      <UniqueIdentifier>{7951044a-ad34-4510-8e4b-1931da3fea59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\src\bg">
+      <UniqueIdentifier>{e28e38f7-3c2f-4e56-87b9-5bd904d290ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\src\cg">
+      <UniqueIdentifier>{38043821-ddcf-4939-9f13-62168d9c5b30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\src\q">
+      <UniqueIdentifier>{3645abe8-908b-4efb-9b1e-4053c7180c11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\src\ui">
+      <UniqueIdentifier>{deb5688b-1b16-4279-b758-241ff05d7cfd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\bg">
+      <UniqueIdentifier>{dc758bd0-f631-485e-843d-d450535c6d9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\cg">
+      <UniqueIdentifier>{3caa7264-fb5e-4d64-855f-9e1d7a9768f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\q">
+      <UniqueIdentifier>{76f8eeb5-7371-4e7a-a97d-604420dad2c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\CLI\header\cl">
+      <UniqueIdentifier>{83529e23-1977-4ff5-b778-8284c75d3129}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\CLI\src\cl">
+      <UniqueIdentifier>{cd1125fa-0976-400c-a5c9-c62eedd53624}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\code\game\bg_lib.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\code\game\bg_misc.c">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\src\bg</Filter>
     </ClCompile>
     <ClCompile Include="..\..\code\game\bg_pmove.c">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\src\bg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\game\bg_misc.c">
+      <Filter>Source Files\src\bg</Filter>
     </ClCompile>
     <ClCompile Include="..\..\code\game\bg_slidemove.c">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\src\bg</Filter>
     </ClCompile>
     <ClCompile Include="..\..\code\cgame\cg_consolecmds.c">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\src\cg</Filter>
     </ClCompile>
     <ClCompile Include="..\..\code\cgame\cg_draw.c">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\src\cg</Filter>
     </ClCompile>
     <ClCompile Include="..\..\code\cgame\cg_drawtools.c">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\src\cg</Filter>
     </ClCompile>
     <ClCompile Include="..\..\code\cgame\cg_effects.c">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\src\cg</Filter>
     </ClCompile>
     <ClCompile Include="..\..\code\cgame\cg_ents.c">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\src\cg</Filter>
     </ClCompile>
     <ClCompile Include="..\..\code\cgame\cg_event.c">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\src\cg</Filter>
     </ClCompile>
     <ClCompile Include="..\..\code\cgame\cg_info.c">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\src\cg</Filter>
     </ClCompile>
     <ClCompile Include="..\..\code\cgame\cg_localents.c">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\src\cg</Filter>
     </ClCompile>
     <ClCompile Include="..\..\code\cgame\cg_main.c">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\src\cg</Filter>
     </ClCompile>
     <ClCompile Include="..\..\code\cgame\cg_marks.c">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\src\cg</Filter>
     </ClCompile>
     <ClCompile Include="..\..\code\cgame\cg_newDraw.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\code\cgame\cg_particles.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\code\cgame\cg_players.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\code\cgame\cg_playerstate.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\code\cgame\cg_predict.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\code\cgame\cg_scoreboard.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\code\cgame\cg_servercmds.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\code\cgame\cg_snapshot.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\code\cgame\cg_syscalls.c">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\src\cg</Filter>
     </ClCompile>
     <ClCompile Include="..\..\code\cgame\cg_view.c">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\src\cg</Filter>
     </ClCompile>
     <ClCompile Include="..\..\code\cgame\cg_weapons.c">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\src\cg</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\code\qcommon\q_math.c">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\..\code\cgame\cg_syscalls.c">
+      <Filter>Source Files\src\cg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\cgame\cg_snapshot.c">
+      <Filter>Source Files\src\cg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\cgame\cg_servercmds.c">
+      <Filter>Source Files\src\cg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\cgame\cg_scoreboard.c">
+      <Filter>Source Files\src\cg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\cgame\cg_predict.c">
+      <Filter>Source Files\src\cg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\cgame\cg_playerstate.c">
+      <Filter>Source Files\src\cg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\cgame\cg_players.c">
+      <Filter>Source Files\src\cg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\cgame\cg_particles.c">
+      <Filter>Source Files\src\cg</Filter>
     </ClCompile>
     <ClCompile Include="..\..\code\qcommon\q_shared.c">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\src\q</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\qcommon\q_math.c">
+      <Filter>Source Files\src\q</Filter>
     </ClCompile>
     <ClCompile Include="..\..\code\ui\ui_shared.c">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\src\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\CLI\src\cAPI.cpp">
+      <Filter>Source Files\CLI\src\cl</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\code\game\bg_public.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\code\cgame\cg_local.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\code\cgame\cg_public.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\code\qcommon\q_shared.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\code\qcommon\surfaceflags.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\game\bg_public.h">
+      <Filter>Header Files\bg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\cgame\cg_public.h">
+      <Filter>Header Files\cg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\cgame\cg_local.h">
+      <Filter>Header Files\cg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\qcommon\q_shared.h">
+      <Filter>Header Files\q</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\CLI\header\cAPI.h">
+      <Filter>Source Files\CLI\header\cl</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

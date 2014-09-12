@@ -21,7 +21,7 @@ void sAPI::LoadPlugins() {
 
 void sAPI::UnloadPlugins() {
 	try {
-		for each (sAPIAddon^ Pl in Instances) {
+		for each (sAddon^ Pl in Instances) {
 			Print(String::Format(S_COLOR_GREEN "Unloading {0}\n", Pl->ToString()));
 			Pl->Unload();
 		}
@@ -35,15 +35,15 @@ void sAPI::LoadPlugin(Assembly^ Asm) {
 		auto Typs = Asm->GetExportedTypes();
 
 		for each (auto Typ in Typs) {
-			if (Typ->BaseType == sAPIAddon::typeid) {
+			if (Typ->BaseType == sAddon::typeid) {
 				Print(String::Format(S_COLOR_GREEN "Loading {0}\n", Typ->ToString()));
-				auto Inst = dynamic_cast<sAPIAddon^>(Activator::CreateInstance(Typ));
+				auto Inst = dynamic_cast<sAddon^>(Activator::CreateInstance(Typ));
 
 				if (Inst != nullptr) {
 					Inst->Load();
 					Instances->Add(Inst);
 				} else
-					sAPI::Print(String::Format(Str("Could not load {0}"), Typ->ToString()));
+					sAPI::Print(String::Format(Str(S_COLOR_RED "Could not load {0}"), Typ->ToString()));
 			}
 		}
 	} ProtectedCatch
@@ -51,7 +51,7 @@ void sAPI::LoadPlugin(Assembly^ Asm) {
 
 void sAPI::OnEntityCreated(EntPtr^ E) {
 	try {
-		for each (sAPIAddon^ A in Instances)
+		for each (sAddon^ A in Instances)
 			A->EntityCreated(E);
 	} ProtectedCatch
 }
@@ -59,7 +59,7 @@ void sAPI::OnEntityCreated(EntPtr^ E) {
 void sAPI::OnCommand(String^ S) {
 	try {
 		//bool R = false;
-		for each (sAPIAddon^ A in Instances)
+		for each (sAddon^ A in Instances)
 			/*R = R || */A->Command(S);
 		//return R;
 	} ProtectedCatch
@@ -68,7 +68,7 @@ void sAPI::OnCommand(String^ S) {
 bool sAPI::OnFireWeapon(EntPtr^ Ent, bool AltFire, Vec3 Muzzle, Vec3 Forward) {
 	try {
 		bool R = false;
-		for each (sAPIAddon^ A in Instances)
+		for each (sAddon^ A in Instances)
 			R = R || A->FireWeapon(Ent, AltFire, Muzzle, Forward);
 		return R;
 	} ProtectedCatch
@@ -82,7 +82,7 @@ void sAPI::Print(String^ S) {
 
 void sAPI::PrintError(String^ S) {
 	auto Ns = (const char*)CreateNString(S);
-	Com_Printf(S_COLOR_RED "%s", Ns);
+	Com_Printf(S_COLOR_RED "SERVER: %s", Ns);
 	DestroyNString(Ns);
 }
 

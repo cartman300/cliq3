@@ -11,11 +11,24 @@ using vCommands.Parsing;
 using vCommands.Variables;
 
 namespace Example {
-	public class Addon : sAPIAddon {
+	public class clAddon : cAddon {
+		public clAddon() {
+		}
+
+		public override void Load() {
+			cAPI.Print("Loading example addon!\n");
+		}
+
+		public override void Unload() {
+			cAPI.Print("Unloading example addon!\n");
+		}
+	}
+
+	public class svAddon : sAddon {
 		public static Random R;
 		CommandHost H;
 
-		public Addon() {
+		public svAddon() {
 		}
 
 		public override void Load() {
@@ -33,14 +46,14 @@ namespace Example {
 			try {
 				EvaluationResult R = H.Evaluate(S);
 				if (!string.IsNullOrWhiteSpace(R.Output)) {
-					string Clr = sAPI.ConColor.Green;
+					string Clr = ConColor.Green;
 					if (!R.TruthValue) {
-						Clr = sAPI.ConColor.Red;
+						Clr = ConColor.Red;
 						sAPI.Print(Clr + R.Status + ": ");
 					}
 					sAPI.Print(Clr + R.Output + "\n");
 				} else if (!R.TruthValue)
-					sAPI.Print(sAPI.ConColor.Red + R.Status + "\n");
+					sAPI.Print(ConColor.Red + R.Status + "\n");
 			} catch (Exception E) {
 				sAPI.PrintError(E.ToString() + "\n");
 			}

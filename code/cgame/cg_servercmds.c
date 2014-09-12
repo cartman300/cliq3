@@ -449,6 +449,9 @@ static void CG_MapRestart( void ) {
 		CG_Printf( "CG_MapRestart\n" );
 	}
 
+	CLIq3::cAPI::UnloadPlugins();
+	CLIq3::cAPI::LoadPlugins();
+
 	CG_InitLocalEntities();
 	CG_InitMarkPolys();
 	CG_ClearParticles ();

@@ -1,5 +1,9 @@
 #pragma once
 
+#ifndef SERVER
+#error Must compile under SERVER
+#endif
+
 #define GEntityType EntPtr^
 #define DeclareFunc(T) \
 	[System::Runtime::CompilerServices::Extension] \

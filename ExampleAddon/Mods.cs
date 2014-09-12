@@ -18,7 +18,7 @@ namespace Example {
 
 		public static EntPtr FireStraightGrenade(EntPtr Ply, Vec3 Muzzle, Vec3 Forward) {
 			EntPtr R = sQuake.Fire_grenade(Ply, Muzzle, Forward);
-			R.SetNextThink(sAPI.GetTime() + 2000 + Addon.R.Next(-350, 350));
+			R.SetNextThink(sAPI.GetTime() + 2000 + svAddon.R.Next(-350, 350));
 
 			Trajectory T = R.GetTrajectory();
 			T.Type = TrajectoryType.TR_LINEAR;

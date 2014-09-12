@@ -9,17 +9,17 @@ using CLIq3;
 namespace Example {
 	static class Vector {
 		public static Vec3 Randomize(this Vec3 T, int Amp) {
-			T.X += Addon.R.Next(-Amp, Amp);
-			T.Y += Addon.R.Next(-Amp, Amp);
-			T.Z += Addon.R.Next(-Amp, Amp);
+			T.X += svAddon.R.Next(-Amp, Amp);
+			T.Y += svAddon.R.Next(-Amp, Amp);
+			T.Z += svAddon.R.Next(-Amp, Amp);
 			return T;
 		}
 
 		public static Vec3 RandomizeDir() {
 			Vec3 V = new Vec3();
-			V.X = (float)(Addon.R.NextDouble() + Addon.R.NextDouble() - 1);
-			V.Y = (float)(Addon.R.NextDouble() + Addon.R.NextDouble() - 1);
-			V.Z = (float)(Addon.R.NextDouble() + Addon.R.NextDouble() - 1);
+			V.X = (float)(svAddon.R.NextDouble() + svAddon.R.NextDouble() - 1);
+			V.Y = (float)(svAddon.R.NextDouble() + svAddon.R.NextDouble() - 1);
+			V.Z = (float)(svAddon.R.NextDouble() + svAddon.R.NextDouble() - 1);
 			return V;
 		}
 
