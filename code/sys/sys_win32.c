@@ -56,13 +56,13 @@ Set FPU control word to default value
 #ifndef _RC_CHOP
 // mingw doesn't seem to have these defined :(
 
-  #define _MCW_EM	0x0008001fU
-  #define _MCW_RC	0x00000300U
-  #define _MCW_PC	0x00030000U
-  #define _RC_NEAR      0x00000000U
-  #define _PC_53	0x00010000U
-  
-  unsigned int _controlfp(unsigned int new, unsigned int mask);
+#define _MCW_EM	0x0008001fU
+#define _MCW_RC	0x00000300U
+#define _MCW_PC	0x00030000U
+#define _RC_NEAR      0x00000000U
+#define _PC_53	0x00010000U
+
+unsigned int _controlfp(unsigned int new, unsigned int mask);
 #endif
 
 #define FPUCWMASK1 (_MCW_RC | _MCW_EM)
@@ -107,13 +107,13 @@ char *Sys_DefaultHomePath( void )
 		}
 
 		if( !SUCCEEDED( qSHGetFolderPath( NULL, CSIDL_APPDATA,
-						NULL, 0, szPath ) ) )
+			NULL, 0, szPath ) ) )
 		{
 			Com_Printf("Unable to detect CSIDL_APPDATA\n");
 			FreeLibrary(shfolder);
 			return NULL;
 		}
-		
+
 		Com_sprintf(homePath, sizeof(homePath), "%s%c", szPath, PATH_SEP);
 
 		if(com_homepath->string[0])
@@ -158,7 +158,7 @@ qboolean Sys_RandomBytes( byte *string, int len )
 	if( !CryptAcquireContext( &prov, NULL, NULL,
 		PROV_RSA_FULL, CRYPT_VERIFYCONTEXT ) )  {
 
-		return qfalse;
+			return qfalse;
 	}
 
 	if( !CryptGenRandom( prov, len, (BYTE *)string ) )  {
@@ -229,7 +229,7 @@ const char *Sys_Basename( char *path )
 
 	// Strip trailing slashes
 	while( length > 0 && base[ length ] == '\\' )
-    base[ length-- ] = '\0';
+		base[ length-- ] = '\0';
 
 	return base;
 }
@@ -553,7 +553,7 @@ Display an error message
 void Sys_ErrorDialog( const char *error )
 {
 	if( Sys_Dialog( DT_YES_NO, va( "%s. Copy console log to clipboard?", error ),
-			"Error" ) == DR_YES )
+		"Error" ) == DR_YES )
 	{
 		HGLOBAL memoryHandle;
 		char *clipMemory;
@@ -597,21 +597,21 @@ dialogResult_t Sys_Dialog( dialogType_t type, const char *message, const char *t
 
 	switch( type )
 	{
-		default:
-		case DT_INFO:      uType = MB_ICONINFORMATION|MB_OK; break;
-		case DT_WARNING:   uType = MB_ICONWARNING|MB_OK; break;
-		case DT_ERROR:     uType = MB_ICONERROR|MB_OK; break;
-		case DT_YES_NO:    uType = MB_ICONQUESTION|MB_YESNO; break;
-		case DT_OK_CANCEL: uType = MB_ICONWARNING|MB_OKCANCEL; break;
+	default:
+	case DT_INFO:      uType = MB_ICONINFORMATION|MB_OK; break;
+	case DT_WARNING:   uType = MB_ICONWARNING|MB_OK; break;
+	case DT_ERROR:     uType = MB_ICONERROR|MB_OK; break;
+	case DT_YES_NO:    uType = MB_ICONQUESTION|MB_YESNO; break;
+	case DT_OK_CANCEL: uType = MB_ICONWARNING|MB_OKCANCEL; break;
 	}
 
 	switch( MessageBox( NULL, message, title, uType ) )
 	{
-		default:
-		case IDOK:      return DR_OK;
-		case IDCANCEL:  return DR_CANCEL;
-		case IDYES:     return DR_YES;
-		case IDNO:      return DR_NO;
+	default:
+	case IDOK:      return DR_OK;
+	case IDCANCEL:  return DR_CANCEL;
+	case IDYES:     return DR_YES;
+	case IDNO:      return DR_NO;
 	}
 }
 
@@ -662,12 +662,13 @@ void Sys_PlatformInit( void )
 			Com_Printf("Warning: Minimum supported timer resolution is %ums "
 				"on this system, recommended resolution 1ms\n", timerResolution);
 		}
-		
+
 		timeBeginPeriod(timerResolution);				
 	}
 	else
 		timerResolution = 0;
 #endif
+	_setmaxstdio(2048);
 }
 
 /*
